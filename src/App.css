@@ -2,32 +2,263 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  font-weight: black !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+h2 {
+  font-weight: bold !important;
 }
 
-.App-link {
-  color: #61dafb;
+h3 {
+  font-weight: light !important;
+  color: grey !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h4 {
+  font-weight: 400 !important;
+}
+
+.frame {
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+
+.upper {
+  text-transform: uppercase;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.mt-1 {
+  margin-top: 8px;
+}
+
+.mt-2 {
+  margin-top: 16px;
+}
+
+.mt-3 {
+  margin-top: 24px;
+}
+
+.mt-4 {
+  margin-top: 32px;
+}
+
+.mt-5 {
+  margin-top: 40px;
+}
+
+.mt-6 {
+  margin-top: 48px;
+}
+
+.mt-7 {
+  margin-top: 56px;
+}
+
+.mt-8 {
+  margin-top: 64px;
+}
+
+.mt-9 {
+  margin-top: 72px;
+}
+
+.mt-more {
+  margin-top: 100px;
+}
+
+.mb-1 {
+  margin-bottom: 8px;
+}
+
+.mb-2 {
+  margin-bottom: 16px;
+}
+
+.mb-3 {
+  margin-bottom: 24px;
+}
+
+.mb-4 {
+  margin-bottom: 32px;
+}
+
+.mb-5 {
+  margin-bottom: 40px;
+}
+
+.mb-6 {
+  margin-bottom: 48px;
+}
+
+.mb-7 {
+  margin-bottom: 56px;
+}
+
+.mb-8 {
+  margin-bottom: 64px;
+}
+
+.mb-9 {
+  margin-bottom: 72px;
+}
+
+.ml-1 {
+  margin-left: 8px;
+}
+
+.ml-2 {
+  margin-left: 16px;
+}
+
+.ml-3 {
+  margin-left: 24px;
+}
+
+.ml-4 {
+  margin-left: 32px;
+}
+
+.mr-1 {
+  margin-right: 8px;
+}
+
+.mr-2 {
+  margin-right: 16px;
+}
+
+.mr-3 {
+  margin-right: 24px;
+}
+
+.mr-4 {
+  margin-right: 32px;
+}
+
+.pt-2 {
+  padding-top: 16px;
+}
+
+.pt-3 {
+  padding-top: 24px;
+}
+
+.pt-4 {
+  padding-top: 32px;
+}
+
+.pt-5 {
+  padding-top: 40px;
+}
+
+.pt-6 {
+  padding-top: 48px;
+}
+
+.pt-7 {
+  padding-top: 56px;
+}
+
+.pt-8 {
+  padding-top: 64px;
+}
+
+.pt-9 {
+  padding-top: 72px;
+}
+
+.pb-2 {
+  padding-bottom: 16px;
+}
+
+.pb-3 {
+  padding-bottom: 24px;
+}
+
+.pb-4 {
+  padding-bottom: 32px;
+}
+
+.pb-5 {
+  padding-bottom: 40px;
+}
+
+.pb-6 {
+  padding-bottom: 48px;
+}
+
+.pb-7 {
+  padding-bottom: 56px;
+}
+
+.pb-8 {
+  padding-bottom: 64px;
+}
+
+.pb-9 {
+  padding-bottom: 72px;
+}
+
+.pb-more {
+  padding-bottom: 100px;
+}
+
+.z-0 {
+  z-index: 0;
+}
+
+.z-1 {
+  z-index: 1;
+}
+
+.z-2 {
+  z-index: 2;
+}
+
+.z-3 {
+  z-index: 3;
+}
+
+.z-4 {
+  z-index: 4;
+}
+
+.font-1 {
+  font-family: "Apple SD Gothic Neo";
+  font-size: small !important;
+}
+
+.font-2 {
+  font-family: "Apple SD Gothic Neo";
+  font-size: medium !important;
+}
+
+.font-3 {
+  font-family: "Apple SD Gothic Neo";
+  font-size: large !important;
+}
+
+.font-4 {
+  font-family: "Apple SD Gothic Neo";
+  font-size: x-large !important;
+}
+
+.font-5 {
+  font-family: "Apple SD Gothic Neo";
+  font-size: xx-large !important;
+}
+
+.font-6 {
+  font-family: "Apple SD Gothic Neo";
+  font-size: larger !important;
 }
