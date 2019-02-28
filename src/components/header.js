@@ -1,24 +1,21 @@
 import React, { Component } from 'react';
-import '../css/header.css';
+import '../css/Header.css';
 import '../App.css';
-import logo from '../logo.svg';
-//import { Container, Row, Col } from 'react-bootstrap';
+import MaterialIcon from 'material-icons-react';
 
-class header extends Component {
+class Header extends Component {
     render() {
         return (
             <div className="header">
-                <div className="header-title">
+                <div className="header-title font-3 font-white">
                     Meeting Service
                 </div>
                 <div className="header-logo">
-                    <div>
-                        <img src={logo} alt={"logo"} />
-                    </div>
+                    <MaterialIcon icon="keyboard_backspace" size="35px" color="white"/>
                 </div>
             </div>
         );
     }
 }
 
-export default header;
+export default Header;

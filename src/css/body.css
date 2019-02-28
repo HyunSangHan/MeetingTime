@@ -1,3 +1,56 @@
 .offset-down {
     padding-top: 60px;
 }
+
+.up-bg {
+    background-color: #4C4C4C;
+    height: 45vh;
+}
+
+.down-bg {
+    background-color: white;
+    height: 55vh;
+}
+
+.down-bg >div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile {
+    height: 15vh;
+    border-top: 1vh solid #F0F0F0;
+    border-bottom: 0.2vh solid #F0F0F0;
+}
+
+.chat {
+    height: 10vh;
+}
+
+.heart {
+    border-top: 1vh solid #F0F0F0;
+    height: 15vh;
+}
+
+.invite {
+    border-top: 1vh solid #F0F0F0;
+    height: 15vh;
+}
+
+.big-button {
+    cursor: pointer;
+    width: 70vw;
+    height: 10vh;
+    margin-top: 5vh;
+    background-color: orangered;
+    border-radius: 80px;
+}
+
+.img-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+    background-color: grey;
+
+}
