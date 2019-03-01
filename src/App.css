@@ -43,6 +43,34 @@ h4 {
   align-items: center;
 }
 
+.flex-j-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flex-j-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.flex-a-start {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.flex-a-end {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.align-center {
+  align-items: center;
+}
+
 .mt-1 {
   margin-top: 8px;
 }
@@ -239,6 +267,16 @@ h4 {
   z-index: 4;
 }
 
+.font-0 {
+  font-family: "Apple SD Gothic Neo";
+  font-size: 0.7rem;
+}
+
+.font-05 {
+  font-family: "Apple SD Gothic Neo";
+  font-size: 0.9rem !important;
+}
+
 .font-1 {
   font-family: "Apple SD Gothic Neo";
   font-size: 1.0rem !important;
@@ -269,6 +307,20 @@ h4 {
   font-size: 2.0rem !important;
 }
 
+.font-big {
+  font-family: "Apple SD Gothic Neo";
+  font-size: 2.5rem !important;
+  font-weight: bolder;
+}
+
 .font-white {
   color: white;
+}
+
+.opacity05 {
+  opacity: 0.5;
+}
+
+.opacity08 {
+  opacity: 0.8;
 }

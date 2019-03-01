@@ -9,48 +9,59 @@
 
 .down-bg {
     background-color: white;
-    height: 55vh;
+    height: 50vh;
 }
 
-.down-bg >div {
+.down-bg > div {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .profile {
-    height: 15vh;
-    border-top: 1vh solid #F0F0F0;
-    border-bottom: 0.2vh solid #F0F0F0;
+    height: 17vh;
+    border-top: 7px solid #F0F0F0;
 }
 
-.chat {
-    height: 10vh;
+.h17vh {
+    height: 17vh;
 }
 
 .heart {
-    border-top: 1vh solid #F0F0F0;
-    height: 15vh;
+    border-top: 1.4px solid #F0F0F0;
+    height: 8vh;
+}
+
+.chat {
+    border-top: 1.4px solid #F0F0F0;
+    height: 8vh;
 }
 
 .invite {
-    border-top: 1vh solid #F0F0F0;
-    height: 15vh;
+    border-top: 7px solid #F0F0F0;
+    height: 17vh;
 }
 
 .big-button {
     cursor: pointer;
-    width: 70vw;
+    width: 30vh;
     height: 10vh;
-    margin-top: 5vh;
     background-color: orangered;
-    border-radius: 80px;
+    border-radius: 5vh;
+}
+
+.heart-button {
+    cursor: pointer;
+    width: 100%;
+    height: 5vh;
+    border-radius: 2.5vh;
+    border: 1px solid #F0F0F0;
 }
 
 .img-circle {
-    width: 70px;
-    height: 70px;
-    border-radius: 35px;
-    background-color: grey;
-
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    background-color: lightgray;
+    /*have to edit: for auto crop*/
 }
