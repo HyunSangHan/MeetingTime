@@ -4,7 +4,7 @@ import '../../App.css';
 import { Container, Row, Col } from 'reactstrap';
 import Header from "./Header";
 
-class Profile extends Component {
+class Heart extends Component {
 
     render() {
         return (
@@ -13,7 +13,7 @@ class Profile extends Component {
                 <div className="offset-down">
                     <Container>
                         <Row>
-                            <div className={"App"}>프로필 개발 필요</div>
+                            <div className={"App"}>하트 개발 필요</div>
                         </Row>
                     </Container>
                 </div>
@@ -22,4 +22,4 @@ class Profile extends Component {
     }
 }
 
-export default Profile;
+export default Heart;

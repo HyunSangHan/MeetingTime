@@ -269,7 +269,7 @@ h4 {
 
 .font-0 {
   font-family: "Apple SD Gothic Neo";
-  font-size: 0.7rem;
+  font-size: 0.75rem;
 }
 
 .font-05 {
@@ -315,6 +315,10 @@ h4 {
 
 .font-white {
   color: white;
+}
+
+.font-grey {
+  color: grey;
 }
 
 .opacity05 {

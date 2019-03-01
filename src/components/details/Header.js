@@ -14,7 +14,7 @@ class Header extends Component {
                 </div>
                 <div className="header-logo">
                     <Link to="/">
-                        <MaterialIcon icon="keyboard_backspace" size="35px" color="white"/>
+                        <MaterialIcon icon="arrow_back_ios" size="23x" color="white"/>
                     </Link>
                 </div>
             </div>
