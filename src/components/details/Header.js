@@ -9,8 +9,7 @@ class Header extends Component {
         return (
             <div className="header">
                 <div className="header-title font-3 font-white">
-                    Profile
-                    {/*props로 페이지 이름 넘겨받기*/}
+                    {this.props.title}
                 </div>
                 <div className="header-logo">
                     <Link to="/">

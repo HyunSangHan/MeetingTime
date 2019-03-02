@@ -27,6 +27,10 @@
     height: 17vh;
 }
 
+.h8vh {
+    height: 8vh;
+}
+
 .heart {
     border-top: 1.4px solid #F0F0F0;
     height: 8vh;
@@ -61,10 +65,35 @@
     border: 1px solid #F0F0F0;
 }
 
+.copy-button {
+    cursor: pointer;
+    width: 46px;
+    height: 46px;
+    border-radius: 23px;
+    border: 1px solid lightgrey;
+    text-decoration: none;
+}
+
+.copy-pop {
+    width: 90vw;
+    height: 20vh;
+    background-color: #F0F0F0;
+}
+
+.minus-height {
+    margin-top: 50vh;
+}
+
 .img-circle {
     width: 80px;
     height: 80px;
     border-radius: 40px;
     background-color: lightgray;
     /*have to edit: for auto crop*/
+}
+
+.abs {
+    position: absolute;
+    right: 1vh;
+    top: 1vh;
 }

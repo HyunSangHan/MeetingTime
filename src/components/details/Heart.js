@@ -9,11 +9,13 @@ class Heart extends Component {
     render() {
         return (
             <div className={"App"}>
-                <Header/>
+                <Header title="하트 충전하기"/>
                 <div className="offset-down">
                     <Container>
                         <Row>
-                            <div className={"App"}>하트 개발 필요</div>
+                            <Col>
+                                <div className={"App"}>하트 개발 필요</div>
+                            </Col>
                         </Row>
                     </Container>
                 </div>
