@@ -22,8 +22,9 @@ class Main extends Component {
             is_copied: true
             //배경 어둡게, 리덕스 디렉토리 구조 만들기
         });
-    }
-    //
+    };
+
+    // //리덕스 필요
     // DeletePopup = () = () => {
     //     this.setState({
     //         is_joined: false,
@@ -34,13 +35,16 @@ class Main extends Component {
     render() {
         return (
             <div className="App">
-                <div className={"App flex-center"}>
-                    {this.state.is_copied &&
+                {this.state.is_copied &&
+                <div className={"App"}>
+                    <div className={"flex-center"}>
                     <div className={"fix minus-height z-2"}>
-                        <CopiedPopup recommendation_code={"test_추천인코드"}/>
+                        <CopiedPopup recommendation_code={"data_추천인코드"} offPopup={this.props.offPopup}/>
                     </div>
-                    }
+                    </div>
+                    <div className={"frame-dark fix z-1"}></div>
                 </div>
+                }
                 <div className="up-bg flex-center">
                     <Container>
                         <Row className={"App"}>

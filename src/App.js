@@ -8,6 +8,8 @@ import Chat from "./components/details/Chat";
 import Initpage from "./components/Initpage";
 import Result from "./components/Result";
 import { BrowserRouter, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from './actions';
 
 class App extends Component {
 
@@ -30,7 +32,7 @@ class App extends Component {
     return (
         <BrowserRouter>
             <div className="App frame">
-                <Route exact path="/" component={Main}/>
+                <Route exact path="/" component={Main} offPopup={this.props.offPopup}/>
                 {/* NEED TO CHECK SYNTAX => user={this.state.user} this_week={this.state.this_week}*/}
                 <Route path="/profile" component={Profile}/>
                 <Route path="/heart" component={Heart}/>
@@ -44,4 +46,14 @@ class App extends Component {
   }
 }
 
-export default App;
+// 액션 생성 함수 준비
+const mapToDispatch = (dispatch) => ({
+    offPopup: () => dispatch(actions.deletePopup())
+});
+
+const mapToState = () => ({
+    //넣을게없음
+})
+
+// 리덕스에 연결시키고 내보냅니다
+export default connect(mapToState, mapToDispatch)(App);

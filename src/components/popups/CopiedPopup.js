@@ -8,7 +8,7 @@ class CopiedPopup extends Component {
     render() {
         return (
             <div className={"App flex-center"}>
-                <div  className={"abs"}>
+                <div  className={"abs"} onClick={this.props.offPopup}>
                     <MaterialIcon icon="clear" size="25px" color="lightgrey"/>
                 </div>
                 <div  className={"copy-pop flex-center font-1"}>
