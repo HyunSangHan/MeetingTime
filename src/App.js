@@ -24,7 +24,8 @@ class App extends Component {
                 current_heart: "하트개수",
                 chat: "대화방개수"
             },
-            this_week : "이번주 🔥금 in 강남"
+            this_week: "이번주 🔥금 in 강남",
+            offPopup: false
         }
     }
 
@@ -32,7 +33,11 @@ class App extends Component {
     return (
         <BrowserRouter>
             <div className="App frame">
-                <Route exact path="/" component={Main} offPopup={this.props.offPopup}/>
+                <Route exact path="/"
+                       render={(props) => (
+                           <Main {...props} user={this.state.user} />
+                               )} />
+                {/*offPopup={this.props.offPopup}*/}
                 {/* NEED TO CHECK SYNTAX => user={this.state.user} this_week={this.state.this_week}*/}
                 <Route path="/profile" component={Profile}/>
                 <Route path="/heart" component={Heart}/>

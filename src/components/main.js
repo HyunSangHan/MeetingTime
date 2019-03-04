@@ -22,6 +22,7 @@ class Main extends Component {
             is_copied: true
             //배경 어둡게, 리덕스 디렉토리 구조 만들기
         });
+        console.log(this.props.user);
     };
 
     // //리덕스 필요
