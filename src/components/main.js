@@ -51,15 +51,15 @@ class Main extends Component {
                         <Row className={"App"}>
                             <Col xs={12}>
                                 <div className={"font-big font-white mt-4"}>
-                                    이번주 🔥금 in 강남
+                                    {this.props.info.title}
                                 </div>
                             </Col>
                             <Col xs={12}>
                                 <div className={"font-1 font-white mt-3 opacity05"}>
-                                    매칭오픈 - 3월 4일 월요일 오전 10시
+                                    {this.props.info.msg1}
                                 </div>
                                 <div className={"font-1 font-white mt-1 opacity05"}>
-                                    결과발표 - 3월 6일 수요일 오후 10시
+                                    {this.props.info.msg2}
                                 </div>
                             </Col>
                             <Col xs={12} className={"flex-center"}>
@@ -79,8 +79,12 @@ class Main extends Component {
                                         </div>
                                     </Col>
                                     <Col xs={7} className={"align-left"}>
-                                        <div className={"font-3 ml-1"}><b>필요data: 닉네임</b></div>
-                                        <div className={"font-1 font-grey mt-2 ml-1"}>필요data: 회사이름</div>
+                                        <div className={"font-3 ml-1"}>
+                                            <b>{this.props.user.nickname}</b>
+                                        </div>
+                                        <div className={"font-1 font-grey mt-2 ml-1"}>
+                                            {this.props.user.company}
+                                        </div>
                                     </Col>
                                     <Link to="/profile">
                                     <Col xs={2} className={"h17vh flex-j-start"}>
@@ -95,7 +99,7 @@ class Main extends Component {
                         <Container>
                             <Row className={"align-center"}>
                                 <Col xs={8} className={"align-left"}>
-                                    <div className={"font-05 opacity08 ml-1"}>내 하트 <b>[하트개수]</b>개</div>
+                                    <div className={"font-05 opacity08 ml-1"}>내 하트 <b>{this.props.user.current_heart}</b>개</div>
                                 </Col>
                                 <Col xs={4} className={"align-right align-center"}>
                                     <Link to="/heart">
@@ -112,7 +116,7 @@ class Main extends Component {
                         <Container>
                             <Row className={"align-center"}>
                                 <Col xs={10} className={"align-left"}>
-                                    <div className={"font-05 opacity08 ml-1"}>지난 대화 <b>[대화방개수]</b>개</div>
+                                    <div className={"font-05 opacity08 ml-1"}>지난 대화 <b>{this.props.user.chat}</b>개</div>
                                 </Col>
                                 <Link to="/chat">
                                 <Col xs={2} className={"h8vh flex-j-start"}>
@@ -129,7 +133,7 @@ class Main extends Component {
                                 <Col xs={9} className={"align-left"}>
                                     <div className={"font-1 ml-1"}>
                                         <b>친구 초대 </b>
-                                        <font color="#808080" size="10px">(추천인코드: <b>[추천코드]</b>)</font>
+                                        <font color="#808080" size="10px">(추천인코드: <b>{this.props.user.recommendation_code}</b>)</font>
                                         </div>
                                     <div className={"font-05 ml-1 mt-2"}>여자사람친구를 초대해주세요.</div>
                                     <div className={"font-05 ml-1"}>하트 1,000개를 드려요!</div>

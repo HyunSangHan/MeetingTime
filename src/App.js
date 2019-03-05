@@ -22,9 +22,13 @@ class App extends Component {
                 company: "필요data: 회사명",
                 recommendation_code: "추천인코드",
                 current_heart: "하트개수",
-                chat: "대화방개수"
+                chat: "대화방개수" //나중에 유저의 모델 내 필드 개수와 맞춰야 할 것임
             },
-            this_week: "이번주 🔥금 in 강남",
+            info: {
+                title: "이번주 🔥금 in 강남",
+                msg1: "매칭오픈 - 3월 4일 월요일 오전 10시",
+                msg2: "결과발표 - 3월 6일 수요일 오후 10시"
+            },
             offPopup: false
         }
     }
@@ -35,10 +39,9 @@ class App extends Component {
             <div className="App frame">
                 <Route exact path="/"
                        render={(props) => (
-                           <Main {...props} user={this.state.user} />
+                           <Main {...props} user={this.state.user} info={this.state.info}/>
                                )} />
                 {/*offPopup={this.props.offPopup}*/}
-                {/* NEED TO CHECK SYNTAX => user={this.state.user} this_week={this.state.this_week}*/}
                 <Route path="/profile" component={Profile}/>
                 <Route path="/heart" component={Heart}/>
                 <Route path="/chat" component={Chat}/>
@@ -60,5 +63,5 @@ const mapToState = () => ({
     //넣을게없음
 })
 
-// 리덕스에 연결시키고 내보냅니다
+// 리덕스에 연결시키고 내보내기
 export default connect(mapToState, mapToDispatch)(App);
