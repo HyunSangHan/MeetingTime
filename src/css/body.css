@@ -98,3 +98,12 @@
     top: 1vh;
 }
 
+@media(max-width: 370px) {  /*Small Mobile*/
+    .img-circle {
+        width: 70px;
+        height: 70px;
+        border-radius: 35px;
+        background-color: lightgray;
+        /*have to edit: for auto crop*/
+    }
+}

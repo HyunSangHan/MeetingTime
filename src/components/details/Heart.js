@@ -12,9 +12,20 @@ class Heart extends Component {
                 <Header title="하트 충전하기"/>
                 <div className="offset-down">
                     <Container>
-                        <Row>
-                            <Col>
-                                <div className={"App"}>하트 개발 필요</div>
+                        <Row className={"flex-center"}>
+                            <Col xs={12}>
+                                <div>하트 개발 필요1</div>
+                            </Col>
+                            <Col xs={12}>
+                                <div>하트 개발 필요2</div>
+                            </Col>
+                        </Row>
+                        <Row className={"flex-center"}>
+                            <Col xs={12}>
+                                <div>하트 개발 필요3</div>
+                            </Col>
+                            <Col xs={12}>
+                                <div>하트 개발 필요4</div>
                             </Col>
                         </Row>
                     </Container>

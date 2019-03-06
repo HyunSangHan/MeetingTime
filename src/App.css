@@ -301,7 +301,7 @@ h4 {
 
 .font-2 {
   font-family: "Apple SD Gothic Neo";
-  font-size: 1.2rem !important;
+  font-size: 1.1rem !important;
 }
 
 .font-3 {
@@ -344,4 +344,54 @@ h4 {
 
 .opacity08 {
   opacity: 0.8;
+}
+
+@media(max-width: 370px){ /*Small Mobile*/
+
+  .font-0 {
+    font-family: "Apple SD Gothic Neo";
+    font-size: 0.6rem;
+  }
+
+  .font-05 {
+    font-family: "Apple SD Gothic Neo";
+    font-size: 0.75rem !important;
+  }
+
+  .font-1 {
+    font-family: "Apple SD Gothic Neo";
+    font-size: 0.9rem !important;
+  }
+
+  .font-2 {
+    font-family: "Apple SD Gothic Neo";
+    font-size: 0.95rem !important;
+  }
+
+  .font-3 {
+    font-family: "Apple SD Gothic Neo";
+    font-size: 1.1rem !important;
+  }
+
+  .font-4 {
+    font-family: "Apple SD Gothic Neo";
+    font-size: 1.2rem !important;
+  }
+
+  .font-5 {
+    font-family: "Apple SD Gothic Neo";
+    font-size: 1.3rem !important;
+  }
+
+  .font-6 {
+    font-family: "Apple SD Gothic Neo";
+    font-size: 1.5rem !important;
+  }
+
+  .font-big {
+    font-family: "Apple SD Gothic Neo";
+    font-size: 2.0rem !important;
+    font-weight: bolder;
+  }
+
 }

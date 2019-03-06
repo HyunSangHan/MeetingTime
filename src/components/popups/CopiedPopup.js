@@ -12,7 +12,7 @@ class CopiedPopup extends Component {
                     <MaterialIcon icon="clear" size="25px" color="lightgrey"/>
                 </div>
                 <div  className={"copy-pop flex-center font-1"}>
-                    추천인코드({this.props.recommendation_code})가 복사되었습니다.
+                    추천인코드({this.props.user.recommendation_code})가 복사되었습니다.
                 </div>
             </div>
         );

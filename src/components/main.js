@@ -5,43 +5,35 @@ import { Container, Row, Col } from 'reactstrap';
 import MaterialIcon from 'material-icons-react';
 import { Link } from 'react-router-dom';
 import CopiedPopup from "./popups/CopiedPopup";
+import JoinedPopup from "./popups/JoinedPopup";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 class Main extends Component {
-    constructor(props){
-        super(props);
-
-        this.state = {
-            is_popuped: false, //someday will be updated
-            is_joined: false,
-            is_copied: false,
-        }
-    }
-
-    ClickCopyButton = () => () => {
-        this.setState({
-            is_copied: true
-            //배경 어둡게, 리덕스 디렉토리 구조 만들기
-        });
-        console.log(this.props.user);
-    };
-
-    // //리덕스 필요
-    // DeletePopup = () = () => {
-    //     this.setState({
-    //         is_joined: false,
-    //         is_copied: false
-    //     });
-    // }
+    // constructor(props){
+    //     super(props);
+    // };
 
     render() {
         return (
             <div className="App">
-                {this.state.is_copied &&
+                {this.props.is_copied &&
                 <div className={"App"}>
                     <div className={"flex-center"}>
                     <div className={"fix minus-height z-2"}>
-                        <CopiedPopup recommendation_code={"data_추천인코드"} offPopup={this.props.offPopup}/>
+                        <CopiedPopup user={this.props.user}
+                                     offPopup={this.props.offPopup}/>
                     </div>
+                    </div>
+                    <div className={"frame-dark fix z-1"}></div>
+                </div>
+                }
+                {this.props.is_joined &&
+                <div className={"App"}>
+                    <div className={"flex-center"}>
+                        <div className={"fix minus-height z-2"}>
+                            <JoinedPopup user={this.props.user}
+                                         offPopup={this.props.offPopup}/>
+                        </div>
                     </div>
                     <div className={"frame-dark fix z-1"}></div>
                 </div>
@@ -63,7 +55,9 @@ class Main extends Component {
                                 </div>
                             </Col>
                             <Col xs={12} className={"flex-center"}>
-                                <div className={"big-button flex-center font-2 font-white"}>
+
+                                {/*추후 조건부 렌더 필요한부분*/}
+                                <div className={"big-button flex-center font-2 font-white"} onClick={this.props.onJoinedPopup}>
                                     선착순 번호표 뽑기
                                 </div>
                             </Col>
@@ -88,7 +82,7 @@ class Main extends Component {
                                     </Col>
                                     <Link to="/profile">
                                     <Col xs={2} className={"h17vh flex-j-start"}>
-                                        <MaterialIcon icon="arrow_forward_ios" size="30px" color="#f0f0f0"/>
+                                        <MaterialIcon icon="arrow_forward_ios" size="23x" color="#f0f0f0"/>
                                     </Col>
                                     </Link>
 
@@ -120,7 +114,7 @@ class Main extends Component {
                                 </Col>
                                 <Link to="/chat">
                                 <Col xs={2} className={"h8vh flex-j-start"}>
-                                    <MaterialIcon icon="arrow_forward_ios" size="20px" color="#f0f0f0"/>
+                                    <MaterialIcon icon="arrow_forward_ios" size="16px" color="#f0f0f0"/>
                                 </Col>
                                 </Link>
                             </Row>
@@ -139,9 +133,11 @@ class Main extends Component {
                                     <div className={"font-05 ml-1"}>하트 1,000개를 드려요!</div>
                                 </Col>
                                 <Col xs={3} className={"h8vh flex-j-end flex-a-end"}>
-                                    <div className={"copy-button flex-center"} onClick={this.ClickCopyButton()}>
-                                        <MaterialIcon icon="file_copy" size="25px" color="lightgrey"/>
-                                    </div>
+                                    <CopyToClipboard text={this.props.user.recommendation_code}>
+                                        <div className={"copy-button flex-center"} onClick={this.props.onCopiedPopup}>
+                                            <MaterialIcon icon="file_copy" size="25px" color="lightgrey"/>
+                                        </div>
+                                    </CopyToClipboard>
                                 </Col>
                             </Row>
                         </Container>

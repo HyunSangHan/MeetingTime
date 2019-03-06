@@ -1,7 +1,8 @@
 import * as types from '../actions/ActionTypes';
 
 const initialState = {
-//딱히넣을거없음
+    is_joined: false,
+    is_copied: false
 };
 
 function popup(state = initialState, action) {
@@ -11,6 +12,18 @@ function popup(state = initialState, action) {
             return {
                 is_joined: false,
                 is_copied: false
+            };
+
+        case types.CREATE_JOINED_POPUP:
+            return {
+                is_joined: true,
+                is_copied: false
+            };
+
+        case types.CREATE_COPIED_POPUP:
+            return {
+                is_joined: false,
+                is_copied: true
             };
 
         default:
