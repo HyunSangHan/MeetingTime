@@ -1,8 +1,15 @@
 .footer-bg {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100vw;
     border-top: 0.1px solid #f9f9f9;
     background-color: #f9f9f9;
+    height: 5vh;
+}
+
+.footer-scrollabe-bg {
+    width: 100%;
+    border-top: 1px solid #DDDDDD;
+    margin-top: 15px;
     height: 5vh;
 }

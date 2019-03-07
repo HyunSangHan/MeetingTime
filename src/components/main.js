@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import CopiedPopup from "./popups/CopiedPopup";
 import JoinedPopup from "./popups/JoinedPopup";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import Footer from "./Footer";
 
 class Main extends Component {
     // constructor(props){
@@ -67,26 +68,28 @@ class Main extends Component {
                 <div className="down-bg">
                         <div className={"profile"}>
                             <Container>
-                                <Row className={"align-center"}>
+                                <Link to="/profile">
+                                <Row className={"align-center deco-none"}>
                                     <Col xs={3}>
-                                        <div className={"img-circle"}>
+                                        <div className={"img-my-circle"}>
+                                            {/*img 태그와 props 들어갈 부분*/}
                                         </div>
                                     </Col>
                                     <Col xs={7} className={"align-left"}>
-                                        <div className={"font-3 ml-1"}>
+                                        <div className={"font-3 ml-1 font-black"}>
                                             <b>{this.props.user.nickname}</b>
                                         </div>
                                         <div className={"font-1 font-grey mt-2 ml-1"}>
                                             {this.props.user.company}
                                         </div>
                                     </Col>
-                                    <Link to="/profile">
                                     <Col xs={2} className={"h17vh flex-j-start"}>
                                         <MaterialIcon icon="arrow_forward_ios" size="23x" color="#f0f0f0"/>
                                     </Col>
-                                    </Link>
 
                                 </Row>
+                                </Link>
+
                             </Container>
                         </div>
                     <div className={"heart"}>
@@ -97,9 +100,9 @@ class Main extends Component {
                                 </Col>
                                 <Col xs={4} className={"align-right align-center"}>
                                     <Link to="/heart">
-                                        <div className={"heart-button flex-center font-05"}>
+                                        <div className={"heart-button deco-none flex-center font-05"}>
                                             <MaterialIcon icon="favorite" size="18px" color="red"/>
-                                            하트충전
+                                            <div className={"ml-1"}>충전하기</div>
                                         </div>
                                     </Link>
                                 </Col>
@@ -109,14 +112,17 @@ class Main extends Component {
                     <div className={"chat"}>
                         <Container>
                             <Row className={"align-center"}>
-                                <Col xs={10} className={"align-left"}>
+                                <Col xs={8} className={"align-left"}>
                                     <div className={"font-05 opacity08 ml-1"}>지난 대화 <b>{this.props.user.chat}</b>개</div>
                                 </Col>
-                                <Link to="/chat">
-                                <Col xs={2} className={"h8vh flex-j-start"}>
-                                    <MaterialIcon icon="arrow_forward_ios" size="16px" color="#f0f0f0"/>
+                                <Col xs={4} className={"align-right align-center"}>
+                                    <Link to="/chat">
+                                        <div className={"heart-button deco-none flex-center font-05"}>
+                                            <MaterialIcon icon="forum" size="18px" color="grey"/>
+                                            <div className={"ml-1"}>대화하기</div>
+                                        </div>
+                                    </Link>
                                 </Col>
-                                </Link>
                             </Row>
                         </Container>
                     </div>
@@ -134,7 +140,7 @@ class Main extends Component {
                                 </Col>
                                 <Col xs={3} className={"h8vh flex-j-end flex-a-end"}>
                                     <CopyToClipboard text={this.props.user.recommendation_code}>
-                                        <div className={"copy-button flex-center"} onClick={this.props.onCopiedPopup}>
+                                        <div className={"copy-button deco-none flex-center"} onClick={this.props.onCopiedPopup}>
                                             <MaterialIcon icon="file_copy" size="25px" color="lightgrey"/>
                                         </div>
                                     </CopyToClipboard>
@@ -143,6 +149,7 @@ class Main extends Component {
                         </Container>
                     </div>
                 </div>
+                <Footer/>
             </div>
         );
     }

@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+.base-box {
+  width: 100%;
+  height: auto;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
 h1 {
   font-weight: black !important;
 }
@@ -338,12 +346,24 @@ h4 {
   color: grey;
 }
 
+.font-black {
+  color: black;
+}
+
 .opacity05 {
   opacity: 0.5;
 }
 
 .opacity08 {
   opacity: 0.8;
+}
+
+.deco-none {
+  text-decoration: none;
+}
+
+.bg-main-color {
+  background-color: #4C4C4C;
 }
 
 @media(max-width: 370px){ /*Small Mobile*/
