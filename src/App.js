@@ -7,7 +7,7 @@ import Chat from "./components/details/Chat";
 import Initpage from "./components/Initpage";
 import SignUp from "./components/SignUp";
 import Result from "./components/details/Result";
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import * as actions from './actions';
 import { connect } from 'react-redux';
 
@@ -44,7 +44,7 @@ class App extends Component {
     return (
         <BrowserRouter>
             <div className="frame">
-                <Route exact path="/"
+                <Route path="/"
                        render={(props) => (
                            <Main
                                {...props}
@@ -70,6 +70,7 @@ class App extends Component {
                 <Route path="/init" component={Initpage}/>
                 <Route path="/sign_up" component={SignUp}/>
                 <Route path="/matching_result" component={Result}/>
+                {/*<Redirect from="/" to="/init" />*/}
             </div>
         </BrowserRouter>
     );

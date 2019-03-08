@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 class Header extends Component {
     render() {
         return (
-            <div className="header z-2">
+            <div className="pc-none header z-2">
                 <div className="header-title font-3 font-white z-2">
                     {this.props.title}
                 </div>

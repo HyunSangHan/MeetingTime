@@ -8,6 +8,7 @@ import CopiedPopup from "./popups/CopiedPopup";
 import JoinedPopup from "./popups/JoinedPopup";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import Footer from "./Footer";
+import Profile from "./details/Profile";
 
 class Main extends Component {
     // constructor(props){
@@ -17,6 +18,8 @@ class Main extends Component {
     render() {
         return (
             <div className="App">
+
+{/*팝업들*/}
                 {this.props.is_copied &&
                 <div className={"App"}>
                     <div className={"flex-center"}>
@@ -39,6 +42,8 @@ class Main extends Component {
                     <div className={"frame-dark fix z-1"}></div>
                 </div>
                 }
+
+{/*PC와 모바일 공통*/}
                 <div className="up-bg flex-center">
                     <Container>
                         <Row className={"App"}>
@@ -65,7 +70,8 @@ class Main extends Component {
                         </Row>
                     </Container>
                 </div>
-                <div className="down-bg">
+{/*모바일 전용*/}
+                <div className="pc-none down-bg">
                         <div className={"profile"}>
                             <Container>
                                 <Link to="/profile">
@@ -148,6 +154,10 @@ class Main extends Component {
                             </Row>
                         </Container>
                     </div>
+                </div>
+{/*PC전용*/}
+                <div className={"mobile-none"}>
+                    <Profile/>
                 </div>
                 <Footer/>
             </div>

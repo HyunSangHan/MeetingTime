@@ -72,7 +72,9 @@ class Profile extends Component {
                                     </FormGroup>
                                     <Button>반영하기</Button>
                                 </Form>
-
+                                <div className={"App font-grey font-2 mt-2 hover deco-none"}>
+                                    <u>로그아웃</u>
+                                </div>
                             </div>
                         </Col>
                     </Row>

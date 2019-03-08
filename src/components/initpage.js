@@ -4,12 +4,11 @@ import '../App.css';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import Footer from "./Footer";
 import { Link } from 'react-router-dom';
-import SignUp from "./SignUp";
 
 class Initpage extends Component {
     render() {
         return (
-            <div className={"frame flex-center bg-main-color"}>
+            <div className={"pc-none frame flex-center bg-main-color"}>
                 <Container className={"font-white"}>
                     <Row>
                         <Col>
@@ -23,12 +22,14 @@ class Initpage extends Component {
                                     <Label for="password">비밀번호</Label>
                                     <Input type="password" name="password" id="password" placeholder="Password" />
                                 </FormGroup>
-                                <Button color="danger" className={"mt-1"}>로그인하기</Button>
+                                <Link to={"./main"}>
+                                    <Button color="danger" className={"mt-1"}>로그인하기</Button>
+                                </Link>
                             </Form>
                         </Col>
                     </Row>
                     <Row>
-                        <Col className={"App mt-4 font-2 deco-none"}>
+                        <Col className={"App mt-4 font-1 deco-none"}>
                             <Link to={"./sign_up"}>
                                 <u className={"font-white"}>설마, 아직도 회원이 아니신가요?</u>
                             </Link>
