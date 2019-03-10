@@ -17,7 +17,7 @@ class Main extends Component {
 
     render() {
         return (
-            <div className="App">
+            <div>
 
 {/*팝업들*/}
                 {this.props.is_copied &&
@@ -159,6 +159,7 @@ class Main extends Component {
                 <div className={"mobile-none"}>
                     <Profile/>
                 </div>
+
                 <Footer/>
             </div>
         );

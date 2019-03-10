@@ -44,7 +44,7 @@ class App extends Component {
     return (
         <BrowserRouter>
             <div className="frame">
-                <Route path="/"
+                <Route exact path="/"
                        render={(props) => (
                            <Main
                                {...props}

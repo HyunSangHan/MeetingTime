@@ -140,7 +140,6 @@
 
 @media(min-width: 768px){ /*PC*/
     .offset-down {
-        padding-top: 10vh;
     }
 
     .up-bg {

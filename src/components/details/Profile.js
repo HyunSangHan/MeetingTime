@@ -5,6 +5,7 @@ import { Container, Row, Col } from 'reactstrap';
 import Header from "./../Header";
 import FooterScrollable from "./../FooterScrollable";
 import { Button, Form, FormGroup, Label, Input, FormText, CustomInput } from 'reactstrap';
+import EditPW from "./EditPW";
 
 class Profile extends Component {
 
@@ -16,21 +17,9 @@ class Profile extends Component {
                     <Row>
                         <Col>
                             <div className={"mt-4"}>
+                                <EditPW/>
                                 <Form>
-                                    <div className={"font-3 mb-3"}><b>비밀번호 변경</b></div>
-                                    <FormGroup>
-                                        <Label for="password">비밀번호</Label>
-                                        <Input type="password" name="password" id="password" placeholder="비밀번호 입력" />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label for="password_confirm">비밀번호 확인</Label>
-                                        <Input type="password" name="password_confirm" id="password_confirm" placeholder="비밀번호 재입력" />
-                                    </FormGroup>
-                                    <div className={"font-3 mt-5 mb-3"}><b>미팅 정보 변경</b></div>
-                                    <FormGroup>
-                                        <Label for="phone">대표 연락처</Label>
-                                        <Input type="text" name="phone" id="phone" placeholder="여기는 props로 현재 전화번호를 미리 보여줄 부분임" />
-                                    </FormGroup>
+                                    <div className={"font-3 mt-5 mb-3 pc-none"}><b>미팅 정보 변경</b></div>
                                     <FormGroup>
                                         <Label for="img">프로필 사진</Label>
                                         <CustomInput className={"base-box"} type="file" name="img" id="img" />
@@ -65,7 +54,10 @@ class Profile extends Component {
                                             {/*추가 필요*/}
                                         </Input>
                                     </FormGroup>
-
+                                    <FormGroup>
+                                        <Label for="phone">대표 연락처</Label>
+                                        <Input type="text" name="phone" id="phone" placeholder="여기는 props로 현재 전화번호를 미리 보여줄 부분임" />
+                                    </FormGroup>
                                     <FormGroup>
                                         <Label for="team_detail">팀 소개</Label>
                                         <Input type="textarea" name="team_detail" id="team_detail" placeholder="여기는 props로 현재 팀소개를 미리 보여줄 부분임" />
