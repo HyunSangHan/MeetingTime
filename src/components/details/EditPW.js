@@ -7,7 +7,7 @@ class EditPW extends Component {
 
     render() {
         return (
-            <div className={"pc-none"}>
+            <div>
                 <Form>
                     <div className={"font-3 mb-3"}><b>비밀번호 변경</b></div>
                     <FormGroup>

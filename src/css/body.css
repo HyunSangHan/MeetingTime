@@ -14,6 +14,10 @@
         padding-top: 10vh;
     }
 
+    .offset-down-mobile-only {
+        margin-top: 10vh;
+    }
+
     .up-bg {
         background-color: #4C4C4C;
         height: 45vh;
@@ -140,6 +144,11 @@
 
 @media(min-width: 768px){ /*PC*/
     .offset-down {
+        margin-top: 80px;
+    }
+
+    .offset-down-mobile-only {
+        height: 100%;
     }
 
     .up-bg {
@@ -264,4 +273,5 @@
         font-weight: bold;
         cursor: pointer;
     }
+
 }

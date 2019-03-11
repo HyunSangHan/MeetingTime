@@ -13,13 +13,15 @@ class Profile extends Component {
         return (
             <div>
                 <Header title="팀 프로필 수정"/>
-                <Container className={"offset-down"}>
+                <div className={"offset-down"}>
+                    <Container>
                     <Row>
                         <Col>
-                            <div className={"mt-4"}>
+                            <div className={"mt-4 flex-j-center"}>
                                 <EditPW/>
                                 <Form>
-                                    <div className={"font-3 mt-5 mb-3 pc-none"}><b>미팅 정보 변경</b></div>
+                                    <div>
+                                    <div className={"font-3 mt-5 mb-3"}><b>미팅 정보 변경</b></div>
                                     <FormGroup>
                                         <Label for="img">프로필 사진</Label>
                                         <CustomInput className={"base-box"} type="file" name="img" id="img" />
@@ -32,6 +34,8 @@ class Profile extends Component {
                                         <Label for="nickname">닉네임</Label>
                                         <Input type="text" name="nickname" id="nickname" placeholder="여기는 props로 현재 닉네임을 미리 보여줄 부분임" />
                                     </FormGroup>
+                                    </div>
+                                    <div>
                                     <FormGroup>
                                         <Label for="company">직장명</Label>
                                         <Input type="select" name="company" id="company">
@@ -62,6 +66,7 @@ class Profile extends Component {
                                         <Label for="team_detail">팀 소개</Label>
                                         <Input type="textarea" name="team_detail" id="team_detail" placeholder="여기는 props로 현재 팀소개를 미리 보여줄 부분임" />
                                     </FormGroup>
+                                    </div>
                                     <Button>반영하기</Button>
                                 </Form>
                                 <div className={"App font-grey font-2 mt-2 hover deco-none"}>
@@ -70,8 +75,9 @@ class Profile extends Component {
                             </div>
                         </Col>
                     </Row>
-                    <FooterScrollable/>
-                </Container>
+                    </Container>
+                        <FooterScrollable/>
+                </div>
             </div>
         );
     }

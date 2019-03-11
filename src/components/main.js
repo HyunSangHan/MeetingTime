@@ -9,6 +9,7 @@ import JoinedPopup from "./popups/JoinedPopup";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import Footer from "./Footer";
 import Profile from "./details/Profile";
+import Heart from "./details/Heart";
 
 class Main extends Component {
     // constructor(props){
@@ -17,7 +18,7 @@ class Main extends Component {
 
     render() {
         return (
-            <div>
+            <div className={"frame"}>
 
 {/*팝업들*/}
                 {this.props.is_copied &&
@@ -157,9 +158,17 @@ class Main extends Component {
                 </div>
 {/*PC전용*/}
                 <div className={"mobile-none"}>
-                    <Profile/>
+                    <Container>
+                        <Row>
+                            <Col md={6} className={"App"}>
+                                d
+                            </Col>
+                            <Col md={6} className={"App"}>
+                                <Heart/>
+                            </Col>
+                        </Row>
+                    </Container>
                 </div>
-
                 <Footer/>
             </div>
         );
