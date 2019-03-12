@@ -8,7 +8,6 @@ import CopiedPopup from "./popups/CopiedPopup";
 import JoinedPopup from "./popups/JoinedPopup";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import Footer from "./Footer";
-import Profile from "./details/Profile";
 import Heart from "./details/Heart";
 
 class Main extends Component {
@@ -72,33 +71,32 @@ class Main extends Component {
                     </Container>
                 </div>
 {/*모바일 전용*/}
-                <div className="pc-none down-bg">
-                        <div className={"profile"}>
-                            <Container>
-                                <Link to="/profile">
-                                <Row className={"align-center deco-none"}>
-                                    <Col xs={3}>
-                                        <div className={"img-my-circle"}>
-                                            {/*img 태그와 props 들어갈 부분*/}
-                                        </div>
-                                    </Col>
-                                    <Col xs={7} className={"align-left"}>
-                                        <div className={"font-3 ml-1 font-black"}>
-                                            <b>{this.props.user.nickname}</b>
-                                        </div>
-                                        <div className={"font-1 font-grey mt-2 ml-1"}>
-                                            {this.props.user.company}
-                                        </div>
-                                    </Col>
-                                    <Col xs={2} className={"h17vh flex-j-start"}>
-                                        <MaterialIcon icon="arrow_forward_ios" size="23x" color="#f0f0f0"/>
-                                    </Col>
+                <div className="down-bg pc-max-width">
+                    <div className={"profile"}>
+                        <Container>
+                            <Link to="/profile">
+                            <Row className={"align-center deco-none"}>
+                                <Col xs={3}>
+                                    <div className={"img-my-circle"}>
+                                        {/*img 태그와 props 들어갈 부분*/}
+                                    </div>
+                                </Col>
+                                <Col xs={7} className={"align-left"}>
+                                    <div className={"font-3 ml-1 font-black"}>
+                                        <b>{this.props.user.nickname}</b>
+                                    </div>
+                                    <div className={"font-1 font-grey mt-2 ml-1"}>
+                                        {this.props.user.company}
+                                    </div>
+                                </Col>
+                                <Col xs={2} className={"h17vh flex-j-start"}>
+                                    <MaterialIcon icon="arrow_forward_ios" size="23x" color="#f0f0f0"/>
+                                </Col>
 
-                                </Row>
-                                </Link>
-
-                            </Container>
-                        </div>
+                            </Row>
+                            </Link>
+                        </Container>
+                    </div>
                     <div className={"heart"}>
                         <Container>
                             <Row className={"align-center"}>
@@ -157,18 +155,18 @@ class Main extends Component {
                     </div>
                 </div>
 {/*PC전용*/}
-                <div className={"mobile-none"}>
-                    <Container>
-                        <Row>
-                            <Col md={6} className={"App"}>
-                                d
-                            </Col>
-                            <Col md={6} className={"App"}>
-                                <Heart/>
-                            </Col>
-                        </Row>
-                    </Container>
-                </div>
+                {/*<div className={"mobile-none h50percent"}>*/}
+                    {/*<Container className={"h100percent"}>*/}
+                        {/*<Row className={"h100percent"}>*/}
+                            {/*<Col md={6} className={"App flex-center"}>*/}
+                                {/*d*/}
+                            {/*</Col>*/}
+                            {/*<Col md={6} className={"App flex-center"}>*/}
+                                {/*<Heart/>*/}
+                            {/*</Col>*/}
+                        {/*</Row>*/}
+                    {/*</Container>*/}
+                {/*</div>*/}
                 <Footer/>
             </div>
         );

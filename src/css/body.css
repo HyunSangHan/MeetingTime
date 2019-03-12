@@ -223,6 +223,7 @@
 
     .copy-pop {
         width: 90vw;
+        max-width: 600px;
         height: 20vh;
         background-color: #F0F0F0;
     }

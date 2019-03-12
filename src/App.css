@@ -14,6 +14,19 @@
   height: 100%;
 }
 
+.h50percent {
+  height: 50%;
+}
+
+.pc-max-width {
+  max-width: 80vh;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 h1 {
   font-weight: black !important;
 }

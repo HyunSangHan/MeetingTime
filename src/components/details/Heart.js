@@ -11,30 +11,30 @@ class Heart extends Component {
     render() {
         return (
             <div className={"App"}>
-                <div className={"pc-none"}>
+                <div className="offset-down">
                     <Header title="하트 충전하기"/>
                 </div>
                 <div className="offset-down-mobile-only">
                     <Container>
                         <Row className={"flex-center font-2"}>
-                            <Col xs={12} md={6}>
+                            <Col xs={12} md={12}>
                                 <div className={"heart-box flex-center mt-3"}>
                                     <MaterialIcon icon="favorite" size="18px" color="red"/>
                                     x 1k = 1,200원</div>
                             </Col>
-                            <Col xs={12} md={6}>
+                            <Col xs={12} md={12}>
                                 <div className={"heart-box flex-center"}>
                                     <MaterialIcon icon="favorite" size="18px" color="red"/>
                                     x 3k = 3,300원</div>
                             </Col>
                         </Row>
                         <Row className={"flex-center font-2"}>
-                            <Col xs={12} md={6}>
+                            <Col xs={12} md={12}>
                                 <div className={"heart-box flex-center"}>
                                     <MaterialIcon icon="favorite" size="18px" color="red"/>
                                     x 5k = 5,300원</div>
                             </Col>
-                            <Col xs={12} md={6}>
+                            <Col xs={12} md={12}>
                                 <div className={"heart-box flex-center"}>
                                     <MaterialIcon icon="favorite" size="18px" color="red"/>
                                     x 10k = 9,900원</div>
