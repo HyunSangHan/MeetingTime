@@ -11,21 +11,22 @@ class Chat extends Component {
     render() {
         return (
             <div className={"App"}>
-                <Header title="지난 대화"/>
-                <div className="offset-down">
+                <div className="offset-down-mobile-only pc-none">
+                    <Header title="지난 대화"/>
+                </div>
+                <div className="offset-down-mobile-only mt-1 mb-1">
                     <Container>
-                        <Row className={"flex-center font-2"}>
-                            <Col>
-                               <div className={"chat-box flex-center mt-3"}>
+                        <div className={"flex-center font-2"}>
+                               <div className={"chat-box flex-center"}>
                                    <Col xs={3}>
                                        <div className={"img-your-circle"}>
                                        </div>
                                    </Col>
                                    <Col xs={7} className={"align-left"}>
-                                       <div className={"font-3 ml-1"}>
+                                       <div className={"font-2 ml-1"}>
                                           {this.props.ex_user.nickname}
                                        </div>
-                                       <div className={"font-1 font-grey mt-1 ml-1"}>
+                                       <div className={"font-05 font-grey mt-1 ml-1"}>
                                            {this.props.ex_user.company}
                                        </div>
                                    </Col>
@@ -33,8 +34,7 @@ class Chat extends Component {
                                        <MaterialIcon icon="arrow_forward_ios" size="23x" color="#f0f0f0"/>
                                    </Col>
                                 </div>
-                            </Col>
-                        </Row>
+                        </div>
                     </Container>
                 </div>
                 <Footer/>

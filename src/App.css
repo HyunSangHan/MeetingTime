@@ -367,6 +367,10 @@ h4 {
   color: black;
 }
 
+.font-bolder {
+  font-weight: bolder;
+}
+
 .opacity05 {
   opacity: 0.5;
 }
@@ -443,4 +447,26 @@ h4 {
   .pc-none {
     display: none !important;
   }
+
+  .frame-half {
+    width: 50vw;
+    height: 100vh;
+    z-index: 0;
+  }
+
+  .font-3 {
+    font-family: "Apple SD Gothic Neo";
+    font-size: 1.6rem !important;
+  }
+
+  .font-1 {
+    font-family: "Apple SD Gothic Neo";
+    font-size: 1.1rem !important;
+  }
+
+  .font-05 {
+    font-family: "Apple SD Gothic Neo";
+    font-size: 1.0rem !important;
+  }
+
 }

@@ -50,6 +50,7 @@ class App extends Component {
                                {...props}
                                info={this.state.info}
                                user={this.state.user}
+                               ex_user={this.state.ex_user}
                                is_joined={this.props.is_joined}
                                is_copied={this.props.is_copied}
                                offPopup={this.props.offPopup}
