@@ -118,7 +118,6 @@ class Main extends Component {
                                             정보 수정하기 >
                                         </div>
                                     </Col>
-
                                 </Row>
                                 </Link>
                             </Container>
