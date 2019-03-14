@@ -153,42 +153,42 @@ end
 
 
 
-post '/signin_process' do
-    user = User.where("email" => params["email"]).first
+# post '/signin_process' do
+#     user = User.where("email" => params["email"]).first
 
-    if !user.nil? and BCrypt::Password.new(user.password) == params["password"]
-        session["user_id"] = user.id
-        redirect '/main'
-    else
-        redirect back
-    end
-end
+#     if !user.nil? and BCrypt::Password.new(user.password) == params["password"]
+#         session["user_id"] = user.id
+#         redirect '/main'
+#     else
+#         redirect back
+#     end
+# end
 
-post '/signup_process' do
-    if params["password"] != params["retype_password"]
-        redirect back
-    else
-        user = User.new
-        user.nickname = params["nickname"]
-        user.email = params["email"]
-        user.password = BCrypt::Password.create(params["password"])
-        user.phone_number = params["phone_number"]
-        if params["gender"] == "F"
-            user.is_male = false
-        else
-            user.is_male = true
-        end
+# post '/signup_process' do
+#     if params["password"] != params["retype_password"]
+#         redirect back
+#     else
+#         user = User.new
+#         user.nickname = params["nickname"]
+#         user.email = params["email"]
+#         user.password = BCrypt::Password.create(params["password"])
+#         user.phone_number = params["phone_number"]
+#         if params["gender"] == "F"
+#             user.is_male = false
+#         else
+#             user.is_male = true
+#         end
 
-        user.profile_img = params["profile_img"]
-        user.location = params["location"]
-        user.team_detail = params["team_detail"]
-        user.recommendation_code = params["recommendation_code"]
-        user.save
+#         user.profile_img = params["profile_img"]
+#         user.location = params["location"]
+#         user.team_detail = params["team_detail"]
+#         user.recommendation_code = params["recommendation_code"]
+#         user.save
 
-        session["user_id"] = user.id
-        redirect '/'
-    end 
-end
+#         session["user_id"] = user.id
+#         redirect '/'
+#     end 
+# end
 
 
 # get '/sign_up' do
@@ -224,19 +224,19 @@ end
 #     end
 # end
     
-post '/edit_profile' do 
-    user = User.find(session["user_id"])
-    user.email = params["email"]
-    user.password = params["password"] #need to logic for check password
-    user.nickname = params["nickname"]
-    user.location = params["location"]
-    user.phone_number = params["phone_number"]
-    user.team_detail = params["team_detail"]
-    # user.team_datail = params["team_detail"] #need to edit
-    user.save #need company.save?
+# post '/edit_profile' do 
+#     user = User.find(session["user_id"])
+#     user.email = params["email"]
+#     user.password = params["password"] #need to logic for check password
+#     user.nickname = params["nickname"]
+#     user.location = params["location"]
+#     user.phone_number = params["phone_number"]
+#     user.team_detail = params["team_detail"]
+#     # user.team_datail = params["team_detail"] #need to edit
+#     user.save #need company.save?
 
-    redirect '/profile'
-  end  
+#     redirect '/profile'
+#   end  
 
 # get '/buy_heart' do
 #     if session["user_id"].nil?
