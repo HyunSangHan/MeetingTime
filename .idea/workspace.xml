@@ -1,38 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7253765f-8fee-4065-a9bd-912514991749" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Rakefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config.ru" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/database.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/dev.sqlite3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/migrate/20190115013250_create_users_table.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/migrate/20190116104753_create_joined_users_table.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/migrate/20190116105410_create_companies_table.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/migrate/20190116105427_create_heart_payments_table.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/migrate/20190116105435_create_cash_payments_table.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/migrate/20190116105510_create_matched_histories_table.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/migrate/20190116105522_create_meeting_details_table.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/schema.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/seeds.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db_class.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dev.sqlite3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/function.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/migrate/20190115013250_create_users_table.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/migrate/20190116104753_create_joined_users_table.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/migrate/20190116105410_create_companies_table.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/migrate/20190116105427_create_heart_payments_table.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/migrate/20190116105435_create_cash_payments_table.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/migrate/20190116105510_create_matched_histories_table.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/migrate/20190116105522_create_meeting_details_table.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/schema.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/seeds.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="7253765f-8fee-4065-a9bd-912514991749" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -47,7 +16,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="690">
+            <state relative-caret-position="444">
               <caret line="46" column="18" lean-forward="true" selection-start-line="46" selection-start-column="18" selection-end-line="46" selection-end-column="18" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
@@ -157,9 +126,10 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds">
+    <option name="x" value="696" />
     <option name="y" value="23" />
-    <option name="width" value="881" />
+    <option name="width" value="740" />
     <option name="height" value="834" />
   </component>
   <component name="ProjectView">
@@ -285,12 +255,12 @@
       <updated>1551226038753</updated>
       <workItem from="1551226040222" duration="9450000" />
       <workItem from="1551361596188" duration="22928000" />
-      <workItem from="1551555328433" duration="51493000" />
+      <workItem from="1551555328433" duration="51663000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="83871000" />
+    <option name="totallyTimeSpent" value="84041000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -604,7 +574,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
+        <state relative-caret-position="444">
           <caret line="46" column="18" lean-forward="true" selection-start-line="46" selection-start-column="18" selection-end-line="46" selection-end-column="18" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
