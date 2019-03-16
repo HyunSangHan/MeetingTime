@@ -80,6 +80,7 @@ end
 
 get '/assign_first_score' do
 # MUST check if all cases are included
+# "ranking"????????
     meeting = MeetingDetail.where("meeting_date > ?", Time.now().to_datetime)
                             .where("starting_date < ?", Time.now().to_datetime).take
     all_users = meeting.joined_users
@@ -116,6 +117,10 @@ get '/get_my_partner' do
     #     redirect '/'
     # else
     user = User.find(session["user_id"])
+
+    ##### Important!!!!
+    #if ########### have to edit about 'last' meeting, and run this 'if' meeting was finished only 
+
     meeting = MeetingDetail.where("meeting_date > ?", Time.now().to_datetime)
                             .where("starting_date < ?", Time.now().to_datetime).take
 
@@ -136,7 +141,6 @@ get '/get_my_partner' do
         xx.save
     end
 
-    #if ########### have to edit about 'last' meeting, and run this 'if' meeting was finished only 
     if meeting.cutline >= my.ranking
         if my.is_male?
             my_partner = female_users.where("ranking" => my.ranking).take
