@@ -3,16 +3,16 @@ require 'bcrypt'
 require './db_class.rb'
 
 MeetingDetail.create( #1
-    "starting_date"=>DateTime.new(2019,1,24,10),
-    "mid_date"=>DateTime.new(2019,1,25,10),
-    "meeting_date"=>DateTime.new(2019,2,25,22),
+    "starting_date"=>DateTime.new(2019,2,24,10),
+    "mid_date"=>DateTime.new(2019,2,25,10),
+    "meeting_date"=>DateTime.new(2019,3,25,22),
     "location"=>"Gangnam",
     "cutline"=>"0") #will be editted
 
 MeetingDetail.create( #2
-    "starting_date"=>DateTime.new(2019,2,24,10),
-    "mid_date"=>DateTime.new(2019,2,25,10),
-    "meeting_date"=>DateTime.new(2019,3,25,22),
+    "starting_date"=>DateTime.new(2019,3,24,10),
+    "mid_date"=>DateTime.new(2019,3,25,10),
+    "meeting_date"=>DateTime.new(2019,4,25,22),
     "location"=>"Hongdae",
     "cutline"=>"0") #will be editted
 
