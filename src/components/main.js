@@ -182,7 +182,7 @@ class Main extends Component {
                                         </Col>
                                         <Col md={3} lg={3} className={"h17vh flex-j-end"}>
                                             <Link to="/profile">
-                                                <div className={"font-black deco-none"}>
+                                                <div className={"font-grey deco-none"}>
                                                     수정하기 >
                                                 </div>
                                             </Link>
@@ -207,7 +207,7 @@ class Main extends Component {
                                             <div className={"font-05 ml-1 mt-2"}>여자사람친구를 초대해주세요.</div>
                                             <div className={"font-05 ml-1"}>하트 2개를 드려요!</div>
                                         </Col>
-                                        <Col xs={3} className={"h8vh flex-center"}>
+                                        <Col xs={3} className={"h8vh flex-j-end"}>
                                             <CopyToClipboard text={this.props.user.recommendation_code}>
                                                 <div className={"copy-button deco-none flex-center"} onClick={this.props.onCopiedPopup}>
                                                     <MaterialIcon icon="file_copy" size="25px" color="lightgrey"/>

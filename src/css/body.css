@@ -10,11 +10,11 @@
 
 @media(max-width: 767px){ /*Mobile & Tablet*/
     .offset-down {
-        padding-top: 10vh;
+        padding-top: 60px;
     }
 
     .offset-down-mobile-only {
-        margin-top: 11vh;
+        margin-top: 1vh;
     }
 
     .up-bg {

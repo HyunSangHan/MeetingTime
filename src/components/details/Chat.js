@@ -11,7 +11,7 @@ class Chat extends Component {
     render() {
         return (
             <div className={"App"}>
-                <div className="offset-down-mobile-only pc-none">
+                <div className="offset-down pc-none">
                     <Header title="지난 대화"/>
                 </div>
                 <div className="offset-down-mobile-only mt-1 mb-1">
