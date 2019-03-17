@@ -20,24 +20,24 @@ class Heart extends Component {
                             <Col xs={12} md={6}>
                                 <div className={"heart-box flex-center mt-3"}>
                                     <MaterialIcon icon="favorite" size="18px" color="red"/>
-                                    x 1k = 1,200원</div>
+                                    x 1 = 1,200원</div>
                             </Col>
                             <Col xs={12} md={6}>
                                 <div className={"heart-box flex-center"}>
                                     <MaterialIcon icon="favorite" size="18px" color="red"/>
-                                    x 3k = 3,300원</div>
+                                    x 3 = 3,300원</div>
                             </Col>
                         </Row>
                         <Row className={"flex-center font-2"}>
                             <Col xs={12} md={6}>
                                 <div className={"heart-box flex-center"}>
                                     <MaterialIcon icon="favorite" size="18px" color="red"/>
-                                    x 5k = 5,300원</div>
+                                    x 5 = 5,300원</div>
                             </Col>
                             <Col xs={12} md={6}>
                                 <div className={"heart-box flex-center"}>
                                     <MaterialIcon icon="favorite" size="18px" color="red"/>
-                                    x 10k = 9,900원</div>
+                                    x 10 = 9,900원</div>
                             </Col>
                         </Row>
                     </Container>

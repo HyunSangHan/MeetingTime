@@ -10,6 +10,9 @@ import Result from "./components/details/Result";
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import * as actions from './actions';
 import { connect } from 'react-redux';
+// import axios from 'axios';
+// Have to install axios!!!!!!!!!!!!!!!!!!!!
+
 
 class App extends Component {
 
@@ -38,9 +41,39 @@ class App extends Component {
                 company: "data_상대회사명",
             },
         }
+        // this.getUserInfo();
     }
 
-  render() {
+    // getUserInfo = () => () => {
+    //     let self = this;
+    //     axios.get('http://localhost:9292/get_user_info',
+    //         {
+    //             params : {
+    //                 //someting necessary??
+    //             }
+    //         })
+    //         .then(function(response){
+    //             // let tourList: Tour[] = [];
+    //             // for(let i=0; i<10; i++) {
+    //             //     let tourEach = new Tour(response.data.response.body.items.item[i]); //[i]
+    //             //     tourList.push(tourEach);
+    //                 console.log(response);
+    //             // }
+    //             // self.props.onTour(tourList);
+    //             // self.setState({
+    //             //         // tmp: response.data.response.body.items.item[0].firstimage
+    //             //
+    //             //         // ans3: _tmp,
+    //             //         loading_tour: true,
+    //             //     }
+    //             // );
+    //         })
+    // }
+
+
+
+
+    render() {
     return (
         <BrowserRouter>
             <div className="frame">

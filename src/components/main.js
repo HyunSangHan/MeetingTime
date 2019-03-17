@@ -24,28 +24,28 @@ class Main extends Component {
                 {this.props.is_copied &&
                 <div className={"App"}>
                     <div className={"flex-center"}>
-                    <div className={"fix minus-height z-2"}>
+                    <div className={"fix minus-height z-4"}>
                         <CopiedPopup user={this.props.user}
                                      offPopup={this.props.offPopup}/>
                     </div>
                     </div>
-                    <div className={"frame-dark fix z-1"}></div>
+                    <div className={"frame-dark fix z-3"}></div>
                 </div>
                 }
                 {this.props.is_joined &&
                 <div className={"App"}>
                     <div className={"flex-center"}>
-                        <div className={"fix minus-height z-2"}>
+                        <div className={"fix minus-height z-4"}>
                             <JoinedPopup user={this.props.user}
                                          offPopup={this.props.offPopup}/>
                         </div>
                     </div>
-                    <div className={"frame-dark fix z-1"}></div>
+                    <div className={"frame-dark fix z-3"}></div>
                 </div>
                 }
 
 
-{/*PC전용*/}
+{/*PC전용 1 */}
                 <div className={"mobile-none frame-half abs-right z-2"}>
                     <Container>
                         <Container className={"h100percent"}>
@@ -63,7 +63,12 @@ class Main extends Component {
 
 {/*PC와 모바일 공통*/}
                 <div className="up-bg flex-center frame-half">
-                    <Container>
+                    <div className={"up-bg-color fix z-1"}>
+                    </div>
+                    {/*<div className={"up-bg-color img-prf fix z-0"}>*/}
+                        {/*<img src = "../images/exampleProfile.jpeg" alt={"profile-large-img"}/>*/}
+                    {/*</div>*/}
+                    <Container className={"z-2"}>
                         <Row className={"App"}>
                             <Col xs={12}>
                                 <div className={"font-big font-white mt-4"}>
@@ -88,11 +93,11 @@ class Main extends Component {
                         </Row>
                     </Container>
                 </div>
-                {/*모바일 전용*/}
+{/*모바일 전용*/}
 
-                <div className="down-bg frame-half">
-                        <div className={"profile"}>
-                            <Container>
+                <div className="down-bg frame-half z-2">
+                        <div className={"profile bg-white pc-none"}>
+                            <Container className={"bg-white"}>
                                 <Link to="/profile">
                                 <Row className={"align-center deco-none"}>
                                     <Col xs={3} md={3}>
@@ -113,9 +118,6 @@ class Main extends Component {
                                     <Col xs={2} md={3} className={"h17vh flex-j-start"}>
                                         <div className={"pc-none"}>
                                             <MaterialIcon icon="arrow_forward_ios" size="23x" color="#f0f0f0"/>
-                                        </div>
-                                        <div className={"mobile-none font-black deco-none"}>
-                                            정보 수정하기 >
                                         </div>
                                     </Col>
                                 </Row>
@@ -157,26 +159,64 @@ class Main extends Component {
                             </Container>
                         </div>
 
-                        <div className={"invite"}>
+{/*PC 전용 2 */}
+
+                    <div className={"profile mobile-none z-2"}>
+                        <div className={"pc-max-width z-2"}>
                             <Container>
-                                <Row>
-                                    <Col xs={9} className={"align-left"}>
-                                        <div className={"font-1 ml-1"}>
-                                            <b>친구 초대 </b>
-                                            <font color="#808080" size="10px">(추천인코드: <b>{this.props.user.recommendation_code}</b>)</font>
+                                    <Row className={"align-center deco-none z-2"}>
+                                        <Col md={4} lg={3}>
+                                            <div className={"img-my-circle"}>
+                                                {/*img 태그와 props 들어갈 부분*/}
                                             </div>
-                                        <div className={"font-05 ml-1 mt-2"}>여자사람친구를 초대해주세요.</div>
-                                        <div className={"font-05 ml-1"}>하트 1,000개를 드려요!</div>
-                                    </Col>
-                                    <Col xs={3} className={"h8vh flex-center"}>
-                                        <CopyToClipboard text={this.props.user.recommendation_code}>
-                                            <div className={"copy-button deco-none flex-center"} onClick={this.props.onCopiedPopup}>
-                                                <MaterialIcon icon="file_copy" size="25px" color="lightgrey"/>
+                                        </Col>
+                                        <Col md={5} lg={6} className={"align-left"}>
+                                            <div className={"ml-name"}>
+                                                <div className={"font-3 font-black font-bolder"}>
+                                                    {this.props.user.nickname}
+                                                </div>
+                                                <div className={"font-1 font-grey mt-2"}>
+                                                    {this.props.user.company}
+                                                </div>
                                             </div>
-                                        </CopyToClipboard>
-                                    </Col>
-                                </Row>
+                                        </Col>
+                                        <Col md={3} lg={3} className={"h17vh flex-j-end"}>
+                                            <Link to="/profile">
+                                                <div className={"font-black deco-none"}>
+                                                    수정하기 >
+                                                </div>
+                                            </Link>
+                                        </Col>
+                                    </Row>
                             </Container>
+                        </div>
+                    </div>
+
+
+
+
+                        <div className={"invite"}>
+                            <div className={"pc-max-width"}>
+                                <Container>
+                                    <Row>
+                                        <Col xs={9} className={"align-left"}>
+                                            <div className={"font-1 ml-1"}>
+                                                <b>친구 초대 </b>
+                                                <font color="#808080" size="10px">(추천인코드: <b>{this.props.user.recommendation_code}</b>)</font>
+                                                </div>
+                                            <div className={"font-05 ml-1 mt-2"}>여자사람친구를 초대해주세요.</div>
+                                            <div className={"font-05 ml-1"}>하트 2개를 드려요!</div>
+                                        </Col>
+                                        <Col xs={3} className={"h8vh flex-center"}>
+                                            <CopyToClipboard text={this.props.user.recommendation_code}>
+                                                <div className={"copy-button deco-none flex-center"} onClick={this.props.onCopiedPopup}>
+                                                    <MaterialIcon icon="file_copy" size="25px" color="lightgrey"/>
+                                                </div>
+                                            </CopyToClipboard>
+                                        </Col>
+                                    </Row>
+                                </Container>
+                            </div>
                         </div>
                     </div>
 

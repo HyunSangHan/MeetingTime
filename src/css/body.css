@@ -18,8 +18,14 @@
     }
 
     .up-bg {
-        background-color: #4C4C4C;
         height: 45vh;
+    }
+
+    .up-bg-color {
+        background-color: #4C4C4C;
+        width: 100%;
+        height: 45%;
+        /*opacity: 0.77;*/
     }
 
     .down-bg {
@@ -97,6 +103,11 @@
         margin-top: 50vh;
     }
 
+    .profile-img {
+        width: 100%;
+        height: auto;
+    }
+
     .img-my-circle {
         width: 80px;
         height: 80px;
@@ -151,8 +162,14 @@
     }
 
     .up-bg {
-        background-color: #4C4C4C;
         height: 45vh;
+    }
+
+    .up-bg-color {
+        background-color: #4C4C4C;
+        width: 50%;
+        height: 45%;
+        /*opacity: 0.77;*/
     }
 
     .down-bg {
@@ -230,6 +247,12 @@
     .minus-height {
         margin-top: 50vh;
     }
+
+    /*.img-prf {*/
+        /*width: 50%;*/
+        /*height: auto;*/
+        /*left: 0;*/
+    /*}*/
 
     .img-my-circle {
         width: 120px;

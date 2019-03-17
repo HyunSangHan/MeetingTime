@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.bg-white {
+  background-color: white;
+}
+
 .base-box {
   width: 100%;
   height: auto;
@@ -18,14 +22,6 @@
   height: 50%;
 }
 
-.pc-max-width {
-  max-width: 80vh;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-}
 
 h1 {
   font-weight: black !important;
@@ -107,6 +103,10 @@ h4 {
 
 .align-center {
   align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
 }
 
 .fix {
@@ -441,11 +441,23 @@ h4 {
   .mobile-none {
     display: none !important;
   }
+
+  .pc-max-width {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 @media(min-width: 768px){ /*PC*/
   .pc-none {
     display: none !important;
+  }
+
+  .pc-max-width {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .frame-half {
