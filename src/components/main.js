@@ -24,12 +24,12 @@ class Main extends Component {
                 {this.props.is_copied &&
                 <div className={"App"}>
                     <div className={"flex-center"}>
-                    <div className={"fix minus-height z-4"}>
-                        <CopiedPopup user={this.props.user}
-                                     offPopup={this.props.offPopup}/>
+                        <div className={"fix minus-height z-4"}>
+                            <CopiedPopup user={this.props.user}
+                                         offPopup={this.props.offPopup}/>
+                        </div>
                     </div>
-                    </div>
-                    <div className={"frame-dark fix z-3"}></div>
+                    <div className={"frame-dark fix z-3"}/>
                 </div>
                 }
                 {this.props.is_joined &&
@@ -40,13 +40,13 @@ class Main extends Component {
                                          offPopup={this.props.offPopup}/>
                         </div>
                     </div>
-                    <div className={"frame-dark fix z-3"}></div>
+                    <div className={"frame-dark fix z-3"}/>
                 </div>
                 }
 
 
 {/*PC전용 1 */}
-                <div className={"mobile-none frame-half abs-right z-2"}>
+                <div className={"mobile-none frame-half abs-right"}>
                     <Container>
                         <Container className={"h100percent"}>
                             <div className={"font-3 font-grey font-bolder mt-4 ml-3"}>
@@ -63,12 +63,11 @@ class Main extends Component {
 
 {/*PC와 모바일 공통*/}
                 <div className="up-bg flex-center frame-half">
-                    <div className={"up-bg-color fix z-1"}>
+                    <div className={"fix flex-center frame-half"}>
+                        <img src={this.props.user.img_url} className={"bg-under-img"} alt={"profile-large-img"}/>
                     </div>
-                    {/*<div className={"up-bg-color img-prf fix z-0"}>*/}
-                        {/*<img src = "../images/exampleProfile.jpeg" alt={"profile-large-img"}/>*/}
-                    {/*</div>*/}
-                    <Container className={"z-2"}>
+                    <div className={"up-bg-color fix"}/>
+                    <Container>
                         <Row className={"App"}>
                             <Col xs={12}>
                                 <div className={"font-big font-white mt-4"}>
@@ -93,11 +92,14 @@ class Main extends Component {
                         </Row>
                     </Container>
                 </div>
-{/*모바일 전용*/}
 
-                <div className="down-bg frame-half z-2">
-                        <div className={"profile bg-white pc-none"}>
-                            <Container className={"bg-white"}>
+
+                <div className="down-bg frame-half bg-white z-2">
+{/*모바일 전용*/}
+                    <div className={"profile bg-white pc-none"}>
+                        <div className="profile h100percent w50percent bg-white fix z-1"/>
+                        <div className={"pc-max-width bg-white z-2"}>
+                            <Container>
                                 <Link to="/profile">
                                 <Row className={"align-center deco-none"}>
                                     <Col xs={3} md={3}>
@@ -124,45 +126,47 @@ class Main extends Component {
                                 </Link>
                             </Container>
                         </div>
-                        <div className={"heart pc-none"}>
-                            <Container>
-                                <Row className={"align-center"}>
-                                    <Col xs={8} className={"align-left"}>
-                                        <div className={"font-05 opacity08 ml-1"}>내 하트 <b>{this.props.user.current_heart}</b>개</div>
-                                    </Col>
-                                    <Col xs={4} className={"align-right align-center"}>
-                                        <Link to="/heart">
-                                            <div className={"heart-button deco-none flex-center font-05"}>
-                                                <MaterialIcon icon="favorite" size="18px" color="red"/>
-                                                <div className={"ml-1"}>충전하기</div>
-                                            </div>
-                                        </Link>
-                                    </Col>
-                                </Row>
-                            </Container>
-                        </div>
-                        <div className={"chat pc-none"}>
-                            <Container>
-                                <Row className={"align-center"}>
-                                    <Col xs={8} className={"align-left"}>
-                                        <div className={"font-05 opacity08 ml-1"}>지난 대화 <b>{this.props.user.chat}</b>개</div>
-                                    </Col>
-                                    <Col xs={4} className={"align-right align-center"}>
-                                        <Link to="/chat">
-                                            <div className={"heart-button deco-none flex-center font-05"}>
-                                                <MaterialIcon icon="forum" size="18px" color="grey"/>
-                                                <div className={"ml-1"}>대화하기</div>
-                                            </div>
-                                        </Link>
-                                    </Col>
-                                </Row>
-                            </Container>
-                        </div>
+                    </div>
+                    <div className={"heart pc-none"}>
+                        <Container>
+                            <Row className={"align-center"}>
+                                <Col xs={8} className={"align-left"}>
+                                    <div className={"font-05 opacity08 ml-1"}>내 하트 <b>{this.props.user.current_heart}</b>개</div>
+                                </Col>
+                                <Col xs={4} className={"align-right align-center"}>
+                                    <Link to="/heart">
+                                        <div className={"heart-button deco-none flex-center font-05"}>
+                                            <MaterialIcon icon="favorite" size="18px" color="red"/>
+                                            <div className={"ml-1"}>충전하기</div>
+                                        </div>
+                                    </Link>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </div>
+                    <div className={"chat pc-none"}>
+                        <Container>
+                            <Row className={"align-center"}>
+                                <Col xs={8} className={"align-left"}>
+                                    <div className={"font-05 opacity08 ml-1"}>지난 대화 <b>{this.props.user.chat}</b>개</div>
+                                </Col>
+                                <Col xs={4} className={"align-right align-center"}>
+                                    <Link to="/chat">
+                                        <div className={"heart-button deco-none flex-center font-05"}>
+                                            <MaterialIcon icon="forum" size="18px" color="grey"/>
+                                            <div className={"ml-1"}>대화하기</div>
+                                        </div>
+                                    </Link>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </div>
 
 {/*PC 전용 2 */}
 
                     <div className={"profile mobile-none z-2"}>
-                        <div className={"pc-max-width z-2"}>
+                        <div className="profile h100percent w50percent bg-white fix z-1"/>
+                        <div className={"pc-max-width bg-white z-2"}>
                             <Container>
                                     <Row className={"align-center deco-none z-2"}>
                                         <Col md={4} lg={3}>
@@ -192,33 +196,30 @@ class Main extends Component {
                         </div>
                     </div>
 
-
-
-
-                        <div className={"invite"}>
-                            <div className={"pc-max-width"}>
-                                <Container>
-                                    <Row>
-                                        <Col xs={9} className={"align-left"}>
-                                            <div className={"font-1 ml-1"}>
-                                                <b>친구 초대 </b>
-                                                <font color="#808080" size="10px">(추천인코드: <b>{this.props.user.recommendation_code}</b>)</font>
-                                                </div>
-                                            <div className={"font-05 ml-1 mt-2"}>여자사람친구를 초대해주세요.</div>
-                                            <div className={"font-05 ml-1"}>하트 2개를 드려요!</div>
-                                        </Col>
-                                        <Col xs={3} className={"h8vh flex-j-end"}>
-                                            <CopyToClipboard text={this.props.user.recommendation_code}>
-                                                <div className={"copy-button deco-none flex-center"} onClick={this.props.onCopiedPopup}>
-                                                    <MaterialIcon icon="file_copy" size="25px" color="lightgrey"/>
-                                                </div>
-                                            </CopyToClipboard>
-                                        </Col>
-                                    </Row>
-                                </Container>
-                            </div>
+                    <div className={"invite"}>
+                        <div className={"pc-max-width"}>
+                            <Container>
+                                <Row>
+                                    <Col xs={9} className={"align-left"}>
+                                        <div className={"font-1 ml-1"}>
+                                            <b>친구 초대 </b>
+                                            <font color="#808080" size="10px">(추천인코드: <b>{this.props.user.recommendation_code}</b>)</font>
+                                            </div>
+                                        <div className={"font-05 ml-1 mt-2"}>여자사람친구를 초대해주세요.</div>
+                                        <div className={"font-05 ml-1"}>하트 2개를 드려요!</div>
+                                    </Col>
+                                    <Col xs={3} className={"h8vh flex-j-end"}>
+                                        <CopyToClipboard text={this.props.user.recommendation_code}>
+                                            <div className={"copy-button deco-none flex-center"} onClick={this.props.onCopiedPopup}>
+                                                <MaterialIcon icon="file_copy" size="25px" color="lightgrey"/>
+                                            </div>
+                                        </CopyToClipboard>
+                                    </Col>
+                                </Row>
+                            </Container>
                         </div>
                     </div>
+                </div>
 
                 <Footer/>
             </div>

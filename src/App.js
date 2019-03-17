@@ -28,6 +28,7 @@ class App extends Component {
             user: {
                 nickname: "data_닉네임",
                 company: "data_회사명",
+                img_url: "../images/exampleProfile.jpeg",
                 recommendation_code: "data_코드",
                 current_heart: "data_하트개수",
                 chat: "data_대화방개수",

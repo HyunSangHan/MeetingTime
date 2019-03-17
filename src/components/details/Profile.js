@@ -26,8 +26,8 @@ class Profile extends Component {
                                         <Label for="img">프로필 사진</Label>
                                         <CustomInput className={"base-box"} type="file" name="img" id="img" />
                                         <FormText color="muted">
-                                            가로와 세로 길이가 같은 정방형으로 업로드해주세요.<br/>
-                                            팀 전체 얼굴이 잘 보이는 사진을 올려주세요.
+                                            가로가 더 긴 사진으로 업로드해주세요.<br/>
+                                            팀 전체 얼굴이 잘 보이는 사진으로요.
                                         </FormText>
                                     </FormGroup>
                                     <FormGroup>
