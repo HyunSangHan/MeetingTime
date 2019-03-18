@@ -93,8 +93,7 @@ class Main extends Component {
                     </Container>
                 </div>
 
-
-                <div className="down-bg frame-half bg-white z-2">
+                <div className="down-bg frame-half bg-white fix z-2">
 {/*모바일 전용*/}
                     <div className={"profile bg-white pc-none"}>
                         <div className="profile h100percent w50percent bg-white fix z-1"/>
@@ -127,10 +126,9 @@ class Main extends Component {
                             </Container>
                         </div>
                     </div>
-                    <div className={"heart pc-none z-2"}>
-                        <div className="heart h10percent w100percent bg-white fix z-1"/>
-                        <Container className={"z-2"}>
-                            <Row className={"align-center z-2"}>
+                    <div className={"heart pc-none"}>
+                        <Container>
+                            <Row className={"align-center"}>
                                 <Col xs={8} className={"align-left"}>
                                     <div className={"font-05 opacity08 ml-1"}>내 하트 <b>{this.props.user.current_heart}</b>개</div>
                                 </Col>
@@ -145,9 +143,8 @@ class Main extends Component {
                             </Row>
                         </Container>
                     </div>
-                    <div className={"chat pc-none z-2"}>
-                        <div className="chat h10percent w100percent bg-white fix z-1"/>
-                        <Container className={"z-2"}>
+                    <div className={"chat pc-none"}>
+                        <Container>
                             <Row className={"align-center"}>
                                 <Col xs={8} className={"align-left"}>
                                     <div className={"font-05 opacity08 ml-1"}>지난 대화 <b>{this.props.user.chat}</b>개</div>
@@ -167,8 +164,8 @@ class Main extends Component {
 {/*PC 전용 2 */}
 
                     <div className={"profile mobile-none z-2"}>
-                        <div className="profile h100percent w50percent bg-white fix z-1"/>
-                        <div className={"pc-max-width bg-white z-2"}>
+                        {/*<div className="profile h100percent w50percent bg-white fix z-1"/>*/}
+                        <div className={"pc-max-width z-2"}>
                             <Container>
                                     <Row className={"align-center deco-none z-2"}>
                                         <Col md={4} lg={3}>
@@ -199,10 +196,8 @@ class Main extends Component {
                     </div>
 
                     <div className={"invite"}>
-                        <div className="invite h100percent w50percent bg-white fix z-1 mobile-none"/>
-                        <div className="invite h100percent w100percent bg-white fix z-1 pc-none"/>
-                        <div className={"pc-max-width z-2"}>
-                            <Container className={"z-2"}>
+                        <div className={"pc-max-width"}>
+                            <Container>
                                 <Row>
                                     <Col xs={9} className={"align-left"}>
                                         <div className={"font-1 ml-1"}>

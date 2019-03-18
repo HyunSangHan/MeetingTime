@@ -396,6 +396,12 @@ h4 {
 
 @media(max-width: 370px){ /*Small Mobile*/
 
+  .frame-half {
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+  }
+
   .font-0 {
     font-family: "Apple SD Gothic Neo";
     font-size: 0.6rem;
@@ -453,6 +459,12 @@ h4 {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .frame-half {
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
   }
 }
 
