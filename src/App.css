@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+.inline-flex {
+  display: inline-flex;
+  align-items: flex-end;
+}
+
 .bg-white {
   background-color: white !important;
 }
@@ -450,7 +455,7 @@ h4 {
 
 }
 
-@media(max-width: 767px){ /*Mobile & Tablet*/
+@media(max-width: 1024px){ /*Mobile & Tablet*/
   .mobile-none {
     display: none !important;
   }
@@ -468,7 +473,7 @@ h4 {
   }
 }
 
-@media(min-width: 768px){ /*PC*/
+@media(min-width: 1025px){ /*PC*/
   .pc-none {
     display: none !important;
   }

@@ -7,12 +7,20 @@ import MaterialIcon from 'material-icons-react';
 import Footer from "./../Footer";
 
 class Heart extends Component {
+    constructor(props){
+        super(props);
+        console.log(this.props);
+
+    };
 
     render() {
         return (
             <div className={"App"}>
                 <div className="offset-down pc-none">
                     <Header title="하트 충전하기"/>
+                </div>
+                <div className={"font-05 font-grey opacity08 ml-3 align-left"}>
+                    현재 나의 하트는 {this.props.user.current_heart}개입니다.
                 </div>
                 <div className="offset-down-mobile-only">
                     <Container>

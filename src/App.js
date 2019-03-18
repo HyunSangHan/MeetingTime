@@ -34,12 +34,13 @@ class App extends Component {
                 chat: "data_대화방개수",
                 rank: "data_선착순번호",
                 location: "서울",
-                team_detail: "blah blah~ 이건 테스트입니다. 우리 팀은 평범하지 않습니다. 테스트입니다."
+                team_detail: "data_팀소개문구_blah blah~ 이건 테스트입니다. 우리 팀은 평범하지 않습니다. 테스트입니다. 테스트입니다. blah blah blah blah 테스트다 블라 blah"
                 //나중에 유저의 모델 내 필드 개수와 맞춰야 할 것임
             },
             ex_user: {
                 nickname: "data_상대닉네임",
                 company: "data_상대회사명",
+                test: "test success",
             },
         }
         // this.getUserInfo();
@@ -94,11 +95,18 @@ class App extends Component {
                                )} />
                 {/*offPopup={this.props.offPopup}*/}
                 <Route path="/profile" component={Profile}/>
-                <Route path="/heart" component={Heart}/>
+                <Route path="/heart"
+                       render={(props) => (
+                           <Heart
+                               {...props}
+                               user={this.state.user}
+                           />
+                       )} />
                 <Route path="/chat"
                        render={(props) => (
                            <Chat
                                {...props}
+                               user={this.state.user}
                                ex_user={this.state.ex_user}
                            />
                        )} />

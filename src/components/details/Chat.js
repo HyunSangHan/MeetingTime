@@ -14,6 +14,9 @@ class Chat extends Component {
                 <div className="offset-down pc-none">
                     <Header title="지난 대화"/>
                 </div>
+                <div className={"font-05 font-grey opacity08 ml-3 mb-2 align-left"}>
+                    지난 대화 {this.props.user.chat}개가 있습니다.
+                </div>
                 <div className="offset-down-mobile-only mt-1 mb-1">
                     <Container>
                         <div className={"flex-center font-2"}>

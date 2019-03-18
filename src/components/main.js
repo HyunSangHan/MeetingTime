@@ -52,11 +52,11 @@ class Main extends Component {
                             <div className={"font-3 font-grey font-bolder mt-4 ml-3"}>
                                 하트 충전하기
                             </div>
-                            <Heart/>
-                            <div className={"font-3 font-grey font-bolder mt-5 mb-2 ml-3"}>
+                            <Heart user={this.props.user}/>
+                            <div className={"font-3 font-grey font-bolder mt-5 ml-3"}>
                                 지난 대화목록
                             </div>
-                            <Chat ex_user={this.props.ex_user}/>
+                            <Chat  user={this.props.user} ex_user={this.props.ex_user}/>
                         </Container>
                     </Container>
                 </div>
@@ -168,25 +168,30 @@ class Main extends Component {
                         <div className={"pc-max-width z-2"}>
                             <Container>
                                     <Row className={"align-center deco-none z-2"}>
-                                        <Col md={4} lg={3}>
-                                            <div className={"img-my-circle"}>
-                                                {/*img 태그와 props 들어갈 부분*/}
-                                            </div>
-                                        </Col>
-                                        <Col md={5} lg={6} className={"align-left"}>
-                                            <div className={"ml-name"}>
+                                        {/*<Col md={4} lg={3}>*/}
+                                            {/*<div className={"img-my-circle"}>*/}
+                                                {/*/!*img 태그와 props 들어갈 부분*!/*/}
+                                            {/*</div>*/}
+                                        {/*</Col>*/}
+                                        <Col md={9} lg={9} className={"align-left"}>
+                                            <div className={"ml-1 inline-flex"}>
                                                 <div className={"font-3 font-black font-bolder"}>
                                                     {this.props.user.nickname}
                                                 </div>
-                                                <div className={"font-1 font-grey mt-2"}>
-                                                    {this.props.user.company}
+                                                <div className={"font-1 font-black mt-1"}>
+                                                    &nbsp; {this.props.user.company}
                                                 </div>
+                                            </div>
+                                            <div className={"font-05 ml-1 mt-3 font-grey"}>
+                                                {this.props.user.team_detail}
                                             </div>
                                         </Col>
                                         <Col md={3} lg={3} className={"h17vh flex-j-end"}>
                                             <Link to="/profile">
                                                 <div className={"font-grey deco-none"}>
-                                                    수정하기 >
+                                                    <div className={"copy-button deco-none flex-center"}>
+                                                        <MaterialIcon icon="edit" size="25px" color="lightgrey"/>
+                                                    </div>
                                                 </div>
                                             </Link>
                                         </Col>
