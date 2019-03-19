@@ -87,8 +87,11 @@ class App extends Component {
                                user={this.state.user}
                                ex_user={this.state.ex_user}
                                is_joined={this.props.is_joined}
+                               is_joined_done={this.props.is_joined_done}
                                is_copied={this.props.is_copied}
                                offPopup={this.props.offPopup}
+                               offPopupJoin={this.props.offPopupJoin}
+                               onJoinedPopup={this.props.onJoinedPopup}
                                onJoinedPopup={this.props.onJoinedPopup}
                                onCopiedPopup={this.props.onCopiedPopup}
                            />
@@ -123,13 +126,16 @@ class App extends Component {
 // 액션 생성 함수 준비
 const mapToDispatch = (dispatch) => ({
     offPopup: () => dispatch(actions.deletePopup()),
+    offPopupJoin: () => dispatch(actions.deletePopupJoin()),
     onJoinedPopup: () => dispatch(actions.createJoinedPopup()),
-    onCopiedPopup: () => dispatch(actions.createCopiedPopup())
+    onCopiedPopup: () => dispatch(actions.createCopiedPopup()),
+    // onClickedMainButton: () => dispatch(actions.createClickedMainButton())
 });
 
 const mapToState = (state) => ({
     is_joined: state.is_joined,
-    is_copied: state.is_copied
+    is_copied: state.is_copied,
+    is_joined_done: state.is_joined_done
 })
 
 // 리덕스에 연결시키고 내보내기

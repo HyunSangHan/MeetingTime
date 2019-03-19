@@ -37,7 +37,9 @@ class Main extends Component {
                     <div className={"flex-center"}>
                         <div className={"fix minus-height z-4"}>
                             <JoinedPopup user={this.props.user}
-                                         offPopup={this.props.offPopup}/>
+                                         offPopup={this.props.offPopup}
+                                         offPopupJoin={this.props.offPopupJoin}
+                                         is_joined_done={this.props.is_joined_done}/>
                         </div>
                     </div>
                     <div className={"frame-dark fix z-3"}/>
@@ -85,9 +87,15 @@ class Main extends Component {
                             <Col xs={12} className={"flex-center"}>
 
                                 {/*추후 조건부 렌더 필요한부분*/}
-                                <div className={"big-button flex-center font-2 font-white"} onClick={this.props.onJoinedPopup}>
-                                    선착순 번호표 뽑기
-                                </div>
+                                {this.props.is_joined_done
+                                    ? (<div className={"big-button-black flex-center font-2 font-white"}
+                                            onClick={this.props.onJoinedPopup}>
+                                        현재 순위: {this.props.user.rank}
+                                    </div>)
+                                    : (<div className={"big-button-red flex-center font-2 font-white"}
+                                            onClick={this.props.onJoinedPopup}>
+                                        선착순 번호표 뽑기
+                                    </div>)}
                             </Col>
                         </Row>
                     </Container>

@@ -46,15 +46,6 @@
 }
 
 @media(min-width: 768px){ /*PC*/
-    .header {
-        width: 100%;
-        height: 70px;
-        background-color: #4C4C4C;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: fixed;
-        top: 0;
-    }
+
 }
 

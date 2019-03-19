@@ -225,11 +225,29 @@
         height: 20vh;
     }
 
-    .big-button {
+    .big-button-red {
         cursor: pointer;
         width: 30vh;
         height: 10vh;
         background-color: orangered;
+        border-radius: 5vh;
+        margin-top: 4vh;
+    }
+
+    .big-button-black {
+        cursor: pointer;
+        width: 30vh;
+        height: 10vh;
+        background-color: black;
+        border-radius: 5vh;
+        margin-top: 4vh;
+    }
+
+    .big-button-grey {
+        cursor: pointer;
+        width: 30vh;
+        height: 10vh;
+        background-color: grey;
         border-radius: 5vh;
         margin-top: 4vh;
     }
