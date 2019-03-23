@@ -11,7 +11,6 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import * as actions from './actions';
 import { connect } from 'react-redux';
 // import axios from 'axios';
-// Have to install axios!!!!!!!!!!!!!!!!!!!!
 
 
 class App extends Component {
@@ -45,10 +44,10 @@ class App extends Component {
         }
         // this.getUserInfo();
     }
-
-    // getUserInfo = () => () => {
-    //     let self = this;
-    //     axios.get('http://localhost:9292/get_user_info',
+    //
+    // testFunc = () => () => {
+    //     // let self = this;
+    //     axios.get('localhost:9292/get_meeting_info_cutline',
     //         {
     //             params : {
     //                 //someting necessary??
@@ -92,8 +91,8 @@ class App extends Component {
                                offPopup={this.props.offPopup}
                                offPopupJoin={this.props.offPopupJoin}
                                onJoinedPopup={this.props.onJoinedPopup}
-                               onJoinedPopup={this.props.onJoinedPopup}
                                onCopiedPopup={this.props.onCopiedPopup}
+                               // testFunc={this.testFunc()}
                            />
                                )} />
                 {/*offPopup={this.props.offPopup}*/}
@@ -117,6 +116,7 @@ class App extends Component {
                 <Route path="/sign_up" component={SignUp}/>
                 <Route path="/matching_result" component={Result}/>
                 {/*<Redirect from="/" to="/init" />*/}
+
             </div>
         </BrowserRouter>
     );

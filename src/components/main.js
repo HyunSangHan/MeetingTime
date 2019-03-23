@@ -12,9 +12,9 @@ import Heart from "./details/Heart";
 import Chat from "./details/Chat";
 
 class Main extends Component {
-    // constructor(props){
-    //     super(props);
-    // };
+    constructor(props){
+        super(props);
+    };
 
     render() {
         return (
@@ -58,7 +58,7 @@ class Main extends Component {
                             <div className={"font-3 font-grey font-bolder mt-5 ml-3"}>
                                 지난 대화목록
                             </div>
-                            <Chat  user={this.props.user} ex_user={this.props.ex_user}/>
+                            <Chat user={this.props.user} ex_user={this.props.ex_user}/>
                         </Container>
                     </Container>
                 </div>
@@ -100,22 +100,23 @@ class Main extends Component {
                         </Row>
                     </Container>
                 </div>
-
-                <div className="down-bg frame-half bg-white fix z-2">
+{/*absolute로 변경?*/}
+                <div className="down-bg frame-half bg-white absolute z-2">
 {/*모바일 전용*/}
+                    {/*<div className={"hover"} onClick={this.props.testFunc}>이것은 테스트~~~!!여기를 클릭</div>*/}
                     <div className={"profile bg-white pc-none"}>
-                        <div className="profile h100percent w50percent bg-white fix z-1"/>
+                        <div className="profile h100percent w50percent bg-white absolute z-1"/>
                         <div className={"pc-max-width bg-white z-2"}>
                             <Container>
                                 <Link to="/profile">
                                 <Row className={"align-center deco-none"}>
-                                    <Col xs={3} md={3}>
-                                        <div className={"img-my-circle"}>
-                                            {/*img 태그와 props 들어갈 부분*/}
-                                        </div>
-                                    </Col>
-                                    <Col xs={7} md={6} className={"align-left"}>
-                                        <div className={"ml-name"}>
+                                    {/*<Col xs={3} md={3}>*/}
+                                        {/*<div className={"img-my-circle"}>*/}
+                                            {/*/!*img 태그와 props 들어갈 부분*!/*/}
+                                        {/*</div>*/}
+                                    {/*</Col>*/}
+                                    <Col xs={10} md={9} className={"align-left"}>
+                                        <div className={"ml-name ml-1"}>
                                             <div className={"font-3 font-black font-bolder"}>
                                                 {this.props.user.nickname}
                                             </div>

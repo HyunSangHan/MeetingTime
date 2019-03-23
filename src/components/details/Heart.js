@@ -18,7 +18,7 @@ class Heart extends Component {
                     <Header title="하트 충전하기"/>
                 </div>
                 <div className={"font-05 font-grey opacity08 ml-3 align-left mobile-none"}>
-                    현재 나의 하트는 {this.props.user.current_heart}개입니다.
+                    현재 나의 보유 하트는 {this.props.user.current_heart}개입니다.
                 </div>
                 <div className="offset-down-mobile-only">
                     <Container>
