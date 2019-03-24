@@ -124,7 +124,7 @@ class Main extends Component {
                                             </div>
                                         </div>
                                     </Col>
-                                    <Col xs={2} md={3} className={"h17vh flex-j-start"}>
+                                    <Col xs={2} md={3} className={"h17vh flex-j-end"}>
                                         <div className={"pc-none"}>
                                             <MaterialIcon icon="arrow_forward_ios" size="23x" color="#f0f0f0"/>
                                         </div>
