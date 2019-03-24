@@ -19,7 +19,6 @@ class Main extends Component {
     render() {
         return (
             <div className={"frame"}>
-
 {/*팝업들*/}
                 {this.props.is_copied &&
                 <div className={"App"}>
@@ -100,10 +99,10 @@ class Main extends Component {
                         </Row>
                     </Container>
                 </div>
-{/*absolute로 변경?*/}
                 <div className="down-bg frame-half bg-white absolute z-2">
 {/*모바일 전용*/}
-                    {/*<div className={"hover"} onClick={this.props.testFunc}>이것은 테스트~~~!!여기를 클릭</div>*/}
+                    {/*<div className={"hover z-5"} onClick={this.props.testFunc}>이것은 테스트~~~!!여기를 클릭</div>*/}
+
                     <div className={"profile bg-white pc-none"}>
                         <div className="profile h100percent w50percent bg-white absolute z-1"/>
                         <div className={"pc-max-width bg-white z-2"}>

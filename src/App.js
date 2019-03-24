@@ -10,7 +10,7 @@ import Result from "./components/details/Result";
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import * as actions from './actions';
 import { connect } from 'react-redux';
-// import axios from 'axios';
+import axios from 'axios';
 
 
 class App extends Component {
@@ -42,16 +42,16 @@ class App extends Component {
                 test: "test success",
             },
         }
-        // this.getUserInfo();
+        // this.testFunc();
     }
-    //
+
     // testFunc = () => () => {
     //     // let self = this;
-    //     axios.get('localhost:9292/get_meeting_info_cutline',
+    //     axios.get('http://localhost:9292/get_meeting_info_first',
     //         {
-    //             params : {
-    //                 //someting necessary??
-    //             }
+    //             // params : {
+    //             //     //someting necessary??
+    //             // }
     //         })
     //         .then(function(response){
     //             // let tourList: Tour[] = [];
@@ -72,6 +72,11 @@ class App extends Component {
     // }
 
 
+    componentDidMount () {
+        axios.get("http://localhost:9292/get_meeting_info_first").then(response => {
+            console.log(response);
+        })
+    }
 
 
     render() {

@@ -7,6 +7,7 @@ gem 'sinatra-activerecord'
 gem 'pg'
 gem 'bcrypt'
 gem 'plural'
+gem 'rack-cors', :require => 'rack/cors'
 
 group :development, :test do
   gem 'sqlite3'
