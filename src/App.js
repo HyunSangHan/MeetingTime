@@ -71,9 +71,13 @@ class App extends Component {
     //         })
     // }
 
-
     componentDidMount () {
-        axios.get("http://localhost:9292/get_meeting_info_first").then(response => {
+        axios.get("http://localhost:9292/get_meeting_info_first",
+            {
+                // headers: {'Access-Control-Allow-Origin': '*'}
+                //왜 안먹히는 걸까
+            }
+            ).then(response => {
             console.log(response);
         })
     }
