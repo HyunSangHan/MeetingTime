@@ -138,13 +138,13 @@ class Main extends Component {
                         <Container>
                             <Row className={"align-center"}>
                                 <Col xs={8} className={"align-left"}>
-                                    <div className={"font-05 opacity08 ml-1"}>내 하트 <b>{this.props.user.current_heart}</b>개</div>
+                                    <div className={"font-05 opacity08 ml-1"}>내 하트 <strong>{this.props.user.current_heart}</strong>개</div>
                                 </Col>
                                 <Col xs={4} className={"align-right align-center"}>
                                     <Link to="/heart">
                                         <div className={"heart-button deco-none flex-center font-05"}>
                                             <MaterialIcon icon="favorite" size="18px" color="red"/>
-                                            <div className={"ml-1"}>충전하기</div>
+                                            <span className={"ml-1"}>충전하기</span>
                                         </div>
                                     </Link>
                                 </Col>
@@ -155,13 +155,13 @@ class Main extends Component {
                         <Container>
                             <Row className={"align-center"}>
                                 <Col xs={8} className={"align-left"}>
-                                    <div className={"font-05 opacity08 ml-1"}>지난 대화 <b>{this.props.user.chat}</b>개</div>
+                                    <span className={"font-05 opacity08 ml-1"}>지난 대화 <strong>{this.props.user.chat}</strong>개</span>
                                 </Col>
                                 <Col xs={4} className={"align-right align-center"}>
                                     <Link to="/chat">
-                                        <div className={"heart-button deco-none flex-center font-05"}>
+                                        <div className={"heart-button hover flex-center font-05"}>
                                             <MaterialIcon icon="forum" size="18px" color="grey"/>
-                                            <div className={"ml-1"}>대화하기</div>
+                                            <span className={"ml-1 hover"}>대화하기</span>
                                         </div>
                                     </Link>
                                 </Col>
@@ -215,7 +215,7 @@ class Main extends Component {
                                     <Col xs={9} className={"align-left"}>
                                         <div className={"font-1 ml-1"}>
                                             <b>친구 초대 </b>
-                                            <font color="#808080" size="10px">(추천인코드: <b>{this.props.user.recommendation_code}</b>)</font>
+                                            <font color="#808080" size="10px">(추천인코드: <strong>{this.props.user.recommendation_code}</strong>)</font>
                                             </div>
                                         <div className={"font-05 ml-1 mt-2"}>여자사람친구를 초대해주세요.</div>
                                         <div className={"font-05 ml-1"}>하트 2개를 드려요!</div>

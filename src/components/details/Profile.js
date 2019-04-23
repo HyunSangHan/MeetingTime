@@ -38,23 +38,23 @@ class Profile extends Component {
                                     <div>
                                     <FormGroup>
                                         <Label for="company">직장명</Label>
-                                        <Input type="select" name="company" id="company">
-                                            <option>- select -</option>
-                                            <option>삼성전자</option>
-                                            <option>SK</option>
-                                            <option>현대자동차</option>
-                                            <option>네이버</option>
-                                            <option>카카오</option>
+                                        <Input type="select" name="company" id="company" required>
+                                            <option disabled selected value>- select -</option>
+                                            <option value="삼성전자">삼성전자</option>
+                                            <option value="SK">SK</option>
+                                            <option value="현대자동차">현대자동차</option>
+                                            <option value="네이버">네이버</option>
+                                            <option value="카카오">카카오</option>
                                             {/*추가 필요*/}
                                         </Input>
                                     </FormGroup>
                                     <FormGroup>
                                         <Label for="location">선호지역</Label>
-                                        <Input type="select" name="location" id="location">
-                                            <option>- select -</option>
-                                            <option>강남</option>
-                                            <option>홍대</option>
-                                            <option>이태원</option>
+                                        <Input type="select" name="location" id="location" required>
+                                            <option disabled selected value>- select -</option>
+                                            <option value="강남">강남</option>
+                                            <option value="홍대">홍대</option>
+                                            <option value="이태원">이태원</option>
                                             {/*추가 필요*/}
                                         </Input>
                                     </FormGroup>

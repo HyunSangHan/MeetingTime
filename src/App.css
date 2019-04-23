@@ -72,6 +72,7 @@ h4 {
 
 .hover {
   cursor: pointer;
+  text-decoration: none;
 }
 
 .align-left {
