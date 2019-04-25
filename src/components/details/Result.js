@@ -17,7 +17,13 @@ class Result extends Component {
                     <Row>
                         <Col>
                             <div className={"App"}>
-                                <img src="/images/counterProfile.jpeg" className="w-100" />
+                                <img src={this.props.ex_user.img_url} className="w-100" />
+                            </div>
+                            <div>
+                                {this.props.ex_user.nickname}
+                            </div>
+                            <div>
+                                {this.props.ex_user.team_detail}
                             </div>
                         </Col>
                     </Row>

@@ -27,7 +27,7 @@ class App extends Component {
             user: {
                 nickname: "data_닉네임",
                 company: "data_회사명",
-                img_url: "../images/exampleProfile.jpeg",
+                img_url: "/images/exampleProfile.jpeg",
                 recommendation_code: "data_코드",
                 current_heart: "data_하트개수",
                 chat: "data_대화방개수",
@@ -39,7 +39,8 @@ class App extends Component {
             ex_user: {
                 nickname: "data_상대닉네임",
                 company: "data_상대회사명",
-                test: "test success",
+                img_url: "/images/counterProfile.jpeg",
+                team_detail: "test success",
             },
         }
         // this.testFunc();
@@ -118,12 +119,18 @@ class App extends Component {
                            <Chat
                                {...props}
                                user={this.state.user}
-                               ex_user={this.state.ex_user}
+                               ex_user={this.state.ex_user}//maybe not necessary
                            />
                        )} />
                 <Route path="/init" component={Initpage}/>
                 <Route path="/sign_up" component={SignUp}/>
-                <Route path="/matching_result" component={Result}/>
+                <Route path="/matching_result"
+                       render={(props) => (
+                           <Result
+                               {...props}
+                               ex_user={this.state.ex_user}
+                           />
+                       )} />
                 {/*<Redirect from="/" to="/init" />*/}
 
             </div>
