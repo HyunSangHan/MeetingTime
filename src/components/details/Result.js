@@ -10,20 +10,26 @@ class Result extends Component {
 
     render() {
         return (
-            <div className={"App"}>
+            <div className="App">
                 <Header title="이번주 매칭 상대"/>
-                <div className={"offset-down"}>
-                <Container>
+                <div className="offset-down offset-down-same">
+                    <div className="img-max-width margin-auto">
+                        <img src={this.props.ex_user.img_url} className="w-100" />
+                    </div>
+
+                    <Container>
                     <Row>
                         <Col>
-                            <div className={"App"}>
-                                <img src={this.props.ex_user.img_url} className="w-100" />
-                            </div>
                             <div>
-                                {this.props.ex_user.nickname}
-                            </div>
-                            <div>
-                                {this.props.ex_user.team_detail}
+                                <div className="mt-4 font-4">
+                                    <strong>{this.props.ex_user.nickname}</strong>
+                                </div>
+                                <div className="mt-2 font-2">
+                                    {this.props.ex_user.team_detail}
+                                </div>
+                                <div className="mid-button-red margin-auto flex-center font-2 font-white">
+                                    대화하기
+                                </div>
                             </div>
                         </Col>
                     </Row>

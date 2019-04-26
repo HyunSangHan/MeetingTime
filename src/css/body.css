@@ -1,3 +1,40 @@
+
+.big-button-red {
+    cursor: pointer;
+    width: 30vh;
+    height: 10vh;
+    background-color: orangered;
+    border-radius: 5vh;
+    margin-top: 4vh;
+}
+
+.big-button-black {
+    cursor: pointer;
+    width: 30vh;
+    height: 10vh;
+    background-color: black;
+    border-radius: 5vh;
+    margin-top: 4vh;
+}
+
+.big-button-grey {
+    cursor: pointer;
+    width: 30vh;
+    height: 10vh;
+    background-color: grey;
+    border-radius: 5vh;
+    margin-top: 4vh;
+}
+
+.mid-button-red {
+    cursor: pointer;
+    width: 20vh;
+    height: 8vh;
+    background-color: orangered;
+    border-radius: 4vh;
+    margin-top: 3vh;
+}
+
 @media(max-width: 370px) {  /*Small Device*/
     .img-my-circle {
         width: 70px !important;
@@ -72,33 +109,6 @@
     .invite {
         border-top: 7px solid #F0F0F0;
         height: 17vh;
-    }
-
-    .big-button-red {
-        cursor: pointer;
-        width: 30vh;
-        height: 10vh;
-        background-color: orangered;
-        border-radius: 5vh;
-        margin-top: 4vh;
-    }
-
-    .big-button-black {
-        cursor: pointer;
-        width: 30vh;
-        height: 10vh;
-        background-color: black;
-        border-radius: 5vh;
-        margin-top: 4vh;
-    }
-
-    .big-button-grey {
-        cursor: pointer;
-        width: 30vh;
-        height: 10vh;
-        background-color: grey;
-        border-radius: 5vh;
-        margin-top: 4vh;
     }
 
     .heart-button {
@@ -181,6 +191,9 @@
     .offset-down {
         margin-top: 80px;
     }
+    .offset-down-same {
+        margin-top: 60px !important;
+    }
 
     .offset-down-mobile-only {
         height: 100%;
@@ -241,33 +254,6 @@
     .invite {
         border-top: 7px solid #F0F0F0;
         height: 20vh;
-    }
-
-    .big-button-red {
-        cursor: pointer;
-        width: 30vh;
-        height: 10vh;
-        background-color: orangered;
-        border-radius: 5vh;
-        margin-top: 4vh;
-    }
-
-    .big-button-black {
-        cursor: pointer;
-        width: 30vh;
-        height: 10vh;
-        background-color: black;
-        border-radius: 5vh;
-        margin-top: 4vh;
-    }
-
-    .big-button-grey {
-        cursor: pointer;
-        width: 30vh;
-        height: 10vh;
-        background-color: grey;
-        border-radius: 5vh;
-        margin-top: 4vh;
     }
 
     .heart-button {
