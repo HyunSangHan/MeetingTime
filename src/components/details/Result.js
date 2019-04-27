@@ -24,7 +24,7 @@ class Result extends Component {
                                 <div className="mt-4 font-4">
                                     <strong>{this.props.ex_user.nickname}</strong>
                                 </div>
-                                <div className="mt-2 font-2">
+                                <div className="mt-2 font-1">
                                     {this.props.ex_user.team_detail}
                                 </div>
                                 <div className="mid-button-red margin-auto flex-center font-2 font-white">

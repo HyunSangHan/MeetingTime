@@ -214,7 +214,12 @@ class Main extends Component {
                                 <Row>
                                     <Col xs={9} className={"align-left"}>
                                         <div className={"font-1 ml-1"}>
-                                            <b>친구 초대 </b>
+                                            <b>
+                {/*for test*/}
+                                                <Link to="/matching_result">
+                                                <span className="font-black deco-none">친구</span>
+                                                </Link> 초대 </b>
+                {/*end here*/}
                                             <font color="#808080" size="10px">(추천인코드: <strong>{this.props.user.recommendation_code}</strong>)</font>
                                             </div>
                                         <div className={"font-05 ml-1 mt-2"}>여자사람친구를 초대해주세요.</div>

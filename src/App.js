@@ -32,7 +32,8 @@ class App extends Component {
                 current_heart: "data_하트개수",
                 chat: "data_대화방개수",
                 rank: "data_선착순번호",
-                location: "서울",
+                location: "data_선호지역",
+                phone_number: "data_대표연락처",
                 team_detail: "data_팀소개문구_blah blah~ 이건 테스트입니다. 우리 팀은 평범하지 않습니다. 테스트입니다. 테스트입니다. blah blah blah blah 테스트다 블라 blah"
                 //나중에 유저의 모델 내 필드 개수와 맞춰야 할 것임
             },
@@ -40,7 +41,7 @@ class App extends Component {
                 nickname: "data_상대닉네임",
                 company: "data_상대회사명",
                 img_url: "/images/counterProfile.jpeg",
-                team_detail: "동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세",
+                team_detail: "data_상대팀소개문구_동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세",
             },
         }
         // this.testFunc();
@@ -106,7 +107,13 @@ class App extends Component {
                            />
                                )} />
                 {/*offPopup={this.props.offPopup}*/}
-                <Route path="/profile" component={Profile}/>
+                <Route path="/profile"
+                       render={(props) => (
+                           <Profile
+                               {...props}
+                               user={this.state.user}
+                           />
+                       )} />
                 <Route path="/heart"
                        render={(props) => (
                            <Heart

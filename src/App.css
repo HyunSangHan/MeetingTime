@@ -336,26 +336,31 @@ h4 {
 .font-0 {
   font-family: "Apple SD Gothic Neo";
   font-size: 0.75rem;
+  letter-spacing: -0.3px;
 }
 
 .font-05 {
   font-family: "Apple SD Gothic Neo";
   font-size: 0.9rem !important;
+  letter-spacing: -0.3px;
 }
 
 .font-1 {
   font-family: "Apple SD Gothic Neo";
   font-size: 1.0rem !important;
+  letter-spacing: -0.3px;
 }
 
 .font-2 {
   font-family: "Apple SD Gothic Neo";
   font-size: 1.1rem !important;
+  letter-spacing: -0.3px;
 }
 
 .font-3 {
   font-family: "Apple SD Gothic Neo";
   font-size: 1.4rem !important;
+  letter-spacing: -0.3px;
 }
 
 .font-4 {
