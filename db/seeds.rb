@@ -16,6 +16,14 @@ MeetingDetail.create( #2
     "location"=>"Hongdae",
     "cutline"=>"0") #will be editted
 
+MeetingDetail.create( #3
+    "starting_date"=>DateTime.new(2019,4,24,10),
+    "mid_date"=>DateTime.new(2019,5,25,10),
+    "meeting_date"=>DateTime.new(2019,12,25,22),
+    "location"=>"Gangnam",
+    "cutline"=>"0") #will be editted
+
+
 for i in 1..20 #for men
     j = i % 4 + 1
 

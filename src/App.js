@@ -44,34 +44,34 @@ class App extends Component {
                 team_detail: "data_상대팀소개문구_동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세",
             },
         }
-        // this.testFunc();
+        this.testFunc();
     }
 
-    // testFunc = () => () => {
-    //     // let self = this;
-    //     axios.get('http://localhost:9292/get_meeting_info_first',
-    //         {
-    //             // params : {
-    //             //     //someting necessary??
-    //             // }
-    //         })
-    //         .then(function(response){
-    //             // let tourList: Tour[] = [];
-    //             // for(let i=0; i<10; i++) {
-    //             //     let tourEach = new Tour(response.data.response.body.items.item[i]); //[i]
-    //             //     tourList.push(tourEach);
-    //                 console.log(response);
-    //             // }
-    //             // self.props.onTour(tourList);
-    //             // self.setState({
-    //             //         // tmp: response.data.response.body.items.item[0].firstimage
-    //             //
-    //             //         // ans3: _tmp,
-    //             //         loading_tour: true,
-    //             //     }
-    //             // );
-    //         })
-    // }
+    testFunc = () => () => {
+        // let self = this;
+        axios.get('http://localhost:9292/get_meeting_info_first',
+            {
+                // params : {
+                //     //something necessary??
+                // }
+            })
+            .then(function(response){
+                // let tourList: Tour[] = [];
+                // for(let i=0; i<10; i++) {
+                //     let tourEach = new Tour(response.data.response.body.items.item[i]); //[i]
+                //     tourList.push(tourEach);
+                    console.log(response);
+                // }
+                // self.props.onTour(tourList);
+                // self.setState({
+                //         // tmp: response.data.response.body.items.item[0].firstimage
+                //
+                //         // ans3: _tmp,
+                //         loading_tour: true,
+                //     }
+                // );
+            })
+    }
 
     componentDidMount () {
         axios.get("http://localhost:9292/get_meeting_info_first",

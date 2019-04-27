@@ -4,34 +4,6 @@ require './db_class.rb'
 require './function.rb'
 enable :sessions
 
-# require 'sinatra/cors'
-
-# set :allow_origin, "http://example.com http://foo.com"
-# set :allow_methods, "GET,HEAD,POST"
-# set :allow_headers, "content-type,if-modified-since"
-# set :expose_headers, "location,link"
-
-
-# class Application < Service
-  
-#     use Rack::Cors do |config|
-#       config.allow do |allow|
-#          allow.origins '*'
-#          allow.resource '/file/list_all/', :headers => :any
-#          allow.resource '/file/at/*',
-#            :methods => [:get, :post, :put, :delete],
-#            :headers => :any,
-#            :max_age => 0
-#          allow.resource '/compound/*',
-#            :methods => [:get, :post],
-#            :headers => :any,
-#            :max_age => 0
-#       end
-#     end
-# end
-
-
-
 ############# Question: How to get params in using React?
 
 DEFAULT_SCORE_RATE = 1000
