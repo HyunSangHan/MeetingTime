@@ -60,7 +60,7 @@ class App extends Component {
                 // for(let i=0; i<10; i++) {
                 //     let tourEach = new Tour(response.data.response.body.items.item[i]); //[i]
                 //     tourList.push(tourEach);
-                    console.log(response);
+                    console.log(response.location);
                 // }
                 // self.props.onTour(tourList);
                 // self.setState({
@@ -80,7 +80,8 @@ class App extends Component {
                 //왜 안먹히는 걸까
             }
             ).then(response => {
-            console.log(response);
+            console.log(response.data.location);
+        //    강남
         })
     }
 

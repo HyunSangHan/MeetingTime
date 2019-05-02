@@ -33,7 +33,7 @@ get '/get_meeting_info_cutline' do
     meeting = MeetingDetail.where("meeting_date > ?", Time.now().to_datetime)
                             .where("starting_date < ?", Time.now().to_datetime).take
     all_users = meeting.joined_users
-                          
+
     female_count = all_users.where(:is_male => false).count
     male_count = all_users.where(:is_male => true).count
     cutline = [female_count, male_count].min
