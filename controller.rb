@@ -40,7 +40,7 @@ get '/get_meeting_info_cutline' do
     meeting.cutline = cutline
     meeting.save
 
-    return meeting.to_json
+    return cutline.to_json
 end
 
 get '/get_joined_user_info' do

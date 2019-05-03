@@ -72,7 +72,8 @@ class Main extends Component {
                         <Row className={"App"}>
                             <Col xs={12}>
                                 <div className={"font-big font-white mt-4"}>
-                                    {this.props.info.title}
+                                    {/*{this.props.info.title}*/}
+                                    {this.props.meeting.location}
                                 </div>
                             </Col>
                             <Col xs={12}>
@@ -94,6 +95,7 @@ class Main extends Component {
                                     : (<div className={"big-button-red flex-center font-2 font-white"}
                                             onClick={this.props.onJoinedPopup}>
                                         선착순 번호표 뽑기
+                                        {/*{this.props.cutline}*/}
                                     </div>)}
                             </Col>
                         </Row>

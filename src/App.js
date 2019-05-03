@@ -22,7 +22,8 @@ class App extends Component {
             info: {
                 title: "이번주 🔥금 in 강남",
                 msg1: "매칭오픈 - 3월 4일 월요일 오전 10시",
-                msg2: "결과발표 - 3월 6일 수요일 오후 10시"
+                msg2: "결과발표 - 3월 6일 수요일 오후 10시",
+                // cutline: 0,
             },
             user: {
                 nickname: "data_닉네임",
@@ -43,14 +44,31 @@ class App extends Component {
                 img_url: "/images/counterProfile.jpeg",
                 team_detail: "data_상대팀소개문구_동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세",
             },
+            meeting: {
+                title: "이번주 🔥금 in 강남",
+                msg1: "매칭오픈 - 3월 4일 월요일 오전 10시",
+                msg2: "결과발표 - 3월 6일 수요일 오후 10시"
+            },
+            cutline: 0,
         }
     }
 
     componentDidMount () {
+        let self = this;
         axios.get("http://localhost:9292/get_meeting_info_first",
             ).then(response => {
             console.log(response.data.location);
-        //    강남
+            self.setState({
+                meeting: response.data,
+            })
+        })
+
+        axios.get("http://localhost:9292/get_meeting_info_cutline",
+        ).then(response => {
+            console.log(response.data);
+            self.setState({
+                cutline: response.data,
+            })
         })
     }
 
@@ -72,7 +90,8 @@ class App extends Component {
                                offPopupJoin={this.props.offPopupJoin}
                                onJoinedPopup={this.props.onJoinedPopup}
                                onCopiedPopup={this.props.onCopiedPopup}
-                               // testFunc={this.testFunc()}
+                               meeting={this.state.meeting}
+                               cutline={this.state.cutline}
                            />
                                )} />
                 {/*offPopup={this.props.offPopup}*/}
