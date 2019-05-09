@@ -13,8 +13,8 @@ class Result extends Component {
             <div className="App">
                 <Header title="이번주 매칭 상대"/>
                 <div className="offset-down offset-down-same">
-                    <div className="img-max-width margin-auto">
-                        <img src={this.props.ex_user.img_url} className="w-100" />
+                    <div className="img-max-width margin-auto result-img">
+                        <img src={this.props.ex_user.img_url} className="w-100" alt="counter-img" />
                     </div>
 
                     <Container>

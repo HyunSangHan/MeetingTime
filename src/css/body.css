@@ -199,6 +199,11 @@
         height: 100%;
     }
 
+    .result-img{
+        margin-top: 80px !important;
+        max-width: 400px;
+    }
+
     .up-bg {
         height: 45vh;
     }
