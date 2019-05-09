@@ -12,9 +12,6 @@ import Heart from "./details/Heart";
 import Chat from "./details/Chat";
 
 class Main extends Component {
-    constructor(props){
-        super(props);
-    };
 
     render() {
         return (
@@ -25,7 +22,7 @@ class Main extends Component {
                     <div className={"flex-center"}>
                         <div className={"fix minus-height z-4"}>
                             <CopiedPopup user={this.props.user}
-                                         offPopup={this.props.offPopup}/>
+                                        offPopup={this.props.offPopup}/>
                         </div>
                     </div>
                     <div className={"frame-dark fix z-3"}/>
@@ -36,9 +33,9 @@ class Main extends Component {
                     <div className={"flex-center"}>
                         <div className={"fix minus-height z-4"}>
                             <JoinedPopup user={this.props.user}
-                                         offPopup={this.props.offPopup}
-                                         offPopupJoin={this.props.offPopupJoin}
-                                         is_joined_done={this.props.is_joined_done}/>
+                                        offPopup={this.props.offPopup}
+                                        offPopupJoin={this.props.offPopupJoin}
+                                        is_joined_done={this.props.is_joined_done}/>
                         </div>
                     </div>
                     <div className={"frame-dark fix z-3"}/>
@@ -73,7 +70,7 @@ class Main extends Component {
                             <Col xs={12}>
                                 <div className={"font-big font-white mt-4"}>
                                     {/*{this.props.info.title}*/}
-                                    {this.props.meeting.location}
+                                    {this.props.meeting.meeting_date.split("T",1)}
                                 </div>
                             </Col>
                             <Col xs={12}>

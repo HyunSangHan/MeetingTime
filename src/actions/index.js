@@ -16,3 +16,7 @@ export const createJoinedPopup = () => ({
 export const createCopiedPopup = () => ({
     type: types.CREATE_COPIED_POPUP
 });
+
+export const getMeetingInfo = () => ({
+    type: types.GET_MEETING_INFO
+});

@@ -32,7 +32,7 @@ class App extends Component {
                 recommendation_code: "data_코드",
                 current_heart: "data_하트개수",
                 chat: "data_대화방개수",
-                rank: "data_선착순번호",
+                rank: "data_순번",
                 location: "data_선호지역",
                 phone_number: "data_대표연락처",
                 team_detail: "data_팀소개문구_blah blah~ 이건 테스트입니다. 우리 팀은 평범하지 않습니다. 테스트입니다. 테스트입니다. blah blah blah blah 테스트다 블라 blah"
@@ -90,7 +90,7 @@ class App extends Component {
                                offPopupJoin={this.props.offPopupJoin}
                                onJoinedPopup={this.props.onJoinedPopup}
                                onCopiedPopup={this.props.onCopiedPopup}
-                               meeting={this.state.meeting}
+                               meeting={this.props.meeting}
                                cutline={this.state.cutline}
                            />
                                )} />
@@ -146,7 +146,8 @@ const mapToDispatch = (dispatch) => ({
 const mapToState = (state) => ({
     is_joined: state.is_joined,
     is_copied: state.is_copied,
-    is_joined_done: state.is_joined_done
+    is_joined_done: state.is_joined_done,
+    meeting: state.meeting,
 })
 
 // 리덕스에 연결시키고 내보내기
