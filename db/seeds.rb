@@ -19,6 +19,7 @@ MeetingDetail.create( #2
 MeetingDetail.create( #3
     "starting_date"=>DateTime.new(2019,4,24,10),
     "mid_date"=>DateTime.new(2019,5,25,10),
+    #결과발표 date 하나 더 만들어야할 수 있음
     "meeting_date"=>DateTime.new(2019,12,25,22),
     "location"=>"Gangnam",
     "cutline"=>"0") #will be editted

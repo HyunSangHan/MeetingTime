@@ -13,6 +13,20 @@ import Chat from "./details/Chat";
 
 class Main extends Component {
 
+
+    constructor(props){
+        super(props);
+
+        //여기 넣어놔도 문제없을까.
+        let year = this.props.meeting.meeting_date.split("-")
+
+        //아직 쓰지 않지만, 이런 식으로 날짜를 파싱해서 프론트에서 사용해야겠다.
+        this.state = { 
+            meeting_month: year[1],
+            meeting_day: year[2],
+        }
+    }
+
     render() {
         return (
             <div className={"frame"}>
