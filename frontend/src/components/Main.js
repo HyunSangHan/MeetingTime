@@ -6,7 +6,7 @@ import MaterialIcon from 'material-icons-react';
 import { Link } from 'react-router-dom';
 import CopiedPopup from "./popups/CopiedPopup";
 import JoinedPopup from "./popups/JoinedPopup";
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Footer from "./Footer";
 import Heart from "./details/Heart";
 import Chat from "./details/Chat";
@@ -83,8 +83,8 @@ class Main extends Component {
                         <Row className={"App"}>
                             <Col xs={12}>
                                 <div className={"font-big font-white mt-4"}>
-                                    {/*{this.props.info.title}*/}
-                                    {this.props.meeting.meeting_date.split("T",1)}
+                                    {/* {this.props.info.title} */}
+                                    {this.props.meeting_info.location}
                                 </div>
                             </Col>
                             <Col xs={12}>

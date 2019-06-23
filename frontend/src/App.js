@@ -12,6 +12,8 @@ import * as actions from './actions';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 class App extends Component {
 
@@ -19,7 +21,8 @@ class App extends Component {
         super(props);
 
         this.state = { //결국엔 스토어에 다 넣어야 할 놈들. 특히, 이걸 해결하고나면 rank가 false냐 true냐에 따라 버튼을 바꿔줘야한다. 단, 그전에 axios를 던져놓은 상태여야함
-            info: {
+            meeting_info: {},
+            info: { //test용도 더미 (지워야함)
                 title: "이번주 🔥금 in 강남",
                 msg1: "매칭오픈 - 3월 4일 월요일 오전 10시",
                 msg2: "결과발표 - 3월 6일 수요일 오후 10시",
@@ -54,22 +57,21 @@ class App extends Component {
     }
 
     componentDidMount () {
+        // let self = this;
+        // axios.get("http://localhost:9292/get_meeting_info_first",
+        //     ).then(response => {
+        //     console.log(response.data.location);
+        //     self.setState({
+        //         meeting: response.data,
+        //     })
+        // })
         let self = this;
-        axios.get("http://localhost:9292/get_meeting_info_first",
-            ).then(response => {
-            console.log(response.data.location);
-            self.setState({
-                meeting: response.data,
-            })
+        axios.get("/api/meeting_info/")
+        .then(response => {
+            console.log(response.data[0])
+            self.setState({ meeting_info: response.data[0] })
         })
-
-        axios.get("http://localhost:9292/get_meeting_info_cutline",
-        ).then(response => {
-            console.log(response.data);
-            self.setState({
-                cutline: response.data,
-            })
-        })
+        .catch(err => console.log(err));
     }
 
     render() {
@@ -80,6 +82,7 @@ class App extends Component {
                        render={(props) => (
                            <Main
                                {...props}
+                               meeting_info={this.state.meeting_info}
                                info={this.state.info}
                                user={this.state.user}
                                ex_user={this.state.ex_user}
