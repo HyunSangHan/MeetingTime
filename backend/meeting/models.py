@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils import timezone
 
 class Meeting(models.Model):
     open_time = models.DateTimeField(blank=False, null=False)
@@ -12,7 +15,15 @@ class Meeting(models.Model):
     def __str__(self):
         return self.open_time
 
+class Company(models.Model):
+    name = models.CharField(max_length=20, blank=True)
+    domain = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return self.name
+
 class Profile(models.Model):
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     company = models.ForeignKey(Company)
     image = models.ImageField(null=True)
@@ -27,6 +38,15 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):  
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):  
+    instance.profile.save()
+
 class JoinedUser(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
@@ -38,12 +58,7 @@ class JoinedUser(models.Model):
     def __str__(self):
         return self.profile
 
-class Company(models.Model):
-    name = models.CharField(max_length=20, blank=True)
-    domain = models.CharField(max_length=100, blank=True)
 
-    def __str__(self):
-        return self.name
 
 class Matching(models.Model):
     joined_male = models.ForeignKey(JoinedUser, on_delete=models.CASCADE)
