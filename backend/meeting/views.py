@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializers import MeetingMatchingSerializer
-from .models import MeetingMatching
+from .serializers import MeetingSerializer
+from .models import Meeting
 
 
 class MeetingInfoView(viewsets.ModelViewSet):
-    serializer_class = MeetingMatchingSerializer
-    queryset = MeetingMatching.objects.all()
+    serializer_class = MeetingSerializer
+    queryset = Meeting.objects.all()
