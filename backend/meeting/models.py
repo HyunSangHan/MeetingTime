@@ -16,7 +16,7 @@ class Meeting(models.Model):
     cutline = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return '장소: {} / 일시: {}'.format(str(self.location), str(self.open_time).split(" ")[0])
+        return f'미팅장소: {str(self.location)} / 미팅일시: {str(self.open_time).split(" ")[0]}'
 
 class Company(models.Model):
     name = models.CharField(max_length=20, blank=True)
@@ -73,4 +73,4 @@ class Matching(models.Model):
     kakao_chattingroom = models.URLField(null=True, blank=True)
 
     def __str__(self):
-        return '[남]{} + [여]{}'.format(str(self.joined_male), str(self.joined_female))
+        return f'남: {str(self.joined_male)} / 여: {str(self.joined_female)}'
