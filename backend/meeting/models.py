@@ -34,8 +34,8 @@ class Profile(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     last_login_at = models.DateTimeField(default=timezone.now)
     team_introduce = models.TextField(null=True, blank=True)
-    last_intro_modified_at = models.DateTimeField(default=timezone.now) #디폴트 대신 null=True가 어떨까
-    last_img_modified_at = models.DateTimeField(default=timezone.now) #디폴트 대신 null=True가 어떨까
+    last_intro_modified_at = models.DateTimeField(null=True, blank=True)
+    last_img_modified_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.user.username
