@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import MeetingMatching
+from .models import Meeting
 
-class MeetingMatchingSerializer(serializers.ModelSerializer):
+class MeetingSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MeetingMatching
+        model = Meeting
         fields = '__all__'

@@ -1,4 +1,8 @@
 from django.contrib import admin
-from .models import MeetingMatching
+from .models import Meeting, Company, Profile, JoinedUser, Matching
 
-admin.site.register(MeetingMatching)
+admin.site.register(Meeting)
+admin.site.register(Company)
+admin.site.register(Profile)
+admin.site.register(JoinedUser)
+admin.site.register(Matching)
