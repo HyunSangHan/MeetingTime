@@ -6,6 +6,11 @@ class MeetingSerializer(serializers.ModelSerializer):
         model = Meeting
         fields = '__all__'
 
+class CurrentMeetingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Meeting
+        fields = '__all__'
+
 class JoinSerializer(serializers.ModelSerializer):
     class Meta:
         model = JoinedUser
