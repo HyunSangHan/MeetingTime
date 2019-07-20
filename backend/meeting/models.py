@@ -16,7 +16,7 @@ class Meeting(models.Model):
     cutline = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return f'미팅장소: {str(self.location)} / 미팅일시: {str(self.open_time).split(" ")[0]}'
+        return f'미팅장소: {str(self.location)} / 오픈일자: {str(self.open_time).split(" ")[0]} / 미팅일자: {str(self.meeting_time).split(" ")[0]}'
 
 class Company(models.Model):
     name = models.CharField(max_length=20, blank=True)
@@ -33,7 +33,7 @@ class Profile(models.Model):
     age_range = models.IntegerField(null=True, blank=True) #10, 20, 30, 40 예컨대 이런식
     created_at = models.DateTimeField(default=timezone.now)
     last_login_at = models.DateTimeField(default=timezone.now)
-    team_introduce = models.TextField(null=True, blank=True)
+    team_introduce = models.TextField(blank=True)
     last_intro_modified_at = models.DateTimeField(null=True, blank=True)
     last_img_modified_at = models.DateTimeField(null=True, blank=True)
 
@@ -55,7 +55,7 @@ class JoinedUser(models.Model):
     matching = models.ManyToManyField('self', through = 'Matching', symmetrical= False) #Matching이라는 별도 모델을 활용하여 관계설정을 하기 때문에 symmetrical을 True로 둘 수 없음
     created_at = models.DateTimeField(default=timezone.now)
     is_matched = models.BooleanField(default=False)
-    rank = models.IntegerField()
+    rank = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.profile.user.username
