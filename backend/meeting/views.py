@@ -18,7 +18,7 @@ class CurrentMeeting(APIView):
             serializer = CurrentMeetingSerializer(queryset)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request, format=None):
         queryset = Meeting.objects.all()
