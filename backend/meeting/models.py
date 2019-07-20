@@ -52,7 +52,7 @@ def save_user_profile(sender, instance, **kwargs):
 class JoinedUser(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
-    matching = models.ManyToManyField('self', through = 'Matching', symmetrical= False) #Matching이라는 별도 모델을 활용하여 관계설정을 하기 때문에 symmetrical을 True로 둘 수 없음
+    matching = models.ManyToManyField('self', through = 'Matching', symmetrical= False)
     created_at = models.DateTimeField(default=timezone.now)
     is_matched = models.BooleanField(default=False)
     rank = models.IntegerField()
