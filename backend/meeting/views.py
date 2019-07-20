@@ -64,3 +64,10 @@ class Join(APIView):
                 return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        if self.my_profile is not None and self.current_meeting is not None and self.joined_user is not None:
+            self.joined_user.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
