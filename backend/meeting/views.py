@@ -5,7 +5,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import MeetingSerializer, JoinSerializer, CurrentMeetingSerializer, CounterProfileSerializer, MatchingSerializer
 from django.contrib.auth.models import User
-from .models import Meeting, JoinedUser, Profile, Matching
 import random
 from django.utils import timezone
 
