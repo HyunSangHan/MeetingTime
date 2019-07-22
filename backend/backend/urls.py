@@ -24,5 +24,6 @@ router.register('meeting_info', views.MeetingInfoView, 'meeting_info')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('join/', views.Join.as_view()),
     path('current_meeting/', views.CurrentMeeting.as_view())
 ]
