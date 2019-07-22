@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Meeting, JoinedUser, Matching
+from .models import Meeting, Profile, JoinedUser, Matching
 
 class MeetingSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,4 +19,9 @@ class CurrentMeetingSerializer(serializers.ModelSerializer):
 class JoinSerializer(serializers.ModelSerializer):
     class Meta:
         model = JoinedUser
+        fields = '__all__'
+
+class CounterProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
         fields = '__all__'
