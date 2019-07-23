@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
-from faker import Faker #for debugging later
 
 class Meeting(models.Model):
     open_time = models.DateTimeField()
@@ -16,6 +15,59 @@ class Meeting(models.Model):
 
     def __str__(self):
         return f'미팅장소: {str(self.location)} / 오픈일자: {str(self.open_time).split(" ")[0]} / 미팅일자: {str(self.meeting_time).split(" ")[0]}'
+
+    def seed(num_of_seed):
+        from datetime import timedelta
+        import random
+        NUM_OF_SEED_FOR_BASE = num_of_seed
+        NUM_OF_SEED_FOR_ACCOUNT = num_of_seed*20
+        NUM_OF_SEED_FOR_ADD = num_of_seed*15
+
+        for i in range(1, NUM_OF_SEED_FOR_BASE+1):
+            # Company
+            company_name = f'Company{i}'
+            company_domain = f'@{i}.com'
+            Company.objects.create(name=company_name, domain=company_domain)
+            open_time = timezone.now()
+
+            # Meeting
+            first_shuffle_time = timezone.now()+timedelta(days=i)
+            second_shuffle_time = timezone.now()+timedelta(days=i*2)
+            third_shuffle_time = timezone.now()+timedelta(days=i*3)
+            meeting_time = timezone.now()+timedelta(days=i*4)
+            location = f'봉천{i}동'
+            Meeting.objects.create(
+                open_time=open_time,
+                first_shuffle_time=first_shuffle_time,
+                second_shuffle_time=second_shuffle_time,
+                third_shuffle_time=third_shuffle_time,
+                meeting_time=meeting_time,
+                location=location
+            )
+
+        for j in range(1, NUM_OF_SEED_FOR_ACCOUNT+1):
+            # User
+            username = f'user{j}'
+            password = '1234'
+            email = f'{j}@{j}.com'
+            user = User.objects.create_user(
+                username = username,
+                password = password,
+                email = email
+            )
+            # Profile
+            profile = user.profile
+            profile.is_male = random.choice([True, False])
+            profile.company = Company.objects.all().first()
+            profile.age_range = 20
+            profile.save()
+
+        for k in range(1, NUM_OF_SEED_FOR_ADD+1):
+            # JoinedUser
+            JoinedUser.objects.create(
+                profile_id=k,
+                meeting_id=random.randrange(1, NUM_OF_SEED_FOR_BASE+1)
+            )
 
 class Company(models.Model):
     name = models.CharField(max_length=20, blank=True)
@@ -39,14 +91,14 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):  
-    if created:
-        Profile.objects.create(user=instance)
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):  
-    instance.profile.save()
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
 
 class JoinedUser(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -57,7 +109,7 @@ class JoinedUser(models.Model):
     rank = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.profile.user.username} (is_male : {self.profile.is_male})'
+        return f'{self.profile.user.username} (is_male: {self.profile.is_male})'
 
 class Matching(models.Model):
     joined_male = models.ForeignKey(JoinedUser, related_name = 'joined_male', on_delete=models.CASCADE)
