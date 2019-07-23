@@ -30,9 +30,10 @@ class CurrentMeeting(APIView):
 
 class Join(APIView):
     # =========Just for test (START)=========
-    user = User.objects.get(username="user_female")
+    user = User.objects.create_user(username="user_male", password="1234") # 첫 마이그레이션용 / 이후에는 주석처리해둘 것.
+    # user = User.objects.all().first() # 이후 테스트용
     # =========Just for test (END)=========
-    # user = request.data.user # request에 user가 있다고 가정하고. 그런데 session관리는 어떻게 해야하는지 고민 필요. 혹시 토큰으로?
+    # user = request.user # request에 user가 있다고 가정하고. 그런데 session관리는 어떻게 해야하는지 고민 필요. 혹시 토큰으로?
     my_profile = user.profile
     current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
     joined_user = JoinedUser.objects.filter(profile=my_profile, meeting=current_meeting).first()
@@ -86,9 +87,10 @@ class Join(APIView):
 class CounterProfile(APIView):
     def get(self, request, format=None):
         # =========Just for test (START)=========
-        user = User.objects.get(username="user_male")
+        user = User.objects.create_user(username="user_male", password="1234") # 첫 마이그레이션용 / 이후에는 주석처리해둘 것.
+        # user = User.objects.all().first() # 이후 테스트용
         # =========Just for test (END)=========
-        # user = request.data.user # request에 user가 있다고 가정하고. 그런데 session관리는 어떻게 해야하는지 고민 필요. 혹시 토큰으로?
+        # user = request.user # request에 user가 있다고 가정하고. 그런데 session관리는 어떻게 해야하는지 고민 필요. 혹시 토큰으로?
         my_profile = user.profile
         current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
         joined_user = JoinedUser.objects.filter(profile=my_profile, meeting=current_meeting).first()
