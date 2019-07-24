@@ -13,34 +13,51 @@ class MeetingInfoView(viewsets.ModelViewSet):
     queryset = Meeting.objects.all()
 
 class CurrentMatching(APIView):
+    def get(self, request, format=None):
+        joined_user = JoinedUser.objects.filter(profile__user=request.data)
+        if joined_user is not None:
+            current_matching = joined_user.matching
+            return Response(current_matching, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
     def post(self, request, format=None):
         joined_users_male = list(JoinedUser.objects.filter(is_matched=False, profile__is_male=True))
         joined_users_female = list(JoinedUser.objects.filter(is_matched=False, profile__is_male=False))
         numbers = list(range(len(joined_users_male)))
         random.shuffle(numbers)
-        #matched = list()
 
         for i in range(len(joined_users_male)):
             if request.data.trial_time == 1:
                 serializer = MatchingSerializer(Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data.trial_time))
+                joined_users_male[i].already_met_one = joined_users_female[numbers[0]].rank
+                joined_users_female[numbers[0]].already_met_one = joined_users_male[i].rank
+                joined_users_male[i].save()
+                joined_users_female[numbers[0]].save()
                 numbers[0].pop()
-            if request.data.trial_time == 2:
+            elif request.data.trial_time == 2:
                 runned = 1
-                while runned < 3:
+                while runned < 10:
                     if joined_users_male[i].already_met_one != joined_users_female[numbers[0]].rank:
-                        #matched.append
                         serializer = MatchingSerializer(Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data.trial_time))
+                        joined_users_male[i].already_met_two = joined_users_female[numbers[0]].rank
+                        joined_users_female[numbers[0]].already_met_two = joined_users_male[i].rank
+                        joined_users_male[i].save()
+                        joined_users_female[numbers[0]].save()
                         numbers[0].pop()
                         break
                     else:
                         random.shuffle(numbers)
                         runned += 1
-            if request.data.trial_time == 3:
+            elif request.data.trial_time == 3:
                 runned = 1
-                while runned < 3:
+                while runned < 10:
                     if joined_users_male[i].already_met_two != joined_users_female[numbers[0]].rank:
-                        #matched.append
                         serializer = MatchingSerializer(Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data.trial_time))
+                        joined_users_male[i].already_met_three = joined_users_female[numbers[0]].rank
+                        joined_users_female[numbers[0]].already_met_three = joined_users_male[i].rank
+                        joined_users_male[i].save()
+                        joined_users_female[numbers[0]].save()
                         numbers[0].pop()
                         break
                     else:
@@ -48,9 +65,8 @@ class CurrentMatching(APIView):
                         runned += 1
             else:
                 runned = 1
-                while runned < 3:
+                while runned < 10:
                     if joined_users_male[i].already_met_three != joined_users_female[numbers[0]].rank:
-                        #matched.append
                         serializer = MatchingSerializer(Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data.trial_time))
                         numbers[0].pop()
                         break
@@ -68,19 +84,19 @@ class CurrentMatching(APIView):
         queryset = Matching.objects.filter(id=request.data.id)
         serializer = MatchingSerializer(queryset, data=request.data, partial=True)
         if serializer.is_greenlight_male and serializer.is_greenlight_female:
-            matched_matching = {
+            successful_matching_data = {
                 "kakao_chattingroom": "kakao_chat_example/1"
             # kakao 채팅방을 최대 50개를 준비해놓고 ChattingRoom 이런 model에 저장해놓은 다음 filter 해서 할당되지 않은 첫번째
             # url을 할당하는 것도 괜찮을 것 같네요 (50개는 우리가 매주 admin으로 입력해놓고)
             }
-            serializer = MatchingSerializer(queryset, data=matched_matching, partial=True)
+            serializer = MatchingSerializer(queryset, data=successful_matching_data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
     def delete(self, request, format=None):
-        if request.data.trail_time > 0:
-            Matching.objects.filter(trail_time=request.data.trial_time, is_matched=False).delete()
+        if request.data.trial_time > 0:
+            Matching.objects.filter(trial_time=request.data.trial_time, is_matched=False).delete()
         else:
             Matching.objects.all().delete()
         return Response(status=status.HTTP_202_ACCEPTED)
