@@ -107,6 +107,9 @@ class JoinedUser(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     is_matched = models.BooleanField(default=False)
     rank = models.IntegerField(null=True, blank=True)
+    already_met_one = models.IntegerField(null=True, blank=True)
+    already_met_two = models.IntegerField(null=True, blank=True)
+    already_met_three = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.profile.user.username} (is_male: {self.profile.is_male})'
