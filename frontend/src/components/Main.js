@@ -13,7 +13,6 @@ import Chat from "./details/Chat";
 
 class Main extends Component {
 
-
     constructor(props){
         super(props);
 
@@ -25,6 +24,49 @@ class Main extends Component {
             meeting_month: year[1],
             meeting_day: year[2],
         }
+    }
+
+    // componentDidMount(){
+    //     window.Kakao.init('9cd330f6d1c822aa3bccb0a124d073c1');
+    //     // 카카오 로그인 버튼을 생성합니다.
+    //     window.Kakao.Auth.createLoginButton({
+    //         container: '#kakao-login-btn',
+    //         success: function(authObj) {
+    //             alert(JSON.stringify(authObj));
+    //             console.log(JSON.stringify(authObj));
+    //             console.log(authObj);
+    //         },
+    //         fail: function(err) {
+    //             alert(JSON.stringify(err));
+    //         }
+    //     });
+    // }
+
+    componentDidMount(){
+        window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);
+        // 카카오 로그인 버튼을 생성합니다.
+        window.Kakao.Auth.createLoginButton({
+            container: '#kakao-login-btn',
+            success: function(authObj) {
+              // 로그인 성공시, API를 호출합니다.
+                console.log(authObj);
+                window.Kakao.API.request({
+                url: '/v2/user/me',
+                success: function(res) {
+                    alert(JSON.stringify(res));
+                    console.log(res);
+                },
+                fail: function(error) {
+                    alert(JSON.stringify(error));
+                    console.log(error);
+                }
+                });
+            },
+            fail: function(err) {
+                alert(JSON.stringify(err));
+                console.log(err);
+            }
+        });
     }
 
     render() {
@@ -75,6 +117,7 @@ class Main extends Component {
 
 {/*PC와 모바일 공통*/}
                 <div className="up-bg flex-center frame-half">
+
                     <div className={"fix flex-center frame-half"}>
                         <img src={this.props.user.img_url} className={"bg-under-img"} alt={"profile-large-img"}/>
                     </div>
@@ -85,6 +128,8 @@ class Main extends Component {
                                 <div className={"font-big font-white mt-4"}>
                                     {/* {this.props.info.title} */}
                                     {this.props.meeting_info.location}
+                                    <a id="kakao-login-btn"></a>
+                                    <a href="http://developers.kakao.com/logout">로그아웃</a>
                                 </div>
                             </Col>
                             <Col xs={12}>
