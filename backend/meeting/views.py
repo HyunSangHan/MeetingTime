@@ -30,19 +30,9 @@ def oauth(request):
         'access_token': access_token,
         'code' : KAKAO_AUTH_REST_API_KEY
         }
-    res = requests.post('http://localhost:8000/rest-auth/kakao/', data=DATA_FOR_GET_USER_INFO)
-    print('key값:'+ str(res.json()['key']))
+    response = requests.post('http://localhost:8000/rest-auth/kakao/', data=DATA_FOR_GET_USER_INFO).json()['key']
+    print('로그인된 유저의 Token값은 "'+ str(response)+'"이고, 이름은 "'+User.objects.filter(auth_token=response).first().username+'"입니다.')
     return redirect('http://localhost:3000/')
-
-# def get_code(request):
-#     params = {
-#         'client_id': KAKAO_AUTH_REST_API_KEY,
-#         'redirect_uri': 'http://localhost:8000/oauth',
-#         'response_type': 'code'
-#         }
-#     res = requests.get('https://kauth.kakao.com/oauth/authorize', params=params)
-#     print(res)
-#     return redirect('/oauth')
 
 class KakaoLogin(SocialLoginView):
     adapter_class = KakaoOAuth2Adapter

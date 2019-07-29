@@ -57,14 +57,6 @@ class App extends Component {
     }
 
     componentDidMount () {
-        // let self = this;
-        // axios.get("http://localhost:9292/get_meeting_info_first",
-        //     ).then(response => {
-        //     console.log(response.data.location);
-        //     self.setState({
-        //         meeting: response.data,
-        //     })
-        // })
         let self = this;
         axios.get("/current_meeting")
         .then(response => {

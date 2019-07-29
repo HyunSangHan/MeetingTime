@@ -23,19 +23,15 @@ router.register('meeting_info', views.MeetingInfoView, 'meeting_info')
 
 urlpatterns = [
     path('oauth/', views.oauth, name='oauth'),
-    # path('get_code/', views.get_code, name='get_code'),
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('join/', views.Join.as_view()),
     path('current_meeting/', views.CurrentMeeting.as_view()),
     path('counter_profile/', views.CounterProfile.as_view()),
-    # url(r'^rest-auth/', include('rest_auth.urls')),
-    # url(r'^rest-auth/registration/', include('rest_auth.registration.urls'))
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
 ]
 
 urlpatterns += [
     path('rest-auth/kakao/', views.KakaoLogin.as_view())
-    # url(r'^rest-auth/kakao/$', KakaoLogin.as_view(), name='kakao_login')
 ]

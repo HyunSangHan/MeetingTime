@@ -26,48 +26,8 @@ class Main extends Component {
         }
     }
 
-    // componentDidMount(){
-    //     window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);
-    //     // 카카오 로그인 버튼을 생성합니다.
-    //     window.Kakao.Auth.createLoginButton({
-    //         container: '#kakao-login-btn',
-    //         success: function(authObj) {
-    //             alert(JSON.stringify(authObj));
-    //             console.log(JSON.stringify(authObj));
-    //             console.log(authObj);
-    //         },
-    //         fail: function(err) {
-    //             alert(JSON.stringify(err));
-    //         }
-    //     });
-    // }
-
     componentDidMount(){
         window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);
-        // 카카오 로그인 버튼을 생성합니다.
-        window.Kakao.Auth.createLoginButton({
-            container: '#kakao-login-btn',
-            success: function(authObj) {
-              // 로그인 성공시, API를 호출합니다.
-                console.log(authObj);
-                window.Kakao.API.request({
-                url: '/v2/user/me',
-                success: function(res) {
-                    alert(JSON.stringify(res));
-                    console.log(res);
-                    console.log(res);
-                },
-                fail: function(error) {
-                    alert(JSON.stringify(error));
-                    console.log(error);
-                }
-                });
-            },
-            fail: function(err) {
-                alert(JSON.stringify(err));
-                console.log(err);
-            }
-        });
     }
 
     render() {
@@ -129,8 +89,8 @@ class Main extends Component {
                                 <div className={"font-big font-white mt-4"}>
                                     {/* {this.props.info.title} */}
                                     {this.props.current_meeting.location}
-                                    <a href="https://kauth.kakao.com/oauth/authorize?client_id=a6901347b31d90b387660121f5a20e42&redirect_uri=http://localhost:8000/oauth&response_type=code">테스트로그인</a>
-                                    <a id="kakao-login-btn"></a>
+                                    <br/>
+                                    <a href="https://kauth.kakao.com/oauth/authorize?client_id=a6901347b31d90b387660121f5a20e42&redirect_uri=http://localhost:8000/oauth&response_type=code">카카오로그인 </a>
                                     <a href="http://developers.kakao.com/logout">로그아웃</a>
                                 </div>
                             </Col>
