@@ -23,6 +23,8 @@
 .env.production.local
 .env
 **/.env
+secrets.json
+**/secrets.json
 
 .idea/
 

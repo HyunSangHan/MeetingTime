@@ -27,7 +27,7 @@ class Main extends Component {
     }
 
     // componentDidMount(){
-    //     window.Kakao.init('9cd330f6d1c822aa3bccb0a124d073c1');
+    //     window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);
     //     // 카카오 로그인 버튼을 생성합니다.
     //     window.Kakao.Auth.createLoginButton({
     //         container: '#kakao-login-btn',
@@ -54,6 +54,7 @@ class Main extends Component {
                 url: '/v2/user/me',
                 success: function(res) {
                     alert(JSON.stringify(res));
+                    console.log(res);
                     console.log(res);
                 },
                 fail: function(error) {
@@ -128,6 +129,7 @@ class Main extends Component {
                                 <div className={"font-big font-white mt-4"}>
                                     {/* {this.props.info.title} */}
                                     {this.props.meeting_info.location}
+                                    <a href="http://localhost:8000/get_code">테스트로그인</a>
                                     <a id="kakao-login-btn"></a>
                                     <a href="http://developers.kakao.com/logout">로그아웃</a>
                                 </div>

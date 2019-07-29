@@ -8,6 +8,24 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from allauth.socialaccount.providers.kakao.views import KakaoOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
+import requests
+import json
+from django.shortcuts import redirect
+from backend.settings import KAKAO_AUTH_REST_API_KEY
+
+def oauth(request):
+    print(request.GET.get('code'))
+    return redirect('http://localhost:3000/')
+
+def get_code(request):
+    params = {
+        'client_id': KAKAO_AUTH_REST_API_KEY,
+        'redirect_uri': 'http://localhost:8000/oauth',
+        'response_type': 'code'
+        }
+    res = requests.get('https://kauth.kakao.com/oauth/authorize', params=params)
+    print(res)
+    return redirect('http://localhost:3000/')
 
 class KakaoLogin(SocialLoginView):
     adapter_class = KakaoOAuth2Adapter

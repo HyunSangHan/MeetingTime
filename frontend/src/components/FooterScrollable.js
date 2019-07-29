@@ -6,7 +6,7 @@ class FooterScrollable extends Component {
     render() {
         return (
             <div className="footer-scrollabe-bg flex-center font-0">
-                Copyright © LIKELION in SNU
+                Copyright © LIKELION
             </div>
         );
     }
