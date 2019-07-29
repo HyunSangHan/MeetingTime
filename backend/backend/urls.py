@@ -23,7 +23,7 @@ router.register('meeting_info', views.MeetingInfoView, 'meeting_info')
 
 urlpatterns = [
     path('oauth/', views.oauth, name='oauth'),
-    path('get_code/', views.get_code, name='get_code'),
+    # path('get_code/', views.get_code, name='get_code'),
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path('join/', views.Join.as_view()),

@@ -128,8 +128,8 @@ class Main extends Component {
                             <Col xs={12}>
                                 <div className={"font-big font-white mt-4"}>
                                     {/* {this.props.info.title} */}
-                                    {this.props.meeting_info.location}
-                                    <a href="http://localhost:8000/get_code">테스트로그인</a>
+                                    {this.props.current_meeting.location}
+                                    <a href="https://kauth.kakao.com/oauth/authorize?client_id=a6901347b31d90b387660121f5a20e42&redirect_uri=http://localhost:8000/oauth&response_type=code">테스트로그인</a>
                                     <a id="kakao-login-btn"></a>
                                     <a href="http://developers.kakao.com/logout">로그아웃</a>
                                 </div>
