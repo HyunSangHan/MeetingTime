@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
+    "immutable": "^4.0.0-rc.12",
     "material-icons-react": "^1.0.4",
     "react": "^16.8.4",
     "react-copy-to-clipboard": "^5.0.1",

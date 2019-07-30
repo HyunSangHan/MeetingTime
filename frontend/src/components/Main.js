@@ -110,7 +110,7 @@ class Main extends Component {
                                 user={this.props.user}
                                 offPopup={this.props.offPopup}
                                 offPopupJoin={this.props.offPopupJoin}
-                                is_joined_done={this.state.is_joined_done}
+                                is_joined_done={this.props.is_joined_done}
                             />
                         </div>
                     </div>

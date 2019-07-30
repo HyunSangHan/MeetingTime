@@ -12,7 +12,6 @@ export const createJoinedPopup = () => ({
     type: types.CREATE_JOINED_POPUP
 });
 
-
 export const createCopiedPopup = () => ({
     type: types.CREATE_COPIED_POPUP
 });
