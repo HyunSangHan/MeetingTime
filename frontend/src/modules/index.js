@@ -28,6 +28,6 @@ export default handleActions({
     },
 }, initialState);
 
-export const validateTfa = createAction(
+export const deletePopupJoin = createAction(
     DELETE_POPUP_JOIN,
 );
