@@ -73,12 +73,15 @@ class Meeting(models.Model):
                 meeting_id=random.randrange(1, NUM_OF_SEED_FOR_BASE+1)
             )
 
-            if JoinedUser.objects.get(profile_id=k).is_male:
-                JoinedUser.objects.get(profile_id=k).rank = male_rank
+            joined_user = JoinedUser.objects.get(profile_id=k)
+            if joined_user.profile.is_male:
+                joined_user.rank = male_rank
                 male_rank += 1
             else:
-                JoinedUser.objects.get(profile_id=k).rank = female_rank
+                joined_user.rank = female_rank
                 female_rank += 1
+            joined_user.save()
+
 
 class Company(models.Model):
     name = models.CharField(max_length=20, blank=True)
@@ -125,6 +128,13 @@ class JoinedUser(models.Model):
     def __str__(self):
         return f'{self.profile.user.username} (is_male: {self.profile.is_male})'
 
+class KakaoChatting(models.Model):
+    kakao_chattingroom = models.URLField(null=True, blank=True)
+    is_used = models.BooleanField(default=False)
+
+    def __str__(self):
+        return kakao_chattingroom
+
 class Matching(models.Model):
     joined_male = models.ForeignKey(JoinedUser, related_name = 'joined_male', on_delete=models.CASCADE)
     joined_female = models.ForeignKey(JoinedUser, related_name = 'joined_female', on_delete=models.CASCADE)
@@ -138,27 +148,19 @@ class Matching(models.Model):
     def seed(num_of_seed):
         import random
 
-        for k in range(1, 4)
-            joined_male = JoinedUser.objects.get(is_male = True, rank=k)
-            joined_female = JoinedUser.objects.get(is_male = False, rank=k)
-            Matching.joined_male = joined_male
-            Matching.joined_female = joined_female
-            trial_time = random.randint(1, 3)
-            is_greenlight_male = random.choice([True, False])
-            is_greenlight_female = random.choice([True, False])
-            is_gift_male = random.choice([True, False])
-            is_gift_female = random.choice([True, False])
-            kakao_chatting_uri = f'This is uri of kakao #{k}'
+        for k in range(1, 4):
+            joined_male = JoinedUser.objects.get(profile__is_male = True, rank=k)
+            joined_female = JoinedUser.objects.get(profile__is_male = False, rank=k)
 
-            KakaoChatting.objects.create(
-                kakao_chattingroom = kakao_chatting_uri,
-                is_used = True
+            Matching.objects.create(
+                joined_male = joined_male, 
+                joined_female = joined_female,
+                trial_time = random.randint(1, 3),
+                is_greenlight_male = random.choice([True, False]),
+                is_greenlight_female = random.choice([True, False]),
+                is_gift_male = random.choice([True, False]),
+                is_gift_female = random.choice([True, False])
             )
             
     def __str__(self):
         return f'남: {str(self.joined_male)} / 여: {str(self.joined_female)}'
-
-class KakaoChatting(models.Model):
-    kakao_chattingroom = models.URLField(null=True, blank=True)
-    is_used = models.BooleanField(default=false)
-
