@@ -24,6 +24,8 @@ class Main extends Component {
         this.state = { 
             meeting_month: year[1],
             meeting_day: year[2],
+            is_joined: false,
+            is_copied: false,
         }
     }
 
@@ -60,11 +62,36 @@ class Main extends Component {
         });
     }
 
+    onJoinedPopup() {
+        this.setState({
+            is_joined: true,
+        });
+    }
+
+    onCopiedPopup() {
+        this.setState({
+            is_copied: true,
+        })
+    }
+
+    kakaoLogout = () => () => {
+        console.log(window.Kakao.Auth.getAccessToken());
+        window.Kakao.Auth.logout(function(data){
+            console.log(data)
+        });
+        axios.get("/logout")
+        .then(response => {
+            console.log(response.data)
+            console.log("로그아웃 완료")
+        })
+        .catch(err => console.log(err));
+    }
+
     render() {
         return (
             <div className={"frame"}>
 {/*팝업들*/}
-                {this.props.is_copied &&
+                {this.state.is_copied &&
                 <div className={"App"}>
                     <div className={"flex-center"}>
                         <div className={"fix minus-height z-4"}>
@@ -75,14 +102,16 @@ class Main extends Component {
                     <div className={"frame-dark fix z-3"}/>
                 </div>
                 }
-                {this.props.is_joined &&
+                {this.state.is_joined &&
                 <div className={"App"}>
                     <div className={"flex-center"}>
                         <div className={"fix minus-height z-4"}>
-                            <JoinedPopup user={this.props.user}
-                                        offPopup={this.props.offPopup}
-                                        offPopupJoin={this.props.offPopupJoin}
-                                        is_joined_done={this.props.is_joined_done}/>
+                            <JoinedPopup
+                                user={this.props.user}
+                                offPopup={this.props.offPopup}
+                                offPopupJoin={this.props.offPopupJoin}
+                                is_joined_done={this.state.is_joined_done}
+                            />
                         </div>
                     </div>
                     <div className={"frame-dark fix z-3"}/>
@@ -120,9 +149,8 @@ class Main extends Component {
                                     {/* {this.props.info.title} */}
                                     {this.props.current_meeting.location}
                                     <br/>
-                                    {/* <a href="https://kauth.kakao.com/oauth/authorize?client_id=a6901347b31d90b387660121f5a20e42&redirect_uri=http://localhost:8000/oauth&response_type=code">카카오로그인 </a> */}
                                     <a id="kakao-login-btn"></a>
-                                    <a href="http://developers.kakao.com/logout">로그아웃</a>
+                                    <div className="font-05 hover" onClick={this.kakaoLogout()}>카카오로그아웃</div>
                                 </div>
                             </Col>
                             <Col xs={12}>
@@ -138,11 +166,11 @@ class Main extends Component {
                                 {/*추후 조건부 렌더 필요한부분*/}
                                 {this.props.is_joined_done
                                     ? (<div className={"big-button-black flex-center font-2 font-white"}
-                                            onClick={this.props.onJoinedPopup}>
+                                            onClick={this.onJoinedPopup.bind(this)}>
                                         현재 순위: {this.props.user.rank}
                                     </div>)
                                     : (<div className={"big-button-red flex-center font-2 font-white"}
-                                            onClick={this.props.onJoinedPopup}>
+                                            onClick={this.onJoinedPopup.bind(this)}>
                                         선착순 번호표 뽑기
                                         {/*{this.props.cutline}*/}
                                     </div>)}
@@ -278,7 +306,7 @@ class Main extends Component {
                                     </Col>
                                     <Col xs={3} className={"h8vh flex-j-end"}>
                                         <CopyToClipboard text={this.props.user.recommendation_code}>
-                                            <div className={"copy-button deco-none flex-center"} onClick={this.props.onCopiedPopup}>
+                                            <div className={"copy-button deco-none flex-center"} onClick={this.onCopiedPopup.bind(this)}>
                                                 <MaterialIcon icon="file_copy" size="25px" color="lightgrey"/>
                                             </div>
                                         </CopyToClipboard>

@@ -13,6 +13,10 @@ import requests
 import json
 from django.shortcuts import redirect
 
+def logout(request):
+    auth.logout(request)
+    return redirect('http://localhost:3000/')
+
 class KakaoLogin(SocialLoginView):
     adapter_class = KakaoOAuth2Adapter
 
@@ -22,6 +26,8 @@ class MeetingInfoView(viewsets.ModelViewSet):
 
 class CurrentMeeting(APIView):
     def get(self, request, format=None):
+        print(request.user)
+        print(request.user.is_authenticated)
         # 미팅일자가 현재보다 미래인 경우 + 가장 빨리 디가오는 미팅 순으로 정렬해서 + 가장 앞에 있는 미팅일정 1개만 쿼리셋에 담기 
         queryset = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
         if queryset is not None:
@@ -41,7 +47,7 @@ class Join(APIView):
     # =========Just for test (START)=========
     user = User.objects.all().first() # 이후 테스트용
     # =========Just for test (END)=========
-    # user = request.user # request에 user가 있다고 가정하고. 그런데 session관리는 어떻게 해야하는지 고민 필요. 혹시 토큰으로?
+    # user = request.user
     my_profile = user.profile
     current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
     joined_user = JoinedUser.objects.filter(profile=my_profile, meeting=current_meeting).first()
