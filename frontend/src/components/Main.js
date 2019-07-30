@@ -10,6 +10,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Footer from "./Footer";
 import Heart from "./details/Heart";
 import Chat from "./details/Chat";
+import axios from 'axios'; //카카오로그인 실험용
 
 class Main extends Component {
 
@@ -28,6 +29,35 @@ class Main extends Component {
 
     componentDidMount(){
         window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);
+        // 카카오 로그인 버튼을 생성합니다.
+        window.Kakao.Auth.createLoginButton({
+            container: '#kakao-login-btn',
+            success: function(authObj) {
+                // 로그인 성공시, 장고의 KAKAO Login API를 호출함
+                axios.post("/rest-auth/kakao/", {
+                    access_token: authObj.access_token,
+                    code: process.env.REACT_APP_KAKAO_REST_API_KEY
+                })
+                .then( response => {
+                    console.log("로그인 성공");
+                    // console.log();
+                    // axios.post("/profile/", {
+                    //     // is_male: 0000,
+                    // })
+                    // .catch( err => {
+                    //     console.log(err);
+                    // });
+                    })
+                .catch( err => {
+                    console.log(err);
+                });
+
+            },
+            fail: function(err) {
+                alert(JSON.stringify(err));
+                console.log(err);
+            }
+        });
     }
 
     render() {
@@ -90,7 +120,8 @@ class Main extends Component {
                                     {/* {this.props.info.title} */}
                                     {this.props.current_meeting.location}
                                     <br/>
-                                    <a href="https://kauth.kakao.com/oauth/authorize?client_id=a6901347b31d90b387660121f5a20e42&redirect_uri=http://localhost:8000/oauth&response_type=code">카카오로그인 </a>
+                                    {/* <a href="https://kauth.kakao.com/oauth/authorize?client_id=a6901347b31d90b387660121f5a20e42&redirect_uri=http://localhost:8000/oauth&response_type=code">카카오로그인 </a> */}
+                                    <a id="kakao-login-btn"></a>
                                     <a href="http://developers.kakao.com/logout">로그아웃</a>
                                 </div>
                             </Col>

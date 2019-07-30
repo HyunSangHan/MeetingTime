@@ -5,34 +5,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import MeetingSerializer, JoinSerializer, CurrentMeetingSerializer, CounterProfileSerializer
 from django.contrib.auth.models import User
+from django.contrib import auth
 from django.utils import timezone
 from allauth.socialaccount.providers.kakao.views import KakaoOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 import requests
 import json
 from django.shortcuts import redirect
-from backend.settings import KAKAO_AUTH_REST_API_KEY
-
-def oauth(request):
-    authorize_code = request.GET.get('code')
-    DATA_FOR_GET_ACCESS_TOKEN = {
-        'grant_type' : 'authorization_code',
-        'client_id': KAKAO_AUTH_REST_API_KEY,
-        'redirect_uri': 'http://localhost:8000/oauth',
-        'code': authorize_code
-        }
-    access_token = requests.post('https://kauth.kakao.com/oauth/token', data=DATA_FOR_GET_ACCESS_TOKEN).json()['access_token']
-
-    print(access_token)
-    print(KAKAO_AUTH_REST_API_KEY)
-
-    DATA_FOR_GET_USER_INFO = {
-        'access_token': access_token,
-        'code' : KAKAO_AUTH_REST_API_KEY
-        }
-    response = requests.post('http://localhost:8000/rest-auth/kakao/', data=DATA_FOR_GET_USER_INFO).json()['key']
-    print('로그인된 유저의 Token값은 "'+ str(response)+'"이고, 이름은 "'+User.objects.filter(auth_token=response).first().username+'"입니다.')
-    return redirect('http://localhost:3000/')
 
 class KakaoLogin(SocialLoginView):
     adapter_class = KakaoOAuth2Adapter
