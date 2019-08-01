@@ -78,7 +78,6 @@ class App extends Component {
                                 info={this.state.info}
                                 user={this.state.user}
                                 ex_user={this.state.ex_user}
-                                is_joined_done={this.props.is_joined_done}
                                 offPopup={this.props.offPopup}
                                 offPopupJoin={this.props.offPopupJoin}
                                 meeting={this.props.meeting}
@@ -134,7 +133,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-    is_joined_done: state.is_joined_done,
     meeting: state.meeting,
 })
 
