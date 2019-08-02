@@ -156,4 +156,4 @@ class Matching(models.Model):
             )
             
     def __str__(self):
-        return f'남: {str(self.joined_male)} / 여: {str(self.joined_female)}'
+        return f'남: {str(self.joined_male)} / 여: {str(self.joined_female)} / 셔플 횟수: {str(self.trial_time)}'
