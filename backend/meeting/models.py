@@ -122,11 +122,11 @@ class JoinedUser(models.Model):
         return f'{self.profile.user.username} (is_male: {self.profile.is_male})'
 
 class KakaoChatting(models.Model):
-    kakao_chattingroom = models.URLField(null=True, blank=True)
+    chattingroom_url = models.URLField(null=True, blank=True)
     is_used = models.BooleanField(default=False)
 
     def __str__(self):
-        return kakao_chattingroom
+        return chattingroom_url
 
 class Matching(models.Model):
     joined_male = models.ForeignKey(JoinedUser, related_name = 'joined_male', on_delete=models.CASCADE)
