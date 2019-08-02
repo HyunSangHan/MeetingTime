@@ -62,24 +62,17 @@ class Meeting(models.Model):
             profile.age_range = 20
             profile.save()
 
-        # rank seeding
-        male_rank = 1
-        female_rank = 1
 
         for k in range(1, NUM_OF_SEED_FOR_ADD+1):
             # JoinedUser
-            JoinedUser.objects.create(
-                profile_id=k,
-                meeting_id=random.randrange(1, NUM_OF_SEED_FOR_BASE+1)
-            )
-
-            joined_user = JoinedUser.objects.get(profile_id=k)
+            joined_user = JoinedUser.objects.create(
+                        profile_id=k,
+                        meeting_id=random.randrange(1, NUM_OF_SEED_FOR_BASE+1)
+                    )
             if joined_user.profile.is_male:
-                joined_user.rank = male_rank
-                male_rank += 1
+                joined_user.rank = JoinedUser.objects.filter(profile__is_male=True).count()+1
             else:
-                joined_user.rank = female_rank
-                female_rank += 1
+                joined_user.rank = JoinedUser.objects.filter(profile__is_male=False).count()+1                
             joined_user.save()
 
 
