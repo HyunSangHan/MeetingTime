@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
-from .models import Meeting, JoinedUser, Profile, Matching
+from .models import Meeting, JoinedUser, Profile, Matching, KakaoChatting
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import MeetingSerializer, JoinSerializer, CurrentMeetingSerializer, CounterProfileSerializer, MatchingSerializer, ProfileSerializer
@@ -14,10 +14,17 @@ class MeetingInfoView(viewsets.ModelViewSet):
 
 class CurrentMatching(APIView):
     def get(self, request, format=None):
-        joined_user = JoinedUser.objects.filter(profile__user=request.data)
-        if joined_user is not None:
-            current_matching = joined_user.matching
-            return Response(current_matching, status=status.HTTP_200_OK)
+        
+        # for Debugging
+        user = User.objects.all().first()
+        
+        #joined_user = JoinedUser.objects.filter(profile__user=request.data)
+        # joined_user = JoinedUser.objects.filter(profile=user.profile).first()
+        matching = Matching.objects.all().first()
+        if matching is not None:
+            # current_matching = joined_user.matching
+            serializer = MatchingSerializer(matching)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -84,11 +91,16 @@ class CurrentMatching(APIView):
         queryset = Matching.objects.filter(id=request.data.id)
         serializer = MatchingSerializer(queryset, data=request.data, partial=True)
         if serializer.is_greenlight_male and serializer.is_greenlight_female:
+
+            kakao_chattingroom_url = KakaoChatting.objects.filter(is_used=False).first()
+            kakao_chattingroom_url.is_used = True
+            kakao_chattingroom_url.save()
             successful_matching_data = {
-                "kakao_chattingroom": "kakao_chat_example/1"
+                "kakao_chattingroom": kakao_chattingroom_url
             # kakao 채팅방을 최대 50개를 준비해놓고 ChattingRoom 이런 model에 저장해놓은 다음 filter 해서 할당되지 않은 첫번째
             # url을 할당하는 것도 괜찮을 것 같네요 (50개는 우리가 매주 admin으로 입력해놓고)
             }
+
             serializer = MatchingSerializer(queryset, data=successful_matching_data, partial=True)
         if serializer.is_valid():
             serializer.save()

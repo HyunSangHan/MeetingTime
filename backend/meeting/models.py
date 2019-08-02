@@ -110,7 +110,7 @@ class Profile(models.Model):
 class JoinedUser(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
-    matching = models.ManyToManyField('self', through = 'Matching', symmetrical= False)
+    matching = models.ManyToManyField('self', through = 'Matching', symmetrical= False, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     is_matched = models.BooleanField(default=False)
     rank = models.IntegerField(null=True, blank=True)
@@ -126,7 +126,7 @@ class KakaoChatting(models.Model):
     is_used = models.BooleanField(default=False)
 
     def __str__(self):
-        return chattingroom_url
+        return self.chattingroom_url
 
 class Matching(models.Model):
     joined_male = models.ForeignKey(JoinedUser, related_name = 'joined_male', on_delete=models.CASCADE)
