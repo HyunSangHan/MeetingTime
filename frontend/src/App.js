@@ -8,7 +8,6 @@ import Initpage from "./components/Initpage";
 import SignUp from "./components/SignUp";
 import Result from "./components/details/Result";
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
-import * as actions from './actions';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -79,7 +78,6 @@ class App extends Component {
                                 user={this.state.user}
                                 ex_user={this.state.ex_user}
                                 offPopup={this.props.offPopup}
-                                offPopupJoin={this.props.offPopupJoin}
                                 meeting={this.props.meeting}
                                 cutline={this.state.cutline}
                             />
@@ -125,16 +123,4 @@ class App extends Component {
     }
 }
 
-// 액션 생성 함수 준비
-const mapDispatchToProps = (dispatch) => ({
-    offPopup: () => dispatch(actions.deletePopup()),
-    offPopupJoin: () => dispatch(actions.deletePopupJoin()),
-    // onClickedMainButton: () => dispatch(actions.createClickedMainButton())
-});
-
-const mapStateToProps = (state) => ({
-    meeting: state.meeting,
-})
-
-// 리덕스에 연결시키고 내보내기
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

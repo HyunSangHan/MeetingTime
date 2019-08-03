@@ -21,14 +21,12 @@ class Main extends Component {
         super(props);
 
         //여기 넣어놔도 문제없을까.
-        let year = this.props.meeting.meeting_date.split("-")
+        let year = this.props.meeting.get('meeting_date').split("-")
 
         //아직 쓰지 않지만, 이런 식으로 날짜를 파싱해서 프론트에서 사용해야겠다.
-        this.state = { 
+        this.state = {
             meeting_month: year[1],
             meeting_day: year[2],
-            is_joined: false,
-            is_copied: false,
         }
     }
 
@@ -65,18 +63,6 @@ class Main extends Component {
         });
     }
 
-    onJoinedPopup() {
-        this.setState({
-            is_joined: true,
-        });
-    }
-
-    onCopiedPopup() {
-        this.setState({
-            is_copied: true,
-        })
-    }
-
     kakaoLogout = () => () => {
         console.log(window.Kakao.Auth.getAccessToken());
         window.Kakao.Auth.logout(function(data){
@@ -90,30 +76,33 @@ class Main extends Component {
         .catch(err => console.log(err));
     }
 
+    // join() {
+    //     const { Actions } = this.props;
+    // }
+
     render() {
-        const {user, offPopup, Actions, is_joined_done, ex_user, current_meeting, info } = this.props;
+        const {user, Actions, is_copied, is_joined, is_joined_done, ex_user, current_meeting, info } = this.props;
         return (
             <div className={"frame"}>
 {/*팝업들*/}
-                {this.state.is_copied &&
+                {is_copied &&
                 <div className={"App"}>
                     <div className={"flex-center"}>
                         <div className={"fix minus-height z-4"}>
                             <CopiedPopup user={user}
-                                        offPopup={offPopup}/>
+                                        deletePopup={Actions.deletePopup}/>
                         </div>
                     </div>
                     <div className={"frame-dark fix z-3"}/>
                 </div>
                 }
-                {this.state.is_joined &&
+                {is_joined &&
                 <div className={"App"}>
                     <div className={"flex-center"}>
                         <div className={"fix minus-height z-4"}>
                             <JoinedPopup
                                 user={user}
-                                offPopup={offPopup}
-                                offPopupJoin={Actions.offPopupJoin}
+                                deletePopupJoin={Actions.deletePopupJoin}
                                 is_joined_done={is_joined_done}
                             />
                         </div>
@@ -170,11 +159,11 @@ class Main extends Component {
                                 {/*추후 조건부 렌더 필요한부분*/}
                                 {is_joined_done
                                     ? (<div className={"big-button-black flex-center font-2 font-white"}
-                                            onClick={this.onJoinedPopup.bind(this)}>
+                                            onClick={Actions.createJoinedPopup}>
                                         현재 순위: {user.rank}
                                     </div>)
                                     : (<div className={"big-button-red flex-center font-2 font-white"}
-                                            onClick={this.onJoinedPopup.bind(this)}>
+                                            onClick={Actions.createJoinedPopup}>
                                         선착순 번호표 뽑기
                                         {/*{this.props.cutline}*/}
                                     </div>)}
@@ -209,7 +198,7 @@ class Main extends Component {
                                     </Col>
                                     <Col xs={2} md={3} className={"h17vh flex-j-end"}>
                                         <div className={"pc-none"}>
-                                            <MaterialIcon icon="arrow_forward_ios" size="23x" color="#f0f0f0"/>
+                                            <MaterialIcon icon="arrow_forward_ios" size="23px" color="#f0f0f0"/>
                                         </div>
                                     </Col>
                                 </Row>
@@ -310,7 +299,7 @@ class Main extends Component {
                                     </Col>
                                     <Col xs={3} className={"h8vh flex-j-end"}>
                                         <CopyToClipboard text={user.recommendation_code}>
-                                            <div className={"copy-button deco-none flex-center"} onClick={this.onCopiedPopup.bind(this)}>
+                                            <div className={"copy-button deco-none flex-center"} onClick={Actions.createCopiedPopup}>
                                                 <MaterialIcon icon="file_copy" size="25px" color="lightgrey"/>
                                             </div>
                                         </CopyToClipboard>
@@ -333,7 +322,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-    is_joined_done: state.is_joined_done,
+    is_copied: state.join.get('is_copied'),
+    is_joined: state.join.get('is_joined'),
+    is_joined_done: state.join.get('is_joined_done'),
+    meeting: state.join.get('meeting'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

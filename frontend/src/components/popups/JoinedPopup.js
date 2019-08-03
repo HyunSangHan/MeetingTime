@@ -11,7 +11,7 @@ class JoinedPopup extends Component {
     render() {
         return (
             <div className={"App flex-center"}>
-                <div  className={"abs hover"} onClick={this.props.offPopupJoin}>
+                <div  className={"abs hover"} onClick={this.props.deletePopupJoin}>
                     <MaterialIcon icon="clear" size="25px" color="lightgrey"/>
                 </div>
                 {this.props.is_joined_done
