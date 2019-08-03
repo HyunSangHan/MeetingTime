@@ -1,14 +1,19 @@
 import { createAction, handleActions } from 'redux-actions';
 import { Map } from 'immutable';
-<<<<<<< HEAD
 // import {getMeetingInfo} from '../actions/index'
 
-const prefix = "join";
-const DELETE_POPUP_JOIN = `${prefix}/DELETE_POPUP_JOIN`;
-const DELETE_POPUP = `${prefix}/DELETE_POPUP`;
-const CREATE_COPIED_POPUP = `${prefix}/CREATE_COPIED_POPUP`;
-const CREATE_JOINED_POPUP = `${prefix}/CREATE_JOINED_POPUP`;
-const GET_MEETING_INFO = `${prefix}/GET_MEETING_INFO`;
+// const prefix = "join";
+const DELETE_POPUP_JOIN = `DELETE_POPUP_JOIN`;
+const DELETE_POPUP = `DELETE_POPUP`;
+const CREATE_COPIED_POPUP = `CREATE_COPIED_POPUP`;
+const CREATE_JOINED_POPUP = `CREATE_JOINED_POPUP`;
+const GET_MEETING_INFO = `GET_MEETING_INFO`;
+// const DELETE_POPUP_JOIN = `${prefix}/DELETE_POPUP_JOIN`;
+// const DELETE_POPUP = `${prefix}/DELETE_POPUP`;
+// const CREATE_COPIED_POPUP = `${prefix}/CREATE_COPIED_POPUP`;
+// const CREATE_JOINED_POPUP = `${prefix}/CREATE_JOINED_POPUP`;
+// const GET_MEETING_INFO = `${prefix}/GET_MEETING_INFO`;
+
 
 const initialState = Map({
     is_joined: false,
@@ -48,20 +53,3 @@ export const deletePopup = createAction(DELETE_POPUP, payload => payload);
 export const createCopiedPopup = createAction(CREATE_COPIED_POPUP, payload => payload);
 export const createJoinedPopup = createAction(CREATE_JOINED_POPUP, payload => payload);
 export const getMeetingInfo = createAction(GET_MEETING_INFO, payload => payload);
-=======
-
-const prefix = "join";
-const DELETE_POPUP_JOIN = `${prefix}/DELETE_POPUP_JOIN`;
-
-const initialState = Map({
-    is_joined_done: false,
-});
-
-export default handleActions({
-    [DELETE_POPUP_JOIN]: (state, action) => {
-        return state.set('is_joined_done', action.payload.is_joined_done);
-    },
-}, initialState);
-
-export const deletePopupJoin = createAction(DELETE_POPUP_JOIN, payload => payload);
->>>>>>> f635bb43cefe2d299774fd44e1276d086443882e
