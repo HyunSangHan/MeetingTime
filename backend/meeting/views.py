@@ -16,56 +16,71 @@ class CurrentMatching(APIView):
     def get(self, request, format=None):
         
         # for Debugging
-        user = User.objects.all().first()
-        
-        #joined_user = JoinedUser.objects.filter(profile__user=request.data)
-        # joined_user = JoinedUser.objects.filter(profile=user.profile).first()
-        matching = Matching.objects.all().first()
+        profile = User.objects.all().first().profile
+        print(profile)
+        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+        print(current_meeting)
+        joined_user = JoinedUser.objects.filter(meeting=current_meeting, profile=profile).last()
+        print(joined_user)
+
+        if profile.is_male:
+            matching = Matching.objects.filter(trial_time=3, joined_male=joined_user).first()
+        else:
+            matching = Matching.objects.filter(trial_time=3, joined_female=joined_user).last()
+
+
         if matching is not None:
-            # current_matching = joined_user.matching
             serializer = MatchingSerializer(matching)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request, format=None):
-        joined_users_male = list(JoinedUser.objects.filter(is_matched=False, profile__is_male=True))
-        joined_users_female = list(JoinedUser.objects.filter(is_matched=False, profile__is_male=False))
+        # for debugging
+        cutline=3
+        
+        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+        joined_users_male = list(JoinedUser.objects.filter(is_matched=False, profile__is_male=True, rank__lte=cutline))
+        joined_users_female = list(JoinedUser.objects.filter(is_matched=False, profile__is_male=False, rank__lte=cutline))
         numbers = list(range(len(joined_users_male)))
         random.shuffle(numbers)
 
+        print(joined_users_male)
+        print(joined_users_female)
+        print(current_meeting)
+
         for i in range(len(joined_users_male)):
-            if request.data.trial_time == 1:
-                serializer = MatchingSerializer(Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data.trial_time))
+            if request.data["trial_time"] == 1:
+                Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
                 joined_users_male[i].already_met_one = joined_users_female[numbers[0]].rank
                 joined_users_female[numbers[0]].already_met_one = joined_users_male[i].rank
                 joined_users_male[i].save()
                 joined_users_female[numbers[0]].save()
-                numbers[0].pop()
-            elif request.data.trial_time == 2:
+                numbers.pop(0)
+            elif request.data["trial_time"] == 2:
                 runned = 1
                 while runned < 10:
                     if joined_users_male[i].already_met_one != joined_users_female[numbers[0]].rank:
-                        serializer = MatchingSerializer(Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data.trial_time))
+                        Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
                         joined_users_male[i].already_met_two = joined_users_female[numbers[0]].rank
                         joined_users_female[numbers[0]].already_met_two = joined_users_male[i].rank
                         joined_users_male[i].save()
                         joined_users_female[numbers[0]].save()
-                        numbers[0].pop()
+                        numbers.pop(0)
                         break
                     else:
                         random.shuffle(numbers)
                         runned += 1
-            elif request.data.trial_time == 3:
+            elif request.data["trial_time"] == 3:
                 runned = 1
                 while runned < 10:
                     if joined_users_male[i].already_met_two != joined_users_female[numbers[0]].rank:
-                        serializer = MatchingSerializer(Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data.trial_time))
+                        Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
                         joined_users_male[i].already_met_three = joined_users_female[numbers[0]].rank
                         joined_users_female[numbers[0]].already_met_three = joined_users_male[i].rank
                         joined_users_male[i].save()
                         joined_users_female[numbers[0]].save()
-                        numbers[0].pop()
+                        numbers.pop(0)
                         break
                     else:
                         random.shuffle(numbers)
@@ -74,18 +89,19 @@ class CurrentMatching(APIView):
                 runned = 1
                 while runned < 10:
                     if joined_users_male[i].already_met_three != joined_users_female[numbers[0]].rank:
-                        serializer = MatchingSerializer(Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data.trial_time))
-                        numbers[0].pop()
+                        Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
+                        numbers.pop(0)
                         break
                     else:
                         random.shuffle(numbers)
                         runned += 1
 
-            if serializer.is_valid():
-                serializer.save()
-            else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        queryset = Matching.objects.filter(trial_time=request.data["trial_time"], joined_male__meeting=current_meeting)
+        serializer = MatchingSerializer(queryset, many=True)
+        if queryset is not None:
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
 
     def patch(self, request, format=None):
         queryset = Matching.objects.filter(id=request.data.id)
@@ -107,8 +123,8 @@ class CurrentMatching(APIView):
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
     def delete(self, request, format=None):
-        if request.data.trial_time > 0:
-            Matching.objects.filter(trial_time=request.data.trial_time, is_matched=False).delete()
+        if request.data["trial_time"] > 0:
+            Matching.objects.filter(trial_time=request.data["trial_time"], is_matched=False).delete()
         else:
             Matching.objects.all().delete()
         return Response(status=status.HTTP_202_ACCEPTED)
