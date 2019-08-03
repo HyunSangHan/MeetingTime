@@ -4,9 +4,16 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
+<<<<<<< HEAD
 import { createStore, compose, applyMiddleware } from 'redux'
 //import reducers from './reducers';
 import reducers from './modules';
+=======
+import { createStore } from 'redux'
+import reducers from './reducers';
+// import reducers from './modules';
+// 나중에 module 완성되면 적용
+>>>>>>> f635bb43cefe2d299774fd44e1276d086443882e
 import { Provider } from 'react-redux';
 import ReduxThunk from "redux-thunk";
 import penderMiddleware from "redux-pender";
