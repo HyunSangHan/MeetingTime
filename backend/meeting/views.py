@@ -17,11 +17,8 @@ class CurrentMatching(APIView):
         
         # for Debugging
         profile = User.objects.all().first().profile
-        print(profile)
         current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
-        print(current_meeting)
         joined_user = JoinedUser.objects.filter(meeting=current_meeting, profile=profile).last()
-        print(joined_user)
 
         if profile.is_male:
             matching = Matching.objects.filter(trial_time=3, joined_male=joined_user).first()
@@ -36,18 +33,12 @@ class CurrentMatching(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request, format=None):
-        # for debugging
-        cutline=3
-
         current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+        cutline = current_meeting.cutline
         joined_users_male = list(JoinedUser.objects.filter(is_matched=False, profile__is_male=True, rank__lte=cutline))
         joined_users_female = list(JoinedUser.objects.filter(is_matched=False, profile__is_male=False, rank__lte=cutline))
         numbers = list(range(len(joined_users_male)))
         random.shuffle(numbers)
-
-        print(joined_users_male)
-        print(joined_users_female)
-        print(current_meeting)
 
         for i in range(len(joined_users_male)):
             if request.data["trial_time"] == 1:
@@ -159,20 +150,15 @@ class CurrentMeeting(APIView):
 
         cutline = joined_male_last_rank if joined_male_last_rank > joined_female_last_rank else joined_female_last_rank
         
+
+        # Serializer가 필요하지 않아보이므로 우선 queryset.save()로 구현 
+        # 추후 Serializer로 통일하는 것이 좋을 것으로 판단되면 수정
         if cutline is not None:
             queryset.cutline = cutline
             queryset.save()
             return Response(status=status.HTTP_202_ACCEPTED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-
-        # serializer = CurrentMeetingSerializer(queryset, data=cutline, partial=True)
-
-        # if serializer.is_valid():
-        #     serializer.save()
-        #     return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        # else:
-        #     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class Join(APIView):
     # =========Just for test (START)=========
