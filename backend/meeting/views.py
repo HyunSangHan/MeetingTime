@@ -38,7 +38,7 @@ class CurrentMatching(APIView):
     def post(self, request, format=None):
         # for debugging
         cutline=3
-        
+
         current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
         joined_users_male = list(JoinedUser.objects.filter(is_matched=False, profile__is_male=True, rank__lte=cutline))
         joined_users_female = list(JoinedUser.objects.filter(is_matched=False, profile__is_male=False, rank__lte=cutline))
@@ -105,7 +105,9 @@ class CurrentMatching(APIView):
 
     def patch(self, request, format=None):
         queryset = Matching.objects.filter(id=request.data.id)
+        
         serializer = MatchingSerializer(queryset, data=request.data, partial=True)
+
         if serializer.is_greenlight_male and serializer.is_greenlight_female:
 
             kakao_chattingroom_url = KakaoChatting.objects.filter(is_used=False).first()
@@ -145,6 +147,32 @@ class CurrentMeeting(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        # 프론트에서 Join 시간이 종료되면 호출되며 cutline을 설정
+    def patch(self, request, format=None):
+        # current meeting 
+        queryset = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+        
+        # 남, 여 각각 미팅에 참여한 인원
+        joined_male_last_rank = JoinedUser.objects.filter(profile__is_male=True).order_by('rank').last().rank
+        joined_female_last_rank = JoinedUser.objects.filter(profile__is_male=False).order_by('rank').last().rank
+
+        cutline = joined_male_last_rank if joined_male_last_rank > joined_female_last_rank else joined_female_last_rank
+        
+        if cutline is not None:
+            queryset.cutline = cutline
+            queryset.save()
+            return Response(status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        # serializer = CurrentMeetingSerializer(queryset, data=cutline, partial=True)
+
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        # else:
+        #     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class Join(APIView):
     # =========Just for test (START)=========
