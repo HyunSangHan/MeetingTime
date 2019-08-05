@@ -60,9 +60,15 @@ class Main extends Component {
     }
 
     onJoinedPopup() {
-        this.setState({
-            is_joined: true,
-        });
+        axios.post("/join/")
+        .then(response => {
+            console.log(response.data)
+            console.log("join 성공")
+            this.setState({
+                is_joined: true,
+            });    
+        })
+        .catch(err => console.log(err));
     }
 
     onCopiedPopup() {
