@@ -3,7 +3,7 @@ from rest_framework import viewsets, status
 from .models import Meeting, JoinedUser, Profile, Matching, KakaoChatting
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import MeetingSerializer, JoinSerializer, CurrentMeetingSerializer, CounterProfileSerializer, MatchingSerializer, ProfileSerializer
+from .serializers import MeetingSerializer, JoinSerializer, CurrentMeetingSerializer, MatchingSerializer, ProfileSerializer
 from django.contrib.auth.models import User
 from django.contrib import auth
 import random
@@ -248,7 +248,7 @@ class CounterProfile(APIView):
 
         if my_profile is not None and current_meeting is not None and current_matching is not None and counter_joined_user is not None:
             queryset = counter_joined_user.profile
-            serializer = CounterProfileSerializer(queryset)
+            serializer = ProfileSerializer(queryset)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
