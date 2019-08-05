@@ -10,9 +10,9 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Footer from "./Footer";
 import Heart from "./details/Heart";
 import Chat from "./details/Chat";
+import axios from 'axios'; //카카오로그인 실험용
 
 class Main extends Component {
-
 
     constructor(props){
         super(props);
@@ -24,14 +24,71 @@ class Main extends Component {
         this.state = { 
             meeting_month: year[1],
             meeting_day: year[2],
+            is_joined: false,
+            is_copied: false,
         }
+    }
+
+    componentDidMount(){
+        window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);
+        // 카카오 로그인 버튼을 생성합니다.
+        window.Kakao.Auth.createLoginButton({
+            container: '#kakao-login-btn',
+            success: function(authObj) {
+                // 로그인 성공시, 장고의 KAKAO Login API를 호출함
+                axios.post("/rest-auth/kakao/", {
+                    access_token: authObj.access_token,
+                    code: process.env.REACT_APP_KAKAO_REST_API_KEY
+                })
+                .then( response => {
+                    axios.get("/profile")
+                    .then(response => {
+                        console.log("[로그인성공] " + response.data.user.username + "(회사:" + response.data.company.name + ")")
+                    })
+                    .catch(err => console.log(err));
+                })
+                .catch( err => {
+                    console.log(err);
+                });
+
+            },
+            fail: function(err) {
+                alert(JSON.stringify(err));
+                console.log(err);
+            }
+        });
+    }
+
+    onJoinedPopup() {
+        this.setState({
+            is_joined: true,
+        });
+    }
+
+    onCopiedPopup() {
+        this.setState({
+            is_copied: true,
+        })
+    }
+
+    kakaoLogout = () => () => {
+        console.log(window.Kakao.Auth.getAccessToken());
+        window.Kakao.Auth.logout(function(data){
+            console.log(data)
+        });
+        axios.get("/logout")
+        .then(response => {
+            console.log(response.data)
+            console.log("로그아웃 완료")
+        })
+        .catch(err => console.log(err));
     }
 
     render() {
         return (
             <div className={"frame"}>
 {/*팝업들*/}
-                {this.props.is_copied &&
+                {this.state.is_copied &&
                 <div className={"App"}>
                     <div className={"flex-center"}>
                         <div className={"fix minus-height z-4"}>
@@ -42,14 +99,16 @@ class Main extends Component {
                     <div className={"frame-dark fix z-3"}/>
                 </div>
                 }
-                {this.props.is_joined &&
+                {this.state.is_joined &&
                 <div className={"App"}>
                     <div className={"flex-center"}>
                         <div className={"fix minus-height z-4"}>
-                            <JoinedPopup user={this.props.user}
-                                        offPopup={this.props.offPopup}
-                                        offPopupJoin={this.props.offPopupJoin}
-                                        is_joined_done={this.props.is_joined_done}/>
+                            <JoinedPopup
+                                user={this.props.user}
+                                offPopup={this.props.offPopup}
+                                offPopupJoin={this.props.offPopupJoin}
+                                is_joined_done={this.state.is_joined_done}
+                            />
                         </div>
                     </div>
                     <div className={"frame-dark fix z-3"}/>
@@ -75,6 +134,7 @@ class Main extends Component {
 
 {/*PC와 모바일 공통*/}
                 <div className="up-bg flex-center frame-half">
+
                     <div className={"fix flex-center frame-half"}>
                         <img src={this.props.user.img_url} className={"bg-under-img"} alt={"profile-large-img"}/>
                     </div>
@@ -84,7 +144,10 @@ class Main extends Component {
                             <Col xs={12}>
                                 <div className={"font-big font-white mt-4"}>
                                     {/* {this.props.info.title} */}
-                                    {this.props.meeting_info.location}
+                                    {this.props.current_meeting.location}
+                                    <br/>
+                                    <a id="kakao-login-btn"></a>
+                                    <div className="font-05 hover" onClick={this.kakaoLogout()}>카카오로그아웃</div>
                                 </div>
                             </Col>
                             <Col xs={12}>
@@ -100,11 +163,11 @@ class Main extends Component {
                                 {/*추후 조건부 렌더 필요한부분*/}
                                 {this.props.is_joined_done
                                     ? (<div className={"big-button-black flex-center font-2 font-white"}
-                                            onClick={this.props.onJoinedPopup}>
+                                            onClick={this.onJoinedPopup.bind(this)}>
                                         현재 순위: {this.props.user.rank}
                                     </div>)
                                     : (<div className={"big-button-red flex-center font-2 font-white"}
-                                            onClick={this.props.onJoinedPopup}>
+                                            onClick={this.onJoinedPopup.bind(this)}>
                                         선착순 번호표 뽑기
                                         {/*{this.props.cutline}*/}
                                     </div>)}
@@ -240,7 +303,7 @@ class Main extends Component {
                                     </Col>
                                     <Col xs={3} className={"h8vh flex-j-end"}>
                                         <CopyToClipboard text={this.props.user.recommendation_code}>
-                                            <div className={"copy-button deco-none flex-center"} onClick={this.props.onCopiedPopup}>
+                                            <div className={"copy-button deco-none flex-center"} onClick={this.onCopiedPopup.bind(this)}>
                                                 <MaterialIcon icon="file_copy" size="25px" color="lightgrey"/>
                                             </div>
                                         </CopyToClipboard>

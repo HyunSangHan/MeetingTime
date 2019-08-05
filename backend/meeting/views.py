@@ -3,10 +3,23 @@ from rest_framework import viewsets, status
 from .models import Meeting, JoinedUser, Profile, Matching, KakaoChatting
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import MeetingSerializer, JoinSerializer, CurrentMeetingSerializer, CounterProfileSerializer, MatchingSerializer, ProfileSerializer
+from .serializers import MeetingSerializer, JoinSerializer, CurrentMeetingSerializer, MatchingSerializer, ProfileSerializer
 from django.contrib.auth.models import User
+from django.contrib import auth
 import random
 from django.utils import timezone
+from allauth.socialaccount.providers.kakao.views import KakaoOAuth2Adapter
+from rest_auth.registration.views import SocialLoginView
+import requests
+import json
+from django.shortcuts import redirect
+
+def logout(request):
+    auth.logout(request)
+    return redirect('http://localhost:3000/')
+
+class KakaoLogin(SocialLoginView):
+    adapter_class = KakaoOAuth2Adapter
 
 class MeetingInfoView(viewsets.ModelViewSet):
     serializer_class = MeetingSerializer
@@ -14,7 +27,6 @@ class MeetingInfoView(viewsets.ModelViewSet):
 
 class CurrentMatching(APIView):
     def get(self, request, format=None):
-        
         # for Debugging
         profile = User.objects.all().first().profile
         current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
@@ -124,6 +136,8 @@ class CurrentMatching(APIView):
 
 class CurrentMeeting(APIView):
     def get(self, request, format=None):
+        print(request.user)
+        print(request.user.is_authenticated)
         # 미팅일자가 현재보다 미래인 경우 + 가장 빨리 디가오는 미팅 순으로 정렬해서 + 가장 앞에 있는 미팅일정 1개만 쿼리셋에 담기
         queryset = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
         if queryset is not None:
@@ -164,7 +178,7 @@ class Join(APIView):
     # =========Just for test (START)=========
     user = User.objects.all().first() # 이후 테스트용
     # =========Just for test (END)=========
-    # user = request.user # request에 user가 있다고 가정하고. 그런데 session관리는 어떻게 해야하는지 고민 필요. 혹시 토큰으로?
+    # user = request.user
     my_profile = user.profile
     current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
     joined_user = JoinedUser.objects.filter(profile=my_profile, meeting=current_meeting).first()
@@ -234,29 +248,29 @@ class CounterProfile(APIView):
 
         if my_profile is not None and current_meeting is not None and current_matching is not None and counter_joined_user is not None:
             queryset = counter_joined_user.profile
-            serializer = CounterProfileSerializer(queryset)
+            serializer = ProfileSerializer(queryset)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 class Profile(APIView):
     
-    user = User.objects.all().first()
-    my_profile = user.profile
+    # #for debug
+    # my_profile = User.objects.all().first().profile
 
     def get(self, request, format=None):
-        queryset = self.my_profile
+        queryset = request.user.profile
         if queryset is not None:
             serializer = ProfileSerializer(queryset)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-    # Post는 User에서 구현하는 것으로!
+    # models.py에서 user와 연동하여 profile을 만들어주고 있으므로 Post는 불필요
     # def post(self, request, format=None):
 
     def patch(self, request, format=None):
-        queryset = self.my_profile
+        queryset = request.user.profile
         serializer = ProfileSerializer(queryset, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -265,8 +279,8 @@ class Profile(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, format=None):
-        if self.my_profile is not None:
-            self.user.delete()
+        if request.user.profile is not None:
+            request.user.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)

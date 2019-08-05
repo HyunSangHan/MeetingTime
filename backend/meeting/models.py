@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from allauth.account.signals import user_signed_up
 
 class Meeting(models.Model):
     open_time = models.DateTimeField()
@@ -106,6 +107,36 @@ class Profile(models.Model):
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
+
+    @receiver(user_signed_up)
+    def populate_profile(sociallogin, user, **kwargs):
+        if sociallogin.account.provider == 'kakao':
+            profile = user.profile
+            kakao_data = user.socialaccount_set.filter(provider='kakao')[0].extra_data
+
+            try:
+                gender = kakao_data['kakao_account']['gender']
+                if gender == 'male':
+                    profile.is_male = True
+                elif gender == 'female':
+                    profile.is_male = False
+            except:
+                pass
+
+            try:
+                gender = kakao_data['kakao_account']['age_range']
+                if gender == '10~19':
+                    profile.age_range = 10
+                elif gender == '20~29':
+                    profile.age_range = 20
+                elif gender == '30~39':
+                    profile.age_range = 30
+                elif gender == '40~49':
+                    profile.age_range = 40
+            except:
+                pass
+                
+            profile.save()
 
 class JoinedUser(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)

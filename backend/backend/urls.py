@@ -23,10 +23,17 @@ router.register('meeting_info', views.MeetingInfoView, 'meeting_info')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
     path('join/', views.Join.as_view()),
     path('current_meeting/', views.CurrentMeeting.as_view()),
     path('counter_profile/', views.CounterProfile.as_view()),
+    path('rest-auth/', include('rest_auth.urls')),
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('logout/', views.logout, name='logout'),
+    path('', include(router.urls)),
     path('profile/', views.Profile.as_view()),
     path('current_matching/', views.CurrentMatching.as_view())
+]
+
+urlpatterns += [
+    path('rest-auth/kakao/', views.KakaoLogin.as_view())
 ]

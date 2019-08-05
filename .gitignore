@@ -21,6 +21,10 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env
+**/.env
+secrets.json
+**/secrets.json
 
 .idea/
 
