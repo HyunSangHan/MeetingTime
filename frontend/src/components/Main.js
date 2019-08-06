@@ -30,7 +30,11 @@ class Main extends Component {
     }
 
     componentDidMount(){
-        window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);
+        try {
+            window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);            
+        } catch (error) {
+            console.log(error);
+        }
         // 카카오 로그인 버튼을 생성합니다.
         window.Kakao.Auth.createLoginButton({
             container: '#kakao-login-btn',

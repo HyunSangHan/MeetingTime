@@ -30,7 +30,6 @@ class CurrentMatching(APIView):
         my_profile = request.user.profile
         current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
         joined_user = JoinedUser.objects.filter(meeting=current_meeting, profile=my_profile).last()
-
         if my_profile.is_male:
             matching = Matching.objects.filter(trial_time=1, joined_male=joined_user).last()
         else:
