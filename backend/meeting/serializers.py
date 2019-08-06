@@ -30,7 +30,7 @@ class MatchingSerializer(serializers.ModelSerializer):
 class JoinSerializer(serializers.ModelSerializer):
     class Meta:
         model = JoinedUser
-        fields = ['profile', 'rank', 'matching', 'is_matched']
+        fields = ['profile', 'rank', 'matching', 'is_matched', 'meeting']
     def to_representation(self, instance):
         response = super().to_representation(instance)
         response['profile'] = ProfileSerializer(instance.profile).data
