@@ -21,22 +21,25 @@ class MatchingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Matching
         fields = '__all__'
-
-class CurrentMeetingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Meeting
-        fields = '__all__'
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response['joined_male'] = JoinSerializer(instance.joined_male).data
+        response['joined_female'] = JoinSerializer(instance.joined_female).data
+        return response
 
 class JoinSerializer(serializers.ModelSerializer):
     class Meta:
         model = JoinedUser
-        fields = '__all__'
+        fields = ['profile', 'rank', 'matching', 'is_matched']
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response['profile'] = ProfileSerializer(instance.profile).data
+        return response
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
-
     def to_representation(self, instance):
         response = super().to_representation(instance)
         response['user'] = UserSerializer(instance.user).data
