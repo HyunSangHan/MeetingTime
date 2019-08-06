@@ -12,7 +12,7 @@ import Heart from "./details/Heart";
 import Chat from "./details/Chat";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actions from '../actions';
+import * as actions from '../modules/join';
 import axios from 'axios'; //카카오로그인 실험용
 
 class Main extends Component {

@@ -1,5 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 import { Map } from 'immutable';
+import axios from 'axios';
+import { pender } from 'redux-pender';
 // import {getMeetingInfo} from '../actions/index'
 
 // const prefix = "join";
@@ -39,6 +41,12 @@ export default handleActions({
         return state.set('is_joined', true)
                     .set('is_joined_done', true);
     },
+    // ...pender({
+    //     type: CREATE_JOINED_POPUP,
+    //     onSuccess: (state, action) => state.set('rank', action.payload.data.rank)
+    //                                         .set('is_joined', true)
+    //                                         .set('is_joined_done', true),
+    // }),
     [GET_MEETING_INFO]: (state, action) => {
         return
     },
@@ -46,5 +54,19 @@ export default handleActions({
 
 export const deletePopup = createAction(DELETE_POPUP, payload => payload);
 export const createCopiedPopup = createAction(CREATE_COPIED_POPUP, payload => payload);
-export const createJoinedPopup = createAction(CREATE_JOINED_POPUP, payload => payload);
+export const createJoinedPopup = createAction(
+    CREATE_JOINED_POPUP,
+    (payload) => axios({
+        method: 'post',
+        url: '/join/',
+    })
+    .then((response) => {
+        console.log("this is working");
+        console.log(response);
+        return response
+    })
+    .catch(
+        console.log("not working")
+    )
+);
 export const getMeetingInfo = createAction(GET_MEETING_INFO, payload => payload);
