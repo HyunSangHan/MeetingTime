@@ -102,7 +102,7 @@ class Main extends Component {
                         <div className={"fix minus-height z-4"}>
                             <JoinedPopup
                                 user={user}
-                                deletePopupJoin={Actions.deletePopupJoin}
+                                deletePopup={Actions.deletePopup}
                                 is_joined_done={is_joined_done}
                             />
                         </div>
