@@ -44,7 +44,7 @@ class App extends Component {
                 nickname: "data_상대닉네임",
                 company: "data_상대회사명",
                 img_url: "/images/counterProfile.jpeg",
-                team_detail: "data_상대팀소개문구_동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으웃 길이 보전하세",
+                team_detail: "data_상대팀소개문구_동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세",
             },
             meeting: {
                 title: "이번주 🔥금 in 강남",
