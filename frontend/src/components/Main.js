@@ -42,15 +42,12 @@ class Main extends Component {
                     code: process.env.REACT_APP_KAKAO_REST_API_KEY
                 })
                 .then( response => {
-                    console.log("로그인 성공");
-                    // console.log();
-                    // axios.post("/profile/", {
-                    //     // is_male: 0000,
-                    // })
-                    // .catch( err => {
-                    //     console.log(err);
-                    // });
+                    axios.get("/profile")
+                    .then(response => {
+                        console.log("[로그인성공] " + response.data.user.username + "(회사:" + response.data.company.name + ")")
                     })
+                    .catch(err => console.log(err));
+                })
                 .catch( err => {
                     console.log(err);
                 });

@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
-from .models import Meeting, JoinedUser, Profile, Matching
+from .models import Meeting, JoinedUser, Profile, Matching, KakaoChatting
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import MeetingSerializer, JoinSerializer, CurrentMeetingSerializer, CounterProfileSerializer
+from .serializers import MeetingSerializer, JoinSerializer, CurrentMeetingSerializer, MatchingSerializer, ProfileSerializer
 from django.contrib.auth.models import User
 from django.contrib import auth
+import random
 from django.utils import timezone
 from allauth.socialaccount.providers.kakao.views import KakaoOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
@@ -24,11 +25,120 @@ class MeetingInfoView(viewsets.ModelViewSet):
     serializer_class = MeetingSerializer
     queryset = Meeting.objects.all()
 
+class CurrentMatching(APIView):
+    def get(self, request, format=None):
+        # for Debugging
+        profile = User.objects.all().first().profile
+        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+        joined_user = JoinedUser.objects.filter(meeting=current_meeting, profile=profile).last()
+
+        if profile.is_male:
+            matching = Matching.objects.filter(trial_time=3, joined_male=joined_user).first()
+        else:
+            matching = Matching.objects.filter(trial_time=3, joined_female=joined_user).last()
+
+
+        if matching is not None:
+            serializer = MatchingSerializer(matching)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def post(self, request, format=None):
+        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+        cutline = current_meeting.cutline
+        joined_users_male = list(JoinedUser.objects.filter(is_matched=False, profile__is_male=True, rank__lte=cutline))
+        joined_users_female = list(JoinedUser.objects.filter(is_matched=False, profile__is_male=False, rank__lte=cutline))
+        numbers = list(range(len(joined_users_male)))
+        random.shuffle(numbers)
+
+        for i in range(len(joined_users_male)):
+            if request.data["trial_time"] == 1:
+                Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
+                joined_users_male[i].already_met_one = joined_users_female[numbers[0]].rank
+                joined_users_female[numbers[0]].already_met_one = joined_users_male[i].rank
+                joined_users_male[i].save()
+                joined_users_female[numbers[0]].save()
+                numbers.pop(0)
+            elif request.data["trial_time"] == 2:
+                runned = 1
+                while runned < 10:
+                    if joined_users_male[i].already_met_one != joined_users_female[numbers[0]].rank:
+                        Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
+                        joined_users_male[i].already_met_two = joined_users_female[numbers[0]].rank
+                        joined_users_female[numbers[0]].already_met_two = joined_users_male[i].rank
+                        joined_users_male[i].save()
+                        joined_users_female[numbers[0]].save()
+                        numbers.pop(0)
+                        break
+                    else:
+                        random.shuffle(numbers)
+                        runned += 1
+            elif request.data["trial_time"] == 3:
+                runned = 1
+                while runned < 10:
+                    if joined_users_male[i].already_met_two != joined_users_female[numbers[0]].rank:
+                        Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
+                        joined_users_male[i].already_met_three = joined_users_female[numbers[0]].rank
+                        joined_users_female[numbers[0]].already_met_three = joined_users_male[i].rank
+                        joined_users_male[i].save()
+                        joined_users_female[numbers[0]].save()
+                        numbers.pop(0)
+                        break
+                    else:
+                        random.shuffle(numbers)
+                        runned += 1
+            else:
+                runned = 1
+                while runned < 10:
+                    if joined_users_male[i].already_met_three != joined_users_female[numbers[0]].rank:
+                        Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
+                        numbers.pop(0)
+                        break
+                    else:
+                        random.shuffle(numbers)
+                        runned += 1
+
+        queryset = Matching.objects.filter(trial_time=request.data["trial_time"], joined_male__meeting=current_meeting)
+        serializer = MatchingSerializer(queryset, many=True)
+        if queryset is not None:
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+
+    def patch(self, request, format=None):
+        queryset = Matching.objects.filter(id=request.data.id)
+        
+        serializer = MatchingSerializer(queryset, data=request.data, partial=True)
+
+        if serializer.is_greenlight_male and serializer.is_greenlight_female:
+
+            kakao_chattingroom_url = KakaoChatting.objects.filter(is_used=False).first()
+            kakao_chattingroom_url.is_used = True
+            kakao_chattingroom_url.save()
+            successful_matching_data = {
+                "kakao_chattingroom": kakao_chattingroom_url
+            # kakao 채팅방을 최대 50개를 준비해놓고 ChattingRoom 이런 model에 저장해놓은 다음 filter 해서 할당되지 않은 첫번째
+            # url을 할당하는 것도 괜찮을 것 같네요 (50개는 우리가 매주 admin으로 입력해놓고)
+            }
+
+            serializer = MatchingSerializer(queryset, data=successful_matching_data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+    def delete(self, request, format=None):
+        if request.data["trial_time"] > 0:
+            Matching.objects.filter(trial_time=request.data["trial_time"], is_matched=False).delete()
+        else:
+            Matching.objects.all().delete()
+        return Response(status=status.HTTP_202_ACCEPTED)
+
 class CurrentMeeting(APIView):
     def get(self, request, format=None):
         print(request.user)
         print(request.user.is_authenticated)
-        # 미팅일자가 현재보다 미래인 경우 + 가장 빨리 디가오는 미팅 순으로 정렬해서 + 가장 앞에 있는 미팅일정 1개만 쿼리셋에 담기 
+        # 미팅일자가 현재보다 미래인 경우 + 가장 빨리 디가오는 미팅 순으로 정렬해서 + 가장 앞에 있는 미팅일정 1개만 쿼리셋에 담기
         queryset = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
         if queryset is not None:
             serializer = CurrentMeetingSerializer(queryset)
@@ -42,6 +152,27 @@ class CurrentMeeting(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        # 프론트에서 Join 시간이 종료되면 호출되며 cutline을 설정
+    def patch(self, request, format=None):
+        # current meeting 
+        queryset = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+        
+        # 남, 여 각각 미팅에 참여한 인원
+        joined_male_last_rank = JoinedUser.objects.filter(profile__is_male=True).order_by('rank').last().rank
+        joined_female_last_rank = JoinedUser.objects.filter(profile__is_male=False).order_by('rank').last().rank
+
+        cutline = joined_male_last_rank if joined_male_last_rank > joined_female_last_rank else joined_female_last_rank
+        
+
+        # Serializer가 필요하지 않아보이므로 우선 queryset.save()로 구현 
+        # 추후 Serializer로 통일하는 것이 좋을 것으로 판단되면 수정
+        if cutline is not None:
+            queryset.cutline = cutline
+            queryset.save()
+            return Response(status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class Join(APIView):
     # =========Just for test (START)=========
@@ -117,7 +248,39 @@ class CounterProfile(APIView):
 
         if my_profile is not None and current_meeting is not None and current_matching is not None and counter_joined_user is not None:
             queryset = counter_joined_user.profile
-            serializer = CounterProfileSerializer(queryset)
+            serializer = ProfileSerializer(queryset)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+class Profile(APIView):
+    
+    # #for debug
+    # my_profile = User.objects.all().first().profile
+
+    def get(self, request, format=None):
+        queryset = request.user.profile
+        if queryset is not None:
+            serializer = ProfileSerializer(queryset)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    # models.py에서 user와 연동하여 profile을 만들어주고 있으므로 Post는 불필요
+    # def post(self, request, format=None):
+
+    def patch(self, request, format=None):
+        queryset = request.user.profile
+        serializer = ProfileSerializer(queryset, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        if request.user.profile is not None:
+            request.user.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)

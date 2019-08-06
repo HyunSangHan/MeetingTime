@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from allauth.account.signals import user_signed_up
 
 class Meeting(models.Model):
     open_time = models.DateTimeField()
@@ -62,12 +63,19 @@ class Meeting(models.Model):
             profile.age_range = 20
             profile.save()
 
+
         for k in range(1, NUM_OF_SEED_FOR_ADD+1):
             # JoinedUser
-            JoinedUser.objects.create(
-                profile_id=k,
-                meeting_id=random.randrange(1, NUM_OF_SEED_FOR_BASE+1)
-            )
+            joined_user = JoinedUser.objects.create(
+                        profile_id=k,
+                        meeting_id=random.randrange(1, NUM_OF_SEED_FOR_BASE+1)
+                    )
+            if joined_user.profile.is_male:
+                joined_user.rank = JoinedUser.objects.filter(profile__is_male=True).count()+1
+            else:
+                joined_user.rank = JoinedUser.objects.filter(profile__is_male=False).count()+1                
+            joined_user.save()
+
 
 class Company(models.Model):
     name = models.CharField(max_length=20, blank=True)
@@ -100,16 +108,56 @@ class Profile(models.Model):
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
 
+    @receiver(user_signed_up)
+    def populate_profile(sociallogin, user, **kwargs):
+        if sociallogin.account.provider == 'kakao':
+            profile = user.profile
+            kakao_data = user.socialaccount_set.filter(provider='kakao')[0].extra_data
+
+            try:
+                gender = kakao_data['kakao_account']['gender']
+                if gender == 'male':
+                    profile.is_male = True
+                elif gender == 'female':
+                    profile.is_male = False
+            except:
+                pass
+
+            try:
+                gender = kakao_data['kakao_account']['age_range']
+                if gender == '10~19':
+                    profile.age_range = 10
+                elif gender == '20~29':
+                    profile.age_range = 20
+                elif gender == '30~39':
+                    profile.age_range = 30
+                elif gender == '40~49':
+                    profile.age_range = 40
+            except:
+                pass
+                
+            profile.save()
+
 class JoinedUser(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
-    matching = models.ManyToManyField('self', through = 'Matching', symmetrical= False)
+    matching = models.ManyToManyField('self', through = 'Matching', symmetrical= False, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     is_matched = models.BooleanField(default=False)
     rank = models.IntegerField(null=True, blank=True)
+    already_met_one = models.IntegerField(null=True, blank=True)
+    already_met_two = models.IntegerField(null=True, blank=True)
+    already_met_three = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.profile.user.username} (is_male: {self.profile.is_male})'
+
+class KakaoChatting(models.Model):
+    chattingroom_url = models.URLField(null=True, blank=True)
+    is_used = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.chattingroom_url
 
 class Matching(models.Model):
     joined_male = models.ForeignKey(JoinedUser, related_name = 'joined_male', on_delete=models.CASCADE)
@@ -119,7 +167,24 @@ class Matching(models.Model):
     is_greenlight_female = models.BooleanField(default=False)
     is_gift_male = models.BooleanField(default=False)
     is_gift_female = models.BooleanField(default=False)
-    kakao_chattingroom = models.URLField(null=True, blank=True)
+    kakao_chattingroom = models.ForeignKey(KakaoChatting, on_delete=models.CASCADE, null=True, blank=True)
 
+    def seed(num_of_seed):
+        import random
+
+        for k in range(1, 4):
+            joined_male = JoinedUser.objects.get(profile__is_male = True, rank=k)
+            joined_female = JoinedUser.objects.get(profile__is_male = False, rank=k)
+
+            Matching.objects.create(
+                joined_male = joined_male, 
+                joined_female = joined_female,
+                trial_time = random.randint(1, 3),
+                is_greenlight_male = random.choice([True, False]),
+                is_greenlight_female = random.choice([True, False]),
+                is_gift_male = random.choice([True, False]),
+                is_gift_female = random.choice([True, False])
+            )
+            
     def __str__(self):
-        return f'남: {str(self.joined_male)} / 여: {str(self.joined_female)}'
+        return f'남: {str(self.joined_male)} / 여: {str(self.joined_female)} / 셔플 횟수: {str(self.trial_time)}'
