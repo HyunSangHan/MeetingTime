@@ -19,14 +19,7 @@ class App extends Component {
     constructor(props){
         super(props);
 
-        this.state = { //결국엔 스토어에 다 넣어야 할 놈들. 특히, 이걸 해결하고나면 rank가 false냐 true냐에 따라 버튼을 바꿔줘야한다. 단, 그전에 axios를 던져놓은 상태여야함
-            current_meeting: {},
-            info: { //test용도 더미 (지워야함)
-                title: "이번주 🔥금 in 강남",
-                msg1: "매칭오픈 - 3월 4일 월요일 오전 10시",
-                msg2: "결과발표 - 3월 6일 수요일 오후 10시",
-                // cutline: 0,
-            },
+        this.state = {
             user: {
                 nickname: "data_닉네임",
                 company: "data_회사명",
@@ -46,23 +39,11 @@ class App extends Component {
                 img_url: "/images/counterProfile.jpeg",
                 team_detail: "data_상대팀소개문구_동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세",
             },
-            meeting: {
-                title: "이번주 🔥금 in 강남",
-                msg1: "매칭오픈 - 3월 4일 월요일 오전 10시",
-                msg2: "결과발표 - 3월 6일 수요일 오후 10시"
-            },
-            cutline: 0,
         }
     }
 
     componentDidMount () {
-        let self = this;
-        axios.get("/current_meeting")
-        .then(response => {
-            console.log(response.data)
-            self.setState({ current_meeting: response.data })
-        })
-        .catch(err => console.log(err));
+        //로그인여부 들어갈 수도 있는 곳
     }
 
     render() {
@@ -73,13 +54,8 @@ class App extends Component {
                         render={(props) => (
                             <Main
                                 {...props}
-                                current_meeting={this.state.current_meeting}
-                                info={this.state.info}
                                 user={this.state.user}
                                 ex_user={this.state.ex_user}
-                                offPopup={this.props.offPopup}
-                                meeting={this.props.meeting}
-                                cutline={this.state.cutline}
                             />
                         )}
                     />

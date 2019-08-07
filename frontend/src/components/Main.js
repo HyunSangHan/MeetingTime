@@ -20,8 +20,7 @@ class Main extends Component {
     }
 
     componentDidMount(){
-        const { CurrentMeetingActions, current_meeting } = this.props;
-
+        const { CurrentMeetingActions } = this.props;
         CurrentMeetingActions.getCurrentMeeting();
 
         try {
@@ -29,7 +28,7 @@ class Main extends Component {
         } catch (error) {
             console.log(error);
         }
-        // 카카오 로그인 버튼을 생성합니다.
+        // 카카오 로그인 버튼을 생성
         window.Kakao.Auth.createLoginButton({
             container: '#kakao-login-btn',
             success: function(authObj) {
@@ -71,7 +70,7 @@ class Main extends Component {
     }
 
     render() {
-        const {user, JoinActions, CurrentMeetingActions, is_joined_popup_on, is_joined_already, rank, current_meeting } = this.props;
+        const {user, JoinActions, is_joined_popup_on, is_joined_already, rank, current_meeting } = this.props;
         return (
             <div className={"frame"}>
 {/*팝업*/}
