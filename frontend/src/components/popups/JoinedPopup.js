@@ -21,7 +21,7 @@ class JoinedPopup extends Component {
                 </div>)
                 :
                 (<div className={"copy-pop flex-center font-1"}>
-                    번호표 {this.props.user.rank}번 뽑으셨네요!
+                    번호표 {this.props.rank}번 뽑으셨네요!
                 </div>)}
             </div>
         );
