@@ -15,8 +15,8 @@ const GET_MEETING_INFO = `GET_MEETING_INFO`;
 
 
 const initialState = Map({
-    is_joined: false,
-    is_joined_done: false,
+    is_joined_popup_on: false,
+    is_joined_already: false,
     meeting: Map({
         id: 3,
         starting_date: "2019-04-24T10:00:00.000Z",
@@ -29,16 +29,16 @@ const initialState = Map({
 
 export default handleActions({
     [DELETE_POPUP]: (state, action) => {
-        return state.set('is_joined', false)
-                    .set('is_joined_done', true);
+        return state.set('is_joined_popup_on', false)
+                    .set('is_joined_already', true);
     },
     ...pender({
         type: CREATE_JOINED_POPUP,
         onSuccess: (state, action) => state.set('rank', action.payload.data.rank)
-                                            .set('is_joined', true),
+                                            .set('is_joined_popup_on', true),
     }),
     [RECLICK_JOINED_POPUP]: (state, action) => {
-        return state.set('is_joined', true)
+        return state.set('is_joined_popup_on', true)
     },
     [GET_MEETING_INFO]: (state, action) => {
         return

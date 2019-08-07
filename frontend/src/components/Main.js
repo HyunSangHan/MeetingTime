@@ -12,6 +12,7 @@ import Chat from "./details/Chat";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../modules/join';
+import * as actions2 from '../modules/current_meeting';
 import axios from 'axios'; //카카오로그인 실험용
 
 class Main extends Component {
@@ -81,18 +82,18 @@ class Main extends Component {
     // }
 
     render() {
-        const {user, Actions, is_joined, is_joined_done, ex_user, current_meeting, info, rank } = this.props;
+        const {user, Actions, is_joined_popup_on, is_joined_already, ex_user, current_meeting, info, rank } = this.props;
         return (
             <div className={"frame"}>
 {/*팝업*/}
-                {is_joined &&
+                {is_joined_popup_on &&
                 <div className={"App"}>
                     <div className={"flex-center"}>
                         <div className={"fix minus-height z-4"}>
                             <JoinedPopup
                                 rank={rank}
                                 deletePopup={Actions.deletePopup}
-                                is_joined_done={is_joined_done}
+                                is_joined_already={is_joined_already}
                             />
                         </div>
                     </div>
@@ -146,7 +147,7 @@ class Main extends Component {
                             <Col xs={12} className={"flex-center"}>
 
                                 {/*추후 조건부 렌더 필요한부분*/}
-                                {is_joined_done
+                                {is_joined_already
                                     ? (<div className={"big-button-black flex-center font-2 font-white"}
                                             onClick={Actions.reclickJoinedPopup}>
                                         현재 순위: {rank}위
@@ -311,8 +312,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-    is_joined: state.join.get('is_joined'),
-    is_joined_done: state.join.get('is_joined_done'),
+    is_joined_popup_on: state.join.get('is_joined_popup_on'),
+    is_joined_already: state.join.get('is_joined_already'),
     meeting: state.join.get('meeting'),
     rank: state.join.get('rank'),
 })
