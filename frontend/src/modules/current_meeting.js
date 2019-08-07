@@ -6,7 +6,7 @@ import { pender } from 'redux-pender';
 const GET_MEETING_INFO = `GET_MEETING_INFO`;
 
 const initialState = Map({
-    meeting: Map({
+    current_meeting: Map({
         id: 3,
         starting_date: "2019-04-24T10:00:00.000Z",
         mid_date: "2019-05-25T10:00:00.000Z",
@@ -19,8 +19,7 @@ const initialState = Map({
 export default handleActions({
     ...pender({
         type: GET_MEETING_INFO,
-        onSuccess: (state, action) => state.set('rank', action.payload.data.rank)
-                                            .set('is_joined', true),
+        onSuccess: (state, action) => state.set('current_meeting', action.payload.data.meeting)
     }),
 }, initialState);
 

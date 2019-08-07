@@ -83,7 +83,6 @@ class App extends Component {
                             />
                         )}
                     />
-                    {/*offPopup={this.props.offPopup}*/}
                     <Route path="/profile"
                         render={(props) => (
                             <Profile
@@ -98,16 +97,7 @@ class App extends Component {
                                 user={this.state.user}
                             />
                         )} />
-                    <Route path="/chat"
-                        render={(props) => (
-                            <Chat
-                                {...props}
-                                user={this.state.user}
-                                ex_user={this.state.ex_user}//maybe not necessary
-                            />
-                        )} />
                     <Route path="/init" component={Initpage}/>
-                    <Route path="/sign_up" component={SignUp}/>
                     <Route path="/matching_result"
                         render={(props) => (
                             <Result

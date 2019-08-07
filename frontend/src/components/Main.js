@@ -19,15 +19,6 @@ class Main extends Component {
 
     constructor(props){
         super(props);
-
-        //여기 넣어놔도 문제없을까.
-        let year = this.props.meeting.get('meeting_date').split("-")
-
-        //아직 쓰지 않지만, 이런 식으로 날짜를 파싱해서 프론트에서 사용해야겠다.
-        this.state = {
-            meeting_month: year[1],
-            meeting_day: year[2],
-        }
     }
 
     componentDidMount(){
@@ -100,23 +91,6 @@ class Main extends Component {
                     <div className={"frame-dark fix z-3"}/>
                 </div>
                 }
-
-
-{/*PC전용 1 */}
-                <div className={"mobile-none frame-half abs-right"}>
-                    <Container>
-                        <Container className={"h100percent"}>
-                            <div className={"font-3 font-grey font-bolder mt-4 ml-3"}>
-                                하트 충전하기
-                            </div>
-                            <Heart user={user}/>
-                            <div className={"font-3 font-grey font-bolder mt-5 ml-3"}>
-                                지난 대화목록
-                            </div>
-                            <Chat user={user} ex_user={ex_user}/>
-                        </Container>
-                    </Container>
-                </div>
 
 {/*PC와 모바일 공통*/}
                 <div className="up-bg flex-center frame-half">
@@ -314,7 +288,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
     is_joined_popup_on: state.join.get('is_joined_popup_on'),
     is_joined_already: state.join.get('is_joined_already'),
-    meeting: state.join.get('meeting'),
+    current_meeting: state.current_meeting.get('current_meeting'),
     rank: state.join.get('rank'),
 })
 
