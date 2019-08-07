@@ -175,8 +175,8 @@ class Join(APIView):
 
     def get(self, request, format=None):
         my_profile = request.user.profile
-        if my_profile is not None and self.current_meeting is not None:
-            queryset = JoinedUser.objects.filter(profile=my_profile, meeting=self.current_meeting).first()
+        queryset = JoinedUser.objects.filter(profile=my_profile, meeting=self.current_meeting).last()
+        if queryset is not None:
             serializer = JoinSerializer(queryset)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
