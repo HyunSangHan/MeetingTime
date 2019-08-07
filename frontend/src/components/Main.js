@@ -4,7 +4,6 @@ import '../App.css';
 import { Container, Row, Col } from 'reactstrap';
 import MaterialIcon from 'material-icons-react';
 import { Link } from 'react-router-dom';
-import CopiedPopup from "./popups/CopiedPopup";
 import JoinedPopup from "./popups/JoinedPopup";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Footer from "./Footer";
@@ -64,24 +63,6 @@ class Main extends Component {
         });
     }
 
-    onJoinedPopup() {
-        axios.post("/join/")
-        .then(response => {
-            console.log(response.data)
-            console.log("join 성공")
-            this.setState({
-                is_joined: true,
-            });
-        })
-        .catch(err => console.log(err));
-    }
-
-    onCopiedPopup() {
-        this.setState({
-            is_copied: true,
-        })
-    }
-
     kakaoLogout = () => () => {
         console.log(window.Kakao.Auth.getAccessToken());
         window.Kakao.Auth.logout(function(data){
@@ -100,27 +81,16 @@ class Main extends Component {
     // }
 
     render() {
-        const {user, Actions, is_copied, is_joined, is_joined_done, ex_user, current_meeting, info } = this.props;
+        const {user, Actions, is_joined, is_joined_done, ex_user, current_meeting, info, rank } = this.props;
         return (
             <div className={"frame"}>
-{/*팝업들*/}
-                {is_copied &&
-                <div className={"App"}>
-                    <div className={"flex-center"}>
-                        <div className={"fix minus-height z-4"}>
-                            <CopiedPopup user={user}
-                                        deletePopup={Actions.deletePopup}/>
-                        </div>
-                    </div>
-                    <div className={"frame-dark fix z-3"}/>
-                </div>
-                }
+{/*팝업*/}
                 {is_joined &&
                 <div className={"App"}>
                     <div className={"flex-center"}>
                         <div className={"fix minus-height z-4"}>
                             <JoinedPopup
-                                user={user}
+                                rank={rank}
                                 deletePopup={Actions.deletePopup}
                                 is_joined_done={is_joined_done}
                             />
@@ -178,8 +148,8 @@ class Main extends Component {
                                 {/*추후 조건부 렌더 필요한부분*/}
                                 {is_joined_done
                                     ? (<div className={"big-button-black flex-center font-2 font-white"}
-                                            onClick={Actions.createJoinedPopup}>
-                                        현재 순위: {user.rank}
+                                            onClick={Actions.reclickJoinedPopup}>
+                                        현재 순위: {rank}위
                                     </div>)
                                     : (<div className={"big-button-red flex-center font-2 font-white"}
                                             onClick={Actions.createJoinedPopup}>
@@ -318,7 +288,7 @@ class Main extends Component {
                                     </Col>
                                     <Col xs={3} className={"h8vh flex-j-end"}>
                                         <CopyToClipboard text={user.recommendation_code}>
-                                            <div className={"copy-button deco-none flex-center"} onClick={Actions.createCopiedPopup}>
+                                            <div className={"copy-button deco-none flex-center"}>
                                                 <MaterialIcon icon="file_copy" size="25px" color="lightgrey"/>
                                             </div>
                                         </CopyToClipboard>
@@ -341,10 +311,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-    is_copied: state.join.get('is_copied'),
     is_joined: state.join.get('is_joined'),
     is_joined_done: state.join.get('is_joined_done'),
     meeting: state.join.get('meeting'),
+    rank: state.join.get('rank'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
