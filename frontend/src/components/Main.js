@@ -10,6 +10,9 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Footer from "./Footer";
 import Heart from "./details/Heart";
 import Chat from "./details/Chat";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actions from '../actions';
 import axios from 'axios'; //카카오로그인 실험용
 
 class Main extends Component {
@@ -18,14 +21,12 @@ class Main extends Component {
         super(props);
 
         //여기 넣어놔도 문제없을까.
-        let year = this.props.meeting.meeting_date.split("-")
+        let year = this.props.meeting.get('meeting_date').split("-")
 
         //아직 쓰지 않지만, 이런 식으로 날짜를 파싱해서 프론트에서 사용해야겠다.
-        this.state = { 
+        this.state = {
             meeting_month: year[1],
             meeting_day: year[2],
-            is_joined: false,
-            is_copied: false,
         }
     }
 
@@ -70,7 +71,7 @@ class Main extends Component {
             console.log("join 성공")
             this.setState({
                 is_joined: true,
-            });    
+            });
         })
         .catch(err => console.log(err));
     }
@@ -94,30 +95,34 @@ class Main extends Component {
         .catch(err => console.log(err));
     }
 
+    // join() {
+    //     const { Actions } = this.props;
+    // }
+
     render() {
+        const {user, Actions, is_copied, is_joined, is_joined_done, ex_user, current_meeting, info } = this.props;
         return (
             <div className={"frame"}>
 {/*팝업들*/}
-                {this.state.is_copied &&
+                {is_copied &&
                 <div className={"App"}>
                     <div className={"flex-center"}>
                         <div className={"fix minus-height z-4"}>
-                            <CopiedPopup user={this.props.user}
-                                        offPopup={this.props.offPopup}/>
+                            <CopiedPopup user={user}
+                                        deletePopup={Actions.deletePopup}/>
                         </div>
                     </div>
                     <div className={"frame-dark fix z-3"}/>
                 </div>
                 }
-                {this.state.is_joined &&
+                {is_joined &&
                 <div className={"App"}>
                     <div className={"flex-center"}>
                         <div className={"fix minus-height z-4"}>
                             <JoinedPopup
-                                user={this.props.user}
-                                offPopup={this.props.offPopup}
-                                offPopupJoin={this.props.offPopupJoin}
-                                is_joined_done={this.state.is_joined_done}
+                                user={user}
+                                deletePopup={Actions.deletePopup}
+                                is_joined_done={is_joined_done}
                             />
                         </div>
                     </div>
@@ -133,11 +138,11 @@ class Main extends Component {
                             <div className={"font-3 font-grey font-bolder mt-4 ml-3"}>
                                 하트 충전하기
                             </div>
-                            <Heart user={this.props.user}/>
+                            <Heart user={user}/>
                             <div className={"font-3 font-grey font-bolder mt-5 ml-3"}>
                                 지난 대화목록
                             </div>
-                            <Chat user={this.props.user} ex_user={this.props.ex_user}/>
+                            <Chat user={user} ex_user={ex_user}/>
                         </Container>
                     </Container>
                 </div>
@@ -146,7 +151,7 @@ class Main extends Component {
                 <div className="up-bg flex-center frame-half">
 
                     <div className={"fix flex-center frame-half"}>
-                        <img src={this.props.user.img_url} className={"bg-under-img"} alt={"profile-large-img"}/>
+                        <img src={user.img_url} className={"bg-under-img"} alt={"profile-large-img"}/>
                     </div>
                     <div className={"up-bg-color fix"}/>
                     <Container>
@@ -154,7 +159,7 @@ class Main extends Component {
                             <Col xs={12}>
                                 <div className={"font-big font-white mt-4"}>
                                     {/* {this.props.info.title} */}
-                                    {this.props.current_meeting.location}
+                                    {current_meeting.location}
                                     <br/>
                                     <a id="kakao-login-btn"></a>
                                     <div className="font-05 hover" onClick={this.kakaoLogout()}>카카오로그아웃</div>
@@ -162,22 +167,22 @@ class Main extends Component {
                             </Col>
                             <Col xs={12}>
                                 <div className={"font-1 font-white mt-3 opacity05"}>
-                                    {this.props.info.msg1}
+                                    {info.msg1}
                                 </div>
                                 <div className={"font-1 font-white mt-1 opacity05"}>
-                                    {this.props.info.msg2}
+                                    {info.msg2}
                                 </div>
                             </Col>
                             <Col xs={12} className={"flex-center"}>
 
                                 {/*추후 조건부 렌더 필요한부분*/}
-                                {this.props.is_joined_done
+                                {is_joined_done
                                     ? (<div className={"big-button-black flex-center font-2 font-white"}
-                                            onClick={this.onJoinedPopup.bind(this)}>
-                                        현재 순위: {this.props.user.rank}
+                                            onClick={Actions.createJoinedPopup}>
+                                        현재 순위: {user.rank}
                                     </div>)
                                     : (<div className={"big-button-red flex-center font-2 font-white"}
-                                            onClick={this.onJoinedPopup.bind(this)}>
+                                            onClick={Actions.createJoinedPopup}>
                                         선착순 번호표 뽑기
                                         {/*{this.props.cutline}*/}
                                     </div>)}
@@ -203,16 +208,16 @@ class Main extends Component {
                                     <Col xs={10} md={9} className={"align-left"}>
                                         <div className={"ml-name ml-1"}>
                                             <div className={"font-3 font-black font-bolder"}>
-                                                {this.props.user.nickname}
+                                                {user.nickname}
                                             </div>
                                             <div className={"font-1 font-grey mt-2"}>
-                                                {this.props.user.company}
+                                                {user.company}
                                             </div>
                                         </div>
                                     </Col>
                                     <Col xs={2} md={3} className={"h17vh flex-j-end"}>
                                         <div className={"pc-none"}>
-                                            <MaterialIcon icon="arrow_forward_ios" size="23x" color="#f0f0f0"/>
+                                            <MaterialIcon icon="arrow_forward_ios" size="23px" color="#f0f0f0"/>
                                         </div>
                                     </Col>
                                 </Row>
@@ -224,7 +229,7 @@ class Main extends Component {
                         <Container>
                             <Row className={"align-center"}>
                                 <Col xs={8} className={"align-left"}>
-                                    <div className={"font-05 opacity08 ml-1"}>내 하트 <strong>{this.props.user.current_heart}</strong>개</div>
+                                    <div className={"font-05 opacity08 ml-1"}>내 하트 <strong>{user.current_heart}</strong>개</div>
                                 </Col>
                                 <Col xs={4} className={"align-right align-center"}>
                                     <Link to="/heart">
@@ -241,7 +246,7 @@ class Main extends Component {
                         <Container>
                             <Row className={"align-center"}>
                                 <Col xs={8} className={"align-left"}>
-                                    <span className={"font-05 opacity08 ml-1"}>지난 대화 <strong>{this.props.user.chat}</strong>개</span>
+                                    <span className={"font-05 opacity08 ml-1"}>지난 대화 <strong>{user.chat}</strong>개</span>
                                 </Col>
                                 <Col xs={4} className={"align-right align-center"}>
                                     <Link to="/chat">
@@ -270,14 +275,14 @@ class Main extends Component {
                                         <Col md={9} lg={9} className={"align-left"}>
                                             <div className={"ml-1 inline-flex"}>
                                                 <div className={"font-3 font-black font-bolder"}>
-                                                    {this.props.user.nickname}
+                                                    {user.nickname}
                                                 </div>
                                                 <div className={"font-1 font-black mt-1"}>
-                                                    &nbsp; {this.props.user.company}
+                                                    &nbsp; {user.company}
                                                 </div>
                                             </div>
                                             <div className={"font-05 ml-1 mt-3 font-grey"}>
-                                                {this.props.user.team_detail}
+                                                {user.team_detail}
                                             </div>
                                         </Col>
                                         <Col md={3} lg={3} className={"h17vh flex-j-end"}>
@@ -306,14 +311,14 @@ class Main extends Component {
                                                 <span className="font-black deco-none">친구</span>
                                                 </Link> 초대 </b>
                 {/*end here*/}
-                                            <font color="#808080" size="10px">(추천인코드: <strong>{this.props.user.recommendation_code}</strong>)</font>
+                                            <font color="#808080" size="10px">(추천인코드: <strong>{user.recommendation_code}</strong>)</font>
                                             </div>
                                         <div className={"font-05 ml-1 mt-2"}>여자사람친구를 초대해주세요.</div>
                                         <div className={"font-05 ml-1"}>하트 2개를 드려요!</div>
                                     </Col>
                                     <Col xs={3} className={"h8vh flex-j-end"}>
-                                        <CopyToClipboard text={this.props.user.recommendation_code}>
-                                            <div className={"copy-button deco-none flex-center"} onClick={this.onCopiedPopup.bind(this)}>
+                                        <CopyToClipboard text={user.recommendation_code}>
+                                            <div className={"copy-button deco-none flex-center"} onClick={Actions.createCopiedPopup}>
                                                 <MaterialIcon icon="file_copy" size="25px" color="lightgrey"/>
                                             </div>
                                         </CopyToClipboard>
@@ -330,4 +335,16 @@ class Main extends Component {
     }
 }
 
-export default Main;
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    Actions: bindActionCreators(actions, dispatch),
+});
+
+const mapStateToProps = (state) => ({
+    is_copied: state.join.get('is_copied'),
+    is_joined: state.join.get('is_joined'),
+    is_joined_done: state.join.get('is_joined_done'),
+    meeting: state.join.get('meeting'),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
