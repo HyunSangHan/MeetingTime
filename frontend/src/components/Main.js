@@ -7,12 +7,10 @@ import { Link } from 'react-router-dom';
 import JoinedPopup from "./popups/JoinedPopup";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Footer from "./Footer";
-import Heart from "./details/Heart";
-import Chat from "./details/Chat";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actions from '../modules/join';
-import * as actions2 from '../modules/current_meeting';
+import * as joinActions from '../modules/join';
+import * as currentMeetingActions from '../modules/current_meeting';
 import axios from 'axios'; //카카오로그인 실험용
 
 class Main extends Component {
@@ -22,6 +20,10 @@ class Main extends Component {
     }
 
     componentDidMount(){
+        const { CurrentMeetingActions, current_meeting } = this.props;
+
+        CurrentMeetingActions.getCurrentMeeting();
+
         try {
             window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);            
         } catch (error) {
@@ -68,12 +70,8 @@ class Main extends Component {
         .catch(err => console.log(err));
     }
 
-    // join() {
-    //     const { Actions } = this.props;
-    // }
-
     render() {
-        const {user, Actions, is_joined_popup_on, is_joined_already, ex_user, current_meeting, info, rank } = this.props;
+        const {user, JoinActions, CurrentMeetingActions, is_joined_popup_on, is_joined_already, rank, current_meeting } = this.props;
         return (
             <div className={"frame"}>
 {/*팝업*/}
@@ -83,7 +81,7 @@ class Main extends Component {
                         <div className={"fix minus-height z-4"}>
                             <JoinedPopup
                                 rank={rank}
-                                deletePopup={Actions.deletePopup}
+                                deletePopup={JoinActions.deletePopup}
                                 is_joined_already={is_joined_already}
                             />
                         </div>
@@ -94,7 +92,6 @@ class Main extends Component {
 
 {/*PC와 모바일 공통*/}
                 <div className="up-bg flex-center frame-half">
-
                     <div className={"fix flex-center frame-half"}>
                         <img src={user.img_url} className={"bg-under-img"} alt={"profile-large-img"}/>
                     </div>
@@ -103,7 +100,6 @@ class Main extends Component {
                         <Row className={"App"}>
                             <Col xs={12}>
                                 <div className={"font-big font-white mt-4"}>
-                                    {/* {this.props.info.title} */}
                                     {current_meeting.location}
                                     <br/>
                                     <a id="kakao-login-btn"></a>
@@ -112,10 +108,10 @@ class Main extends Component {
                             </Col>
                             <Col xs={12}>
                                 <div className={"font-1 font-white mt-3 opacity05"}>
-                                    {info.msg1}
+                                    {current_meeting.first_shuffle_time}
                                 </div>
                                 <div className={"font-1 font-white mt-1 opacity05"}>
-                                    {info.msg2}
+                                    {current_meeting.second_shuffle_time}
                                 </div>
                             </Col>
                             <Col xs={12} className={"flex-center"}>
@@ -123,11 +119,11 @@ class Main extends Component {
                                 {/*추후 조건부 렌더 필요한부분*/}
                                 {is_joined_already
                                     ? (<div className={"big-button-black flex-center font-2 font-white"}
-                                            onClick={Actions.reclickJoinedPopup}>
+                                            onClick={JoinActions.reclickJoinedPopup}>
                                         현재 순위: {rank}위
                                     </div>)
                                     : (<div className={"big-button-red flex-center font-2 font-white"}
-                                            onClick={Actions.createJoinedPopup}>
+                                            onClick={JoinActions.createJoinedPopup}>
                                         선착순 번호표 뽑기
                                         {/*{this.props.cutline}*/}
                                     </div>)}
@@ -204,9 +200,7 @@ class Main extends Component {
                             </Row>
                         </Container>
                     </div>
-
-{/*PC 전용 2 */}
-
+{/*PC 전용 */}
                     <div className={"profile mobile-none z-2"}>
                         {/*<div className="profile h100percent w50percent bg-white fix z-1"/>*/}
                         <div className={"pc-max-width z-2"}>
@@ -251,11 +245,8 @@ class Main extends Component {
                                     <Col xs={9} className={"align-left"}>
                                         <div className={"font-1 ml-1"}>
                                             <b>
-                {/*for test*/}
-                                                <Link to="/matching_result">
-                                                <span className="font-black deco-none">친구</span>
-                                                </Link> 초대 </b>
-                {/*end here*/}
+                                                <span className="font-black deco-none">친구</span>초대
+                                            </b>
                                             <font color="#808080" size="10px">(추천인코드: <strong>{user.recommendation_code}</strong>)</font>
                                             </div>
                                         <div className={"font-05 ml-1 mt-2"}>여자사람친구를 초대해주세요.</div>
@@ -282,14 +273,15 @@ class Main extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
-    Actions: bindActionCreators(actions, dispatch),
+    JoinActions: bindActionCreators(joinActions, dispatch),
+    CurrentMeetingActions: bindActionCreators(currentMeetingActions, dispatch),
 });
 
 const mapStateToProps = (state) => ({
     is_joined_popup_on: state.join.get('is_joined_popup_on'),
     is_joined_already: state.join.get('is_joined_already'),
-    current_meeting: state.current_meeting.get('current_meeting'),
     rank: state.join.get('rank'),
+    current_meeting: state.current_meeting.get('current_meeting'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
