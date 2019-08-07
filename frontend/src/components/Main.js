@@ -20,8 +20,9 @@ class Main extends Component {
     }
 
     componentDidMount(){
-        const { CurrentMeetingActions } = this.props;
+        const { CurrentMeetingActions, JoinActions } = this.props;
         CurrentMeetingActions.getCurrentMeeting();
+        JoinActions.getJoinedUser();
 
         try {
             window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);            
@@ -70,7 +71,7 @@ class Main extends Component {
     }
 
     render() {
-        const {user, JoinActions, is_joined_popup_on, is_joined_already, rank, current_meeting } = this.props;
+        const {user, JoinActions, is_joined_popup_on, is_joined_already, joined_user, current_meeting } = this.props;
         return (
             <div className={"frame"}>
 {/*팝업*/}
@@ -79,7 +80,7 @@ class Main extends Component {
                     <div className={"flex-center"}>
                         <div className={"fix minus-height z-4"}>
                             <JoinedPopup
-                                rank={rank}
+                                rank={joined_user.rank}
                                 deletePopup={JoinActions.deletePopup}
                                 is_joined_already={is_joined_already}
                             />
@@ -119,7 +120,7 @@ class Main extends Component {
                                 {is_joined_already
                                     ? (<div className={"big-button-black flex-center font-2 font-white"}
                                             onClick={JoinActions.reclickJoinedPopup}>
-                                        현재 순위: {rank}위
+                                        현재 순위: {joined_user.rank}위
                                     </div>)
                                     : (<div className={"big-button-red flex-center font-2 font-white"}
                                             onClick={JoinActions.createJoinedPopup}>
@@ -279,7 +280,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
     is_joined_popup_on: state.join.get('is_joined_popup_on'),
     is_joined_already: state.join.get('is_joined_already'),
-    rank: state.join.get('rank'),
+    joined_user: state.join.get('joined_user'),
     current_meeting: state.current_meeting.get('current_meeting'),
 })
 
