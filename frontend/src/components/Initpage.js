@@ -33,6 +33,7 @@ class Initpage extends Component {
                         console.log("[로그인성공] " + response.data.user.username + "(회사:" + response.data.company.name + ")")
                     })
                     .catch(err => console.log(err));
+                    window.location.reload();
                 })
                 .catch( err => {
                     console.log(err);

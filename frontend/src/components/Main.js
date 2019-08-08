@@ -36,6 +36,7 @@ class Main extends Component {
             console.log("로그아웃 완료")
         })
         .catch(err => console.log(err));
+        window.location.reload();
     }
 
     render() {
