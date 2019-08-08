@@ -9,6 +9,8 @@ import SignUp from "./components/SignUp";
 import Result from "./components/details/Result";
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as myProfileActions from './modules/my_profile';
 import axios from 'axios';
 
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -89,4 +91,13 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    MyProfileActions: bindActionCreators(myProfileActions, dispatch),
+});
+
+const mapStateToProps = (state) => ({
+    is_login_already: state.join.get('is_login_already'),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

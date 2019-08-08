@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as joinActions from '../modules/join';
 import * as currentMeetingActions from '../modules/current_meeting';
-import axios from 'axios'; //카카오로그인 실험용
+import axios from 'axios';
 
 class Main extends Component {
 
