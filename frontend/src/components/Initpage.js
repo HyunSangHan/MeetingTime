@@ -52,8 +52,8 @@ class Initpage extends Component {
                 <Container className={"font-white"}>
                     <Row>
                         <Col>
-                            <div className={"App font-big mb-3"}><b>Meeting Time</b></div>
-                            <a id="kakao-login-btn"></a>
+                            <div className="App font-big mb-3"><b>Meeting Time</b></div>
+                            <div className="App"><a id="kakao-login-btn"></a></div>
                         </Col>
                     </Row>
                 </Container>
