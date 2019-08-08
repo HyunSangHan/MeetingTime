@@ -13,10 +13,6 @@ class Initpage extends Component {
         super(props);
     }
     componentDidMount(){
-        const { CurrentMeetingActions, JoinActions } = this.props;
-        CurrentMeetingActions.getCurrentMeeting();
-        JoinActions.getJoinedUser();
-
         try {
             window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);            
         } catch (error) {

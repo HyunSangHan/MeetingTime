@@ -116,7 +116,6 @@ class Main extends Component {
                             </Col>
                             <Col xs={12} className={"flex-center"}>
 
-                                {/*추후 조건부 렌더 필요한부분*/}
                                 {is_joined_already
                                     ? (<div className={"big-button-black flex-center font-2 font-white"}
                                             onClick={JoinActions.reclickJoinedPopup}>

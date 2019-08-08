@@ -18,18 +18,17 @@ export default handleActions({
     }),
 }, initialState);
 
-export const getJoinedUser = createAction(
+export const getMyProfile = createAction(
     GET_PROFILE,
     (payload) => axios({
         method: 'get',
         url: '/profile',
     })
     .then((response) => {
-        console.log("this is working");
         console.log(response);
         return response
     })
     .catch(
-        console.log("not working")
+        console.log("not working (profile)")
     )
 );
