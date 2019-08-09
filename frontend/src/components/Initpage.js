@@ -31,9 +31,9 @@ class Initpage extends Component {
                     axios.get("/profile")
                     .then(response => {
                         console.log("[로그인성공] " + response.data.user.username + "(회사:" + response.data.company.name + ")")
+                        window.location.reload();
                     })
                     .catch(err => console.log(err));
-                    window.location.reload();
                 })
                 .catch( err => {
                     console.log(err);

@@ -34,9 +34,9 @@ class Main extends Component {
         .then(response => {
             console.log(response.data)
             console.log("로그아웃 완료")
+            window.location.reload();
         })
         .catch(err => console.log(err));
-        window.location.reload();
     }
 
     render() {
