@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
-from .models import Meeting, JoinedUser, Profile, Matching, KakaoChatting
+from .models import Meeting, Profile, Matching, JoinedUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import MeetingSerializer, JoinSerializer, MatchingSerializer, ProfileSerializer
+from .serializers import MeetingSerializer, ProfileSerializer, MatchingSerializer, JoinSerializer
 from django.contrib.auth.models import User
 from django.contrib import auth
 import random
