@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import './App.css';
 import Main from "./components/Main"
 import Profile from "./components/details/Profile";
-import Heart from "./components/details/Heart";
-import Chat from "./components/details/Chat";
 import Initpage from "./components/Initpage";
-import SignUp from "./components/SignUp";
 import Result from "./components/details/Result";
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as myProfileActions from './modules/my_profile';
 import axios from 'axios';
 
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -43,14 +42,20 @@ class App extends Component {
     }
 
     componentDidMount () {
-        //로그인여부 들어갈 수도 있는 곳
+        const { MyProfileActions } = this.props;
+        MyProfileActions.getMyProfile();
     }
 
     render() {
+        const { is_login_already } = this.props;
+
         return (
             <BrowserRouter>
                 <div className="frame">
-                    <Route exact path="/"
+
+                { is_login_already
+                    ? (
+                        <Route exact path="/"
                         render={(props) => (
                             <Main
                                 {...props}
@@ -59,6 +64,14 @@ class App extends Component {
                             />
                         )}
                     />
+                    ) : (
+                        <Route exact path="/"
+                        render={(props) => (
+                            <Initpage/>
+                        )}
+                    />
+                    ) }
+
                     <Route path="/profile"
                         render={(props) => (
                             <Profile
@@ -66,14 +79,6 @@ class App extends Component {
                                 user={this.state.user}
                             />
                         )} />
-                    <Route path="/heart"
-                        render={(props) => (
-                            <Heart
-                                {...props}
-                                user={this.state.user}
-                            />
-                        )} />
-                    <Route path="/init" component={Initpage}/>
                     <Route path="/matching_result"
                         render={(props) => (
                             <Result
@@ -89,4 +94,13 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    MyProfileActions: bindActionCreators(myProfileActions, dispatch),
+});
+
+const mapStateToProps = (state) => ({
+    is_login_already: state.my_profile.get('is_login_already'),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

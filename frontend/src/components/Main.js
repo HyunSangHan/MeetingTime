@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as joinActions from '../modules/join';
 import * as currentMeetingActions from '../modules/current_meeting';
-import axios from 'axios'; //카카오로그인 실험용
+import axios from 'axios';
 
 class Main extends Component {
 
@@ -23,38 +23,6 @@ class Main extends Component {
         const { CurrentMeetingActions, JoinActions } = this.props;
         CurrentMeetingActions.getCurrentMeeting();
         JoinActions.getJoinedUser();
-
-        try {
-            window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);            
-        } catch (error) {
-            console.log(error);
-        }
-        // 카카오 로그인 버튼을 생성
-        window.Kakao.Auth.createLoginButton({
-            container: '#kakao-login-btn',
-            success: function(authObj) {
-                // 로그인 성공시, 장고의 KAKAO Login API를 호출함
-                axios.post("/rest-auth/kakao/", {
-                    access_token: authObj.access_token,
-                    code: process.env.REACT_APP_KAKAO_REST_API_KEY
-                })
-                .then( response => {
-                    axios.get("/profile")
-                    .then(response => {
-                        console.log("[로그인성공] " + response.data.user.username + "(회사:" + response.data.company.name + ")")
-                    })
-                    .catch(err => console.log(err));
-                })
-                .catch( err => {
-                    console.log(err);
-                });
-
-            },
-            fail: function(err) {
-                alert(JSON.stringify(err));
-                console.log(err);
-            }
-        });
     }
 
     kakaoLogout = () => () => {
@@ -66,6 +34,7 @@ class Main extends Component {
         .then(response => {
             console.log(response.data)
             console.log("로그아웃 완료")
+            window.location.reload();
         })
         .catch(err => console.log(err));
     }
@@ -100,10 +69,8 @@ class Main extends Component {
                         <Row className={"App"}>
                             <Col xs={12}>
                                 <div className={"font-big font-white mt-4"}>
+                                    <div className="font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div>
                                     {current_meeting.location}
-                                    <br/>
-                                    <a id="kakao-login-btn"></a>
-                                    <div className="font-05 hover" onClick={this.kakaoLogout()}>카카오로그아웃</div>
                                 </div>
                             </Col>
                             <Col xs={12}>
@@ -116,7 +83,6 @@ class Main extends Component {
                             </Col>
                             <Col xs={12} className={"flex-center"}>
 
-                                {/*추후 조건부 렌더 필요한부분*/}
                                 {is_joined_already
                                     ? (<div className={"big-button-black flex-center font-2 font-white"}
                                             onClick={JoinActions.reclickJoinedPopup}>

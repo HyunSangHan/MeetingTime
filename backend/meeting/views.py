@@ -246,14 +246,17 @@ class CounterProfile(APIView):
 
 class Profile(APIView):
     def get(self, request, format=None):
-        queryset = request.user.profile
-        if queryset is not None:
-            serializer = ProfileSerializer(queryset)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+        if request.user.is_authenticated:
+            queryset = request.user.profile
+            if queryset is not None:
+                serializer = ProfileSerializer(queryset)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_404_NOT_FOUND)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-    # models.py에서 user와 연동하여 profile을 만들어주고 있으므로 Post는 불필요
+    # models.py에서 user와 연동하여 profile을 만들어주고 있으므로 현재로선 Post 불필요
     # def post(self, request, format=None):
 
     def patch(self, request, format=None):

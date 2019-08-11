@@ -4,35 +4,57 @@ import '../App.css';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import Footer from "./Footer";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 class Initpage extends Component {
+
+
+    constructor(props){
+        super(props);
+    }
+    componentDidMount(){
+        try {
+            window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);            
+        } catch (error) {
+            console.log(error);
+        }
+        // 카카오 로그인 버튼을 생성
+        window.Kakao.Auth.createLoginButton({
+            container: '#kakao-login-btn',
+            success: function(authObj) {
+                // 로그인 성공시, 장고의 KAKAO Login API를 호출함
+                axios.post("/rest-auth/kakao/", {
+                    access_token: authObj.access_token,
+                    code: process.env.REACT_APP_KAKAO_REST_API_KEY
+                })
+                .then( response => {
+                    axios.get("/profile")
+                    .then(response => {
+                        console.log("[로그인성공] " + response.data.user.username + "(회사:" + response.data.company.name + ")")
+                        window.location.reload();
+                    })
+                    .catch(err => console.log(err));
+                })
+                .catch( err => {
+                    console.log(err);
+                });
+
+            },
+            fail: function(err) {
+                alert(JSON.stringify(err));
+                console.log(err);
+            }
+        });
+    }
+
     render() {
         return (
             <div className={"pc-none frame flex-center bg-main-color"}>
                 <Container className={"font-white"}>
                     <Row>
                         <Col>
-                            <div className={"App font-big mb-3"}><b>Meeting Time</b></div>
-                            <Form>
-                                <FormGroup>
-                                    <Label for="email">ID(이메일주소)</Label>
-                                    <Input type="email" name="email" id="email" placeholder="Email Address" />
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="password">비밀번호</Label>
-                                    <Input type="password" name="password" id="password" placeholder="Password" />
-                                </FormGroup>
-                                <Link to={"./main"}>
-                                    <Button color="danger" className={"mt-1"}>로그인하기</Button>
-                                </Link>
-                            </Form>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className={"App mt-4 font-1 deco-none"}>
-                            <Link to={"./sign_up"}>
-                                <u className={"font-white"}>설마, 아직도 회원이 아니신가요?</u>
-                            </Link>
+                            <div className="App font-big mb-3"><b>Meeting Time</b></div>
+                            <div className="App"><a id="kakao-login-btn"></a></div>
                         </Col>
                     </Row>
                 </Container>
