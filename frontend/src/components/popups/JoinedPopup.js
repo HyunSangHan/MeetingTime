@@ -14,7 +14,7 @@ class JoinedPopup extends Component {
                 <div  className={"abs hover"} onClick={this.props.deletePopup}>
                     <MaterialIcon icon="clear" size="25px" color="lightgrey"/>
                 </div>
-                {this.props.is_joined_done
+                {this.props.is_joined_already
                 ?
                 (<div className={"copy-pop flex-center font-1"}>
                     이미 번호표를 뽑으셨어요! 결과발표 전까지 조금만 기다려주세요.
