@@ -66,19 +66,6 @@ class Main extends Component {
                                     {current_meeting.second_shuffle_time}
                                 </div>
                             </Col>
-                            <Col xs={12} className={"flex-center"}>
-
-                                {is_joined_already
-                                    ? (<div className={"big-button-black flex-center font-2 font-white"}
-                                            onClick={JoinActions.reclickJoinedPopup}>
-                                        현재 순위: {joined_user.rank}위
-                                    </div>)
-                                    : (<div className={"big-button-red flex-center font-2 font-white"}
-                                            onClick={JoinActions.createJoinedPopup}>
-                                        선착순 번호표 뽑기
-                                        {/*{this.props.cutline}*/}
-                                    </div>)}
-                            </Col>
                         </Row>
                     </Container>
                 </div>
