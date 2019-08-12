@@ -49,7 +49,7 @@ class Initpage extends Component {
 
     render() {
         return (
-            <div className={"pc-none frame flex-center bg-main-color"}>
+            <div className={"frame flex-center bg-main-color"}>
                 <Container className={"font-white"}>
                     <Row>
                         <Col>
