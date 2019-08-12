@@ -40,24 +40,9 @@ class Main extends Component {
     }
 
     render() {
-        const {user, JoinActions, is_joined_popup_on, is_joined_already, joined_user, current_meeting } = this.props;
+        const {user, JoinActions, is_joined_already, joined_user, current_meeting } = this.props;
         return (
             <div className={"frame"}>
-{/*팝업*/}
-                {is_joined_popup_on &&
-                <div className={"App"}>
-                    <div className={"flex-center"}>
-                        <div className={"fix minus-height z-4"}>
-                            <JoinedPopup
-                                rank={joined_user.rank}
-                                deletePopup={JoinActions.deletePopup}
-                                is_joined_already={is_joined_already}
-                            />
-                        </div>
-                    </div>
-                    <div className={"frame-dark fix z-3"}/>
-                </div>
-                }
 
 {/*PC와 모바일 공통*/}
                 <div className="up-bg flex-center frame-half">

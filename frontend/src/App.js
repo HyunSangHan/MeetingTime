@@ -10,6 +10,7 @@ import { bindActionCreators } from 'redux';
 import * as myProfileActions from './modules/my_profile';
 import * as currentMeetingActions from './modules/current_meeting';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -84,9 +85,16 @@ class App extends Component {
             <BrowserRouter>
                 <div className="frame">
 
-                { is_login_already
-                    ? (
                         <Route exact path="/"
+                            render={(props) => (
+                                <Initpage
+                                    {...props}
+                                    is_login_already={is_login_already}
+                                />
+                            )}
+                        />
+
+                        <Route path="/matching"
                         render={(props) => (
                             <Main
                                 {...props}
@@ -95,13 +103,7 @@ class App extends Component {
                             />
                         )}
                     />
-                    ) : (
-                        <Route exact path="/"
-                        render={(props) => (
-                            <Initpage/>
-                        )}
-                    />
-                    ) }
+
 
                     <Route path="/profile"
                         render={(props) => (
