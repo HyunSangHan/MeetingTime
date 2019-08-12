@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import '../css/Body.css';
 import '../App.css';
@@ -12,6 +13,7 @@ class Initpage extends Component {
     constructor(props){
         super(props);
     }
+
     componentDidMount(){
         try {
             window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);            
@@ -28,7 +30,7 @@ class Initpage extends Component {
                     code: process.env.REACT_APP_KAKAO_REST_API_KEY
                 })
                 .then( response => {
-                    axios.get("/profile")
+                    axios.get("/profile/")
                     .then(response => {
                         console.log("[로그인성공] " + response.data.user.username + "(회사:" + response.data.company.name + ")")
                         window.location.reload();
@@ -46,7 +48,6 @@ class Initpage extends Component {
             }
         });
     }
-
     render() {
         return (
             <div className={"pc-none frame flex-center bg-main-color"}>

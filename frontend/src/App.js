@@ -1,10 +1,11 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import './App.css';
 import Main from "./components/Main"
 import Profile from "./components/details/Profile";
 import Initpage from "./components/Initpage";
 import Result from "./components/details/Result";
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as myProfileActions from './modules/my_profile';
@@ -44,10 +45,14 @@ class App extends Component {
     componentDidMount () {
         const { MyProfileActions } = this.props;
         MyProfileActions.getMyProfile();
+
+        console.log(this.props);
     }
 
     render() {
         const { is_login_already } = this.props;
+        const { my_profile } = this.props;
+        console.log(this.props);
 
         return (
             <BrowserRouter>
@@ -59,6 +64,7 @@ class App extends Component {
                         render={(props) => (
                             <Main
                                 {...props}
+                
                                 user={this.state.user}
                                 ex_user={this.state.ex_user}
                             />
