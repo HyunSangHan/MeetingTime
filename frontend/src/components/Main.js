@@ -17,12 +17,20 @@ class Main extends Component {
 
     constructor(props){
         super(props);
+
+        this.state = {
+            time: 179,
+        }
+        this.startTimer = this.startTimer.bind(this);
+
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const { CurrentMeetingActions, JoinActions } = this.props;
         CurrentMeetingActions.getCurrentMeeting();
         JoinActions.getJoinedUser();
+
+        this.startTimer();
     }
 
     kakaoLogout = () => () => {
@@ -39,7 +47,7 @@ class Main extends Component {
         .catch(err => console.log(err));
     }
 
-    startTimer() { //일단 넣어둔 함수
+    startTimer() { //일단 넣어둔 함수TODO: 커스터마이징해야됨
         // const { history } = this.props; //시간 관련해서 받아올 곳
         this.setState(prevState => ({
             time: prevState.time,
@@ -73,14 +81,15 @@ class Main extends Component {
                             <Col xs={12}>
                                 <div className={"font-big font-white mt-4"}>
                                     <div className="font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div>
+                                    {/* TODO: 이번주 or 다음주 넣을곳 */}
                                     {current_meeting.location}
                                 </div>
                             </Col>
                             <Col xs={12}>
                                 <div className={"font-1 font-white mt-3 opacity05"}>
                                     {current_meeting.first_shuffle_time}
-                                    {/* 카운트다운 들어갈 곳 */}
-                                    {/* current_matching 모듈 생기면, 셔플회차 들어갈 곳 */}
+                                    {/* TODO: 카운트다운 들어갈 곳 */}
+                                    {/* TODO: current_matching 모듈 생기면, 셔플회차 들어갈 곳 */}
                                 </div>
                             </Col>
                         </Row>
