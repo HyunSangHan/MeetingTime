@@ -11,6 +11,7 @@ const GET_JOINED_USER = `GET_JOINED_USER`;
 const initialState = Map({
     is_joined_popup_on: false,
     is_joined_already: false,
+    joined_user : {},
 }); 
 
 export default handleActions({

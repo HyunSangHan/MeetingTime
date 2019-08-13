@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import '../../css/Body.css';
 import '../../App.css';
 import { Container, Row, Col } from 'reactstrap';
+/* eslint-disable-next-line */
 import Footer from "../Footer";
+/* eslint-disable-next-line */
 import { Link } from 'react-router-dom';
 import Header from "../Header";
 

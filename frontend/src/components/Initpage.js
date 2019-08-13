@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import '../css/Body.css';
 import '../App.css';
@@ -75,7 +76,6 @@ class Initpage extends Component {
         const todayLabel = week[today];
         return todayLabel;
     }
-
     render() {
         const { is_joined_popup_on, joined_user, JoinActions, is_joined_already, current_meeting } = this.props;
 
