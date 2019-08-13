@@ -26,24 +26,25 @@ class MeetingInfoView(viewsets.ModelViewSet):
     queryset = Meeting.objects.all()
 
 class CurrentMatching(APIView):
+    current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+
+    if timezone.now() < self.current_meeting.first_shuffle_time:
+        trial_time = 0
+    elif timezone.now() < self.current_meeting.second_shuffle_time:
+        trial_time = 1
+    elif timezone.now() < self.current_meeting.third_shuffle_time:
+        trial_time = 2
+    else:
+        trial_time = 3
+
     def get(self, request, format=None):
         my_profile = request.user.profile
-        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
-        joined_user = JoinedUser.objects.filter(meeting=current_meeting, profile=my_profile).last()
-
-        if timezone.now() < current_meeting.first_shuffle_time:
-            trial_time = 0
-        elif timezone.now() < current_meeting.second_shuffle_time:
-            trial_time = 1
-        elif timezone.now() < current_meeting.third_shuffle_time:
-            trial_time = 2
-        else:
-            trial_time = 3
+        joined_user = JoinedUser.objects.filter(meeting=self.current_meeting, profile=my_profile).last()
 
         if my_profile.is_male:
-            matching = Matching.objects.filter(trial_time=trial_time, joined_male=joined_user).last()
+            matching = Matching.objects.filter(trial_time=self.trial_time, joined_male=joined_user).last()
         else:
-            matching = Matching.objects.filter(trial_time=trial_time, joined_female=joined_user).last()
+            matching = Matching.objects.filter(trial_time=self.trial_time, joined_female=joined_user).last()
 
         if matching is not None:
             serializer = MatchingSerializer(matching)
@@ -52,10 +53,9 @@ class CurrentMatching(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request, format=None):
-        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
-        cutline = current_meeting.cutline
-        joined_users_male = list(JoinedUser.objects.filter(meeting=current_meeting, is_matched=False, profile__is_male=True, rank__lte=cutline))
-        joined_users_female = list(JoinedUser.objects.filter(meeting=current_meeting, is_matched=False, profile__is_male=False, rank__lte=cutline))
+        cutline = self.current_meeting.cutline
+        joined_users_male = list(JoinedUser.objects.filter(meeting=self.current_meeting, is_matched=False, profile__is_male=True, rank__lte=cutline))
+        joined_users_female = list(JoinedUser.objects.filter(meeting=self.current_meeting, is_matched=False, profile__is_male=False, rank__lte=cutline))
         numbers = list(range(len(joined_users_male)))
         random.shuffle(numbers)
 
@@ -106,7 +106,7 @@ class CurrentMatching(APIView):
                         random.shuffle(numbers)
                         runned += 1
 
-        queryset = Matching.objects.filter(trial_time=request.data["trial_time"], joined_male__meeting=current_meeting)
+        queryset = Matching.objects.filter(trial_time=request.data["trial_time"], joined_male__meeting=self.current_meeting)
         serializer = MatchingSerializer(queryset, many=True)
         if queryset is not None:
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -114,25 +114,30 @@ class CurrentMatching(APIView):
             return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
 
     def patch(self, request, format=None):
-        queryset = Matching.objects.filter(id=request.data.id)
-        
+        my_profile = request.user.profile
+        joined_user = JoinedUser.objects.filter(profile=my_profile, meeting=self.current_meeting)
+        if my_profile.is_male:
+            queryset = Matching.objects.filter(joined_male=joined_user, meeting=self.current_meeting, trial_time=self.trial_time)
+        else:
+            queryset = Matching.objects.filter(joined_female=joined_user, meeting=self.current_meeting, trial_time=self.trial_time)
         serializer = MatchingSerializer(queryset, data=request.data, partial=True)
-
-        if serializer.is_greenlight_male and serializer.is_greenlight_female:
-
-            kakao_chattingroom_url = KakaoChatting.objects.filter(is_used=False).first()
-            kakao_chattingroom_url.is_used = True
-            kakao_chattingroom_url.save()
-            successful_matching_data = {
-                "kakao_chattingroom": kakao_chattingroom_url
-            # kakao 채팅방을 최대 50개를 준비해놓고 ChattingRoom 이런 model에 저장해놓은 다음 filter 해서 할당되지 않은 첫번째
-            # url을 할당하는 것도 괜찮을 것 같네요 (50개는 우리가 매주 admin으로 입력해놓고)
-            }
-
-            serializer = MatchingSerializer(queryset, data=successful_matching_data, partial=True)
+        
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+
+        # if serializer.is_greenlight_male and serializer.is_greenlight_female:
+
+        #     kakao_chattingroom_url = KakaoChatting.objects.filter(is_used=False).first()
+        #     kakao_chattingroom_url.is_used = True
+        #     kakao_chattingroom_url.save()
+        #     successful_matching_data = {
+        #         "kakao_chattingroom": kakao_chattingroom_url
+        #     # kakao 채팅방을 최대 50개를 준비해놓고 ChattingRoom 이런 model에 저장해놓은 다음 filter 해서 할당되지 않은 첫번째
+        #     # url을 할당하는 것도 괜찮을 것 같네요 (50개는 우리가 매주 admin으로 입력해놓고)
+        #     }
+
 
     def delete(self, request, format=None):
         if request.data["trial_time"] > 0:
