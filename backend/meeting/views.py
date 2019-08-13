@@ -174,10 +174,11 @@ class Join(APIView):
     current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
 
     def get(self, request, format=None):
-        my_profile = request.user.profile
-        queryset = JoinedUser.objects.filter(profile=my_profile, meeting=self.current_meeting).last()
+        # my_profile = request.user.profile
+        # queryset = JoinedUser.objects.filter(profile=my_profile, meeting=self.current_meeting).last()
+        queryset = JoinedUser.objects.all()
         if queryset is not None:
-            serializer = JoinSerializer(queryset)
+            serializer = JoinSerializer(queryset, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
@@ -217,9 +218,29 @@ class Join(APIView):
 
     def delete(self, request, format=None):
         my_profile = request.user.profile
-        joined_user = JoinedUser.objects.filter(profile=my_profile, meeting=self.current_meeting).first()
+        user2delete = JoinedUser.objects.get(profile=my_profile, meeting=self.current_meeting)
+        # 취소자보다 rank 높은 모든 사람들 
+        after_joined_users = JoinedUser.objects.filter(rank__gte=user2delete.rank, meeting=self.current_meeting)
+        # cutline 산정 전 join 취소 - 취소자 바로 뒤의 joinedUser로부터 두 번 연속해서 같은 Rank를 가지고 있는 사람들 중 앞사람까지 rank를 하나씩 줄임
+        if current_meeting.cutline is None:
+            prev_rank = user2delete.rank
+            for after_joined_user in after_joined_users:
+                if prev_rank != after_joined_user.rank:
+                    prev_rank = after_joined_user.rank
+                    after_joined_user.rank -= 1
+                else:
+                    break
+        # cutline 산정 후 join 취소 - 매칭이 진행되는 중이라면 후순위 사람을 참여시켜야 하는지? 
+        else:
+            for after_joined_user in after_joined_users:
+                after_joined_user.rank -= 1
+                #################
+                # Edit Required #
+                #################
+        
+        
         if my_profile is not None and self.current_meeting is not None and joined_user is not None:
-            joined_user.delete()
+            user2delete.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -269,7 +290,35 @@ class Profile(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, format=None):
-        if request.user.profile is not None:
+        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+        my_profile = request.user.profile
+        user2delete = JoinedUser.objects.get(profile=my_profile, meeting=current_meeting)
+
+        if user2delete is not None:
+            # 취소자보다 rank 높은 모든 사람들 
+            after_joined_users = JoinedUser.objects.filter(rank__gte=user2delete.rank, meeting=self.current_meeting)
+            # cutline 산정 전 회원탈퇴 - 취소자 바로 뒤의 joinedUser로부터 두 번 연속해서 같은 Rank를 가지고 있는 사람들 중 앞사람까지 rank를 하나씩 줄임
+            if current_meeting.cutline is None:
+                prev_rank = user2delete.rank
+                for after_joined_user in after_joined_users:
+                    if prev_rank != after_joined_user.rank:
+                        prev_rank = after_joined_user.rank
+                        after_joined_user.rank -= 1
+                    else:
+                        break
+            # cutline 산정 후 매칭이 진행되는 도중 회원탈퇴시, 커트라인을 
+            else:
+                
+                for after_joined_user in after_joined_users:
+                    after_joined_user.rank -= 1                
+                    #################
+                    # Edit Required #
+                    #################
+        
+            if my_profile is not None and current_meeting is not None and joined_user is not None:
+                user2delete.delete()
+
+        if my_profile is not None:
             request.user.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
