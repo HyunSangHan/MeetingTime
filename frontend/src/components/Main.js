@@ -45,7 +45,7 @@ class Main extends Component {
 
     
     render() {
-        const {user, JoinActions, is_joined_popup_on, is_joined_already, joined_user, current_meeting } = this.props;
+        const {user, my_profile, JoinActions, is_joined_popup_on, is_joined_already, joined_user, current_meeting } = this.props;
         console.log(this.props);
         return (
             <div className={"frame"}>
@@ -113,7 +113,7 @@ class Main extends Component {
                             <Container>    
                                 <Row className={"align-center deco-none"}>
                                     <Player
-                            
+                                        my_profile={my_profile}
                                     />  
                                     <Col xs={2} md={3} className={"h17vh flex-j-end"}>
                                         <div className={"pc-none"}>

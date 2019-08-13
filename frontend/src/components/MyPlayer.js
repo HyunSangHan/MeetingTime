@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import "../css/info_styles.scss";
 import { Link } from 'react-router-dom';
-//import * as PlayerActions from '../modules/player';
-//import { bindActionCreators } from 'redux';
-//import { connect } from "react-redux";
 
 
 class MyPlayer extends Component {
@@ -15,7 +12,6 @@ class MyPlayer extends Component {
 
     render(){
         const { joined_user, my_profile } = this.props;
-        console.log(this.props);
         return ( 
             <div className="container">
                 <img src={this.props.my_profile.image || require("../images/noPhoto.jpg")}
