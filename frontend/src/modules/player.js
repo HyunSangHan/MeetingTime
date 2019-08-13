@@ -17,18 +17,21 @@ const initialState = Map({
 }); 
 
 export default handleActions({
-    [GREEN_LIGHT_ON]: (state, action) => {
-        return state.set('is_greenlight_on', true)
-                    
-    },
-    [GREEN_LIGHT_OFF]: (state, action) => {
-        return state.set('is_greenlight_on', false)
-    },
+    ...pender({
+        type: GREEN_LIGHT_ON,
+        onSuccess: (state, action) => state.set('is_greenlight_on', true)
+                
+    }),
+    ...pender({
+        type: GREEN_LIGHT_OFF,
+        onSuccess: (state, action) => state.set('is_greenlight_on', false)
+
+    }),
     ...pender({
         type: COUNTER_PROFILE,
         onSuccess: (state, action) => state.set('counter_profile', action.payload.data)
             .set('is_counterProfile', true),
-        onFailure: (state, action) => state.set('is_counterProfile', false),
+        onFailure: (state, action) => state.set('is_counterProfile', false)
     }),
 }, initialState);
 
@@ -52,11 +55,8 @@ export const handleGreenLightOn = createAction(
     (payload) => axios({
         method: "patch",
         url: '/current_matching/',
-        headers: {
-            "Content-Type" : "application/json"
-        },
-        body : {
-            "is_greenlight_male": true  //큰따옴표 있는 지 없는지 모르겟..
+        data : {
+            is_greenlight_male: true  //큰따옴표 있는 지 없는지 모르겟..
         }
     })
     .then((response) => {
@@ -74,11 +74,8 @@ export const handleGreenLightOff = createAction(
     (payload) => axios({
         method: "patch",
         url: '/current_matching/',
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: {
-            "is_greenlight_male": false  //큰따옴표 있는 지 없는지 모르겟..
+        data: {
+            is_greenlight_male: false  //큰따옴표 있는 지 없는지 모르겟..
         }
     })
         .then((response) => {
