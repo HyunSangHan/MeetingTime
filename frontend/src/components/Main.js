@@ -109,18 +109,19 @@ class Main extends Component {
                     <div className={"profile bg-white pc-none"}>
                         <div className="profile h100percent w50percent bg-white absolute z-1"/>
                         <div className={"pc-max-width bg-white z-2"}>
-                            <Container>
+                            <Container>    
                                 <Row className={"align-center deco-none"}>
+                                    <Player
+                                        {...this.props}
+                                        joined_player={joined_user}
+                                    />  
                                     <Col xs={2} md={3} className={"h17vh flex-j-end"}>
                                         <div className={"pc-none"}>
                                             <MaterialIcon icon="arrow_forward_ios" size="23px" color="#f0f0f0"/>
                                         </div>
                                     </Col>
                                 </Row>
-                                <Player
-                                    {...this.props}
-                                    joined_player={joined_user}
-                                />        
+                                
                             </Container>
                         </div>
                     </div>
