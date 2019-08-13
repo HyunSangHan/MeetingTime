@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'django_crontab',
     'allauth.socialaccount.providers.kakao',
 ]
 
@@ -144,6 +145,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CRONJOBS = [
+    ('*/1 * * * *', 'meeting.cron.schedule'),
+    ('*/1 * * * *', 'meeting.cron.match')
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
