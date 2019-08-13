@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import "../css/info_styles.scss";
-import * as playerActions from '../modules/player';
-import { bindActionCreators } from 'redux';
-import { connect } from "react-redux";
-import Ionicon from "react-ionicons";
+import MaterialIcon from 'material-icons-react';
 
 
 class CounterPlayer extends Component {
@@ -13,9 +10,8 @@ class CounterPlayer extends Component {
 
     }
     
-
     render() {
-        const { counter_propfile, is_greenlight_on, is_greenlight_off } = this.props;
+        
         console.log(this.props);
         return (
             <div>
@@ -28,6 +24,26 @@ class CounterPlayer extends Component {
                     <div>팀소개 : {this.props.counter_profile.team_introduce}</div>
                 </div>
 
+                <span className="icon" onClick={this.props.handleGreenLightOn}>                    
+                    
+                    {this.props.is_greenlight_on &&
+                        <MaterialIcon icon="favorite" fontSize="40px" color="#0b6623" />
+                    }
+                    {!this.props.is_greenlight_on &&
+                        <MaterialIcon icon="favorite" fontSize="40px" color="darkgrey" />
+                    }
+                </span>
+                그린라이트 ON 버튼
+                <span className="icon" onClick={this.props.handleGreenLightOff}>
+                    
+                    {this.props.is_greenlight_on &&
+                        <MaterialIcon icon="favorite" fontSize="40px" color="#0b6623" />
+                    }
+                    {!this.props.is_greenlight_on &&
+                        <MaterialIcon icon="favorite" fontSize="40px" color="darkgrey" />
+                    }
+                </span>
+                그린라이트 OFF 버튼 
             </div>
 
         )

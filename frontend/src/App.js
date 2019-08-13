@@ -21,7 +21,7 @@ class App extends Component {
 
         this.state = {
             
-            user: {
+            user: {//삭제 요망
                 nickname: "data_닉네임",
                 company: "data_회사명",
                 img_url: "/images/exampleProfile.jpeg",
@@ -34,7 +34,7 @@ class App extends Component {
                 team_detail: "data_팀소개문구_blah blah~ 이건 테스트입니다. 우리 팀은 평범하지 않습니다. 테스트입니다. 테스트입니다. blah blah blah blah 테스트다 블라 blah"
                 //나중에 유저의 모델 내 필드 개수와 맞춰야 할 것임
             },
-            ex_user: {
+            ex_user: {//삭제 요망
                 nickname: "data_상대닉네임",
                 company: "data_상대회사명",
                 img_url: "/images/counterProfile.jpeg",
@@ -63,8 +63,8 @@ class App extends Component {
                             <Main
                                 {...props}
                                 my_profile={my_profile2}
-                                user={this.state.user}
-                                ex_user={this.state.ex_user}
+                                user={this.state.user} //삭제 요망
+                                ex_user={this.state.ex_user} //삭제 요망
                             />
                         )}
                     />

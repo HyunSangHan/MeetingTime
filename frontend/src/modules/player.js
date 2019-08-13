@@ -13,19 +13,15 @@ const GREEN_LIGHT_OFF = "GREEN_LIGHT_OFF";
 
 const initialState = Map({
     is_counterProfile: false,
-    is_greenlight_on : false,
-    is_greenlight_off: true,
-    
+    is_greenlight_on : false    
 }); 
 
 export default handleActions({
     [GREEN_LIGHT_ON]: (state, action) => {
         return state.set('is_greenlight_on', true)
-            .set('is_greenlight_off', false);
     },
     [GREEN_LIGHT_OFF]: (state, action) => {
         return state.set('is_greenlight_on', false)
-            .set('is_greenlight_off', true);
     },
     ...pender({
         type: COUNTER_PROFILE,
@@ -48,4 +44,12 @@ export const getCounterProfile = createAction(
         .catch(
             console.log("not working (counter_profile)")
         )
+);
+
+export const handleGreenLightOn = createAction(
+    GREEN_LIGHT_ON
+);
+
+export const handleGreenLightOff = createAction(
+    GREEN_LIGHT_OFF
 );

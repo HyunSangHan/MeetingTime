@@ -17,7 +17,6 @@ class Player extends Component {
         this.state = {
             action: "user"
         }
-
     }
 
     changeAction = () => {
@@ -39,11 +38,12 @@ class Player extends Component {
         const { PlayerActions, JoinActions } = this.props;
         PlayerActions.getCounterProfile();
         JoinActions.getJoinedUser();
+        //PlayerActions.handleGreenLightClick();
     }
 
     render(){
         const{ action } = this.state;
-        const { my_profile, joined_user, counter_profile, is_counterProfile, is_greenlight_on, is_greenlight_off } = this.props;
+        const { PlayerActions, my_profile, joined_user, counter_profile, is_counterProfile, is_greenlight_on } = this.props;
         console.log(this.props);
         return (
             <div className="container">
@@ -54,9 +54,10 @@ class Player extends Component {
                     {action === "counter_user" 
                         && is_counterProfile 
                         && <CounterPlayer 
+                            handleGreenLightOn={PlayerActions.handleGreenLightOn}
+                            handleGreenLightOff={PlayerActions.handleGreenLightOff}
                             counter_profile={counter_profile}
                             is_greenlight_on={is_greenlight_on}
-                            is_greenlight_off={is_greenlight_off}
                     />}
                 </div>
                 <div className="white-box">
@@ -89,14 +90,13 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     PlayerActions: bindActionCreators(playerActions, dispatch),
     JoinActions: bindActionCreators(joinActions, dispatch),
-
+    
 });
 
 const mapStateToProps = (state) => ({
     joined_user: state.join.get('joined_user'),
     counter_profile: state.player.get('counter_profile'),
     is_greenlight_on: state.player.get('is_greenlight_on'),
-    is_greenlight_off: state.player.get('is_greenlight_off'),
     is_counterProfile: state.player.get('is_counterProfile'),
 })
 
