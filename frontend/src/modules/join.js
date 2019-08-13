@@ -15,7 +15,7 @@ const initialState = Map({
 }); 
 
 export default handleActions({
-    [DELETE_POPUP]: (state, action) => {
+    [DELETE_POPUP]: (state) => {
         return state.set('is_joined_popup_on', false)
                     .set('is_joined_already', true);
     },
@@ -28,7 +28,7 @@ export default handleActions({
         type: GET_JOINED_USER,
         onSuccess: (state, action) => state.set('joined_user', action.payload.data)
                                             .set('is_joined_already', true),
-        onFailure: (state, action) => state.set('is_joined_already', false),
+        onFailure: (state) => state.set('is_joined_already', false),
     }),
     [RECLICK_JOINED_POPUP]: (state, action) => {
         return state.set('is_joined_popup_on', true);

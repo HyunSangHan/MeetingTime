@@ -7,12 +7,10 @@ class MyPlayer extends Component {
 
     constructor(props) {
         super(props);
-
     }
 
     render(){
         const { joined_user, my_profile } = this.props;
-        console.log(joined_user.profile);
         return ( 
             <div className="container">
                 <img src={my_profile.image || require("../images/noPhoto.jpg")}

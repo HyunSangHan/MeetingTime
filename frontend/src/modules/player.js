@@ -13,7 +13,7 @@ const GREEN_LIGHT_OFF = "GREEN_LIGHT_OFF";
 
 const initialState = Map({
     is_counterProfile: false,
-    is_greenlight_on : false,   
+    is_greenlight_on : false,
 }); 
 
 export default handleActions({

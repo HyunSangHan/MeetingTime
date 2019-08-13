@@ -4,8 +4,7 @@ import '../css/Body.css';
 import '../App.css';
 import { Container, Row, Col } from 'reactstrap';
 import MaterialIcon from 'material-icons-react';
-import { Link } from 'react-router-dom';
-import JoinedPopup from "./popups/JoinedPopup";
+import { Link, Redirect } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Footer from "./Footer";
 import Player from "./Player";
@@ -21,12 +20,20 @@ import axios from 'axios';
 class Main extends Component {
     constructor(props){
         super(props);
+
+        this.state = {
+            time: 179,
+        }
+        this.startTimer = this.startTimer.bind(this);
+
     }
-    
-    componentDidMount(){
+
+    componentDidMount() {
         const { CurrentMeetingActions, JoinActions } = this.props;
         CurrentMeetingActions.getCurrentMeeting();
         JoinActions.getJoinedUser();
+
+        this.startTimer();
     }
 
     kakaoLogout = () => () => {
@@ -43,62 +50,80 @@ class Main extends Component {
         .catch(err => console.log(err));
     }
 
-    
+    startTimer() { //일단 넣어둔 함수TODO: 커스터마이징해야됨
+        // const { history } = this.props; //시간 관련해서 받아올 곳
+        this.setState(prevState => ({
+            time: prevState.time,
+        }));
+        this.timer = setInterval(() => this.setState(prevState => ({
+            ...prevState,
+            time: prevState.time - 1
+        })), 1000);
+        this.ifTimer = setInterval(() => {
+            const { time } = this.state;
+            if (time <= 0) {
+                window.location.reload(); //리프레시
+                clearInterval(this.timer, this.ifTimer);
+            }
+        }, 1000);
+    }
+
+    getInputDayLabel = (meetingTime) => {
+        const week = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+        const today = new Date(meetingTime).getDay();
+        const todayLabel = week[today];
+        return todayLabel;
+    }
+
     render() {
-        const {user, my_profile, JoinActions, is_joined_popup_on, is_joined_already, joined_user, current_meeting } = this.props;
-        console.log(this.props);
+        const {user, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting } = this.props;
+
+
+        const nowTime = new Date();
+        const meetingTime = new Date(current_meeting.meeting_time);
+        const meetingDay = this.getInputDayLabel(current_meeting.meeting_time);
+
+        let meetingWeek = null;
+        if (nowTime.getDay() < meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() <= 561600000) {
+            meetingWeek = "이번"
+        } else if (nowTime.getDay() < meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() > 561600000) {
+            meetingWeek = "다음"
+        } else if (nowTime.getDay() > meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() <= 561600000) {
+            meetingWeek = "다음"
+        } else if (nowTime.getDay() > meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() > 561600000) {
+            meetingWeek = "다다음"
+        } else if (nowTime.getDay() === meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() <= 561600000) {
+            meetingWeek = "이번"
+        } else if (nowTime.getDay() === meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() > 561600000) {
+            meetingWeek = "다음"
+        } else {
+            meetingWeek = ""
+        }
+
         return (
             <div className={"frame"}>
-{/*팝업*/}
-                {is_joined_popup_on &&
-                <div className={"App"}>
-                    <div className={"flex-center"}>
-                        <div className={"fix minus-height z-4"}>
-                            <JoinedPopup
-                                rank={joined_user.rank}
-                                deletePopup={JoinActions.deletePopup}
-                                is_joined_already={is_joined_already}
-                            />
-                        </div>
-                    </div>
-                    <div className={"frame-dark fix z-3"}/>
-                </div>
+                {
+                    !is_login_already && <Redirect to="/"/>
                 }
 
 {/*PC와 모바일 공통*/}
                 <div className="up-bg flex-center frame-half">
-                    <div className={"fix flex-center frame-half"}>
-                        <img src={user.img_url} className={"bg-under-img"} alt={"profile-large-img"}/>
-                    </div>
                     <div className={"up-bg-color fix"}/>
                     <Container>
                         <Row className={"App"}>
                             <Col xs={12}>
                                 <div className={"font-big font-white mt-4"}>
                                     <div className="font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div>
-                                    {current_meeting.location}
+                                    {meetingWeek} {meetingDay} {current_meeting.location}
                                 </div>
                             </Col>
                             <Col xs={12}>
                                 <div className={"font-1 font-white mt-3 opacity05"}>
-                                    {current_meeting.first_shuffle_time}
-                                </div>
-                                <div className={"font-1 font-white mt-1 opacity05"}>
-                                    {current_meeting.second_shuffle_time}
-                                </div>
-                            </Col>
-                            <Col xs={12} className={"flex-center"}>
+                                    {/* TODO: 카운트다운 들어갈 곳 */}
 
-                                {is_joined_already
-                                    ? (<div className={"big-button-black flex-center font-2 font-white"}
-                                            onClick={JoinActions.reclickJoinedPopup}>
-                                        현재 순위: {joined_user.rank}위
-                                    </div>)
-                                    : (<div className={"big-button-red flex-center font-2 font-white"}
-                                            onClick={JoinActions.createJoinedPopup}>
-                                        선착순 번호표 뽑기
-                                        {/*{this.props.cutline}*/}
-                                    </div>)}
+                                    {/* TODO: current_matching 모듈 생기면, 셔플회차 들어갈 곳 */}
+                                    ?번째 셔플 결과입니다.
+                                </div>
                             </Col>
                         </Row>
                     </Container>
@@ -151,6 +176,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
     is_joined_popup_on: state.join.get('is_joined_popup_on'),
     is_joined_already: state.join.get('is_joined_already'),
+    is_login_already: state.my_profile.get('is_login_already'),
     joined_user: state.join.get('joined_user'),
     current_meeting: state.current_meeting.get('current_meeting'),
 })
