@@ -74,24 +74,22 @@ class Main extends Component {
     render() {
         const {user, current_meeting, is_login_already } = this.props;
 
-        const meetingTime = new Date(current_meeting.meeting_time);
         const nowTime = new Date();
-        const meetingTimeNum = Date.parse(current_meeting.meeting_time);
-        const nowTimeNum = new Date().getTime()
+        const meetingTime = new Date(current_meeting.meeting_time);
         const meetingDay = this.getInputDayLabel(current_meeting.meeting_time);
 
         let meetingWeek = null;
-        if (nowTime.getDay() < meetingTime.getDay() && meetingTimeNum - nowTimeNum <= 561600000) {
+        if (nowTime.getDay() < meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() <= 561600000) {
             meetingWeek = "이번"
-        } else if (nowTime.getDay() < meetingTime.getDay() && meetingTimeNum - nowTimeNum > 561600000) {
+        } else if (nowTime.getDay() < meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() > 561600000) {
             meetingWeek = "다음"
-        } else if (nowTime.getDay() > meetingTime.getDay() && meetingTimeNum - nowTimeNum <= 561600000) {
+        } else if (nowTime.getDay() > meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() <= 561600000) {
             meetingWeek = "다음"
-        } else if (nowTime.getDay() > meetingTime.getDay() && meetingTimeNum - nowTimeNum > 561600000) {
+        } else if (nowTime.getDay() > meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() > 561600000) {
             meetingWeek = "다다음"
-        } else if (nowTime.getDay() === meetingTime.getDay() && meetingTimeNum - nowTimeNum <= 561600000) {
+        } else if (nowTime.getDay() === meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() <= 561600000) {
             meetingWeek = "이번"
-        } else if (nowTime.getDay() === meetingTime.getDay() && meetingTimeNum - nowTimeNum > 561600000) {
+        } else if (nowTime.getDay() === meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() > 561600000) {
             meetingWeek = "다음"
         } else {
             meetingWeek = ""
