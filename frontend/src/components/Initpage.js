@@ -84,8 +84,8 @@ class Initpage extends Component {
         const meetingTimeNum = Date.parse(current_meeting.meeting_time);
         const nowTimeNum = new Date().getTime()
         const meetingDay = this.getInputDayLabel(current_meeting.meeting_time);
-        let meetingWeek = null;
 
+        let meetingWeek = null;
         if (nowTime.getDay() < meetingTime.getDay() && meetingTimeNum - nowTimeNum <= 561600000) {
             meetingWeek = "이번"
         } else if (nowTime.getDay() < meetingTime.getDay() && meetingTimeNum - nowTimeNum > 561600000) {

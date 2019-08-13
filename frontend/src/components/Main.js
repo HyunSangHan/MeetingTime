@@ -65,31 +65,59 @@ class Main extends Component {
         }, 1000);
     }
 
+    getInputDayLabel = (meetingTime) => {
+        const week = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+        const today = new Date(meetingTime).getDay();
+        const todayLabel = week[today];
+        return todayLabel;
+    }
+
     render() {
-        const {user, JoinActions, is_joined_already, joined_user, current_meeting } = this.props;
+        const {user, current_meeting } = this.props;
+
+        const meetingTime = new Date(current_meeting.meeting_time);
+        const nowTime = new Date();
+        const meetingTimeNum = Date.parse(current_meeting.meeting_time);
+        const nowTimeNum = new Date().getTime()
+        const meetingDay = this.getInputDayLabel(current_meeting.meeting_time);
+
+        let meetingWeek = null;
+        if (nowTime.getDay() < meetingTime.getDay() && meetingTimeNum - nowTimeNum <= 561600000) {
+            meetingWeek = "이번"
+        } else if (nowTime.getDay() < meetingTime.getDay() && meetingTimeNum - nowTimeNum > 561600000) {
+            meetingWeek = "다음"
+        } else if (nowTime.getDay() > meetingTime.getDay() && meetingTimeNum - nowTimeNum <= 561600000) {
+            meetingWeek = "다음"
+        } else if (nowTime.getDay() > meetingTime.getDay() && meetingTimeNum - nowTimeNum > 561600000) {
+            meetingWeek = "다다음"
+        } else if (nowTime.getDay() === meetingTime.getDay() && meetingTimeNum - nowTimeNum <= 561600000) {
+            meetingWeek = "이번"
+        } else if (nowTime.getDay() === meetingTime.getDay() && meetingTimeNum - nowTimeNum > 561600000) {
+            meetingWeek = "다음"
+        } else {
+            meetingWeek = ""
+        }
+
         return (
             <div className={"frame"}>
 
 {/*PC와 모바일 공통*/}
                 <div className="up-bg flex-center frame-half">
-                    <div className={"fix flex-center frame-half"}>
-                        <img src={user.img_url} className={"bg-under-img"} alt={"profile-large-img"}/>
-                    </div>
                     <div className={"up-bg-color fix"}/>
                     <Container>
                         <Row className={"App"}>
                             <Col xs={12}>
                                 <div className={"font-big font-white mt-4"}>
                                     <div className="font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div>
-                                    {/* TODO: 이번주 or 다음주 넣을곳 */}
-                                    {current_meeting.location}
+                                    {meetingWeek} {meetingDay} {current_meeting.location}
                                 </div>
                             </Col>
                             <Col xs={12}>
                                 <div className={"font-1 font-white mt-3 opacity05"}>
-                                    {current_meeting.first_shuffle_time}
                                     {/* TODO: 카운트다운 들어갈 곳 */}
+
                                     {/* TODO: current_matching 모듈 생기면, 셔플회차 들어갈 곳 */}
+                                    ?번째 셔플 결과입니다.
                                 </div>
                             </Col>
                         </Row>
