@@ -3,8 +3,7 @@ import '../css/Body.css';
 import '../App.css';
 import { Container, Row, Col } from 'reactstrap';
 import MaterialIcon from 'material-icons-react';
-import { Link } from 'react-router-dom';
-import JoinedPopup from "./popups/JoinedPopup";
+import { Link, Redirect } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Footer from "./Footer";
 import { connect } from 'react-redux';
@@ -73,7 +72,7 @@ class Main extends Component {
     }
 
     render() {
-        const {user, current_meeting } = this.props;
+        const {user, current_meeting, is_login_already } = this.props;
 
         const meetingTime = new Date(current_meeting.meeting_time);
         const nowTime = new Date();
@@ -100,6 +99,9 @@ class Main extends Component {
 
         return (
             <div className={"frame"}>
+                {
+                    !is_login_already && <Redirect to="/"/>
+                }
 
 {/*PC와 모바일 공통*/}
                 <div className="up-bg flex-center frame-half">
@@ -272,6 +274,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
     is_joined_popup_on: state.join.get('is_joined_popup_on'),
     is_joined_already: state.join.get('is_joined_already'),
+    is_login_already: state.my_profile.get('is_login_already'),
     joined_user: state.join.get('joined_user'),
     current_meeting: state.current_meeting.get('current_meeting'),
 })
