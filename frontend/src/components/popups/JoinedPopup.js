@@ -7,6 +7,8 @@ import * as joinActions from '../../modules/join';
 import MaterialIcon from 'material-icons-react';
 
 class JoinedPopup extends Component {
+
+    /* eslint-disable-next-line */
     constructor(props){
         super(props);
     };

@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from meeting import views
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 router = routers.DefaultRouter()
 router.register('meeting_info', views.MeetingInfoView, 'meeting_info')
@@ -32,7 +35,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('profile/', views.Profile.as_view()),
     path('current_matching/', views.CurrentMatching.as_view())
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [
     path('rest-auth/kakao/', views.KakaoLogin.as_view())

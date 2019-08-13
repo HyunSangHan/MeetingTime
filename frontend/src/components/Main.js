@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import '../css/Body.css';
 import '../App.css';
@@ -6,14 +7,17 @@ import MaterialIcon from 'material-icons-react';
 import { Link, Redirect } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Footer from "./Footer";
-import { connect } from 'react-redux';
+import Player from "./Player";
+import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as joinActions from '../modules/join';
 import * as currentMeetingActions from '../modules/current_meeting';
 import axios from 'axios';
 
-class Main extends Component {
 
+
+
+class Main extends Component {
     constructor(props){
         super(props);
 
@@ -72,7 +76,12 @@ class Main extends Component {
     }
 
     render() {
+<<<<<<< HEAD
         const {user, current_meeting, is_login_already, joined_user } = this.props;
+=======
+        const {user, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting } = this.props;
+
+>>>>>>> 255ac7f4f2c7e9e2199126002f5bf27dad8b8948
 
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
@@ -132,133 +141,32 @@ class Main extends Component {
                     <div className={"profile bg-white pc-none"}>
                         <div className="profile h100percent w50percent bg-white absolute z-1"/>
                         <div className={"pc-max-width bg-white z-2"}>
-                            <Container>
-                                <Link to="/profile">
+                            <Container>    
                                 <Row className={"align-center deco-none"}>
-                                    {/*<Col xs={3} md={3}>*/}
-                                        {/*<div className={"img-my-circle"}>*/}
-                                            {/*/!*img 태그와 props 들어갈 부분*!/*/}
-                                        {/*</div>*/}
-                                    {/*</Col>*/}
-                                    <Col xs={10} md={9} className={"align-left"}>
-                                        <div className={"ml-name ml-1"}>
-                                            <div className={"font-3 font-black font-bolder"}>
-                                                {user.nickname}
-                                            </div>
-                                            <div className={"font-1 font-grey mt-2"}>
-                                                {user.company}
-                                            </div>
-                                        </div>
-                                    </Col>
+                                    <Player
+                                        my_profile={my_profile}
+                                    />  
                                     <Col xs={2} md={3} className={"h17vh flex-j-end"}>
                                         <div className={"pc-none"}>
                                             <MaterialIcon icon="arrow_forward_ios" size="23px" color="#f0f0f0"/>
                                         </div>
                                     </Col>
                                 </Row>
-                                </Link>
+                                
                             </Container>
                         </div>
                     </div>
-                    <div className={"heart pc-none"}>
-                        <Container>
-                            <Row className={"align-center"}>
-                                <Col xs={8} className={"align-left"}>
-                                    <div className={"font-05 opacity08 ml-1"}>내 하트 <strong>{user.current_heart}</strong>개</div>
-                                </Col>
-                                <Col xs={4} className={"align-right align-center"}>
-                                    <Link to="/heart">
-                                        <div className={"heart-button deco-none flex-center font-05"}>
-                                            <MaterialIcon icon="favorite" size="18px" color="red"/>
-                                            <span className={"ml-1"}>충전하기</span>
-                                        </div>
-                                    </Link>
-                                </Col>
-                            </Row>
-                        </Container>
-                    </div>
-                    <div className={"chat pc-none"}>
-                        <Container>
-                            <Row className={"align-center"}>
-                                <Col xs={8} className={"align-left"}>
-                                    <span className={"font-05 opacity08 ml-1"}>지난 대화 <strong>{user.chat}</strong>개</span>
-                                </Col>
-                                <Col xs={4} className={"align-right align-center"}>
-                                    <Link to="/chat">
-                                        <div className={"heart-button hover flex-center font-05"}>
-                                            <MaterialIcon icon="forum" size="18px" color="grey"/>
-                                            <span className={"ml-1 hover"}>대화하기</span>
-                                        </div>
-                                    </Link>
-                                </Col>
-                            </Row>
-                        </Container>
-                    </div>
-{/*PC 전용 */}
+                    
+{/*PC 전용 */} 
                     <div className={"profile mobile-none z-2"}>
                         {/*<div className="profile h100percent w50percent bg-white fix z-1"/>*/}
                         <div className={"pc-max-width z-2"}>
                             <Container>
-                                    <Row className={"align-center deco-none z-2"}>
-                                        {/*<Col md={4} lg={3}>*/}
-                                            {/*<div className={"img-my-circle"}>*/}
-                                                {/*/!*img 태그와 props 들어갈 부분*!/*/}
-                                            {/*</div>*/}
-                                        {/*</Col>*/}
-                                        <Col md={9} lg={9} className={"align-left"}>
-                                            <div className={"ml-1 inline-flex"}>
-                                                <div className={"font-3 font-black font-bolder"}>
-                                                    {user.nickname}
-                                                </div>
-                                                <div className={"font-1 font-black mt-1"}>
-                                                    &nbsp; {user.company}
-                                                </div>
-                                            </div>
-                                            <div className={"font-05 ml-1 mt-3 font-grey"}>
-                                                {user.team_detail}
-                                            </div>
-                                        </Col>
-                                        <Col md={3} lg={3} className={"h17vh flex-j-end"}>
-                                            <Link to="/profile">
-                                                <div className={"font-grey deco-none"}>
-                                                    <div className={"copy-button deco-none flex-center"}>
-                                                        <MaterialIcon icon="edit" size="25px" color="lightgrey"/>
-                                                    </div>
-                                                </div>
-                                            </Link>
-                                        </Col>
-                                    </Row>
-                            </Container>
-                        </div>
-                    </div>
-
-                    <div className={"invite"}>
-                        <div className={"pc-max-width"}>
-                            <Container>
-                                <Row>
-                                    <Col xs={9} className={"align-left"}>
-                                        <div className={"font-1 ml-1"}>
-                                            <b>
-                                                <span className="font-black deco-none">친구</span>초대
-                                            </b>
-                                            <font color="#808080" size="10px">(추천인코드: <strong>{user.recommendation_code}</strong>)</font>
-                                            </div>
-                                        <div className={"font-05 ml-1 mt-2"}>여자사람친구를 초대해주세요.</div>
-                                        <div className={"font-05 ml-1"}>하트 2개를 드려요!</div>
-                                    </Col>
-                                    <Col xs={3} className={"h8vh flex-j-end"}>
-                                        <CopyToClipboard text={user.recommendation_code}>
-                                            <div className={"copy-button deco-none flex-center"}>
-                                                <MaterialIcon icon="file_copy" size="25px" color="lightgrey"/>
-                                            </div>
-                                        </CopyToClipboard>
-                                    </Col>
-                                </Row>
+                    
                             </Container>
                         </div>
                     </div>
                 </div>
-
                 <Footer/>
             </div>
         );
