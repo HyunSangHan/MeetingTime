@@ -52,6 +52,7 @@ class Player extends Component {
                     {action === "user" && <MyPlayer
                                             my_profile={my_profile}
                                             current_matching={current_matching} 
+                                            joined_user={joined_user}
                     />}
                     {action === "counter_user" 
                         && is_counterProfile 

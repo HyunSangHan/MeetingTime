@@ -11,19 +11,19 @@ class CounterPlayer extends Component {
     }
     
     render() {
-        
+        const { counter_profile, current_matching } = this.props;
         console.log(this.props);
         return (
             
             <div>
-                <h3>당신의 {this.props.current_matching.trial_time} 번째 매칭상대</h3>
-                <img src={this.props.counter_profile.image || require("../images/noPhoto.jpg")} 
-                     alt={this.props.counter_profile.user.username}/>
+                <h3>당신의 {current_matching.trial_time} 번째 매칭상대</h3>
+                <img src={counter_profile.image || require("../images/noPhoto.jpg")} 
+                     alt={counter_profile.user.username}/>
                 <div className="information">
-                    <div>이름 : {this.props.counter_profile.user.username}</div>
-                    <div>연령대 : {this.props.counter_profile.age_range}</div>
-                    <div>회사명 : {this.props.counter_profile.company.name}</div>
-                    <div>팀소개 : {this.props.counter_profile.team_introduce}</div>
+                    <div>이름 : {counter_profile.user.username}</div>
+                    <div>연령대 : {counter_profile.age_range}</div>
+                    <div>회사명 : {counter_profile.company.name}</div>
+                    <div>팀소개 : {counter_profile.team_introduce}</div>
                 </div>
                 
                 <span className="icon" onClick={this.props.handleGreenLightOn}>                    

@@ -49,7 +49,7 @@ class App extends Component {
     }
 
     render() {
-        const { is_login_already, my_profile2 } = this.props;
+        const { is_login_already, my_profile } = this.props;
         console.log(this.props);
 
         return (
@@ -62,7 +62,7 @@ class App extends Component {
                         render={(props) => (
                             <Main
                                 {...props}
-                                my_profile={my_profile2}
+                                my_profile={my_profile}
                                 user={this.state.user} //삭제 요망
                                 ex_user={this.state.ex_user} //삭제 요망
                             />
@@ -105,7 +105,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
     is_login_already: state.my_profile.get('is_login_already'),
-    my_profile2: state.my_profile.get('my_profile'),
+    my_profile: state.my_profile.get('my_profile'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
