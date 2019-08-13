@@ -14,6 +14,7 @@ const initialState = Map({
     is_matched: false
 });
 
+console.log(initialState);
 export default handleActions({
     ...pender({
         type: CURRENT_MATCHING,

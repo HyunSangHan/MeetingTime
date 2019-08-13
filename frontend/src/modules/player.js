@@ -13,12 +13,13 @@ const GREEN_LIGHT_OFF = "GREEN_LIGHT_OFF";
 
 const initialState = Map({
     is_counterProfile: false,
-    is_greenlight_on : false    
+    is_greenlight_on : false,   
 }); 
 
 export default handleActions({
     [GREEN_LIGHT_ON]: (state, action) => {
         return state.set('is_greenlight_on', true)
+                    
     },
     [GREEN_LIGHT_OFF]: (state, action) => {
         return state.set('is_greenlight_on', false)
@@ -47,9 +48,44 @@ export const getCounterProfile = createAction(
 );
 
 export const handleGreenLightOn = createAction(
-    GREEN_LIGHT_ON
+    GREEN_LIGHT_ON,
+    (payload) => axios({
+        method: "patch",
+        url: '/current_matching/',
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body : {
+            "is_greenlight_male": true  //큰따옴표 있는 지 없는지 모르겟..
+        }
+    })
+    .then((response) => {
+        console.log(response);
+        return response
+    })
+    .catch(
+        console.log("not working (greenlight api)")
+    )
 );
 
+
 export const handleGreenLightOff = createAction(
-    GREEN_LIGHT_OFF
+    GREEN_LIGHT_OFF,
+    (payload) => axios({
+        method: "patch",
+        url: '/current_matching/',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: {
+            "is_greenlight_male": false  //큰따옴표 있는 지 없는지 모르겟..
+        }
+    })
+        .then((response) => {
+            console.log(response);
+            return response
+        })
+        .catch(
+            console.log("not working (greenlight api)")
+        )
 );
