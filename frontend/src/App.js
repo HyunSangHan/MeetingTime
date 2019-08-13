@@ -20,6 +20,7 @@ class App extends Component {
         super(props);
 
         this.state = {
+            
             user: {
                 nickname: "data_닉네임",
                 company: "data_회사명",
@@ -45,13 +46,10 @@ class App extends Component {
     componentDidMount () {
         const { MyProfileActions } = this.props;
         MyProfileActions.getMyProfile();
-
-        console.log(this.props);
     }
 
     render() {
-        const { is_login_already } = this.props;
-        const { my_profile } = this.props;
+        const { is_login_already, my_profile } = this.props;
         console.log(this.props);
 
         return (
@@ -107,6 +105,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
     is_login_already: state.my_profile.get('is_login_already'),
+    my_profile: state.my_profile.get('my_profile'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

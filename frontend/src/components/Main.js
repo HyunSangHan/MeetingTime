@@ -9,7 +9,7 @@ import JoinedPopup from "./popups/JoinedPopup";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Footer from "./Footer";
 import Player from "./Player";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as joinActions from '../modules/join';
 import * as currentMeetingActions from '../modules/current_meeting';
@@ -46,7 +46,6 @@ class Main extends Component {
     
     render() {
         const {user, JoinActions, is_joined_popup_on, is_joined_already, joined_user, current_meeting } = this.props;
-        
         return (
             <div className={"frame"}>
 {/*팝업*/}
@@ -130,7 +129,10 @@ class Main extends Component {
                                     </Col>
                                 </Row>
                                 </Link>
-                                <h2>모바일전용 화면</h2>
+                                <Player
+                                    {...this.props}
+                                    joined_player={joined_user}
+                                />        
                             </Container>
                         </div>
                     </div>
@@ -145,7 +147,6 @@ class Main extends Component {
                                     joined_player={joined_user}
                                 />
                             </Container>
-                            
                         </div>
                     </div>
                 </div>
@@ -165,7 +166,6 @@ const mapStateToProps = (state) => ({
     is_joined_popup_on: state.join.get('is_joined_popup_on'),
     is_joined_already: state.join.get('is_joined_already'),
     joined_user: state.join.get('joined_user'),
-    my_profile: state.join.get('my_profile'),
     current_meeting: state.current_meeting.get('current_meeting'),
 })
 
