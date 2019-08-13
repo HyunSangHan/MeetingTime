@@ -66,20 +66,8 @@ class App extends Component {
 
     }
 
-    getInputDayLabel = (meetingTime) => {
-        const week = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
-        const today = new Date(meetingTime).getDay();
-        const todayLabel = week[today];
-        return todayLabel;
-    }
-    
     render() {
         const { is_login_already, current_meeting } = this.props;
-
-        console.log("============")
-        console.log("0월 00일 "+this.getInputDayLabel(current_meeting.meeting_time))
-        console.log("============")
-
 
         return (
             <BrowserRouter>

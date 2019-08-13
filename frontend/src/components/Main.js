@@ -39,6 +39,24 @@ class Main extends Component {
         .catch(err => console.log(err));
     }
 
+    startTimer() { //일단 넣어둔 함수
+        // const { history } = this.props; //시간 관련해서 받아올 곳
+        this.setState(prevState => ({
+            time: prevState.time,
+        }));
+        this.timer = setInterval(() => this.setState(prevState => ({
+            ...prevState,
+            time: prevState.time - 1
+        })), 1000);
+        this.ifTimer = setInterval(() => {
+            const { time } = this.state;
+            if (time <= 0) {
+                window.location.reload(); //리프레시
+                clearInterval(this.timer, this.ifTimer);
+            }
+        }, 1000);
+    }
+
     render() {
         const {user, JoinActions, is_joined_already, joined_user, current_meeting } = this.props;
         return (
@@ -61,9 +79,8 @@ class Main extends Component {
                             <Col xs={12}>
                                 <div className={"font-1 font-white mt-3 opacity05"}>
                                     {current_meeting.first_shuffle_time}
-                                </div>
-                                <div className={"font-1 font-white mt-1 opacity05"}>
-                                    {current_meeting.second_shuffle_time}
+                                    {/* 카운트다운 들어갈 곳 */}
+                                    {/* current_matching 모듈 생기면, 셔플회차 들어갈 곳 */}
                                 </div>
                             </Col>
                         </Row>

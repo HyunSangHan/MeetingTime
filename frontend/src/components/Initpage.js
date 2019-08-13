@@ -19,6 +19,8 @@ class Initpage extends Component {
     }
 
     componentDidMount(){
+
+
         try {
             window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);    
             // 카카오 로그인 버튼을 생성
@@ -67,8 +69,38 @@ class Initpage extends Component {
         .catch(err => console.log(err));
     }
 
+    getInputDayLabel = (meetingTime) => {
+        const week = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+        const today = new Date(meetingTime).getDay();
+        const todayLabel = week[today];
+        return todayLabel;
+    }
+
     render() {
-        const { is_joined_popup_on, joined_user, JoinActions, is_joined_already } = this.props;
+        const { is_joined_popup_on, joined_user, JoinActions, is_joined_already, current_meeting } = this.props;
+
+        const meetingTime = new Date(current_meeting.meeting_time);
+        const nowTime = new Date();
+        const meetingTimeNum = Date.parse(current_meeting.meeting_time);
+        const nowTimeNum = new Date().getTime()
+        const meetingDay = this.getInputDayLabel(current_meeting.meeting_time);
+        let meetingWeek = null;
+
+        if (nowTime.getDay() < meetingTime.getDay() && meetingTimeNum - nowTimeNum <= 561600000) {
+            meetingWeek = "이번"
+        } else if (nowTime.getDay() < meetingTime.getDay() && meetingTimeNum - nowTimeNum > 561600000) {
+            meetingWeek = "다음"
+        } else if (nowTime.getDay() > meetingTime.getDay() && meetingTimeNum - nowTimeNum <= 561600000) {
+            meetingWeek = "다음"
+        } else if (nowTime.getDay() > meetingTime.getDay() && meetingTimeNum - nowTimeNum > 561600000) {
+            meetingWeek = "다다음"
+        } else if (nowTime.getDay() === meetingTime.getDay() && meetingTimeNum - nowTimeNum <= 561600000) {
+            meetingWeek = "이번"
+        } else if (nowTime.getDay() === meetingTime.getDay() && meetingTimeNum - nowTimeNum > 561600000) {
+            meetingWeek = "다음"
+        } else {
+            meetingWeek = ""
+        }
 
         let authButton = null;
         if (this.props.is_login_already) {
@@ -99,7 +131,7 @@ class Initpage extends Component {
                 <Container className={"font-white"}>
                     <Row>
                         <Col>
-                            <div className="App font-big"><b>Meeting Time</b></div>
+                            <div className="App font-big"><b>{meetingWeek} {meetingDay} {current_meeting.location}</b></div>
                             <div className="flex-center mb-3">
                                 <JoinButton 
                                     is_login_already={this.props.is_login_already}
@@ -126,6 +158,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
     is_joined_popup_on: state.join.get('is_joined_popup_on'),
     joined_user: state.join.get('joined_user'),
+    current_meeting: state.current_meeting.get('current_meeting'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Initpage);

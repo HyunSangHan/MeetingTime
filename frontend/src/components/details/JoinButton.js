@@ -30,9 +30,6 @@ class JoinButton extends Component {
         const openTime = Date.parse(current_meeting.open_time)
         const closeTime = Date.parse(current_meeting.close_time)
         const nowTime = new Date().getTime()
-        console.log(openTime)
-        console.log(nowTime) 
-        console.log(closeTime)
 
         if (is_login_already) {
             if (nowTime < openTime) {
@@ -52,10 +49,25 @@ class JoinButton extends Component {
                             </div>;
                 }
             } else {
-                button = <div className={"big-button-black flex-center font-2 font-white"}>
-                            <Link to="/matching">커트라인 공개 / 매칭 입장하기</Link>
-                        </div>;
-                //커트라인 안에 들기 실패한 경우도 분기해야하
+                
+                if (is_joined_already && joined_user.rank <= current_meeting.cutline) {
+                    //for winner
+                    button = <Link to="/matching">
+                                <div className={"big-button-black flex-center font-2 font-white"}>
+                                    커트라인:{current_meeting.cutline}명<br/>매칭 입장하기
+                                </div>
+                            </Link>;
+                } else if (is_joined_already && joined_user.rank > current_meeting.cutline) {
+                    //for loser
+                    button = <div className={"big-button-black flex-center font-2 font-white"}>
+                                커트라인:{current_meeting.cutline}명에<br/> 들지 못했어요
+                            </div>;
+                } else {
+                    button = <div className={"big-button-black flex-center font-2 font-white"}>
+                                다음 미팅을 기다려주세요
+                            </div>;
+                }
+
             }
         } else {
             button = <div className={"big-button-red flex-center font-2 font-white"}
