@@ -5,6 +5,7 @@ import CounterPlayer from "./CounterPlayer";
 
 import * as joinActions from '../modules/join';
 import * as playerActions from '../modules/player';
+import * as matchingActions from '../modules/matching';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 
@@ -35,21 +36,22 @@ class Player extends Component {
     }
 
     componentDidMount() {
-        const { PlayerActions, JoinActions } = this.props;
+        const { PlayerActions, JoinActions, MatchingActions } = this.props;
         PlayerActions.getCounterProfile();
         JoinActions.getJoinedUser();
-        //PlayerActions.handleGreenLightClick();
+        MatchingActions.getCurrentMatching();
     }
 
     render(){
         const{ action } = this.state;
-        const { PlayerActions, my_profile, joined_user, counter_profile, is_counterProfile, is_greenlight_on } = this.props;
+        const { PlayerActions, current_matching, my_profile, joined_user, counter_profile, is_counterProfile, is_greenlight_on } = this.props;
         console.log(this.props);
         return (
             <div className="container">
                 <div className="white-box form-box">
                     {action === "user" && <MyPlayer
-                                            my_profile={my_profile} 
+                                            my_profile={my_profile}
+                                            current_matching={current_matching} 
                     />}
                     {action === "counter_user" 
                         && is_counterProfile 
@@ -58,6 +60,7 @@ class Player extends Component {
                             handleGreenLightOff={PlayerActions.handleGreenLightOff}
                             counter_profile={counter_profile}
                             is_greenlight_on={is_greenlight_on}
+                            current_matching={current_matching}
                     />}
                 </div>
                 <div className="white-box">
@@ -90,7 +93,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     PlayerActions: bindActionCreators(playerActions, dispatch),
     JoinActions: bindActionCreators(joinActions, dispatch),
-    
+    MatchingActions: bindActionCreators(matchingActions, dispatch),
 });
 
 const mapStateToProps = (state) => ({
@@ -98,6 +101,7 @@ const mapStateToProps = (state) => ({
     counter_profile: state.player.get('counter_profile'),
     is_greenlight_on: state.player.get('is_greenlight_on'),
     is_counterProfile: state.player.get('is_counterProfile'),
+    current_matching: state.matching.get('current_matching'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);
