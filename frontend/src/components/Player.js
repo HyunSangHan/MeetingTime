@@ -3,6 +3,8 @@ import "../css/player_styles.scss";
 import MyPlayer from "./MyPlayer";
 import CounterPlayer from "./CounterPlayer";
 
+import * as myProfileActions from '../modules/my_profile';
+import * as joinActions from '../modules/join';
 import * as playerActions from '../modules/player';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
@@ -35,17 +37,22 @@ class Player extends Component {
     }
 
     componentDidMount() {
-        const { PlayerActions } = this.props;
+        const { PlayerActions, JoinActions, MyProfileActions } = this.props;
         PlayerActions.getCounterProfile();
+        JoinActions.getJoinedUser();
+        MyProfileActions.getMyProfile();
     }
 
     render(){
         const{ action } = this.state;
-        const { counter_profile, is_counterProfile, is_greenlight_on, is_greenlight_off } = this.props;
+        const { my_profile, joined_user, counter_profile, is_counterProfile, is_greenlight_on, is_greenlight_off } = this.props;
+        console.log(this.props);
         return (
             <div className="container">
                 <div className="white-box form-box">
-                    {action === "user" && <MyPlayer/>}
+                    {action === "user" && <MyPlayer
+                                            my_profile={my_profile}
+                                            joined_user={joined_user}/>}
                     {action === "counter_user" 
                         && is_counterProfile 
                         && <CounterPlayer 
@@ -83,13 +90,20 @@ class Player extends Component {
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     PlayerActions: bindActionCreators(playerActions, dispatch),
+    JoinActions: bindActionCreators(joinActions, dispatch),
+    MyProfileActions: bindActionCreators(myProfileActions, dispatch),
+
 });
 
 const mapStateToProps = (state) => ({
+    joined_user: state.join.get('joined_user'),
+    my_profile: state.my_profile.get('my_profile'),
     counter_profile: state.player.get('counter_profile'),
     is_greenlight_on: state.player.get('is_greenlight_on'),
     is_greenlight_off: state.player.get('is_greenlight_off'),
     is_counterProfile: state.player.get('is_counterProfile'),
+    
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

@@ -62,7 +62,6 @@ class App extends Component {
                         render={(props) => (
                             <Main
                                 {...props}
-                
                                 user={this.state.user}
                                 ex_user={this.state.ex_user}
                             />

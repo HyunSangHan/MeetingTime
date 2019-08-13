@@ -13,16 +13,23 @@ class MyPlayer extends Component {
 
     }
 
-        
     render(){
+        const { joined_user, my_profile } = this.props;
         console.log(this.props);
-        return (
+        return ( 
+            <div className="container">
+                <img src={this.props.my_profile.image || require("../images/noPhoto.jpg")}
+                    alt={this.props.my_profile.user.username} />
+                <div className="information">
+                    <div>이름 : {this.props.my_profile.user.username}</div>
+                    <div>연령대 : {this.props.my_profile.age_range}</div>
+                    <div>회사명 : {this.props.my_profile.company.name}</div>
+                    <div>팀소개 : {this.props.my_profile.team_introduce}</div>
+                </div>
 
-            <div >
                 <Link to="/profile">
                     프로필 수정하기
                 </Link>
-                <h2>나의 프로필 정보 임돠.</h2>
             </div>
         )
     }

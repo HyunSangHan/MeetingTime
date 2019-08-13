@@ -27,7 +27,6 @@ class CounterPlayer extends Component {
                     <div>회사명 : {this.props.counter_profile.company.name}</div>
                     <div>팀소개 : {this.props.counter_profile.team_introduce}</div>
                 </div>
-                <h4>상대방 프로필 정보 입니다.</h4>
 
             </div>
 
