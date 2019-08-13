@@ -5,6 +5,7 @@ import { penderReducer } from "redux-pender";
 import join from './join';
 import current_meeting from './current_meeting';
 import my_profile from './my_profile';
+import player from './player';
 
 export default combineReducers({
     pender: penderReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
     join,
     current_meeting,
     my_profile,
+    player,
 });

@@ -110,25 +110,13 @@ class Main extends Component {
                         <div className="profile h100percent w50percent bg-white absolute z-1"/>
                         <div className={"pc-max-width bg-white z-2"}>
                             <Container>
-                                <Link to="/profile">
                                 <Row className={"align-center deco-none"}>
-                                    <Col xs={10} md={9} className={"align-left"}>
-                                        <div className={"ml-name ml-1"}>
-                                            <div className={"font-3 font-black font-bolder"}>
-                                                {user.nickname}
-                                            </div>
-                                            <div className={"font-1 font-grey mt-2"}>
-                                                {user.company}
-                                            </div>
-                                        </div>
-                                    </Col>
                                     <Col xs={2} md={3} className={"h17vh flex-j-end"}>
                                         <div className={"pc-none"}>
                                             <MaterialIcon icon="arrow_forward_ios" size="23px" color="#f0f0f0"/>
                                         </div>
                                     </Col>
                                 </Row>
-                                </Link>
                                 <Player
                                     {...this.props}
                                     joined_player={joined_user}
@@ -142,10 +130,7 @@ class Main extends Component {
                         {/*<div className="profile h100percent w50percent bg-white fix z-1"/>*/}
                         <div className={"pc-max-width z-2"}>
                             <Container>
-                                <Player 
-                                    {...this.props}
-                                    joined_player={joined_user}
-                                />
+                    
                             </Container>
                         </div>
                     </div>
