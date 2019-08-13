@@ -10,6 +10,7 @@ class CounterPlayer extends Component {
 
     }
     
+    
     render() {
         const { counter_profile, current_matching } = this.props;
         console.log(this.props);
