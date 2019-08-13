@@ -72,7 +72,7 @@ class Main extends Component {
     }
 
     render() {
-        const {user, current_meeting, is_login_already } = this.props;
+        const {user, current_meeting, is_login_already, joined_user } = this.props;
 
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
@@ -94,6 +94,8 @@ class Main extends Component {
         } else {
             meetingWeek = ""
         }
+
+        // console.log(joined_user.profile)
 
         return (
             <div className={"frame"}>
