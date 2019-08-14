@@ -137,9 +137,7 @@ class Main extends Component {
                         <div className={"pc-max-width bg-white z-2"}>
                             <Container>    
                                 <Row className={"align-center deco-none"}>
-                                    <Player
-                                        my_profile={my_profile}
-                                    />  
+                                    <Player />  
                                     <Col xs={2} md={3} className={"h17vh flex-j-end"}>
                                         <div className={"pc-none"}>
                                             <MaterialIcon icon="arrow_forward_ios" size="23px" color="#f0f0f0"/>

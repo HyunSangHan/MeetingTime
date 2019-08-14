@@ -36,33 +36,30 @@ class Player extends Component {
     }
 
     componentDidMount() {
-        const { PlayerActions, JoinActions, MatchingActions } = this.props;
-        PlayerActions.getCounterProfile();
+        const { JoinActions, MatchingActions, PlayerActions } = this.props;
         JoinActions.getJoinedUser();
         MatchingActions.getCurrentMatching();
+        PlayerActions.getCounterProfile();
     }
 
     render(){
         const{ action } = this.state;
-        const { PlayerActions, current_matching, my_profile, joined_user, counter_profile, is_counterProfile, is_greenlight_on } = this.props;
+        const {  current_matching, joined_user, is_counterProfile } = this.props;
         console.log(this.props);
         return (
             <div className="container">
                 <div className="white-box form-box">
                     {action === "user" && <MyPlayer
-                                            my_profile={my_profile}
                                             current_matching={current_matching} 
                                             joined_user={joined_user}
-                    />}
+                                        />}
                     {action === "counter_user" 
                         && is_counterProfile 
                         && <CounterPlayer 
-                            handleGreenLightOn={PlayerActions.handleGreenLightOn}
-                            handleGreenLightOff={PlayerActions.handleGreenLightOff}
-                            counter_profile={counter_profile}
-                            is_greenlight_on={is_greenlight_on}
                             current_matching={current_matching}
                     />}
+                    {action === "counter_user"
+                        && !is_counterProfile && "현재 매칭된 상대가 없습니다."}
                 </div>
                 <div className="white-box">
                     {action === "user" && (<p>
@@ -92,17 +89,15 @@ class Player extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
-    PlayerActions: bindActionCreators(playerActions, dispatch),
     JoinActions: bindActionCreators(joinActions, dispatch),
     MatchingActions: bindActionCreators(matchingActions, dispatch),
+    PlayerActions: bindActionCreators(playerActions, dispatch),
 });
 
 const mapStateToProps = (state) => ({
     joined_user: state.join.get('joined_user'),
-    counter_profile: state.player.get('counter_profile'),
-    is_greenlight_on: state.player.get('is_greenlight_on'),
-    is_counterProfile: state.player.get('is_counterProfile'),
     current_matching: state.matching.get('current_matching'),
+    is_counterProfile: state.player.get('is_counterProfile'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

@@ -7,26 +7,32 @@ import { pender } from 'redux-pender';
 const COUNTER_PROFILE = "COUNTER_PROFILE";
 const GREEN_LIGHT_ON = "GREEN_LIGHT_ON";
 const GREEN_LIGHT_OFF = "GREEN_LIGHT_OFF";
-
+const GIFT_ON = "GIFT_ON";
+const GIFT_OFF = "GIFT_OFF";
 
 //counter_profile 받아오기 + 그린라이트 액션
 
 const initialState = Map({
     is_counterProfile: false,
-    is_greenlight_on : false,
 }); 
 
 export default handleActions({
     ...pender({
         type: GREEN_LIGHT_ON,
-        onSuccess: (state, action) => state.set('is_greenlight_on', true)
-                
     }),
+
     ...pender({
         type: GREEN_LIGHT_OFF,
-        onSuccess: (state, action) => state.set('is_greenlight_on', false)
-
     }),
+
+    ...pender({
+        type: GIFT_ON,
+    }),
+
+    ...pender({
+        type: GIFT_OFF,
+    }),
+
     ...pender({
         type: COUNTER_PROFILE,
         onSuccess: (state, action) => state.set('counter_profile', action.payload.data)
@@ -35,6 +41,7 @@ export default handleActions({
     }),
 }, initialState);
 
+//'''Get Counter_profile'''
 export const getCounterProfile = createAction(
     COUNTER_PROFILE,
     (payload) => axios({
@@ -50,13 +57,16 @@ export const getCounterProfile = createAction(
         )
 );
 
+
+//'''GreenLight Actions'''
 export const handleGreenLightOn = createAction(
     GREEN_LIGHT_ON,
     (payload) => axios({
         method: "patch",
         url: '/current_matching/',
         data : {
-            is_greenlight_male: true  //큰따옴표 있는 지 없는지 모르겟..
+            is_greenlight_male: payload.value1,
+            is_greenlight_female: payload.value2
         }
     })
     .then((response) => {
@@ -68,14 +78,14 @@ export const handleGreenLightOn = createAction(
     )
 );
 
-
 export const handleGreenLightOff = createAction(
     GREEN_LIGHT_OFF,
     (payload) => axios({
         method: "patch",
         url: '/current_matching/',
         data: {
-            is_greenlight_male: false  //큰따옴표 있는 지 없는지 모르겟..
+            is_greenlight_male: payload.value1,
+            is_greenlight_female: payload.value2
         }
     })
         .then((response) => {
@@ -84,5 +94,44 @@ export const handleGreenLightOff = createAction(
         })
         .catch(
             console.log("not working (greenlight api)")
+        )
+);
+
+//'''Gift Actions'''
+export const handleGiftOn = createAction(
+    GIFT_ON,
+    (payload) => axios({
+        method: "patch",
+        url: '/current_matching/',
+        data: {
+            is_gift_male: payload.value1,
+            is_gift_female: payload.value2
+        }
+    })
+        .then((response) => {
+            console.log(response);
+            return response
+        })
+        .catch(
+            console.log("not working (gift api)")
+        )
+);
+
+export const handleGiftOff = createAction(
+    GIFT_OFF,
+    (payload) => axios({
+        method: "patch",
+        url: '/current_matching/',
+        data: {
+            is_gift_male: payload.value1,
+            is_gift_female: payload.value2
+        }
+    })
+        .then((response) => {
+            console.log(response);
+            return response
+        })
+        .catch(
+            console.log("not working (gift api)")
         )
 );
