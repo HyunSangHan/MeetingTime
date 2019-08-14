@@ -133,31 +133,11 @@ class Main extends Component {
                     {/*<div className={"hover z-5"} onClick={this.props.testFunc}>이것은 테스트~~~!!여기를 클릭</div>*/}
 
                     <div className={"profile bg-white pc-none"}>
-                        <div className="profile h100percent w50percent bg-white absolute z-1"/>
                         <div className={"pc-max-width bg-white z-2"}>
-                            <Container>    
-                                <Row className={"align-center deco-none"}>
-                                    <Player />  
-                                    <Col xs={2} md={3} className={"h17vh flex-j-end"}>
-                                        <div className={"pc-none"}>
-                                            <MaterialIcon icon="arrow_forward_ios" size="23px" color="#f0f0f0"/>
-                                        </div>
-                                    </Col>
-                                </Row>
-                                
-                            </Container>
+                            <Player />  
                         </div>
                     </div>
                     
-{/*PC 전용 */} 
-                    <div className={"profile mobile-none z-2"}>
-                        {/*<div className="profile h100percent w50percent bg-white fix z-1"/>*/}
-                        <div className={"pc-max-width z-2"}>
-                            <Container>
-                    
-                            </Container>
-                        </div>
-                    </div>
                 </div>
                 <Footer/>
             </div>

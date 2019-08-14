@@ -52,18 +52,22 @@ class Player extends Component {
                     {action === "user" && <MyPlayer
                                             current_matching={current_matching} 
                                             joined_user={joined_user}
-                                        />}
+                                          />
+                    }
                     {action === "counter_user" 
                         && is_counterProfile 
                         && <CounterPlayer 
                             current_matching={current_matching}
-                    />}
+                           />
+                    }
                     {action === "counter_user"
-                        && !is_counterProfile && "현재 매칭된 상대가 없습니다."}
+                        && !is_counterProfile && "현재 매칭된 상대가 없습니다."
+                    }
                 </div>
+                
                 <div className="white-box">
                     {action === "user" && (<p>
-                        매칭된 상대방을 정보를 확인하시겠습니까?{" "}
+                        매칭 상대의 정보를 확인하시겠습니까?{" "}
                         <span
                             className="change-link"
                             onClick={this.changeAction}

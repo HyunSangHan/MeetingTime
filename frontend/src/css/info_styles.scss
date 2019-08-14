@@ -9,20 +9,37 @@ img {
 }
 
 .main-profile {
-    width : 145px;
+    max-width : 100%;
     border-radius: 50%;
 }
 
 .column {
-
+    display: flex;
 }
 
 .info-list {
     text-align: left;
 }
 
-.action-name {
-    font-size : 30px;
-    font-weight : 800;
-    color : whitesmoke;
+.list-item {
+    font-size : 16px;
+    margin-left : 20px;
+    padding-left : 25px;
+    color: white;
+}
+
+
+.counter-actions {
+    align-content: center;
+    .action-item {
+        font-size: 25px;
+        font-weight: 800;
+        color: floralwhite;
+        
+        .icon{
+            display: inline-block;
+            margin-left: 8px;
+            margin-right : 12px;
+        }
+    }
 }

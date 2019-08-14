@@ -76,16 +76,13 @@ class CounterPlayer extends Component {
         return (
             <div className="container">
                 <h2 className="trial-time">당신의 {current_matching.trial_time + 1} 번째 매칭상대</h2>
+                <br/>
                 <span>
                     <div className="column">
                         <img src={counter_profile.image || require("../images/noPhoto.jpg")}
                             alt={counter_profile.user.username}
                             className="main-profile"
                         />
-                    </div>
-                </span>
-                <span>
-                    <div className="column">
                         <ul className="info-list">
                             <li className="list-item">이름 : {counter_profile.user.username}</li>
                             <li className="list-item">성별 : {counter_profile.is_male ? "남" : "여"}</li>
@@ -95,9 +92,10 @@ class CounterPlayer extends Component {
                         </ul>
                     </div>
                 </span>
-    
+                <br/>
+                <div className="counter-actions">
                 {!counter_profile.is_male ? 
-                <div  className="column">
+                <div  className="action-item">
                     그린라이트 : 
                     <span className="icon" onClick={this._handleGreenLight}>                    
                         {is_greenlight_on_male &&
@@ -107,6 +105,7 @@ class CounterPlayer extends Component {
                             <MaterialIcon icon="favorite" fontSize="200px" color="black" />
                         }
                     </span>
+                    
                     안주쏘기 :
                     <span className="icon" onClick={this._handleGift}>
                         {is_gift_on_male &&
@@ -118,8 +117,8 @@ class CounterPlayer extends Component {
                     </span>
                 </div>
                 :
-                <div className="column">
-                    <span className="action-name">그린라이트 :</span>
+                <div className="action-item">
+                    그린라이트 :
                     <span className="icon" onClick={this._handleGreenLight}>
                         {is_greenlight_on_female &&
                             <MaterialIcon icon="favorite" fontSize="200px" color="#0b6623" />
@@ -128,8 +127,8 @@ class CounterPlayer extends Component {
                             <MaterialIcon icon="favorite" fontSize="200px" color="black" />
                         }
                     </span>
-
-                    <span className="action-name">안주쏘기 :</span>
+                    
+                    안주쏘기 :
                     <span className="icon" onClick={this._handleGift}>
                         {is_gift_on_female &&
                             <MaterialIcon icon="local_bar" fontSize="200px" color="orange" />
@@ -140,6 +139,7 @@ class CounterPlayer extends Component {
                     </span>
                 </div>
                 }
+                </div>
             </div>
          
         )
