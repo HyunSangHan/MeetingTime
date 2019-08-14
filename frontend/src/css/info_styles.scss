@@ -1,11 +1,28 @@
 @import 'reset-css';
 
 img {
-    width: 200px;
-    
+    width: 200px; 
+}
+
+.trial-time{
+    color: palevioletred;
 }
 
 .main-profile {
-    width : 155px;
+    width : 145px;
     border-radius: 50%;
+}
+
+.column {
+
+}
+
+.info-list {
+    text-align: left;
+}
+
+.action-name {
+    font-size : 30px;
+    font-weight : 800;
+    color : whitesmoke;
 }

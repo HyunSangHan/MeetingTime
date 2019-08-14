@@ -74,22 +74,30 @@ class CounterPlayer extends Component {
         const { is_greenlight_on_male, is_greenlight_on_female, is_gift_on_male, is_gift_on_female } = this.state;
 
         return (
-            <div>
-                <h3>당신의 {current_matching.trial_time + 1} 번째 매칭상대</h3>
-                <img src={counter_profile.image || require("../images/noPhoto.jpg")} 
-                     alt={counter_profile.user.username}
-                     className="main-profile"
-                />
-                <div className="information">
-                    <div>이름 : {counter_profile.user.username}</div>
-                    <div>연령대 : {counter_profile.age_range}</div>
-                    <div>회사명 : {counter_profile.company.name}</div>
-                    <div>팀소개 : {counter_profile.team_introduce}</div>
-                </div>
- 
-
+            <div className="container">
+                <h2 className="trial-time">당신의 {current_matching.trial_time + 1} 번째 매칭상대</h2>
+                <span>
+                    <div className="column">
+                        <img src={counter_profile.image || require("../images/noPhoto.jpg")}
+                            alt={counter_profile.user.username}
+                            className="main-profile"
+                        />
+                    </div>
+                </span>
+                <span>
+                    <div className="column">
+                        <ul className="info-list">
+                            <li className="list-item">이름 : {counter_profile.user.username}</li>
+                            <li className="list-item">성별 : {counter_profile.is_male ? "남" : "여"}</li>
+                            <li className="list-item">연령대 : {counter_profile.age_range ? counter_profile.age_range + "대" : "몰라요"}</li>
+                            <li className="list-item">회사명 : {counter_profile.company.name}</li>
+                            <li className="list-item">팀소개 : {counter_profile.team_introduce}</li>
+                        </ul>
+                    </div>
+                </span>
+    
                 {!counter_profile.is_male ? 
-                <div >
+                <div  className="column">
                     그린라이트 : 
                     <span className="icon" onClick={this._handleGreenLight}>                    
                         {is_greenlight_on_male &&
@@ -110,8 +118,8 @@ class CounterPlayer extends Component {
                     </span>
                 </div>
                 :
-                <div>
-                    그린라이트 :
+                <div className="column">
+                    <span className="action-name">그린라이트 :</span>
                     <span className="icon" onClick={this._handleGreenLight}>
                         {is_greenlight_on_female &&
                             <MaterialIcon icon="favorite" fontSize="200px" color="#0b6623" />
@@ -120,7 +128,8 @@ class CounterPlayer extends Component {
                             <MaterialIcon icon="favorite" fontSize="200px" color="black" />
                         }
                     </span>
-                    안주쏘기 :
+
+                    <span className="action-name">안주쏘기 :</span>
                     <span className="icon" onClick={this._handleGift}>
                         {is_gift_on_female &&
                             <MaterialIcon icon="local_bar" fontSize="200px" color="orange" />
@@ -131,8 +140,8 @@ class CounterPlayer extends Component {
                     </span>
                 </div>
                 }
-                
             </div>
+         
         )
     };
 };

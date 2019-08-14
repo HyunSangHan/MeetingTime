@@ -1,6 +1,6 @@
 
 .container{
-    background-color : rgb(252, 238, 238);
+    background-color : whitesmoke;
     .app-box {
         display: flex;
         flex-direction: column;
@@ -20,7 +20,7 @@
         text-align: center;
         padding: 15px;
         .change-link {
-        color: lightblue;
+        color: darkblue;
         cursor: pointer;
         }
         .text {
