@@ -48,8 +48,25 @@ export const ProfileUpdate = createAction(
         url: '/profile/',
         data: {
             age_range: payload.ageValue,
-            company.get(name) : payload.companyValue,
             team_introduce : payload.team_introValue,
+        }
+    })
+    .then((response) => {
+        console.log(response);
+        return response
+    })
+    .catch(
+        console.log("not working (update_profile)")
+    )
+);
+
+export const CompanyUpdate = createAction(
+    UPDATE_PROFILE,
+    (payload) => axios({
+        method: "patch",
+        url: "/company/",
+        data: {
+            name: payload.companyValue,
         }
     })
     .then((response) => {

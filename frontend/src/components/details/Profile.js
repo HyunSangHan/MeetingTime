@@ -16,6 +16,7 @@ class Profile extends Component {
             ageValue: this.props.my_profile.age_range,
             companyValue: this.props.my_profile.company.name,
             team_introValue : this.props.my_profile.team_introduce,
+            my_profile: {}
         }
     }
 
@@ -39,13 +40,16 @@ class Profile extends Component {
         event.preventDefault();
         MyProfileActions.ProfileUpdate({
                         ageValue: ageValue,
-                        companyValue: companyValue,
                         team_introValue : team_introValue,
+                    });
+        MyProfileActions.CompanyUpdate({
+                        companyValue: companyValue,
                     });
     };
 
     render(){    
-        console.log(this.state);
+        const { my_profile } = this.props;
+
         return (
             <div className="form-component" >
                 <h3 className="header">
@@ -60,11 +64,11 @@ class Profile extends Component {
                     <table>
                         <tr>
                             <td>이름  :</td>
-                            <td className="not-change">{this.props.my_profile.user.username}</td>
+                            <td className="not-change">{my_profile.user.username}</td>
                         </tr>
                         <tr>
                             <td>성별  :</td> 
-                            <td className="not-change">{this.props.my_profile.is_male ? "남" : "여"}</td>
+                            <td className="not-change">{my_profile.is_male ? "남" : "여"}</td>
                         </tr>
                         <tr>
                             <td>연령대 :</td>
@@ -82,7 +86,7 @@ class Profile extends Component {
                         <tr>
                             <td>회사 :</td>
                             <td>
-                                <select name="companyValue" value={this.props.my_profile.company.name} onChange={this._handleInputChange}>
+                                <select name="companyValue" value={this.state.companyValue} onChange={this._handleInputChange}>
                                     <option>삼성전자</option>
                                     <option>애플</option>
                                     <option>구글</option>
@@ -116,7 +120,6 @@ class Profile extends Component {
                         type="submit"
                         value="수정완료"
                         className="button"
-                        onChange={this._handleInputChange}
                     />
                 </form>
                 <FooterScrollable/>
