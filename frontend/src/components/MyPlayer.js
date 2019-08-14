@@ -29,7 +29,7 @@ class MyPlayer extends Component {
                             <li className="list-item">최종 로그인 시간 : {joined_user.profile.last_login_at}</li>
                         </ul>
                     </div>
-                    <Link to="/profile">
+                    <Link to="/profile" className="edit">
                         프로필 수정하기
                     </Link>
                 </span>

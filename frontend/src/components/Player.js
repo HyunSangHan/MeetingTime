@@ -64,9 +64,9 @@ class Player extends Component {
                         && !is_counterProfile && "현재 매칭된 상대가 없습니다."
                     }
                 </div>
-                
+
                 <div className="white-box">
-                    {action === "user" && (<p>
+                    {action === "user" && (<p className="change-player">
                         매칭 상대의 정보를 확인하시겠습니까?{" "}
                         <span
                             className="change-link"
@@ -75,7 +75,7 @@ class Player extends Component {
                             상대방 프로필
                         </span>
                     </p>)}
-                    {action === "counter_user" && (<p>
+                    {action === "counter_user" && (<p className="change-player">
                         내 정보를 보시겠습니까?{" "}
                         <span
                             className="change-link"
