@@ -5,16 +5,15 @@ import '../App.css';
 import { Container, Row, Col } from 'reactstrap';
 import MaterialIcon from 'material-icons-react';
 import { Link, Redirect } from 'react-router-dom';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Footer from "./Footer";
 import Player from "./Player";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as joinActions from '../modules/join';
 import * as currentMeetingActions from '../modules/current_meeting';
+import * as matchingActions from '../modules/matching';
+import * as playerActions from '../modules/player';
 import axios from 'axios';
-
-
 
 
 class Main extends Component {
@@ -29,10 +28,10 @@ class Main extends Component {
     }
 
     componentDidMount() {
-        const { CurrentMeetingActions, JoinActions } = this.props;
-        CurrentMeetingActions.getCurrentMeeting();
+        const { JoinActions, MatchingActions, PlayerActions } = this.props;
         JoinActions.getJoinedUser();
-
+        MatchingActions.getCurrentMatching();
+        PlayerActions.getCounterProfile();
         this.startTimer();
     }
 
@@ -68,20 +67,15 @@ class Main extends Component {
         }, 1000);
     }
 
-    getInputDayLabel = (meetingTime) => {
+    getInputDayLabel = (time) => {
         const week = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
-        const today = new Date(meetingTime).getDay();
+        const today = new Date(time).getDay();
         const todayLabel = week[today];
         return todayLabel;
     }
 
     render() {
-<<<<<<< HEAD
-        const {user, current_meeting, is_login_already, joined_user } = this.props;
-=======
-        const {user, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting } = this.props;
-
->>>>>>> 255ac7f4f2c7e9e2199126002f5bf27dad8b8948
+        const {user, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting, current_matching, PlayerActions, counter_profile, is_counter_profile, is_greenlight_on } = this.props;
 
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
@@ -107,62 +101,52 @@ class Main extends Component {
         // console.log(joined_user.profile)
 
         return (
-            <div className={"frame"}>
+            <div className={"App"}>
                 {
                     !is_login_already && <Redirect to="/"/>
                 }
-
-{/*PC와 모바일 공통*/}
-                <div className="up-bg flex-center frame-half">
-                    <div className={"up-bg-color fix"}/>
+                <div className="flex-center">
                     <Container>
                         <Row className={"App"}>
                             <Col xs={12}>
-                                <div className={"font-big font-white mt-4"}>
+                                <div className={"font-big mt-4"}>
                                     <div className="font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div>
                                     {meetingWeek} {meetingDay} {current_meeting.location}
                                 </div>
                             </Col>
                             <Col xs={12}>
-                                <div className={"font-1 font-white mt-3 opacity05"}>
+                                <div className={"font-1 mt-3 opacity05"}>
                                     {/* TODO: 카운트다운 들어갈 곳 */}
 
                                     {/* TODO: current_matching 모듈 생기면, 셔플회차 들어갈 곳 */}
-                                    ?번째 셔플 결과입니다.
+                                    {current_matching.trial_time}번째 셔플 결과입니다.
                                 </div>
                             </Col>
                         </Row>
                     </Container>
                 </div>
-                <div className="down-bg frame-half bg-white absolute z-2">
-{/*모바일 전용*/}
+                <div className="App">
                     {/*<div className={"hover z-5"} onClick={this.props.testFunc}>이것은 테스트~~~!!여기를 클릭</div>*/}
 
-                    <div className={"profile bg-white pc-none"}>
-                        <div className="profile h100percent w50percent bg-white absolute z-1"/>
-                        <div className={"pc-max-width bg-white z-2"}>
+                    <div className={"profile"}>
+                        <div className={"App"}>
                             <Container>    
                                 <Row className={"align-center deco-none"}>
                                     <Player
                                         my_profile={my_profile}
-                                    />  
-                                    <Col xs={2} md={3} className={"h17vh flex-j-end"}>
-                                        <div className={"pc-none"}>
+                                        current_matching={current_matching}
+                                        PlayerActions={PlayerActions}
+                                        counter_profile={counter_profile}
+                                        is_counter_profile={is_counter_profile}
+                                        is_greenlight_on={is_greenlight_on}
+                                        />  
+                                    <Col xs={2} md={3} className={"flex-center"}>
+                                        <div>
                                             <MaterialIcon icon="arrow_forward_ios" size="23px" color="#f0f0f0"/>
                                         </div>
                                     </Col>
                                 </Row>
                                 
-                            </Container>
-                        </div>
-                    </div>
-                    
-{/*PC 전용 */} 
-                    <div className={"profile mobile-none z-2"}>
-                        {/*<div className="profile h100percent w50percent bg-white fix z-1"/>*/}
-                        <div className={"pc-max-width z-2"}>
-                            <Container>
-                    
                             </Container>
                         </div>
                     </div>
@@ -177,6 +161,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     JoinActions: bindActionCreators(joinActions, dispatch),
     CurrentMeetingActions: bindActionCreators(currentMeetingActions, dispatch),
+    MatchingActions: bindActionCreators(matchingActions, dispatch),
+    PlayerActions: bindActionCreators(playerActions, dispatch),
 });
 
 const mapStateToProps = (state) => ({
@@ -185,6 +171,11 @@ const mapStateToProps = (state) => ({
     is_login_already: state.my_profile.get('is_login_already'),
     joined_user: state.join.get('joined_user'),
     current_meeting: state.current_meeting.get('current_meeting'),
+    current_matching: state.matching.get('current_matching'),
+    counter_profile: state.player.get('counter_profile'),
+    is_greenlight_on: state.player.get('is_greenlight_on'),
+    is_counter_profile: state.player.get('is_counter_profile'),
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

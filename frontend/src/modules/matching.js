@@ -11,10 +11,10 @@ const CURRENT_MATCHING = "CURRENT_MATCHING";
 
 const initialState = Map({
     is_current_matching: false,
-    is_matched: false
+    // is_matched: false
+    current_matching: {},
 });
 
-console.log(initialState);
 export default handleActions({
     ...pender({
         type: CURRENT_MATCHING,

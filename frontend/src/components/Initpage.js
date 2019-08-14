@@ -70,9 +70,9 @@ class Initpage extends Component {
         .catch(err => console.log(err));
     }
 
-    getInputDayLabel = (meetingTime) => {
+    getInputDayLabel = (time) => {
         const week = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
-        const today = new Date(meetingTime).getDay();
+        const today = new Date(time).getDay();
         const todayLabel = week[today];
         return todayLabel;
     }

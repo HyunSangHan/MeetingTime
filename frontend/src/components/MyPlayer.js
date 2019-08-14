@@ -10,7 +10,7 @@ class MyPlayer extends Component {
     }
 
     render(){
-        const { joined_user, my_profile } = this.props;
+        const { my_profile } = this.props;
         return ( 
             <div className="container">
                 <img src={my_profile.image || require("../images/noPhoto.jpg")}
@@ -20,7 +20,6 @@ class MyPlayer extends Component {
                     <div>연령대 : {my_profile.age_range}</div>
                     <div>회사명 : {my_profile.company.name}</div>
                     <div>팀소개 : {my_profile.team_introduce}</div>
-                    <div>{joined_user.meeting}</div>
                 </div>
 
                 <Link to="/profile">

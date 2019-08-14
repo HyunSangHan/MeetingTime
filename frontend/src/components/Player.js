@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import "../css/player_styles.scss";
 import MyPlayer from "./MyPlayer";
 import CounterPlayer from "./CounterPlayer";
-
-import * as joinActions from '../modules/join';
-import * as playerActions from '../modules/player';
-import * as matchingActions from '../modules/matching';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 
@@ -36,15 +32,11 @@ class Player extends Component {
     }
 
     componentDidMount() {
-        const { PlayerActions, JoinActions, MatchingActions } = this.props;
-        PlayerActions.getCounterProfile();
-        JoinActions.getJoinedUser();
-        MatchingActions.getCurrentMatching();
     }
 
     render(){
         const{ action } = this.state;
-        const { PlayerActions, current_matching, my_profile, joined_user, counter_profile, is_counterProfile, is_greenlight_on } = this.props;
+        const { PlayerActions, current_matching, my_profile, counter_profile, is_counter_profile, is_greenlight_on } = this.props;
         console.log(this.props);
         return (
             <div className="container">
@@ -52,10 +44,9 @@ class Player extends Component {
                     {action === "user" && <MyPlayer
                                             my_profile={my_profile}
                                             current_matching={current_matching} 
-                                            joined_user={joined_user}
                     />}
                     {action === "counter_user" 
-                        && is_counterProfile 
+                        && is_counter_profile 
                         && <CounterPlayer 
                             handleGreenLightOn={PlayerActions.handleGreenLightOn}
                             handleGreenLightOff={PlayerActions.handleGreenLightOff}
@@ -90,19 +81,4 @@ class Player extends Component {
 
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    PlayerActions: bindActionCreators(playerActions, dispatch),
-    JoinActions: bindActionCreators(joinActions, dispatch),
-    MatchingActions: bindActionCreators(matchingActions, dispatch),
-});
-
-const mapStateToProps = (state) => ({
-    joined_user: state.join.get('joined_user'),
-    counter_profile: state.player.get('counter_profile'),
-    is_greenlight_on: state.player.get('is_greenlight_on'),
-    is_counterProfile: state.player.get('is_counterProfile'),
-    current_matching: state.matching.get('current_matching'),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Player);
+export default Player;
