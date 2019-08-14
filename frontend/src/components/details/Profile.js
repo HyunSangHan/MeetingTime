@@ -1,86 +1,139 @@
 import React, { Component } from 'react';
-import '../../css/Body.css';
-import '../../App.css';
-import { Container, Row, Col } from 'reactstrap';
-import Header from "./../Header";
 import FooterScrollable from "./../FooterScrollable";
-import { Button, Form, FormGroup, Label, Input, FormText, CustomInput } from 'reactstrap';
-import EditPW from "./EditPW";
+import * as myProfileActions from "../../modules/my_profile";
+import "../../css/profile.scss";
+import { bindActionCreators } from 'redux';
+import { connect } from "react-redux";
+import Textarea from "react-textarea-autosize";
+
+//import EditPW from "./EditPW";
 
 class Profile extends Component {
 
-    render() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            ageValue: this.props.my_profile.age_range,
+            companyValue: this.props.my_profile.company.name,
+            team_introValue : this.props.my_profile.team_introduce,
+        }
+    }
+
+    componentDidMount() {
+        const { MyProfileActions } = this.props;
+        MyProfileActions.getMyProfile();
+    }
+
+
+    _handleInputChange = event => {
+        const { target: { value, name } } = event;
+        this.setState({
+            [name]: value
+        });
+    };
+
+    _handleSubmit = event => {
+        const { MyProfileActions } = this.props;
+        const { ageValue, companyValue, team_introValue } = this.state;
+        console.log(ageValue);
+        event.preventDefault();
+        MyProfileActions.ProfileUpdate({
+                        ageValue: ageValue,
+                        companyValue: companyValue,
+                        team_introValue : team_introValue,
+                    });
+    };
+
+    render(){    
+        console.log(this.state);
         return (
-            <div>
-                <Header title="팀 프로필 수정"/>
-                <div className={"offset-down"}>
-                    <Container>
-                    <Row>
-                        <Col>
-                            <div className={"mt-4 flex-j-center"}>
-                                <EditPW/>
-                                <Form>
-                                    <div>
-                                    <div className={"font-3 mt-5 mb-3"}><b>미팅 정보 변경</b></div>
-                                    <FormGroup>
-                                        <Label for="img">프로필 사진</Label>
-                                        <CustomInput className={"base-box"} type="file" name="img" id="img" />
-                                        <FormText color="muted">
-                                            가로가 더 긴 사진으로 업로드해주세요.<br/>
-                                            팀 전체 얼굴이 잘 보이는 사진으로요.
-                                        </FormText>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label for="nickname">닉네임</Label>
-                                        <Input type="text" name="nickname" id="nickname" value={this.props.user.nickname} />
-                                    </FormGroup>
-                                    </div>
-                                    <div>
-                                    <FormGroup>
-                                        <Label for="company">직장명</Label>
-                                        <Input type="select" name="company" id="company" required>
-                                            <option disabled selected value>- select -</option>
-                                            <option value="삼성전자">삼성전자</option>
-                                            <option value="SK">SK</option>
-                                            <option value="현대자동차">현대자동차</option>
-                                            <option value="네이버">네이버</option>
-                                            <option value="카카오">카카오</option>
-                                            {/*추가 필요*/}
-                                        </Input>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label for="location">선호지역</Label>
-                                        <Input type="select" name="location" id="location" required>
-                                            <option disabled selected value>- select -</option>
-                                            <option value="강남">강남</option>
-                                            <option value="홍대">홍대</option>
-                                            <option value="이태원">이태원</option>
-                                            {/*추가 필요*/}
-                                        </Input>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label for="phone">대표 연락처</Label>
-                                        <Input type="text" name="phone" id="phone" value={this.props.user.phone_number} />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label for="team_detail">팀 소개</Label>
-                                        <Input type="textarea" rows="4" name="team_detail" id="team_detail" value={this.props.user.team_detail} />
-                                    </FormGroup>
-                                    </div>
-                                    <Button>반영하기</Button>
-                                </Form>
-                                <div className={"App font-grey font-2 mt-2 hover deco-none"}>
-                                    <u>로그아웃</u>
-                                </div>
-                            </div>
-                        </Col>
-                    </Row>
-                    </Container>
-                        <FooterScrollable/>
-                </div>
+            <div className="form-component" >
+                <h3 className="header">
+                    "프로필 수정"
+                </h3>
+                <br/>
+                <form
+                    className="form"
+                    onSubmit={this._handleSubmit}
+                    method="patch"
+                >
+                    <table>
+                        <tr>
+                            <td>이름  :</td>
+                            <td className="not-change">{this.props.my_profile.user.username}</td>
+                        </tr>
+                        <tr>
+                            <td>성별  :</td> 
+                            <td className="not-change">{this.props.my_profile.is_male ? "남" : "여"}</td>
+                        </tr>
+                        <tr>
+                            <td>연령대 :</td>
+                            <td>
+                            <input
+                                type="number"
+                                placeholder="나이를 입력해주세요"
+                                value={this.state.ageValue}
+                                onChange={this._handleInputChange}
+                                name="ageValue"
+                                classnName="age-form"
+                            />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>회사 :</td>
+                            <td>
+                                <select name="companyValue" value={this.props.my_profile.company.name} onChange={this._handleInputChange}>
+                                    <option>삼성전자</option>
+                                    <option>애플</option>
+                                    <option>구글</option>
+                                    <option>테슬라</option>
+                                    <option>현대자동차</option>
+                                    <option>서울대학교</option>
+                                    <option>네이버</option>
+                                    <option>카카오</option>
+                                    <option>JYP</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>팀 소개  :</td>
+                            <td>
+                            <Textarea
+                                type="text"
+                                placeholder="팀 소개를 입력해주세요"
+                                value={this.state.team_introValue}
+                                onChange={this._handleInputChange}
+                                className="text-input"
+                                name="team_introValue"
+                            />
+                            </td>
+                        </tr>
+                    
+                        <br/>
+                        <br/>
+                    </table>
+                    <input
+                        type="submit"
+                        value="수정완료"
+                        className="button"
+                        onChange={this._handleInputChange}
+                    />
+                </form>
+                <FooterScrollable/>
             </div>
+
         );
     }
 }
 
-export default Profile;
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    MyProfileActions: bindActionCreators(myProfileActions, dispatch),
+});
+
+const mapStateToProps = (state) => ({
+    is_login_already: state.my_profile.get('is_login_already'),
+    my_profile: state.my_profile.get('my_profile'),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

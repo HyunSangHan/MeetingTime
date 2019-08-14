@@ -4,7 +4,7 @@ import './App.css';
 import Main from "./components/Main"
 import Profile from "./components/details/Profile";
 import Initpage from "./components/Initpage";
-import Result from "./components/details/Result";
+import CounterProfile from "./components/CounterPlayer";
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -75,7 +75,6 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div className="frame">
-
                         <Route exact path="/"
                             render={(props) => (
                                 <Initpage
@@ -96,21 +95,20 @@ class App extends Component {
                         )}
                     />
 
-
                     <Route path="/profile"
                         render={(props) => (
                             <Profile
                                 {...props}
-                                user={this.state.user}
                             />
-                        )} />
+                        )} 
+                    />
                     <Route path="/matching_result"
                         render={(props) => (
-                            <Result
+                            <CounterProfile
                                 {...props}
-                                ex_user={this.state.ex_user}
                             />
-                        )} />
+                        )} 
+                    />
                     {/*<Redirect from="/" to="/init" />*/}
 
                 </div>

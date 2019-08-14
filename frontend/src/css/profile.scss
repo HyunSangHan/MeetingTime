@@ -1,0 +1,42 @@
+
+
+.header{
+    text-align: center;
+    margin-top : 40px;
+}
+
+.not-change{
+    font-weight: 650;
+    text-align: center;
+}
+
+.text-input{
+    width: 400px;
+    display: flex;
+    margin-left: 20px;
+}
+
+table{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+tr {
+    text-align : center;
+    td {
+        padding-bottom : 1em;
+    }   
+}
+
+
+.button {
+    display: flex;
+    justify-content: center;
+    box-shadow: rgba(155, 38, 116, 0.4) 0 0px 0px 1px;
+    background-color : palevioletred;
+    color : white;
+    width : 120px;
+    height: 35px;
+    margin-left: auto;
+    margin-right: auto;
+}
