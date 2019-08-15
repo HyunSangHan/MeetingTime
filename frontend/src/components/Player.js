@@ -3,9 +3,9 @@ import "../css/player_styles.scss";
 import MyPlayer from "./MyPlayer";
 import CounterPlayer from "./CounterPlayer";
 
+import * as currentMatchingActions from "../modules/current_matching";
 import * as joinActions from '../modules/join';
 import * as playerActions from '../modules/player';
-import * as matchingActions from '../modules/matching';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 
@@ -16,7 +16,7 @@ class Player extends Component {
         super(props);
         
         this.state = {
-            action: "user"
+            action: "user",
         }
     }
 
@@ -36,37 +36,36 @@ class Player extends Component {
     }
 
     componentDidMount() {
-        const { PlayerActions, JoinActions, MatchingActions } = this.props;
-        PlayerActions.getCounterProfile();
+        const { JoinActions, PlayerActions, CurrentMatchingActions } = this.props;
+        CurrentMatchingActions.getCurrentMatching();
         JoinActions.getJoinedUser();
-        MatchingActions.getCurrentMatching();
+        PlayerActions.getCounterProfile();
     }
 
     render(){
         const{ action } = this.state;
-        const { PlayerActions, current_matching, my_profile, joined_user, counter_profile, is_counterProfile, is_greenlight_on } = this.props;
-        console.log(this.props);
+        const { current_matching, joined_user, is_counter_profile } = this.props;
         return (
             <div className="container">
                 <div className="white-box form-box">
                     {action === "user" && <MyPlayer
-                                            my_profile={my_profile}
                                             current_matching={current_matching} 
                                             joined_user={joined_user}
-                    />}
+                                          />
+                    }
                     {action === "counter_user" 
-                        && is_counterProfile 
+                        && is_counter_profile 
                         && <CounterPlayer 
-                            handleGreenLightOn={PlayerActions.handleGreenLightOn}
-                            handleGreenLightOff={PlayerActions.handleGreenLightOff}
-                            counter_profile={counter_profile}
-                            is_greenlight_on={is_greenlight_on}
-                            current_matching={current_matching}
-                    />}
+                           />
+                    }
+                    {action === "counter_user"
+                        && !is_counter_profile && <p className="no-matching">"현재 매칭된 상대가 없습니다."</p>
+                    }
                 </div>
+
                 <div className="white-box">
-                    {action === "user" && (<p>
-                        매칭된 상대방을 정보를 확인하시겠습니까?{" "}
+                    {action === "user" && (<p className="change-player">
+                        매칭 상대의 정보를 확인하시겠습니까?{" "}
                         <span
                             className="change-link"
                             onClick={this.changeAction}
@@ -74,7 +73,7 @@ class Player extends Component {
                             상대방 프로필
                         </span>
                     </p>)}
-                    {action === "counter_user" && (<p>
+                    {action === "counter_user" && (<p className="change-player">
                         내 정보를 보시겠습니까?{" "}
                         <span
                             className="change-link"
@@ -92,17 +91,16 @@ class Player extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
-    PlayerActions: bindActionCreators(playerActions, dispatch),
     JoinActions: bindActionCreators(joinActions, dispatch),
-    MatchingActions: bindActionCreators(matchingActions, dispatch),
+    PlayerActions: bindActionCreators(playerActions, dispatch),
+    CurrentMatchingActions: bindActionCreators(currentMatchingActions, dispatch),
 });
 
 const mapStateToProps = (state) => ({
     joined_user: state.join.get('joined_user'),
-    counter_profile: state.player.get('counter_profile'),
-    is_greenlight_on: state.player.get('is_greenlight_on'),
-    is_counterProfile: state.player.get('is_counterProfile'),
-    current_matching: state.matching.get('current_matching'),
+    is_counter_profile: state.player.get('is_counter_profile'),
+    current_matching : state.current_matching.get('current_matching'),
+    is_current_matching: state.current_matching.get('is_current_matching'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

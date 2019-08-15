@@ -6,7 +6,7 @@ import join from './join';
 import current_meeting from './current_meeting';
 import my_profile from './my_profile';
 import player from './player';
-import matching from "./matching";
+import current_matching from "./current_matching";
 import email from "./email";
 
 export default combineReducers({
@@ -17,6 +17,6 @@ export default combineReducers({
     current_meeting,
     my_profile,
     player,
-    matching,
+    current_matching,
     email,
 });

@@ -6,6 +6,7 @@ import Profile from "./components/details/Profile";
 import Initpage from "./components/Initpage";
 import Result from "./components/details/Result";
 import Email from "./components/Email";
+import CounterPlayer from "./components/CounterPlayer";
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -13,6 +14,7 @@ import * as myProfileActions from './modules/my_profile';
 import * as currentMeetingActions from './modules/current_meeting';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Loading from './components/Loading';
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -23,28 +25,8 @@ class App extends Component {
         super(props);
 
         this.state = {
-            
-            user: {//삭제 요망
-                nickname: "data_닉네임",
-                company: "data_회사명",
-                img_url: "/images/exampleProfile.jpeg",
-                recommendation_code: "data_코드",
-                current_heart: "data_하트개수",
-                chat: "data_대화방개수",
-                rank: "data_순번",
-                location: "data_선호지역",
-                phone_number: "data_대표연락처",
-                team_detail: "data_팀소개문구_blah blah~ 이건 테스트입니다. 우리 팀은 평범하지 않습니다. 테스트입니다. 테스트입니다. blah blah blah blah 테스트다 블라 blah"
-                //나중에 유저의 모델 내 필드 개수와 맞춰야 할 것임
-            },
-            ex_user: {//삭제 요망
-                nickname: "data_상대닉네임",
-                company: "data_상대회사명",
-                img_url: "/images/counterProfile.jpeg",
-                team_detail: "data_상대팀소개문구_동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세",
-            },
-        }
     }
+}
 
     componentDidMount () {
         const { MyProfileActions, CurrentMeetingActions } = this.props;
@@ -69,10 +51,10 @@ class App extends Component {
 
     }
 
+    
     render() {
         const { is_login_already, current_meeting, my_profile } = this.props;
-        console.log(my_profile)
-
+        
         return (
             <BrowserRouter>
                 <div className="frame">
@@ -91,8 +73,6 @@ class App extends Component {
                             <Main
                                 {...props}
                                 my_profile={my_profile}
-                                user={this.state.user} //삭제 요망
-                                ex_user={this.state.ex_user} //삭제 요망
                             />
                         )}
                     />
@@ -111,16 +91,16 @@ class App extends Component {
                         render={(props) => (
                             <Profile
                                 {...props}
-                                user={this.state.user}
                             />
-                        )} />
+                        )} 
+                    />
                     <Route path="/matching_result"
                         render={(props) => (
-                            <Result
+                            <CounterPlayer
                                 {...props}
-                                ex_user={this.state.ex_user}
                             />
-                        )} />
+                        )} 
+                    />
                     {/*<Redirect from="/" to="/init" />*/}
 
                 </div>
