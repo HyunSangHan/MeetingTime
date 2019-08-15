@@ -1,5 +1,4 @@
-from meeting.views import CurrentMeeting, CurrentMatching, print_example, match_example
-from meeting.models import JoinedUser, Meeting, Matching
+from meeting.views import meeting_example, match_example, success_matching
 
 # def meeting():
 #     # example_meeting = {
@@ -15,12 +14,14 @@ from meeting.models import JoinedUser, Meeting, Matching
 #     Meeting.objects.create(open_time="2019-08-12T22:02:29+09:00", first_shuffle_time="2019-08-13T22:02:29+09:00", second_shuffle_time="2019-08-13T22:02:29+09:00", third_shuffle_time="2019-08-13T22:02:29+09:00", meeting_time="2019-09-05T22:02:29+09:00")
 #     pass
 
-def print_sch():
-    print_example()
+def meeting():
+    meeting_example()
     pass
 
 def match():
     match_example()
-    print("this is match")
     pass
 
+def kakao_for_success():
+    success_matching()
+    pass

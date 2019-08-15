@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
-from .models import Meeting, Profile, Matching, JoinedUser
+from .models import Meeting, Profile, Matching, JoinedUser, KakaoChatting
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import MeetingSerializer, ProfileSerializer, MatchingSerializer, JoinSerializer
@@ -15,30 +15,106 @@ import requests
 import json
 from django.shortcuts import redirect
 
-def print_example():
+def meeting_example():
     now = timezone.now()
-    meeting_time = now + timedelta(days=9)
-    first_shuffle_time = now + timedelta(days=7)
-    second_shuffle_time = first_shuffle_time + timedelta(seconds=60)
-    third_shuffle_time = second_shuffle_time + timedelta(seconds=60)
-    Meeting.objects.create(open_time=now, first_shuffle_time=first_shuffle_time, second_shuffle_time=second_shuffle_time, third_shuffle_time=third_shuffle_time, meeting_time=meeting_time, cutline=4)
+    print(now)
+    meeting_time = now + timedelta(days=1) - timedelta(hours=3)
+    close_time = now + timedelta(hours=1) + timedelta(minutes=10)
+    first_shuffle_time = close_time + timedelta(seconds=120)
+    second_shuffle_time = first_shuffle_time + timedelta(seconds=120)
+    third_shuffle_time = second_shuffle_time + timedelta(seconds=120)
+    Meeting.objects.create(open_time=now, close_time = close_time, first_shuffle_time=first_shuffle_time, second_shuffle_time=second_shuffle_time, third_shuffle_time=third_shuffle_time, meeting_time=meeting_time, cutline=4)
+    # 일단 항상 cutline을 4로 만들긴 하는데 이건 join할 때마다 patch로 수정해줘야 할 것 같다
+    # 매주 수금 10시에 생성, 하루 후 저녁 7시 미팅
+    # 수금 11시 10분에 셔플, 11시 10분에 받기 종료
+    # 2분마다 셔플
 
 def match_example():
-    print("this is working at least")
     current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+    if timezone.now() < current_meeting.first_shuffle_time:
+        trial_time = 1
+    elif timezone.now() < current_meeting.second_shuffle_time:
+        trial_time = 2
+    elif timezone.now() < current_meeting.third_shuffle_time:
+        trial_time = 3
+    else:
+        trial_time = 4
     cutline = current_meeting.cutline
     joined_users_male = list(JoinedUser.objects.filter(meeting=current_meeting, is_matched=False, profile__is_male=True, rank__lte=cutline))
     joined_users_female = list(JoinedUser.objects.filter(meeting=current_meeting, is_matched=False, profile__is_male=False, rank__lte=cutline))
     numbers = list(range(len(joined_users_male)))
     random.shuffle(numbers)
+    print(len(joined_users_male))
+    # 일단 확인용으로 넣어둠 (Meeting에 속해있는 유저가 없을 때 0)
 
     for i in range(len(joined_users_male)):
-        Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=1)
-        joined_users_male[i].already_met_one = joined_users_female[numbers[0]].rank
-        joined_users_female[numbers[0]].already_met_one = joined_users_male[i].rank
-        joined_users_male[i].save()
-        joined_users_female[numbers[0]].save()
-        numbers.pop(0)
+        if trial_time == 1:
+            Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=trial_time)
+            joined_users_male[i].already_met_one = joined_users_female[numbers[0]].rank
+            joined_users_female[numbers[0]].already_met_one = joined_users_male[i].rank
+            joined_users_male[i].save()
+            joined_users_female[numbers[0]].save()
+            numbers.pop(0)
+        elif trial_time == 2:
+            runned = 1
+            while runned < 10:
+                if joined_users_male[i].already_met_one != joined_users_female[numbers[0]].rank:
+                    Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=trial_time)
+                    joined_users_male[i].already_met_two = joined_users_female[numbers[0]].rank
+                    joined_users_female[numbers[0]].already_met_two = joined_users_male[i].rank
+                    joined_users_male[i].save()
+                    joined_users_female[numbers[0]].save()
+                    numbers.pop(0)
+                    break
+                elif runned == 9:
+                    Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=trial_time)
+                    joined_users_male[i].already_met_two = joined_users_female[numbers[0]].rank
+                    joined_users_female[numbers[0]].already_met_two = joined_users_male[i].rank
+                    joined_users_male[i].save()
+                    joined_users_female[numbers[0]].save()
+                    numbers.pop(0)
+                    break
+                else:
+                    random.shuffle(numbers)                            
+                    runned += 1    
+                    
+        elif trial_time:
+            runned = 1
+            while runned < 10:
+                if joined_users_male[i].already_met_one != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_two != joined_users_female[numbers[0]].rank:
+                    Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=trial_time)
+                    joined_users_male[i].already_met_three = joined_users_female[numbers[0]].rank
+                    joined_users_female[numbers[0]].already_met_three = joined_users_male[i].rank
+                    joined_users_male[i].save()
+                    joined_users_female[numbers[0]].save()
+                    numbers.pop(0)
+                    break
+                elif runned == 9:
+                    Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=trial_time)
+                    joined_users_male[i].already_met_three = joined_users_female[numbers[0]].rank
+                    joined_users_female[numbers[0]].already_met_three = joined_users_male[i].rank
+                    joined_users_male[i].save()
+                    joined_users_female[numbers[0]].save()
+                    numbers.pop(0)
+                    break
+                else:
+                    random.shuffle(numbers)
+                    runned += 1
+        else:
+            runned = 1
+            while runned < 10:
+                if joined_users_male[i].already_met_one != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_two != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_three != joined_users_female[numbers[0]].rank:
+                    Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=trial_time)
+                    numbers.pop(0)
+                    break
+                elif runned == 9:
+                    Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=trial_time)
+                    numbers.pop(0)
+                    break
+                else:
+                    random.shuffle(numbers)
+                    runned += 1
+    
 
 def logout(request):
     auth.logout(request)
@@ -50,16 +126,15 @@ def success_matching():
     matchings = Matching.objects.filter(joined_male__meeting=current_meeting)
     for match in matchings:
         if match.is_greenlight_male and match.is_greenlight_female and (not match.joined_male.is_matched or not match.joined_female.is_matched):
-                kakao_chatting = KakaoChatting.objects.filter(is_used=False).first()
-
-                match.joined_male.is_matched = True
-                match.joined_male.save()
-                match.joined_female.is_matched = True
-                match.joined_female.save()
-                match.kakao_chattingroom = kakao_chatting
-                match.save()
-                kakao_chatting.is_used = True
-                kakao_chatting.save()
+            kakao_chatting = KakaoChatting.objects.filter(is_used=False).first()
+            match.joined_male.is_matched = True
+            match.joined_male.save()
+            match.joined_female.is_matched = True
+            match.joined_female.save()
+            match.kakao_chattingroom = kakao_chatting
+            match.save()
+            kakao_chatting.is_used = True
+            kakao_chatting.save()
 
 
 class KakaoLogin(SocialLoginView):

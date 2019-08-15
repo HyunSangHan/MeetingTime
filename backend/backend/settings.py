@@ -146,8 +146,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 CRONJOBS = [
-    ('*/1 * * * *', 'meeting.cron.print_sch', '>> /Users/jaewoo/Snulion7/MeetingTime1/backend/scheduled_job.log'),
-    ('*/1 * * * *', 'meeting.cron.match', '>> /Users/jaewoo/Snulion7/MeetingTime1/backend/scheduled_job.log')
+    ('0 22 * * 3,5', 'meeting.cron.meeting', '>> /Users/jaewoo/Snulion7/MeetingTime1/backend/meeting.log'),
+    ('10,12,14,16 23 * * 3,5', 'meeting.cron.match', '>> /Users/jaewoo/Snulion7/MeetingTime1/backend/matching.log'),
+    ('11,13,15,17 23 * * 3,5', 'meeting.cron.match', '>> /Users/jaewoo/Snulion7/MeetingTime1/backend/kakao.log')
+    # 일단 확실히 matching이 된 후에 kakao가 생성되어야 해서 2분 간격으로 두고 1분 후에 생성되도롣 함
 ]
 
 # Internationalization
