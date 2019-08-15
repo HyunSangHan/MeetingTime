@@ -5,10 +5,8 @@ import "../../css/profile.scss";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import Textarea from "react-textarea-autosize";
-import { post } from "axios";
+import axios from "axios";
 import { Link } from 'react-router-dom';
-
-//import EditPW from "./EditPW";
 
 class Profile extends Component {
 
@@ -36,14 +34,24 @@ class Profile extends Component {
     };
 
     handleImageChange = event => {
+        console.log(event.target.files[0]);
         this.setState ({
             image_value: event.target.files[0]
         })
     }
 
+    handleImageSubmit = () => {
+        const fd = new FormData();
+        fd.append('image', this.state.image_value, this.state.image_value.name);
+        axios.patch('http://localhost:3000/profile/', fd)
+            .then(response => {
+                console.log(response);
+            });
+    }
+
     handleSubmit = event => {
         const { MyProfileActions } = this.props;
-        const { age_value, company_value, team_intro_value, image_value } = this.state;
+        const { age_value, company_value, team_intro_value } = this.state;
         event.preventDefault();
         MyProfileActions.ProfileUpdate({
                         age_value: age_value,
@@ -51,23 +59,10 @@ class Profile extends Component {
                     });
         MyProfileActions.CompanyUpdate({
                         company_value: company_value,
-                    });
-        this.fileUpload(image_value).then((response)=>{
-                                        console.log(response.data);
-                                        })                                   
+                    });             
     };
 
-    fileUpload(file) {
-        const url = 'http://localhost:3000/profile/';
-        const formData = new FormData();
-        formData.append('image', file)
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        }
-        return post(url, formData, config)
-    }
+    
 
     render(){    
         const { my_profile } = this.props;
@@ -84,6 +79,15 @@ class Profile extends Component {
                         alt={my_profile.user.username} />
                 </div>
 
+                <input
+                    type="file"
+                    onChange={this.handleImageChange}
+                    name="image_value"
+                    className="image-uploader"
+                />
+                
+                <button onClick={this.handleImageSubmit}>사진 업로드</button>
+
                 <form
                     className="form"
                     onSubmit={this.handleSubmit}
@@ -92,16 +96,7 @@ class Profile extends Component {
                 >       
                 <table>
                     <tbody>
-                    <tr>
-                        <td className="image-uploader">
-                            <input 
-                                type="file"
-                                onChange={this.handleImageChange}
-                                name="image_value"
-                                className="image-uploader"
-                            />
-                        </td>
-                    </tr>
+                    
                     <tr>
                         <td>이름  :</td>
                         <td className="not-change">{my_profile.user.username}</td>

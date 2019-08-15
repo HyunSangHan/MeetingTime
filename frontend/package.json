@@ -14,6 +14,7 @@
     "react": "^16.8.4",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.3",
+    "react-images-upload": "^1.2.7",
     "react-ionicons": "^3.0.1",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
