@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import "../css/player_styles.scss";
 import MyPlayer from "./MyPlayer";
 import CounterPlayer from "./CounterPlayer";
-
-import * as currentMatchingActions from "../modules/current_matching";
 import * as joinActions from '../modules/join';
 import * as playerActions from '../modules/player';
 import { bindActionCreators } from 'redux';
@@ -36,15 +34,15 @@ class Player extends Component {
     }
 
     componentDidMount() {
-        const { JoinActions, PlayerActions, CurrentMatchingActions } = this.props;
-        CurrentMatchingActions.getCurrentMatching();
+        const { JoinActions, PlayerActions } = this.props;
         JoinActions.getJoinedUser();
         PlayerActions.getCounterProfile();
     }
 
     render(){
         const{ action } = this.state;
-        const { current_matching, joined_user, is_counter_profile } = this.props;
+        const { CurrentMatchingActions, current_matching, joined_user, is_counter_profile } = this.props;
+        console.log(this.props);
         return (
             <div className="container">
                 <div className="white-box form-box">
@@ -56,6 +54,7 @@ class Player extends Component {
                     {action === "counter_user" 
                         && is_counter_profile 
                         && <CounterPlayer 
+                                CurrentMatchingActions={CurrentMatchingActions}
                            />
                     }
                     {action === "counter_user"
@@ -93,14 +92,11 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     JoinActions: bindActionCreators(joinActions, dispatch),
     PlayerActions: bindActionCreators(playerActions, dispatch),
-    CurrentMatchingActions: bindActionCreators(currentMatchingActions, dispatch),
 });
 
 const mapStateToProps = (state) => ({
     joined_user: state.join.get('joined_user'),
     is_counter_profile: state.player.get('is_counter_profile'),
-    current_matching : state.current_matching.get('current_matching'),
-    is_current_matching: state.current_matching.get('is_current_matching'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

@@ -95,7 +95,7 @@ class Main extends Component {
     }
 
     render() {
-        const { is_login_already, current_meeting, current_matching } = this.props;
+        const { is_login_already, current_meeting, current_matching, CurrentMatchingActions } = this.props;
         console.log(current_matching);
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
@@ -153,7 +153,10 @@ class Main extends Component {
                         <div className={"pc-max-width bg-white z-2"}>
                             {this.state.loading ? <Loading/> 
                             :
-                            <Player  />
+                            <Player  
+                                CurrentMatchingActions={CurrentMatchingActions}
+                                current_matching={current_matching}
+                            />
                             }  
                         </div>
                     </div>

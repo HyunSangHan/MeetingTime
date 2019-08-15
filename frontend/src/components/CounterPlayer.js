@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../css/info_styles.scss";
 import MaterialIcon from 'material-icons-react';
-import * as currentMatchingActions from '../modules/current_matching';
 import * as playerActions from '../modules/player';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
@@ -157,7 +156,6 @@ class CounterPlayer extends Component {
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     PlayerActions: bindActionCreators(playerActions, dispatch),
-    CurrentMatchingActions: bindActionCreators(currentMatchingActions, dispatch),
 });
 
 const mapStateToProps = (state) => ({
