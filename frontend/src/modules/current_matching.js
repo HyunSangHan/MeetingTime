@@ -6,11 +6,9 @@ import { pender } from 'redux-pender';
 
 const CURRENT_MATCHING = "CURRENT_MATCHING";
 
-
-
 const initialState = Map({
     is_current_matching: false,
-    is_matched: false
+    current_matching: {},
 });
 
 console.log(initialState);

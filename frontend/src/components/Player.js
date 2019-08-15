@@ -5,7 +5,7 @@ import CounterPlayer from "./CounterPlayer";
 
 import * as joinActions from '../modules/join';
 import * as playerActions from '../modules/player';
-import * as matchingActions from '../modules/matching';
+import * as matchingActions from '../modules/current_matching';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 
@@ -37,10 +37,9 @@ class Player extends Component {
     }
 
     componentDidMount() {
-        const { JoinActions, MatchingActions, PlayerActions } = this.props;
+        const { JoinActions, PlayerActions } = this.props;
         
         JoinActions.getJoinedUser();
-        MatchingActions.getCurrentMatching();
         if (!this.props.is_counter_profile){
             PlayerActions.getCounterProfile();
         }else {
@@ -110,13 +109,11 @@ class Player extends Component {
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     JoinActions: bindActionCreators(joinActions, dispatch),
-    MatchingActions: bindActionCreators(matchingActions, dispatch),
     PlayerActions: bindActionCreators(playerActions, dispatch),
 });
 
 const mapStateToProps = (state) => ({
     joined_user: state.join.get('joined_user'),
-    current_matching: state.matching.get('current_matching'),
     is_counter_profile: state.player.get('is_counter_profile'),
 })
 

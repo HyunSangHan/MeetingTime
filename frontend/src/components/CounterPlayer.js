@@ -25,7 +25,7 @@ class CounterPlayer extends Component {
     }
 
     _handleGreenLight = (event) =>{
-        const { PlayerActions, counter_profile, current_matching } = this.props;
+        const { PlayerActions, counter_profile } = this.props;
         const { is_greenlight_on_male, is_greenlight_on_female } = this.state;
         
         if (is_greenlight_on_male === false && counter_profile.is_male === false){
@@ -47,7 +47,7 @@ class CounterPlayer extends Component {
     };
 
     _handleGift = (event) => {
-        const { PlayerActions, counter_profile, current_matching } = this.props;
+        const { PlayerActions, counter_profile } = this.props;
         const { is_gift_on_male, is_gift_on_female } = this.state;
 
         if (is_gift_on_male === false && counter_profile.is_male === false) {
@@ -75,7 +75,7 @@ class CounterPlayer extends Component {
 
         return (
             <div className="container">
-                <h2 className="trial-time">당신의 {current_matching.trial_time + 1} 번째 매칭상대</h2>
+                <h2 className="trial-time">당신의 { current_matching.trial_time } 번째 매칭상대</h2>
                 <br/>
                 <span>
                     <div className="column">
