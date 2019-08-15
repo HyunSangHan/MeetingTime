@@ -1,4 +1,12 @@
+img{
+    border-radius: 50%;
+    width : 130px;
+}
 
+.profile-image {
+    text-align: center;
+    margin-bottom : 20px;
+}
 
 .header{
     text-align: center;
@@ -8,6 +16,15 @@
 .not-change{
     font-weight: 650;
     text-align: center;
+}
+
+.image-uploader{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .text-input{
@@ -32,11 +49,11 @@ tr {
 .button {
     display: flex;
     justify-content: center;
-    box-shadow: rgba(155, 38, 116, 0.4) 0 0px 0px 1px;
     background-color : palevioletred;
     color : white;
     width : 120px;
     height: 35px;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 34%;
 }

@@ -8,7 +8,7 @@ const UPDATE_PROFILE = "UPDATE_PROFILE";
 
 const initialState = Map({
     is_login_already: false,
-    my_profile: {},
+    
 }); 
 
 export default handleActions({
@@ -48,11 +48,13 @@ export const ProfileUpdate = createAction(
         url: '/profile/',
         data: {
             age_range: payload.ageValue,
+            image: payload.imageValue,
             team_introduce : payload.team_introValue,
         }
     })
     .then((response) => {
         console.log(response);
+        console.log("프로필 수정 성공");
         return response
     })
     .catch(
