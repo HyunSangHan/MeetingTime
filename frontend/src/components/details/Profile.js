@@ -5,6 +5,7 @@ import "../../css/profile.scss";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import Textarea from "react-textarea-autosize";
+import { post, patch } from "axios";
 
 //import EditPW from "./EditPW";
 
@@ -33,6 +34,12 @@ class Profile extends Component {
         });
     };
 
+    _handleImageChange = event => {
+        this.setState ({
+            imageValue: event.target.files[0]
+        })
+    }
+
     _handleSubmit = event => {
         const { MyProfileActions } = this.props;
         const { ageValue, companyValue, team_introValue, imageValue } = this.state;
@@ -40,12 +47,26 @@ class Profile extends Component {
         MyProfileActions.ProfileUpdate({
                         ageValue: ageValue,
                         team_introValue : team_introValue,
-                        imageValue: imageValue
                     });
         MyProfileActions.CompanyUpdate({
                         companyValue: companyValue,
                     });
+        this.fileUpload(imageValue).then((response)=>{
+                                        console.log(response.data);
+                                        })                                   
     };
+
+    fileUpload(file) {
+        const url = 'http://localhost:3000/profile/';
+        const formData = new FormData();
+        formData.append('image', file)
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+        return post(url, formData, config)
+    }
 
     render(){    
         const { my_profile } = this.props;
@@ -74,8 +95,7 @@ class Profile extends Component {
                         <td className="image-uploader">
                             <input 
                                 type="file"
-                                //value={this.state.imageValue}
-                                onChange={this._handleInputChange}
+                                onChange={this._handleImageChange}
                                 name="imageValue"
                                 className="image-uploader"
                             />
