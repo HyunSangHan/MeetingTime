@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
-from .models import Meeting, JoinedUser, Profile, Matching, KakaoChatting
+from .models import Meeting, Profile, Matching, JoinedUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import MeetingSerializer, JoinSerializer, MatchingSerializer, ProfileSerializer
+from .serializers import MeetingSerializer, ProfileSerializer, MatchingSerializer, JoinSerializer
 from django.contrib.auth.models import User
 from django.contrib import auth
 import random
@@ -76,9 +76,7 @@ class CurrentMatching(APIView):
 
     def post(self, request, format=None):
         cutline = self.current_meeting.cutline
-        print("cutline: " + str(cutline))
         joined_users_male = list(JoinedUser.objects.filter(meeting=self.current_meeting, is_matched=False, profile__is_male=True, rank__lte=cutline))
-        print(joined_users_male)
         joined_users_female = list(JoinedUser.objects.filter(meeting=self.current_meeting, is_matched=False, profile__is_male=False, rank__lte=cutline))
         numbers = list(range(len(joined_users_male)))
         random.shuffle(numbers)
@@ -160,12 +158,13 @@ class CurrentMatching(APIView):
 
 
     def patch(self, request, format=None):
+
         my_profile = request.user.profile
         joined_user = JoinedUser.objects.get(profile=my_profile, meeting=self.current_meeting)
         if my_profile.is_male:
-            queryset = Matching.objects.filter(joined_male=joined_user, trial_time=self.trial_time).last()
+            queryset = Matching.objects.filter(joined_male=joined_user).last()
         else:
-            queryset = Matching.objects.filter(joined_female=joined_user, trial_time=self.trial_time).last()
+            queryset = Matching.objects.filter(joined_female=joined_user).last()
         serializer = MatchingSerializer(queryset, data=request.data, partial=True)
         
         if serializer.is_valid():
