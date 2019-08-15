@@ -65,8 +65,8 @@ export const handleGreenLightOn = createAction(
         method: "patch",
         url: '/current_matching/',
         data : {
-            is_greenlight_male: payload.value1,
-            is_greenlight_female: payload.value2
+            is_greenlight_male: payload.male,
+            is_greenlight_female: payload.female
         }
     })
     .then((response) => {
@@ -84,8 +84,8 @@ export const handleGreenLightOff = createAction(
         method: "patch",
         url: '/current_matching/',
         data: {
-            is_greenlight_male: payload.value1,
-            is_greenlight_female: payload.value2
+            is_greenlight_male: payload.male,
+            is_greenlight_female: payload.female
         }
     })
         .then((response) => {
@@ -104,8 +104,8 @@ export const handleGiftOn = createAction(
         method: "patch",
         url: '/current_matching/',
         data: {
-            is_gift_male: payload.value1,
-            is_gift_female: payload.value2
+            is_gift_male: payload.male,
+            is_gift_female: payload.female
         }
     })
         .then((response) => {
@@ -123,8 +123,8 @@ export const handleGiftOff = createAction(
         method: "patch",
         url: '/current_matching/',
         data: {
-            is_gift_male: payload.value1,
-            is_gift_female: payload.value2
+            is_gift_male: payload.male,
+            is_gift_female: payload.female
         }
     })
         .then((response) => {

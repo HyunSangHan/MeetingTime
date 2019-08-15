@@ -3,6 +3,7 @@ import "../css/player_styles.scss";
 import MyPlayer from "./MyPlayer";
 import CounterPlayer from "./CounterPlayer";
 
+import * as currentMatchingActions from "../modules/current_matching";
 import * as joinActions from '../modules/join';
 import * as playerActions from '../modules/player';
 import { bindActionCreators } from 'redux';
@@ -16,7 +17,6 @@ class Player extends Component {
         
         this.state = {
             action: "user",
-            loading : true
         }
     }
 
@@ -36,30 +36,17 @@ class Player extends Component {
     }
 
     componentDidMount() {
-        const { JoinActions, PlayerActions } = this.props;
-        
+        const { JoinActions, PlayerActions, CurrentMatchingActions } = this.props;
+        console.log("매칭 새로받기 성공");
+        CurrentMatchingActions.getCurrentMatching();
         JoinActions.getJoinedUser();
-        if (!this.props.is_counter_profile){
-            PlayerActions.getCounterProfile();
-        }else {
-            this.setState({
-                loading: false
-            })
-        }
-    }
-
-    componentWillReceiveProps = nextProps => {
-        if (nextProps.is_counter_profile) {
-            this.setState({
-                loading: false
-            });
-        };
+        PlayerActions.getCounterProfile();
     }
 
     render(){
         const{ action } = this.state;
-        const {  current_matching, joined_user, is_counter_profile } = this.props;
-        console.log(this.props);
+        const { current_matching, joined_user, is_counter_profile } = this.props;
+        console.log(current_matching);
         return (
             <div className="container">
                 <div className="white-box form-box">
@@ -71,7 +58,6 @@ class Player extends Component {
                     {action === "counter_user" 
                         && is_counter_profile 
                         && <CounterPlayer 
-                            current_matching={current_matching}
                            />
                     }
                     {action === "counter_user"
@@ -109,11 +95,14 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     JoinActions: bindActionCreators(joinActions, dispatch),
     PlayerActions: bindActionCreators(playerActions, dispatch),
+    CurrentMatchingActions: bindActionCreators(currentMatchingActions, dispatch),
 });
 
 const mapStateToProps = (state) => ({
     joined_user: state.join.get('joined_user'),
     is_counter_profile: state.player.get('is_counter_profile'),
+    current_matching : state.current_matching.get('current_matching'),
+    is_current_matching: state.current_matching.get('is_current_matching'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

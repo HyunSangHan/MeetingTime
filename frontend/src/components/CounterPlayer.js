@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../css/info_styles.scss";
 import MaterialIcon from 'material-icons-react';
+import * as currentMatchingActions from '../modules/current_matching';
 import * as playerActions from '../modules/player';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
@@ -19,53 +20,60 @@ class CounterPlayer extends Component {
     }
 
     componentDidMount() {
-        const { PlayerActions } = this.props;
+        const { PlayerActions, CurrentMatchingActions } = this.props;
         PlayerActions.getCounterProfile();
-
+        CurrentMatchingActions.getCurrentMatching();
     }
 
     handleGreenLight = (event) =>{
-        const { PlayerActions, counter_profile } = this.props;
+        const { PlayerActions, counter_profile, CurrentMatchingActions } = this.props;
         const { is_greenlight_on_male, is_greenlight_on_female } = this.state;
         
+
         if (!is_greenlight_on_male && !counter_profile.is_male){
-            PlayerActions.handleGreenLightOn({ value1 : true });
+            PlayerActions.handleGreenLightOn({ male: true });
             this.setState({ is_greenlight_on_male : true }); 
             
         } else if (!is_greenlight_on_female && counter_profile.is_male){
-            PlayerActions.handleGreenLightOn({ value2 : true });
+            PlayerActions.handleGreenLightOn({ female: true });
             this.setState({ is_greenlight_on_female: true });
 
         } else if (is_greenlight_on_male && !counter_profile.is_male){
-            PlayerActions.handleGreenLightOff({ value1: false });
+            PlayerActions.handleGreenLightOff({ male: false });
             this.setState({ is_greenlight_on_male: false });
             
         } else if (is_greenlight_on_female && counter_profile.is_male){
-            PlayerActions.handleGreenLightOff({ value2: false });
+            PlayerActions.handleGreenLightOff({ female: false });
             this.setState({ is_greenlight_on_female: false });
         }
+
+        CurrentMatchingActions.getCurrentMatching();
+
     };
 
     handleGift = (event) => {
-        const { PlayerActions, counter_profile } = this.props;
+        const { PlayerActions, counter_profile, CurrentMatchingActions } = this.props;
         const { is_gift_on_male, is_gift_on_female } = this.state;
 
         if (!is_gift_on_male && !counter_profile.is_male) {
-            PlayerActions.handleGiftOn({ value1: true });
+            PlayerActions.handleGiftOn({ male: true });
             this.setState({ is_gift_on_male: true });
 
         } else if (!is_gift_on_female && counter_profile.is_male) {
-            PlayerActions.handleGiftOn({ value2: true });
+            PlayerActions.handleGiftOn({ female: true });
             this.setState({ is_gift_on_female: true });
 
         } else if (is_gift_on_male && !counter_profile.is_male) {
-            PlayerActions.handleGiftOff({ value1: false });
+            PlayerActions.handleGiftOff({ male: false });
             this.setState({ is_gift_on_male: false });
 
         } else if (is_gift_on_female && counter_profile.is_male) {
-            PlayerActions.handleGiftOff({ value2: false });
+            PlayerActions.handleGiftOff({ female: false });
             this.setState({ is_gift_on_female: false });
         }
+
+        CurrentMatchingActions.getCurrentMatching();
+
     };
     
     
@@ -149,13 +157,14 @@ class CounterPlayer extends Component {
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     PlayerActions: bindActionCreators(playerActions, dispatch),
+    CurrentMatchingActions: bindActionCreators(currentMatchingActions, dispatch),
 });
 
 const mapStateToProps = (state) => ({
     counter_profile: state.player.get('counter_profile'),
     is_greenlight_on: state.player.get('is_greenlight_on'),
     is_counter_profile: state.player.get('is_counter_profile'),
-    
+    current_matching: state.current_matching.get('current_matching'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CounterPlayer);

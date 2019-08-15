@@ -34,6 +34,7 @@ class Main extends Component {
     componentDidMount() {
         const { CurrentMeetingActions, CurrentMatchingActions, JoinActions, is_joined_already } = this.props;
         CurrentMeetingActions.getCurrentMeeting();
+        CurrentMatchingActions.getCurrentMatching();    
         if (!is_joined_already){
             JoinActions.getJoinedUser();
         } else {
@@ -43,7 +44,6 @@ class Main extends Component {
         }
         this.startTimer();
 
-        CurrentMatchingActions.getCurrentMatching();
     }
 
     componentWillReceiveProps = nextProps => {
@@ -153,7 +153,7 @@ class Main extends Component {
                         <div className={"pc-max-width bg-white z-2"}>
                             {this.state.loading ? <Loading/> 
                             :
-                            <Player {...this.state} current_matching={current_matching}/>
+                            <Player  />
                             }  
                         </div>
                     </div>

@@ -99,8 +99,8 @@ class Profile(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     last_login_at = models.DateTimeField(default=timezone.now)
     team_introduce = models.TextField(blank=True, default="")
-    last_intro_modified_at = models.DateTimeField(auto_now=True, null=True)
-    last_img_modified_at = models.DateTimeField(auto_now=True, null=True)
+    last_intro_modified_at = models.DateTimeField(blank=True, null=True)
+    last_img_modified_at = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return self.user.username

@@ -11,7 +11,6 @@ class MyPlayer extends Component {
 
     render(){
         const { joined_user } = this.props;
-        console.log(joined_user);
         return ( 
             <div className="container">
                 <span>
