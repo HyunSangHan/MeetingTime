@@ -22,7 +22,7 @@ class Main extends Component {
         super(props);
 
         this.state = {
-            time: 179,
+            time: 15,
         }
         this.startTimer = this.startTimer.bind(this);
 
@@ -115,9 +115,8 @@ class Main extends Component {
                             </Col>
                             <Col xs={12}>
                                 <div className={"font-1 mt-3 opacity05"}>
-                                    {/* TODO: 카운트다운 들어갈 곳 */}
-
-                                    {/* TODO: current_matching 모듈 생기면, 셔플회차 들어갈 곳 */}
+                                    {this.state.time}초 남음 {/* TODO: 예시로 넣어둔 것으로, 추후 수정 필요 */}
+                                    <br/>
                                     {current_matching.trial_time}번째 셔플 결과입니다.
                                 </div>
                             </Col>
