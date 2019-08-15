@@ -146,8 +146,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 CRONJOBS = [
-    ('*/1 * * * *', 'meeting.cron.schedule'),
-    ('*/1 * * * *', 'meeting.cron.match')
+    ('*/1 * * * *', 'meeting.cron.print_sch', '>> /Users/jaewoo/Snulion7/MeetingTime1/backend/scheduled_job.log'),
+    ('*/1 * * * *', 'meeting.cron.match', '>> /Users/jaewoo/Snulion7/MeetingTime1/backend/scheduled_job.log')
 ]
 
 # Internationalization

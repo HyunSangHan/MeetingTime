@@ -7,12 +7,40 @@ from .serializers import MeetingSerializer, JoinSerializer, MatchingSerializer, 
 from django.contrib.auth.models import User
 from django.contrib import auth
 import random
+from datetime import timedelta
 from django.utils import timezone
 from allauth.socialaccount.providers.kakao.views import KakaoOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 import requests
 import json
 from django.shortcuts import redirect
+
+def print_example():
+    now = timezone.now()
+    meeting_time = now + timedelta(days=9)
+    first_shuffle_time = now + timedelta(days=7)
+    second_shuffle_time = first_shuffle_time + timedelta(seconds=60)
+    third_shuffle_time = second_shuffle_time + timedelta(seconds=60)
+    Meeting.objects.create(open_time=now, first_shuffle_time=first_shuffle_time, second_shuffle_time=second_shuffle_time, third_shuffle_time=third_shuffle_time, meeting_time=meeting_time, cutline=4)
+
+def match_example():
+    current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+    cutline = current_meeting.cutline
+    joined_users_male = list(JoinedUser.objects.filter(meeting=current_meeting, is_matched=False, profile__is_male=True, rank__lte=cutline))
+    joined_users_female = list(JoinedUser.objects.filter(meeting=current_meeting, is_matched=False, profile__is_male=False, rank__lte=cutline))
+    numbers = list(range(len(joined_users_male)))
+    random.shuffle(numbers)
+
+    for i in range(len(joined_users_male)):
+        Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=1)
+        joined_users_male[i].already_met_one = joined_users_female[numbers[0]].rank
+        joined_users_female[numbers[0]].already_met_one = joined_users_male[i].rank
+        joined_users_male[i].save()
+        joined_users_female[numbers[0]].save()
+        numbers.pop(0)
+# class Example(APIView):
+#     def post(self, requests, format=None):
+#         Meeting.objects.create(open_time="2019-08-12T22:02:29+09:00", first_shuffle_time="2019-08-13T22:02:29+09:00", second_shuffle_time="2019-08-13T22:02:29+09:00", third_shuffle_time="2019-08-13T22:02:29+09:00", meeting_time="2019-09-10T22:02:29+09:00")
 
 def logout(request):
     auth.logout(request)
