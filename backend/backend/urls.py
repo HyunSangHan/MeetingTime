@@ -34,6 +34,7 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('', include(router.urls)),
     path('profile/', views.Profile.as_view()),
+    path('company/', views.Company.as_view()),
     path('current_matching/', views.CurrentMatching.as_view())
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

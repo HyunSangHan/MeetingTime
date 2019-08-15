@@ -1,6 +1,10 @@
 
 .container{
-    background-color : rgb(252, 238, 238);
+    background-color : #4c4c4c;
+    .no-matching{
+        color: white;
+        font-size: 40px;
+    }
     .app-box {
         display: flex;
         flex-direction: column;
@@ -20,17 +24,22 @@
         text-align: center;
         padding: 15px;
         .change-link {
-        color: lightblue;
+        color: lightseagreen;
         cursor: pointer;
         }
-        .text {
-        margin: 15px;
+        .change-player {
+            color : white;
+            font-size: 18px;
+            font-weight: 400;
+            margin: 15px;
         }
+        
     }
     .form-box {
         margin-bottom: 10px;
         padding: 0 40px;
         padding-top: 30px;
-        
     }
+    
+
 }

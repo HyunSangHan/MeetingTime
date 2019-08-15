@@ -3,7 +3,7 @@ from rest_framework import viewsets, status
 from .models import Meeting, Profile, Matching, JoinedUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import MeetingSerializer, ProfileSerializer, MatchingSerializer, JoinSerializer
+from .serializers import MeetingSerializer, ProfileSerializer, MatchingSerializer, JoinSerializer, CompanySerializer
 from django.contrib.auth.models import User
 from django.contrib import auth
 import random
@@ -347,6 +347,36 @@ class Profile(APIView):
 
         if my_profile is not None:
             request.user.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class Company(APIView):
+
+    def get(self, request, format=None):
+        if request.user.is_authenticated:
+            queryset = request.user.profile.company
+            if queryset is not None:
+                serializer = CompanySerializer(queryset)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def patch(self, request, format=None):
+        queryset = request.user.profile.company
+        serializer = CompanySerializer(queryset, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format=None):
+        if request.user.profile is not None:
+            request.user.company.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)

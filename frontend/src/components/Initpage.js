@@ -78,7 +78,7 @@ class Initpage extends Component {
     }
     render() {
         const { is_joined_popup_on, joined_user, JoinActions, is_joined_already, current_meeting } = this.props;
-
+        console.log(this.props);
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
         const meetingDay = this.getInputDayLabel(current_meeting.meeting_time);
@@ -145,6 +145,7 @@ class Initpage extends Component {
             </div>
         );
     }
+    
 }
 
 

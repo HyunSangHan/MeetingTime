@@ -10,22 +10,34 @@ class MyPlayer extends Component {
     }
 
     render(){
-        const { joined_user, my_profile } = this.props;
+        const { joined_user } = this.props;
         return ( 
             <div className="container">
-                <img src={my_profile.image || require("../images/noPhoto.jpg")}
-                    alt={my_profile.user.username} />
-                <div className="information">
-                    <div>이름 : {my_profile.user.username}</div>
-                    <div>연령대 : {my_profile.age_range}</div>
-                    <div>회사명 : {my_profile.company.name}</div>
-                    <div>팀소개 : {my_profile.team_introduce}</div>
-                    <div>{joined_user.meeting}</div>
-                </div>
-
-                <Link to="/profile">
-                    프로필 수정하기
-                </Link>
+                <span>
+                    <div className="column">
+                        <img src={joined_user.profile.image || require("../images/noPhoto.jpg")}
+                            alt={joined_user.profile.user.username} 
+                            className="main-profile"
+                        />
+                        <ul className="info-list">
+                            <li className="list-item">이름 : {joined_user.profile.user.username}</li>
+                            <li className="list-item">성별 : {joined_user.profile.is_male ? "남" : "여"}</li>
+                            <li className="list-item">연령대 : {joined_user.profile.age_range ? joined_user.profile.age_range + "대" : "몰라요"}</li>
+                            <li className="list-item">회사명 : {joined_user.profile.company.name}</li>
+                            <li className="list-item">팀소개 : {joined_user.profile.team_introduce}</li>
+                        </ul>
+                    </div>
+                    <br/>
+                    <Link to="/profile" className="update">
+                        프로필 수정하기
+                    </Link>
+                    <h3 className="update-time">{!joined_user.profile.natural_time === null ? " 최종 수정 : " + joined_user.profile.natural_time : "null"}</h3>
+                </span>
+                <span>
+                    <div className="column">
+                   
+                    </div>
+                </span> 
             </div>
         )
     }
