@@ -23,8 +23,7 @@ def success_matching():
     current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
     matchings = Matching.objects.filter(joined_male__meeting=current_meeting)
     for match in matchings:
-        if match.is_greenlight_male and match.is_greenlight_female:
-            if not match.joined_male.is_matched or not match.joined_female.is_matched:
+        if match.is_greenlight_male and match.is_greenlight_female and (not match.joined_male.is_matched or not match.joined_female.is_matched):
                 kakao_chatting = KakaoChatting.objects.filter(is_used=False).first()
 
                 match.joined_male.is_matched = True
@@ -32,6 +31,7 @@ def success_matching():
                 match.joined_female.is_matched = True
                 match.joined_female.save()
                 match.kakao_chattingroom = kakao_chatting
+                match.save()
                 kakao_chatting.is_used = True
                 kakao_chatting.save()
 
@@ -205,19 +205,16 @@ class CurrentMeeting(APIView):
         # 프론트에서 Join 시간이 종료되면 호출되며 cutline을 설정
     def patch(self, request, format=None):
         # current meeting 
-        queryset = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
 
         # 남, 여 각각 미팅에 참여한 인원
         joined_male_last_rank = JoinedUser.objects.filter(profile__is_male=True).order_by('rank').last().rank
         joined_female_last_rank = JoinedUser.objects.filter(profile__is_male=False).order_by('rank').last().rank
-
         cutline = joined_male_last_rank if joined_male_last_rank > joined_female_last_rank else joined_female_last_rank
-        
-        # Serializer가 필요하지 않아보이므로 우선 queryset.save()로 구현 
-        # 추후 Serializer로 통일하는 것이 좋을 것으로 판단되면 수정
+
         if cutline is not None:
-            queryset.cutline = cutline
-            queryset.save()
+            current_meeting.cutline = cutline
+            current_meeting.save()
             return Response(status=status.HTTP_202_ACCEPTED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -227,11 +224,10 @@ class Join(APIView):
     current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
 
     def get(self, request, format=None):
-        # my_profile = request.user.profile
-        # queryset = JoinedUser.objects.filter(profile=my_profile, meeting=self.current_meeting).last()
-        queryset = JoinedUser.objects.filter(meeting=self.current_meeting)
+        my_profile = request.user.profile
+        queryset = JoinedUser.objects.filter(profile=my_profile, meeting=self.current_meeting).last()
         if queryset is not None:
-            serializer = JoinSerializer(queryset, many=True)
+            serializer = JoinSerializer(queryset)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
