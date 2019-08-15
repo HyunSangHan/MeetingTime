@@ -98,6 +98,7 @@ class Profile(models.Model):
     team_introduce = models.TextField(blank=True, default="")
     last_intro_modified_at = models.DateTimeField(null=True, blank=True)
     last_img_modified_at = models.DateTimeField(null=True, blank=True)
+    validated = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
@@ -191,3 +192,7 @@ class Matching(models.Model):
             
     def __str__(self):
         return f'남: {str(self.joined_male)} / 여: {str(self.joined_female)} / 셔플 횟수: {str(self.trial_time)}'
+
+class Validation(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    code = models.IntegerField(null=True, blank=True)

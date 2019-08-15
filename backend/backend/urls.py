@@ -34,7 +34,9 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('', include(router.urls)),
     path('profile/', views.Profile.as_view()),
-    path('current_matching/', views.CurrentMatching.as_view())
+    path('current_matching/', views.CurrentMatching.as_view()),
+    path('send_mail/', views.send_email, name='email'),
+    path('validate/', views.validate_email, name='validate')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [

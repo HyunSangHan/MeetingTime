@@ -185,3 +185,5 @@ REST_SESSION_LOGIN = False
 #         'METHOD': 'oauth2'
 #     }
 # }
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
