@@ -4,7 +4,7 @@ import './App.css';
 import Main from "./components/Main"
 import Profile from "./components/details/Profile";
 import Initpage from "./components/Initpage";
-import CounterProfile from "./components/CounterPlayer";
+import CounterPlayer from "./components/CounterPlayer";
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -23,7 +23,6 @@ class App extends Component {
         super(props);
 
         this.state = {
-            loading : true
     }
 }
 
@@ -53,7 +52,7 @@ class App extends Component {
     
     render() {
         const { is_login_already, current_meeting, my_profile } = this.props;
-        const { loading } = this.state;
+        
         return (
             <BrowserRouter>
                 <div className="frame">
@@ -83,7 +82,7 @@ class App extends Component {
                     />
                     <Route path="/matching_result"
                         render={(props) => (
-                            <CounterProfile
+                            <CounterPlayer
                                 {...props}
                             />
                         )} 
