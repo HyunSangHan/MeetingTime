@@ -1,6 +1,10 @@
 
 .container{
     background-color : #4c4c4c;
+    .no-matching{
+        color: white;
+        font-size: 40px;
+    }
     .app-box {
         display: flex;
         flex-direction: column;

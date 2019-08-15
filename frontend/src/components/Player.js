@@ -61,7 +61,7 @@ class Player extends Component {
                            />
                     }
                     {action === "counter_user"
-                        && !is_counterProfile && "현재 매칭된 상대가 없습니다."
+                        && !is_counterProfile && <p className="no-matching">"현재 매칭된 상대가 없습니다."</p>
                     }
                 </div>
 

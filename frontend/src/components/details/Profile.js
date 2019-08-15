@@ -160,6 +160,8 @@ class Profile extends Component {
                     className="button"
                 />
             </form>
+            <br/>
+            <h3 className="update-time">{my_profile.natural_time ? " 프로필 최종 수정 시간 : " + my_profile.natural_time : null}</h3>
             <FooterScrollable/>
         </div>
         );
