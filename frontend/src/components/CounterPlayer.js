@@ -24,45 +24,45 @@ class CounterPlayer extends Component {
 
     }
 
-    _handleGreenLight = (event) =>{
+    handleGreenLight = (event) =>{
         const { PlayerActions, counter_profile } = this.props;
         const { is_greenlight_on_male, is_greenlight_on_female } = this.state;
         
-        if (is_greenlight_on_male === false && counter_profile.is_male === false){
+        if (!is_greenlight_on_male && !counter_profile.is_male){
             PlayerActions.handleGreenLightOn({ value1 : true });
             this.setState({ is_greenlight_on_male : true }); 
             
-        } else if (is_greenlight_on_female === false && counter_profile.is_male === true){
+        } else if (!is_greenlight_on_female && counter_profile.is_male){
             PlayerActions.handleGreenLightOn({ value2 : true });
             this.setState({ is_greenlight_on_female: true });
 
-        } else if (is_greenlight_on_male === true && counter_profile.is_male === false){
+        } else if (is_greenlight_on_male && !counter_profile.is_male){
             PlayerActions.handleGreenLightOff({ value1: false });
             this.setState({ is_greenlight_on_male: false });
             
-        } else if (is_greenlight_on_female === true && counter_profile.is_male === true){
+        } else if (is_greenlight_on_female && counter_profile.is_male){
             PlayerActions.handleGreenLightOff({ value2: false });
             this.setState({ is_greenlight_on_female: false });
         }
     };
 
-    _handleGift = (event) => {
+    handleGift = (event) => {
         const { PlayerActions, counter_profile } = this.props;
         const { is_gift_on_male, is_gift_on_female } = this.state;
 
-        if (is_gift_on_male === false && counter_profile.is_male === false) {
+        if (!is_gift_on_male && !counter_profile.is_male) {
             PlayerActions.handleGiftOn({ value1: true });
             this.setState({ is_gift_on_male: true });
 
-        } else if (is_gift_on_female === false && counter_profile.is_male === true) {
+        } else if (!is_gift_on_female && counter_profile.is_male) {
             PlayerActions.handleGiftOn({ value2: true });
             this.setState({ is_gift_on_female: true });
 
-        } else if (is_gift_on_male === true && counter_profile.is_male === false) {
+        } else if (is_gift_on_male && !counter_profile.is_male) {
             PlayerActions.handleGiftOff({ value1: false });
             this.setState({ is_gift_on_male: false });
 
-        } else if (is_gift_on_female === true && counter_profile.is_male === true) {
+        } else if (is_gift_on_female && counter_profile.is_male) {
             PlayerActions.handleGiftOff({ value2: false });
             this.setState({ is_gift_on_female: false });
         }
@@ -97,7 +97,7 @@ class CounterPlayer extends Component {
                 {!counter_profile.is_male ? 
                 <div  className="action-item">
                     그린라이트 : 
-                    <span className="icon" onClick={this._handleGreenLight}>                    
+                    <span className="icon" onClick={this.handleGreenLight}>                    
                         {is_greenlight_on_male &&
                             <MaterialIcon icon="favorite" fontSize="200px" color="#0b6623" />
                         }
@@ -107,7 +107,7 @@ class CounterPlayer extends Component {
                     </span>
                     
                     안주쏘기 :
-                    <span className="icon" onClick={this._handleGift}>
+                    <span className="icon" onClick={this.handleGift}>
                         {is_gift_on_male &&
                             <MaterialIcon icon="local_bar" fontSize="200px" color="orange" />
                         }
@@ -119,7 +119,7 @@ class CounterPlayer extends Component {
                 :
                 <div className="action-item">
                     그린라이트 :
-                    <span className="icon" onClick={this._handleGreenLight}>
+                    <span className="icon" onClick={this.handleGreenLight}>
                         {is_greenlight_on_female &&
                             <MaterialIcon icon="favorite" fontSize="200px" color="#0b6623" />
                         }
@@ -129,7 +129,7 @@ class CounterPlayer extends Component {
                     </span>
                     
                     안주쏘기 :
-                    <span className="icon" onClick={this._handleGift}>
+                    <span className="icon" onClick={this.handleGift}>
                         {is_gift_on_female &&
                             <MaterialIcon icon="local_bar" fontSize="200px" color="orange" />
                         }
