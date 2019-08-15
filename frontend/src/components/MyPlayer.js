@@ -26,12 +26,13 @@ class MyPlayer extends Component {
                             <li className="list-item">연령대 : {joined_user.profile.age_range ? joined_user.profile.age_range + "대" : "몰라요"}</li>
                             <li className="list-item">회사명 : {joined_user.profile.company.name}</li>
                             <li className="list-item">팀소개 : {joined_user.profile.team_introduce}</li>
-                            <li className="list-item">최종 로그인 시간 : {joined_user.profile.last_login_at}</li>
                         </ul>
                     </div>
+                    <br/>
                     <Link to="/profile" className="update">
                         프로필 수정하기
                     </Link>
+                    <h3 className="update-time">{!joined_user.profile.natural_time === null ? " 최종 수정 : " + joined_user.profile.natural_time : "null"}</h3>
                 </span>
                 <span>
                     <div className="column">

@@ -5,7 +5,8 @@ import "../../css/profile.scss";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import Textarea from "react-textarea-autosize";
-import { post, patch } from "axios";
+import { post } from "axios";
+import { Link } from 'react-router-dom';
 
 //import EditPW from "./EditPW";
 
@@ -154,14 +155,24 @@ class Profile extends Component {
                 
                     </tbody>
                 </table>
-                <input
-                    type="submit"
-                    value="수정완료"
-                    className="button"
-                />
+                <span className="buttons">
+                    <Link to="/matching" >
+                        <button
+                            type="button"
+                            className="go-back"
+                        >
+                        돌아가기
+                        </button>
+                    </Link>
+                    <input
+                        type="submit"
+                        value="수정완료"
+                        className="button"
+                    />
+                </span>
             </form>
             <br/>
-            <h3 className="update-time">{!my_profile.natural_time === null ? " 프로필 최종 수정 시간 : " + my_profile.natural_time : "null"}</h3>
+            <h3 className="update-time">{!my_profile.natural_time === null ? " 최종 수정 : " + my_profile.natural_time : "null"}</h3>
             <FooterScrollable/>
         </div>
         );
