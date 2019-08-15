@@ -28,20 +28,20 @@ class Profile extends Component {
     }
 
 
-    _handleInputChange = event => {
+    handleInputChange = event => {
         const { target: { value, name } } = event;
         this.setState({
             [name]: value
         });
     };
 
-    _handleImageChange = event => {
+    handleImageChange = event => {
         this.setState ({
             image_value: event.target.files[0]
         })
     }
 
-    _handleSubmit = event => {
+    handleSubmit = event => {
         const { MyProfileActions } = this.props;
         const { age_value, company_value, team_intro_value, image_value } = this.state;
         event.preventDefault();
@@ -86,7 +86,7 @@ class Profile extends Component {
 
                 <form
                     className="form"
-                    onSubmit={this._handleSubmit}
+                    onSubmit={this.handleSubmit}
                     method="patch"
                     encType="multipart/form-data"
                 >       
@@ -96,7 +96,7 @@ class Profile extends Component {
                         <td className="image-uploader">
                             <input 
                                 type="file"
-                                onChange={this._handleImageChange}
+                                onChange={this.handleImageChange}
                                 name="image_value"
                                 className="image-uploader"
                             />
@@ -117,7 +117,7 @@ class Profile extends Component {
                             type="number"
                             placeholder="나이를 입력해주세요"
                             value={this.state.age_value}
-                            onChange={this._handleInputChange}
+                            onChange={this.handleInputChange}
                             name="age_value"
                             className="age-form"
                         />
@@ -126,7 +126,7 @@ class Profile extends Component {
                     <tr>
                         <td>회사 :</td>
                         <td>
-                            <select name="company_value" value={this.state.company_value} onChange={this._handleInputChange}>
+                            <select name="company_value" value={this.state.company_value} onChange={this.handleInputChange}>
                                 <option>삼성전자</option>
                                 <option>애플</option>   
                                 <option>구글</option>
@@ -146,7 +146,7 @@ class Profile extends Component {
                                 type="text"
                                 placeholder="팀 소개를 입력해주세요"
                                 value={this.state.team_intro_value}
-                                onChange={this._handleInputChange}
+                                onChange={this.handleInputChange}
                                 className="text-input"
                                 name="team_intro_value"
                             />
