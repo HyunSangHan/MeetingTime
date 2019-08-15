@@ -73,6 +73,7 @@ class App extends Component {
                         render={(props) => (
                             <Profile
                                 {...props}
+                                my_profile={my_profile}
                             />
                         )} />
 

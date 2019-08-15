@@ -19,7 +19,7 @@ class CounterPlayer extends Component {
             <div>
                 {/* <h3>당신의 {current_matching.trial_time} 번째 매칭상대</h3> */}
                 <img src={counter_profile.image || require("../images/noPhoto.jpg")} 
-                     alt={counter_profile.user.username}/>
+                    alt={counter_profile.user.username}/>
                 <div className="information">
                     <div>이름 : {counter_profile.user.username}</div>
                     <div>연령대 : {counter_profile.age_range}</div>

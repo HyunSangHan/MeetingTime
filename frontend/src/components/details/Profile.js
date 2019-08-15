@@ -32,7 +32,7 @@ class Profile extends Component {
                                     </FormGroup>
                                     <FormGroup>
                                         <Label for="nickname">닉네임</Label>
-                                        <Input type="text" name="nickname" id="nickname" value={this.props.user.nickname} />
+                                        <Input type="text" name="nickname" id="nickname" value={this.props.my_profile.user.username} />
                                     </FormGroup>
                                     </div>
                                     <div>
@@ -59,12 +59,8 @@ class Profile extends Component {
                                         </Input>
                                     </FormGroup>
                                     <FormGroup>
-                                        <Label for="phone">대표 연락처</Label>
-                                        <Input type="text" name="phone" id="phone" value={this.props.user.phone_number} />
-                                    </FormGroup>
-                                    <FormGroup>
                                         <Label for="team_detail">팀 소개</Label>
-                                        <Input type="textarea" rows="4" name="team_detail" id="team_detail" value={this.props.user.team_detail} />
+                                        <Input type="textarea" rows="4" name="team_detail" id="team_detail" value={this.props.my_profile.team_introduce} />
                                     </FormGroup>
                                     </div>
                                     <Button>반영하기</Button>
