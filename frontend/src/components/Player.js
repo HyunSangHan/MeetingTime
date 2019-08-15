@@ -37,7 +37,6 @@ class Player extends Component {
 
     componentDidMount() {
         const { JoinActions, PlayerActions, CurrentMatchingActions } = this.props;
-        console.log("매칭 새로받기 성공");
         CurrentMatchingActions.getCurrentMatching();
         JoinActions.getJoinedUser();
         PlayerActions.getCounterProfile();
@@ -46,7 +45,6 @@ class Player extends Component {
     render(){
         const{ action } = this.state;
         const { current_matching, joined_user, is_counter_profile } = this.props;
-        console.log(current_matching);
         return (
             <div className="container">
                 <div className="white-box form-box">
