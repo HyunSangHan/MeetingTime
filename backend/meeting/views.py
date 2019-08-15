@@ -140,7 +140,7 @@ class Email(APIView):
         )
         Validation.objects.create(user=request.user, code=code)
 
-        return Response({1: "working"}, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED)
 
 
 class SentValidation(APIView):

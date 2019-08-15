@@ -12,16 +12,10 @@ const initialState = Map({
 });
 
 export default handleActions({
-    [SEND_EMAIL]: (state) =>    {
-        return state.set('sent', true);
-    },
-    // ...pender({
-    //     type: SEND_EMAIL,
-    //     onSuccess: (state) => state.set('sent', true),
-    //     onFailure: (state) => state.set('sent', true),
-    //     onError: (state) => state.set('sent', true),
-    //     onPending: (state) => state.set('sent', true),
-    // }),
+    ...pender({
+        type: SEND_EMAIL,
+        onSuccess: (state) => state.set('sent', true),
+    }),
     ...pender({
         type: VALIDATE_EMAIL,
         onSuccess: (state) => state.set('validated', true),

@@ -36,7 +36,7 @@ urlpatterns = [
     path('profile/', views.Profile.as_view()),
     path('current_matching/', views.CurrentMatching.as_view()),
     path('email/', views.Email.as_view()),
-    path('validate/', views.SentValidation.as_view())
+    path('validate/', views.SentValidation.as_view()),
     path('company/', views.Company.as_view()),
     path('current_matching/', views.CurrentMatching.as_view())
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

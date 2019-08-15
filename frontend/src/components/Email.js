@@ -3,7 +3,7 @@ import '../css/Body.css';
 import '../App.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as Actions from './../modules/email';
+import * as actions from './../modules/email';
 
 class Email extends Component {
 
@@ -25,6 +25,7 @@ class Email extends Component {
     }
 
     onSend() {
+        const { Actions } = this.props;
         const { emailId, companyEmail } = this.state;
         Actions.sendEmail({
             email: emailId + companyEmail
@@ -32,6 +33,7 @@ class Email extends Component {
     }
 
     onValidate() {
+        const { Actions } = this.props;
         const { code } = this.state;
         Actions.validateEmail({
             code: code
@@ -59,7 +61,10 @@ class Email extends Component {
                 <Fragment>
                     <input onChange={(e)=> {this.setState({code: e.target.value})}}></input>
                     <button type="submit" onClick={e => this.onValidate(e)}>검사</button>
-                    {this.props.validated}
+                    {this.props.validated ?
+                        (<div>인증되었습니다</div>)
+                        : (<div>인증되지 않았습니다</div>)
+                    }
                 </Fragment>
             )
         }
@@ -69,7 +74,7 @@ class Email extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
-    JoinActions: bindActionCreators(Actions, dispatch),
+    Actions: bindActionCreators(actions, dispatch),
 });
 
 const mapStateToProps = (state) => ({

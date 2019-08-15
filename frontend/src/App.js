@@ -4,7 +4,6 @@ import './App.css';
 import Main from "./components/Main"
 import Profile from "./components/details/Profile";
 import Initpage from "./components/Initpage";
-import Result from "./components/details/Result";
 import Email from "./components/Email";
 import CounterPlayer from "./components/CounterPlayer";
 import { BrowserRouter, Route } from 'react-router-dom';
