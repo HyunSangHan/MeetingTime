@@ -6,12 +6,9 @@ import { pender } from 'redux-pender';
 
 const CURRENT_MATCHING = "CURRENT_MATCHING";
 
-
-//counter_profile 받아오기 + 그린라이트 액션
-
 const initialState = Map({
     is_current_matching: false,
-    is_matched: false
+    current_matching: {},
 });
 
 console.log(initialState);

@@ -4,6 +4,9 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 from allauth.account.signals import user_signed_up
+from django.contrib.humanize.templatetags.humanize import naturaltime
+
+
 
 class Meeting(models.Model):
     open_time = models.DateTimeField()
@@ -96,11 +99,15 @@ class Profile(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     last_login_at = models.DateTimeField(default=timezone.now)
     team_introduce = models.TextField(blank=True, default="")
-    last_intro_modified_at = models.DateTimeField(null=True, blank=True)
-    last_img_modified_at = models.DateTimeField(null=True, blank=True)
+    last_intro_modified_at = models.DateTimeField(blank=True, null=True)
+    last_img_modified_at = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return self.user.username
+
+    @property
+    def natural_time(self):
+        return naturaltime(self.last_intro_modified_at)
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):

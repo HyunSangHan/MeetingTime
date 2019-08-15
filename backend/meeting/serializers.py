@@ -39,7 +39,17 @@ class JoinSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = '__all__'
+        fields = (
+            "image",
+            "is_male",
+            "age_range",
+            "created_at",
+            "last_login_at",
+            "team_introduce",
+            "last_img_modified_at",
+            "natural_time"
+            #"last_intro_modified_at"
+        )
     def to_representation(self, instance):
         response = super().to_representation(instance)
         response['user'] = UserSerializer(instance.user).data
