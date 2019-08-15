@@ -13,6 +13,7 @@ import * as joinActions from '../modules/join';
 import * as currentMeetingActions from '../modules/current_meeting';
 import * as matchingActions from '../modules/matching';
 import * as playerActions from '../modules/player';
+import * as myProfileActions from '../modules/my_profile';
 import axios from 'axios';
 
 
@@ -98,8 +99,6 @@ class Main extends Component {
             meetingWeek = ""
         }
 
-        // console.log(joined_user.profile)
-
         return (
             <div className={"App"}>
                 {
@@ -163,11 +162,13 @@ const mapDispatchToProps = (dispatch) => ({
     CurrentMeetingActions: bindActionCreators(currentMeetingActions, dispatch),
     MatchingActions: bindActionCreators(matchingActions, dispatch),
     PlayerActions: bindActionCreators(playerActions, dispatch),
+    MyProfileActions: bindActionCreators(myProfileActions, dispatch),
 });
 
 const mapStateToProps = (state) => ({
     is_joined_popup_on: state.join.get('is_joined_popup_on'),
     is_joined_already: state.join.get('is_joined_already'),
+    is_login_already: state.my_profile.get('is_login_already'),
     is_login_already: state.my_profile.get('is_login_already'),
     joined_user: state.join.get('joined_user'),
     current_meeting: state.current_meeting.get('current_meeting'),

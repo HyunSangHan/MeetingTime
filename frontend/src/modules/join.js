@@ -11,7 +11,28 @@ const GET_JOINED_USER = `GET_JOINED_USER`;
 const initialState = Map({
     is_joined_popup_on: false,
     is_joined_already: false,
-    joined_user: {},
+    joined_user: {
+        profile: {
+            id: null,
+            image: null,
+            is_male: null,
+            age_range: null,
+            created_at: null,
+            last_login_at: null,
+            team_introduce: "",
+            last_intro_modified_at: null,
+            last_img_modified_at: null,
+            user: {
+                username: ""
+            },
+            company: {
+                name: ""
+            }
+        },
+        rank: null,
+        is_matched: null,
+        meeting: null
+    },
 }); 
 
 export default handleActions({

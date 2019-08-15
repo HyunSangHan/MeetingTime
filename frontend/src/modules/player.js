@@ -14,7 +14,23 @@ const GREEN_LIGHT_OFF = "GREEN_LIGHT_OFF";
 const initialState = Map({
     is_counterProfile: false,
     is_greenlight_on : false,
-    counter_profile: {},
+    counter_profile: {
+        age_range: null,
+        company: {
+            name: null
+        },
+        created_at: null,
+        id: 21,
+        image: null,
+        is_male: false,
+        last_img_modified_at: null,
+        last_intro_modified_at: null,
+        last_login_at: null,
+        team_introduce: null,
+        user: {
+            username: null
+        }
+    },
 }); 
 
 export default handleActions({

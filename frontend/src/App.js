@@ -56,6 +56,7 @@ class App extends Component {
                                 <Initpage
                                     {...props}
                                     is_login_already={is_login_already}
+                                    my_profile={my_profile}
                                 />
                             )}
                         />
