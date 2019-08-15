@@ -1,14 +1,17 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import './App.css';
 import Main from "./components/Main"
 import Profile from "./components/details/Profile";
 import Initpage from "./components/Initpage";
 import Result from "./components/details/Result";
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as myProfileActions from './modules/my_profile';
+import * as currentMeetingActions from './modules/current_meeting';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -19,7 +22,8 @@ class App extends Component {
         super(props);
 
         this.state = {
-            user: {
+            
+            user: {//삭제 요망
                 nickname: "data_닉네임",
                 company: "data_회사명",
                 img_url: "/images/exampleProfile.jpeg",
@@ -32,7 +36,7 @@ class App extends Component {
                 team_detail: "data_팀소개문구_blah blah~ 이건 테스트입니다. 우리 팀은 평범하지 않습니다. 테스트입니다. 테스트입니다. blah blah blah blah 테스트다 블라 blah"
                 //나중에 유저의 모델 내 필드 개수와 맞춰야 할 것임
             },
-            ex_user: {
+            ex_user: {//삭제 요망
                 nickname: "data_상대닉네임",
                 company: "data_상대회사명",
                 img_url: "/images/counterProfile.jpeg",
@@ -42,35 +46,56 @@ class App extends Component {
     }
 
     componentDidMount () {
-        const { MyProfileActions } = this.props;
+        const { MyProfileActions, CurrentMeetingActions } = this.props;
         MyProfileActions.getMyProfile();
+        CurrentMeetingActions.getCurrentMeeting();
+
+        // //원본
+        // console.log(new Date()) 
+        // console.log("2019-09-09T08:25:39+09:00")
+
+        // //스트링용
+        // console.log(Date(new Date().toLocaleString()))
+        // console.log(new Date("2019-09-09T08:25:39+09:00"))
+
+        // //요일뽑기
+        // console.log(this.getInputDayLabel(Date(new Date().toLocaleString())))
+        // console.log(this.getInputDayLabel("2019-09-09T08:25:39+09:00"))
+
+        // //부등호 비교용
+        // console.log(new Date().getTime()) 
+        // console.log(Date.parse("2019-09-09T08:25:39+09:00"))
+
     }
 
     render() {
-        const { is_login_already } = this.props;
+        const { is_login_already, current_meeting, my_profile } = this.props;
+        console.log(my_profile)
 
         return (
             <BrowserRouter>
                 <div className="frame">
 
-                { is_login_already
-                    ? (
                         <Route exact path="/"
+                            render={(props) => (
+                                <Initpage
+                                    {...props}
+                                    is_login_already={is_login_already}
+                                />
+                            )}
+                        />
+
+                        <Route path="/matching"
                         render={(props) => (
                             <Main
                                 {...props}
-                                user={this.state.user}
-                                ex_user={this.state.ex_user}
+                                my_profile={my_profile}
+                                user={this.state.user} //삭제 요망
+                                ex_user={this.state.ex_user} //삭제 요망
                             />
                         )}
                     />
-                    ) : (
-                        <Route exact path="/"
-                        render={(props) => (
-                            <Initpage/>
-                        )}
-                    />
-                    ) }
+
 
                     <Route path="/profile"
                         render={(props) => (
@@ -97,10 +122,13 @@ class App extends Component {
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     MyProfileActions: bindActionCreators(myProfileActions, dispatch),
+    CurrentMeetingActions: bindActionCreators(currentMeetingActions, dispatch),
 });
 
 const mapStateToProps = (state) => ({
     is_login_already: state.my_profile.get('is_login_already'),
+    my_profile: state.my_profile.get('my_profile'),
+    current_meeting: state.current_meeting.get('current_meeting'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

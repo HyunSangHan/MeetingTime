@@ -7,6 +7,7 @@ from allauth.account.signals import user_signed_up
 
 class Meeting(models.Model):
     open_time = models.DateTimeField()
+    close_time = models.DateTimeField()
     first_shuffle_time = models.DateTimeField()
     second_shuffle_time = models.DateTimeField()
     third_shuffle_time = models.DateTimeField()
@@ -32,13 +33,15 @@ class Meeting(models.Model):
             open_time = timezone.now()
 
             # Meeting
-            first_shuffle_time = timezone.now()+timedelta(days=i)
-            second_shuffle_time = timezone.now()+timedelta(days=i*2)
-            third_shuffle_time = timezone.now()+timedelta(days=i*3)
-            meeting_time = timezone.now()+timedelta(days=i*4)
+            close_time = timezone.now()+timedelta(days=i)
+            first_shuffle_time = timezone.now()+timedelta(days=i*2)
+            second_shuffle_time = timezone.now()+timedelta(days=i*3)
+            third_shuffle_time = timezone.now()+timedelta(days=i*4)
+            meeting_time = timezone.now()+timedelta(days=i*10)
             location = f'봉천{i}동'
             Meeting.objects.create(
                 open_time=open_time,
+                close_time=close_time,
                 first_shuffle_time=first_shuffle_time,
                 second_shuffle_time=second_shuffle_time,
                 third_shuffle_time=third_shuffle_time,

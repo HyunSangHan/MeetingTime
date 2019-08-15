@@ -7,6 +7,7 @@ const GET_PROFILE = `GET_PROFILE`;
 
 const initialState = Map({
     is_login_already: false,
+    my_profile: {},
 }); 
 
 export default handleActions({
