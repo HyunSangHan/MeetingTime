@@ -80,12 +80,14 @@ class Profile extends Component {
                 </div>
 
                 <input
+                    style={{display: 'none'}}
                     type="file"
                     onChange={this.handleImageChange}
+                    ref={fileInput => this.fileInput = fileInput}
                     name="image_value"
                     className="image-uploader"
                 />
-                
+                <button onClick={() => this.fileInput.click()}>사진 선택</button>
                 <button onClick={this.handleImageSubmit}>사진 업로드</button>
 
                 <form
