@@ -70,7 +70,7 @@ class CounterPlayer extends Component {
     
     
     render() {
-        const { counter_profile, current_matching, handleGreenLight } = this.props;  
+        const { counter_profile, current_matching } = this.props;  
         const { is_greenlight_on_male, is_greenlight_on_female, is_gift_on_male, is_gift_on_female } = this.state;
 
         return (
@@ -154,7 +154,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
     counter_profile: state.player.get('counter_profile'),
     is_greenlight_on: state.player.get('is_greenlight_on'),
-    is_counterProfile: state.player.get('is_counterProfile'),
+    is_counter_profile: state.player.get('is_counter_profile'),
     
 })
 

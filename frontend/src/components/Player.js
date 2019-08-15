@@ -41,7 +41,7 @@ class Player extends Component {
         
         JoinActions.getJoinedUser();
         MatchingActions.getCurrentMatching();
-        if (!this.props.is_counterProfile){
+        if (!this.props.is_counter_profile){
             PlayerActions.getCounterProfile();
         }else {
             this.setState({
@@ -51,7 +51,7 @@ class Player extends Component {
     }
 
     componentWillReceiveProps = nextProps => {
-        if (nextProps.is_counterProfile) {
+        if (nextProps.is_counter_profile) {
             this.setState({
                 loading: false
             });
@@ -60,7 +60,7 @@ class Player extends Component {
 
     render(){
         const{ action } = this.state;
-        const {  current_matching, joined_user, is_counterProfile } = this.props;
+        const {  current_matching, joined_user, is_counter_profile } = this.props;
         console.log(this.props);
         return (
             <div className="container">
@@ -71,13 +71,13 @@ class Player extends Component {
                                           />
                     }
                     {action === "counter_user" 
-                        && is_counterProfile 
+                        && is_counter_profile 
                         && <CounterPlayer 
                             current_matching={current_matching}
                            />
                     }
                     {action === "counter_user"
-                        && !is_counterProfile && <p className="no-matching">"현재 매칭된 상대가 없습니다."</p>
+                        && !is_counter_profile && <p className="no-matching">"현재 매칭된 상대가 없습니다."</p>
                     }
                 </div>
 
@@ -117,7 +117,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
     joined_user: state.join.get('joined_user'),
     current_matching: state.matching.get('current_matching'),
-    is_counterProfile: state.player.get('is_counterProfile'),
+    is_counter_profile: state.player.get('is_counter_profile'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

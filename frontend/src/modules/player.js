@@ -13,7 +13,7 @@ const GIFT_OFF = "GIFT_OFF";
 //counter_profile 받아오기 + 그린라이트 액션
 
 const initialState = Map({
-    is_counterProfile: false,
+    is_counter_profile: false,
 }); 
 
 export default handleActions({
@@ -36,8 +36,8 @@ export default handleActions({
     ...pender({
         type: COUNTER_PROFILE,
         onSuccess: (state, action) => state.set('counter_profile', action.payload.data)
-            .set('is_counterProfile', true),
-        onFailure: (state, action) => state.set('is_counterProfile', false)
+            .set('is_counter_profile', true),
+        onFailure: (state, action) => state.set('is_counter_profile', false)
     }),
 }, initialState);
 

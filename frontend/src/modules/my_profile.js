@@ -47,9 +47,9 @@ export const ProfileUpdate = createAction(
         method: "patch",
         url: '/profile/',
         data: {
-            age_range: payload.ageValue,
-            image: payload.imageValue,
-            team_introduce : payload.team_introValue,
+            age_range: payload.age_value,
+            image: payload.image_value,
+            team_introduce : payload.team_intro_value,
         }
     })
     .then((response) => {
@@ -68,7 +68,7 @@ export const CompanyUpdate = createAction(
         method: "patch",
         url: "/company/",
         data: {
-            name: payload.companyValue,
+            name: payload.company_value,
         }
     })
     .then((response) => {
