@@ -18,24 +18,45 @@ def logout(request):
     auth.logout(request)
     return redirect('http://localhost:3000/')
 
+
+def success_matching():
+    current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+    matchings = Matching.objects.filter(joined_male__meeting=current_meeting)
+    for match in matchings:
+        if match.is_greenlight_male and match.is_greenlight_female and (not match.joined_male.is_matched or not match.joined_female.is_matched):
+                kakao_chatting = KakaoChatting.objects.filter(is_used=False).first()
+
+                match.joined_male.is_matched = True
+                match.joined_male.save()
+                match.joined_female.is_matched = True
+                match.joined_female.save()
+                match.kakao_chattingroom = kakao_chatting
+                match.save()
+                kakao_chatting.is_used = True
+                kakao_chatting.save()
+
+
 class KakaoLogin(SocialLoginView):
     adapter_class = KakaoOAuth2Adapter
+
 
 class MeetingInfoView(viewsets.ModelViewSet):
     serializer_class = MeetingSerializer
     queryset = Meeting.objects.all()
 
+
 class CurrentMatching(APIView):
     current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
 
     if timezone.now() < current_meeting.first_shuffle_time:
-        trial_time = 0
-    elif timezone.now() < current_meeting.second_shuffle_time:
         trial_time = 1
-    elif timezone.now() < current_meeting.third_shuffle_time:
+    elif timezone.now() < current_meeting.second_shuffle_time:
         trial_time = 2
-    else:
+    elif timezone.now() < current_meeting.third_shuffle_time:
         trial_time = 3
+    else:
+        trial_time = 4
+
 
     def get(self, request, format=None):
         my_profile = request.user.profile
@@ -52,8 +73,8 @@ class CurrentMatching(APIView):
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+
     def post(self, request, format=None):
-    
         cutline = self.current_meeting.cutline
         joined_users_male = list(JoinedUser.objects.filter(meeting=self.current_meeting, is_matched=False, profile__is_male=True, rank__lte=cutline))
         joined_users_female = list(JoinedUser.objects.filter(meeting=self.current_meeting, is_matched=False, profile__is_male=False, rank__lte=cutline))
@@ -79,13 +100,30 @@ class CurrentMatching(APIView):
                         joined_users_female[numbers[0]].save()
                         numbers.pop(0)
                         break
+                    elif runned == 9:
+                        Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
+                        joined_users_male[i].already_met_two = joined_users_female[numbers[0]].rank
+                        joined_users_female[numbers[0]].already_met_two = joined_users_male[i].rank
+                        joined_users_male[i].save()
+                        joined_users_female[numbers[0]].save()
+                        numbers.pop(0)
+                        break
                     else:
-                        random.shuffle(numbers)
-                        runned += 1
+                        random.shuffle(numbers)                            
+                        runned += 1    
+                        
             elif request.data["trial_time"] == 3:
                 runned = 1
                 while runned < 10:
                     if joined_users_male[i].already_met_one != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_two != joined_users_female[numbers[0]].rank:
+                        Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
+                        joined_users_male[i].already_met_three = joined_users_female[numbers[0]].rank
+                        joined_users_female[numbers[0]].already_met_three = joined_users_male[i].rank
+                        joined_users_male[i].save()
+                        joined_users_female[numbers[0]].save()
+                        numbers.pop(0)
+                        break
+                    elif runned == 9:
                         Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
                         joined_users_male[i].already_met_three = joined_users_female[numbers[0]].rank
                         joined_users_female[numbers[0]].already_met_three = joined_users_male[i].rank
@@ -103,6 +141,10 @@ class CurrentMatching(APIView):
                         Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
                         numbers.pop(0)
                         break
+                    elif runned == 9:
+                        Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
+                        numbers.pop(0)
+                        break
                     else:
                         random.shuffle(numbers)
                         runned += 1
@@ -114,7 +156,7 @@ class CurrentMatching(APIView):
         else:
             return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
 
-        
+
     def patch(self, request, format=None):
 
         my_profile = request.user.profile
@@ -124,23 +166,10 @@ class CurrentMatching(APIView):
         else:
             queryset = Matching.objects.filter(joined_female=joined_user).last()
         serializer = MatchingSerializer(queryset, data=request.data, partial=True)
-
-
+        
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-
-
-        # if serializer.is_greenlight_male and serializer.is_greenlight_female:
-
-        #     kakao_chattingroom_url = KakaoChatting.objects.filter(is_used=False).first()
-        #     kakao_chattingroom_url.is_used = True
-        #     kakao_chattingroom_url.save()
-        #     successful_matching_data = {
-        #         "kakao_chattingroom": kakao_chattingroom_url
-        #     # kakao 채팅방을 최대 50개를 준비해놓고 ChattingRoom 이런 model에 저장해놓은 다음 filter 해서 할당되지 않은 첫번째
-        #     # url을 할당하는 것도 괜찮을 것 같네요 (50개는 우리가 매주 admin으로 입력해놓고)
-        #     }
 
 
     def delete(self, request, format=None):
@@ -149,6 +178,7 @@ class CurrentMatching(APIView):
         else:
             Matching.objects.all().delete()
         return Response(status=status.HTTP_202_ACCEPTED)
+
 
 class CurrentMeeting(APIView):
     def get(self, request, format=None):
@@ -161,33 +191,33 @@ class CurrentMeeting(APIView):
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+
     def post(self, request, format=None):
         serializer = MeetingSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
         # 프론트에서 Join 시간이 종료되면 호출되며 cutline을 설정
     def patch(self, request, format=None):
         # current meeting 
-        queryset = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
-        
+        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+
         # 남, 여 각각 미팅에 참여한 인원
         joined_male_last_rank = JoinedUser.objects.filter(profile__is_male=True).order_by('rank').last().rank
         joined_female_last_rank = JoinedUser.objects.filter(profile__is_male=False).order_by('rank').last().rank
-
         cutline = joined_male_last_rank if joined_male_last_rank > joined_female_last_rank else joined_female_last_rank
-        
 
-        # Serializer가 필요하지 않아보이므로 우선 queryset.save()로 구현 
-        # 추후 Serializer로 통일하는 것이 좋을 것으로 판단되면 수정
         if cutline is not None:
-            queryset.cutline = cutline
-            queryset.save()
+            current_meeting.cutline = cutline
+            current_meeting.save()
             return Response(status=status.HTTP_202_ACCEPTED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 class Join(APIView):
     current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
@@ -200,6 +230,7 @@ class Join(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
 
     def post(self, request, format=None):
         my_profile = request.user.profile
@@ -220,6 +251,7 @@ class Join(APIView):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
     def patch(self, request, format=None):
         my_profile = request.user.profile
         joined_user = JoinedUser.objects.filter(profile=my_profile, meeting=self.current_meeting).first()
@@ -234,14 +266,23 @@ class Join(APIView):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
     def delete(self, request, format=None):
         my_profile = request.user.profile
-        joined_user = JoinedUser.objects.filter(profile=my_profile, meeting=self.current_meeting).first()
-        if my_profile is not None and self.current_meeting is not None and joined_user is not None:
-            joined_user.delete()
+        user2delete = JoinedUser.objects.get(profile=my_profile, meeting=self.current_meeting)
+        # 취소자보다 rank 높은 모든 사람들 
+        after_joined_users = JoinedUser.objects.filter(rank__gte=user2delete.rank, meeting=self.current_meeting, profile__is_male = my_profile.is_male)
+
+        if current_meeting.cutline is None:
+            for after_joined_user in after_joined_users:
+                after_joined_user.rank -= 1
+        
+        if my_profile is not None and self.current_meeting is not None and user2delete is not None:
+            user2delete.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 class CounterProfile(APIView):
     def get(self, request, format=None):
@@ -262,6 +303,7 @@ class CounterProfile(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
 
 class Profile(APIView):
     def get(self, request, format=None):
@@ -287,8 +329,23 @@ class Profile(APIView):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
     def delete(self, request, format=None):
-        if request.user.profile is not None:
+        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+        my_profile = request.user.profile
+        user2delete = JoinedUser.objects.get(profile=my_profile, meeting=current_meeting)
+
+        if user2delete is not None:
+            # 취소자보다 rank 높은 모든 사람들 
+            after_joined_users = JoinedUser.objects.filter(rank__gte=user2delete.rank, meeting=self.current_meeting, profile__is_male = my_profile.is_male)
+            if current_meeting.cutline is None:
+                for after_joined_user in after_joined_users:
+                    after_joined_user.rank -= 1
+        
+            if my_profile is not None and current_meeting is not None and user2delete is not None:
+                user2delete.delete()
+
+        if my_profile is not None:
             request.user.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
