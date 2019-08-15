@@ -5,7 +5,6 @@ import CounterPlayer from "./CounterPlayer";
 
 import * as joinActions from '../modules/join';
 import * as playerActions from '../modules/player';
-import * as matchingActions from '../modules/current_matching';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 
