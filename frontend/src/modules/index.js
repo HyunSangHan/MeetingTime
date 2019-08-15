@@ -7,6 +7,7 @@ import current_meeting from './current_meeting';
 import my_profile from './my_profile';
 import player from './player';
 import matching from "./matching";
+import email from "./email";
 
 export default combineReducers({
     pender: penderReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
     my_profile,
     player,
     matching,
+    email,
 });

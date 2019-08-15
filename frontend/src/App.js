@@ -5,6 +5,7 @@ import Main from "./components/Main"
 import Profile from "./components/details/Profile";
 import Initpage from "./components/Initpage";
 import Result from "./components/details/Result";
+import Email from "./components/Email";
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -76,22 +77,31 @@ class App extends Component {
             <BrowserRouter>
                 <div className="frame">
 
-                        <Route exact path="/"
-                            render={(props) => (
-                                <Initpage
-                                    {...props}
-                                    is_login_already={is_login_already}
-                                />
-                            )}
-                        />
+                    <Route exact path="/"
+                        render={(props) => (
+                            <Initpage
+                                {...props}
+                                is_login_already={is_login_already}
+                            />
+                        )}
+                    />
 
-                        <Route path="/matching"
+                    <Route path="/matching"
                         render={(props) => (
                             <Main
                                 {...props}
                                 my_profile={my_profile}
                                 user={this.state.user} //삭제 요망
                                 ex_user={this.state.ex_user} //삭제 요망
+                            />
+                        )}
+                    />
+
+                    <Route exact path="/email"
+                        render={(props) => (
+                            <Email
+                                {...props}
+                                is_login_already={is_login_already}
                             />
                         )}
                     />

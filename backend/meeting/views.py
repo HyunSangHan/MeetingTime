@@ -15,45 +15,42 @@ import json
 from django.shortcuts import redirect
 from django.core.mail import send_mail
 import random
-from rest_framework.decorators import api_view
 
 def logout(request):
     auth.logout(request)
     return redirect('http://localhost:3000/')
 
-@api_view(['GET', 'POST', ])
-def send_email(request):
-    # print(request.POST.json())
-    if request.method == 'POST':
-        Validation.get(user=user).delete()
+
+class Email(APIView):
+    def post(self, request, format=None):
+        try:
+            Validation.objects.get(user=request.user).delete()
+        except:
+            pass
         code = random.randrange(100000,999999)
         send_mail(
             '이메일 인증',
             str(code),
             'maeng9584@likelion.org',
-            [request.POST.get('email')],
+            # 발송자 이메일에는 일단 제 이메일을 넣어두었습니다.
+            [request.data["email"]],
             fail_silently=False,
         )
-        Validation.objects.create(user=User.objects.first(), code=code)
+        Validation.objects.create(user=request.user, code=code)
 
-        return Response(status=status.HTTP_201_CREATED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response({1: "working"}, status=status.HTTP_201_CREATED)
 
 
-@api_view(['GET', 'POST', ])
-def validate_email(request):
-    if request.method == 'POST':
-        if request.user.validation.code == int(request.POST.get('code')):
+class SentValidation(APIView):
+    def post(self, request, format=None):
+        if request.user.validation.code == int(request.data['code']):
             user = request.user
             user.profile.validated = True
             user.profile.save()
-            Validation.get(user=user).delete()
+            Validation.objects.get(user=user).delete()
             return Response(status=status.HTTP_202_ACCEPTED)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 def success_matching():
