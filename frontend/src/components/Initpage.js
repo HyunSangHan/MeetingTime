@@ -160,6 +160,7 @@ class Initpage extends Component {
             </div>
         );
     }
+    
 }
 
 

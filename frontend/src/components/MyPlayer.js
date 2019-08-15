@@ -13,18 +13,30 @@ class MyPlayer extends Component {
         const { my_profile } = this.props;
         return ( 
             <div className="container">
-                <img src={my_profile.image || require("../images/noPhoto.jpg")}
-                    alt={my_profile.user.username} />
-                <div className="information">
-                    <div>이름 : {my_profile.user.username}</div>
-                    <div>연령대 : {my_profile.age_range}</div>
-                    <div>회사명 : {my_profile.company.name}</div>
-                    <div>팀소개 : {my_profile.team_introduce}</div>
-                </div>
-
-                <Link to="/profile">
-                    프로필 수정하기
-                </Link>
+                <span>
+                    <div className="column">
+                        <img src={my_profile.image || require("../images/noPhoto.jpg")}
+                            alt={my_profile.user.username} 
+                            className="main-profile"
+                        />
+                        <ul className="info-list">
+                            <li className="list-item">이름 : {my_profile.user.username}</li>
+                            <li className="list-item">성별 : {my_profile.is_male ? "남" : "여"}</li>
+                            <li className="list-item">연령대 : {my_profile.age_range ? my_profile.age_range + "대" : "몰라요"}</li>
+                            <li className="list-item">회사명 : {my_profile.company.name}</li>
+                            <li className="list-item">팀소개 : {my_profile.team_introduce}</li>
+                        </ul>
+                    </div>
+                    <br/>
+                    <Link to="/profile" className="update">
+                        프로필 수정하기
+                    </Link>
+                    <h3 className="update-time">{!my_profile.natural_time === null ? " 최종 수정 : " + my_profile.natural_time : "null"}</h3>
+                </span>
+                <span>
+                    <div className="column">
+                    </div>
+                </span> 
             </div>
         )
     }

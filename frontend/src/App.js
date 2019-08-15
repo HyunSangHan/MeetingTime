@@ -4,6 +4,7 @@ import './App.css';
 import Main from "./components/Main"
 import Profile from "./components/details/Profile";
 import Initpage from "./components/Initpage";
+import CounterPlayer from "./components/CounterPlayer";
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,6 +12,7 @@ import * as myProfileActions from './modules/my_profile';
 import * as currentMeetingActions from './modules/current_meeting';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Loading from './components/Loading';
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -19,7 +21,10 @@ class App extends Component {
 
     constructor(props){
         super(props);
+
+        this.state = {
     }
+}
 
     componentDidMount () {
         const { MyProfileActions, CurrentMeetingActions } = this.props;
@@ -43,14 +48,13 @@ class App extends Component {
 
     }
 
+    
     render() {
         const { is_login_already, current_meeting, my_profile } = this.props;
-        console.log(my_profile)
-
+        
         return (
             <BrowserRouter>
                 <div className="frame">
-
                         <Route exact path="/"
                             render={(props) => (
                                 <Initpage
@@ -69,14 +73,21 @@ class App extends Component {
                             />
                         )}
                     />
-
                     <Route path="/profile"
                         render={(props) => (
                             <Profile
                                 {...props}
-                                my_profile={my_profile}
                             />
-                        )} />
+                        )} 
+                    />
+                    <Route path="/matching_result"
+                        render={(props) => (
+                            <CounterPlayer
+                                {...props}
+                            />
+                        )} 
+                    />
+                    {/*<Redirect from="/" to="/init" />*/}
 
                 </div>
             </BrowserRouter>

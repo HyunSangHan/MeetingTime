@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import "../css/player_styles.scss";
 import MyPlayer from "./MyPlayer";
 import CounterPlayer from "./CounterPlayer";
-import { bindActionCreators } from 'redux';
-import { connect } from "react-redux";
-
 
 class Player extends Component {
 
@@ -12,7 +9,7 @@ class Player extends Component {
         super(props);
         
         this.state = {
-            action: "user"
+            action: "user",
         }
     }
 
@@ -36,28 +33,29 @@ class Player extends Component {
 
     render(){
         const{ action } = this.state;
-        const { PlayerActions, current_matching, my_profile, counter_profile, is_counter_profile, is_greenlight_on } = this.props;
+        const { PlayerActions, current_matching, my_profile, counter_profile, is_counter_profile, is_greenlight_on, joined_user } = this.props;
         console.log(this.props);
         return (
             <div className="container">
                 <div className="white-box form-box">
                     {action === "user" && <MyPlayer
-                                            my_profile={my_profile}
                                             current_matching={current_matching} 
-                    />}
+                                            my_profile={my_profile}
+                                            />
+                    }
                     {action === "counter_user" 
                         && is_counter_profile 
-                        && <CounterPlayer 
-                            handleGreenLightOn={PlayerActions.handleGreenLightOn}
-                            handleGreenLightOff={PlayerActions.handleGreenLightOff}
-                            counter_profile={counter_profile}
-                            is_greenlight_on={is_greenlight_on}
-                            current_matching={current_matching}
-                    />}
+                        && <CounterPlayer
+                            />
+                    }
+                    {action === "counter_user"
+                        && !is_counter_profile && <p className="no-matching">"현재 매칭된 상대가 없습니다."</p>
+                    }
                 </div>
+
                 <div className="white-box">
-                    {action === "user" && (<p>
-                        매칭된 상대방을 정보를 확인하시겠습니까?{" "}
+                    {action === "user" && (<p className="change-player">
+                        매칭 상대의 정보를 확인하시겠습니까?{" "}
                         <span
                             className="change-link"
                             onClick={this.changeAction}
@@ -65,7 +63,7 @@ class Player extends Component {
                             상대방 프로필
                         </span>
                     </p>)}
-                    {action === "counter_user" && (<p>
+                    {action === "counter_user" && (<p className="change-player">
                         내 정보를 보시겠습니까?{" "}
                         <span
                             className="change-link"

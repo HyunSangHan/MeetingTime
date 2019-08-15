@@ -7,11 +7,12 @@ import MaterialIcon from 'material-icons-react';
 import { Link, Redirect } from 'react-router-dom';
 import Footer from "./Footer";
 import Player from "./Player";
+import Loading from "./Loading";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as joinActions from '../modules/join';
 import * as currentMeetingActions from '../modules/current_meeting';
-import * as matchingActions from '../modules/matching';
+import * as currentMatchingActions from "../modules/current_matching";
 import * as playerActions from '../modules/player';
 import * as myProfileActions from '../modules/my_profile';
 import axios from 'axios';
@@ -23,32 +24,38 @@ class Main extends Component {
 
         this.state = {
             time: 15,
+            loading: true
         }
         this.startTimer = this.startTimer.bind(this);
 
     }
 
     componentDidMount() {
-        const { JoinActions, MatchingActions, PlayerActions } = this.props;
-        JoinActions.getJoinedUser();
-        MatchingActions.getCurrentMatching();
-        PlayerActions.getCounterProfile();
+        const { CurrentMeetingActions, CurrentMatchingActions, PlayerActions, JoinActions, is_joined_already, is_login_already } = this.props;
+        CurrentMeetingActions.getCurrentMeeting();
+        CurrentMatchingActions.getCurrentMatching();
+        PlayerActions.getCounterProfile();  
+        if (!is_joined_already){
+            JoinActions.getJoinedUser();
+        } else {
+            this.setState({
+                loading: false
+            });
+        }
         this.startTimer();
+
+        {
+            !is_login_already && <Redirect to="/"/>
+        }
     }
 
-    kakaoLogout = () => () => {
-        console.log(window.Kakao.Auth.getAccessToken());
-        window.Kakao.Auth.logout(function(data){
-            console.log(data)
-        });
-        axios.get("/logout")
-        .then(response => {
-            console.log(response.data)
-            console.log("로그아웃 완료")
-            window.location.reload();
-        })
-        .catch(err => console.log(err));
-    }
+    componentWillReceiveProps = nextProps => {
+        if (nextProps.is_joined_already) {
+            this.setState({
+                loading: false
+            });
+        }
+    };
 
     startTimer() { //일단 넣어둔 함수TODO: 커스터마이징해야됨
         // const { history } = this.props; //시간 관련해서 받아올 곳
@@ -101,15 +108,11 @@ class Main extends Component {
 
         return (
             <div className={"App"}>
-                {
-                    !is_login_already && <Redirect to="/"/>
-                }
                 <div className="flex-center">
                     <Container>
                         <Row className={"App"}>
                             <Col xs={12}>
                                 <div className={"font-big mt-4"}>
-                                    <div className="font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div>
                                     {meetingWeek} {meetingDay} {current_meeting.location}
                                 </div>
                             </Col>
@@ -130,6 +133,10 @@ class Main extends Component {
                         <div className={"App"}>
                             <Container>    
                                 <Row className={"align-center deco-none"}>
+                                    {this.state.loading
+                                    ?
+                                    <Loading/> 
+                                    :
                                     <Player
                                         my_profile={my_profile}
                                         current_matching={current_matching}
@@ -138,6 +145,7 @@ class Main extends Component {
                                         is_counter_profile={is_counter_profile}
                                         is_greenlight_on={is_greenlight_on}
                                         />  
+                                    }  
                                     <Col xs={2} md={3} className={"flex-center"}>
                                         <div>
                                             <MaterialIcon icon="arrow_forward_ios" size="23px" color="#f0f0f0"/>
@@ -159,7 +167,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     JoinActions: bindActionCreators(joinActions, dispatch),
     CurrentMeetingActions: bindActionCreators(currentMeetingActions, dispatch),
-    MatchingActions: bindActionCreators(matchingActions, dispatch),
+    CurrentMatchingActions : bindActionCreators(currentMatchingActions, dispatch),
     PlayerActions: bindActionCreators(playerActions, dispatch),
     MyProfileActions: bindActionCreators(myProfileActions, dispatch),
 });
@@ -171,11 +179,11 @@ const mapStateToProps = (state) => ({
     is_login_already: state.my_profile.get('is_login_already'),
     joined_user: state.join.get('joined_user'),
     current_meeting: state.current_meeting.get('current_meeting'),
-    current_matching: state.matching.get('current_matching'),
+    current_matching: state.current_matching.get('current_matching'),
     counter_profile: state.player.get('counter_profile'),
     is_greenlight_on: state.player.get('is_greenlight_on'),
     is_counter_profile: state.player.get('is_counter_profile'),
-
+    is_current_matching: state.current_matching.get('is_current_matching'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
