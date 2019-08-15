@@ -44,20 +44,6 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Matching',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('trial_time', models.IntegerField(default=1)),
-                ('is_greenlight_male', models.BooleanField(default=False)),
-                ('is_greenlight_female', models.BooleanField(default=False)),
-                ('is_gift_male', models.BooleanField(default=False)),
-                ('is_gift_female', models.BooleanField(default=False)),
-                ('joined_female', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='joined_female', to='meeting.JoinedUser')),
-                ('joined_male', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='joined_male', to='meeting.JoinedUser')),
-                ('kakao_chattingroom', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='meeting.KakaoChatting')),
-            ],
-        ),
-        migrations.CreateModel(
             name='Meeting',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -85,6 +71,20 @@ class Migration(migrations.Migration):
                 ('last_img_modified_at', models.DateTimeField(blank=True, null=True)),
                 ('company', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='meeting.Company')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Matching',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('trial_time', models.IntegerField(default=1)),
+                ('is_greenlight_male', models.BooleanField(default=False)),
+                ('is_greenlight_female', models.BooleanField(default=False)),
+                ('is_gift_male', models.BooleanField(default=False)),
+                ('is_gift_female', models.BooleanField(default=False)),
+                ('joined_female', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='joined_female', to='meeting.JoinedUser')),
+                ('joined_male', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='joined_male', to='meeting.JoinedUser')),
+                ('kakao_chattingroom', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='meeting.KakaoChatting')),
             ],
         ),
         migrations.AddField(
