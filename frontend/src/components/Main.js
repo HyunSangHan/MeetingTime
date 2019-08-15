@@ -8,6 +8,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Footer from "./Footer";
 import Player from "./Player";
+import Loading from "./Loading";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as joinActions from '../modules/join';
@@ -23,18 +24,33 @@ class Main extends Component {
 
         this.state = {
             time: 179,
+            loading: true
         }
         this.startTimer = this.startTimer.bind(this);
 
     }
 
     componentDidMount() {
-        const { CurrentMeetingActions, JoinActions } = this.props;
+        const { CurrentMeetingActions, JoinActions, is_joined_already } = this.props;
         CurrentMeetingActions.getCurrentMeeting();
-        JoinActions.getJoinedUser();
-
+        if (!is_joined_already){
+            JoinActions.getJoinedUser();
+        } else {
+            this.setState({
+                loading: false
+            });
+        }
         this.startTimer();
     }
+
+    componentWillReceiveProps = nextProps => {
+        if (nextProps.is_joined_already) {
+            this.setState({
+                loading: false
+            });
+        }
+
+    };
 
     kakaoLogout = () => () => {
         console.log(window.Kakao.Auth.getAccessToken());
@@ -134,7 +150,10 @@ class Main extends Component {
 
                     <div className={"profile bg-white pc-none"}>
                         <div className={"pc-max-width bg-white z-2"}>
-                            <Player />  
+                            {this.state.loading ? <Loading/> 
+                            :
+                            <Player {...this.state}/>
+                            }  
                         </div>
                     </div>
                     

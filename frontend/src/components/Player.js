@@ -16,7 +16,8 @@ class Player extends Component {
         super(props);
         
         this.state = {
-            action: "user"
+            action: "user",
+            loading : true
         }
     }
 
@@ -37,9 +38,24 @@ class Player extends Component {
 
     componentDidMount() {
         const { JoinActions, MatchingActions, PlayerActions } = this.props;
+        
         JoinActions.getJoinedUser();
         MatchingActions.getCurrentMatching();
-        PlayerActions.getCounterProfile();
+        if (!this.props.is_counterProfile){
+            PlayerActions.getCounterProfile();
+        }else {
+            this.setState({
+                loading: false
+            })
+        }
+    }
+
+    componentWillReceiveProps = nextProps => {
+        if (nextProps.is_counterProfile) {
+            this.setState({
+                loading: false
+            });
+        };
     }
 
     render(){

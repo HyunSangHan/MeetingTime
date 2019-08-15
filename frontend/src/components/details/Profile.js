@@ -87,7 +87,7 @@ class Profile extends Component {
                     className="form"
                     onSubmit={this._handleSubmit}
                     method="patch"
-                    enctype="multipart/form-data"
+                    encType="multipart/form-data"
                 >       
                 <table>
                     <tbody>
