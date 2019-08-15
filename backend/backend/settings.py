@@ -171,14 +171,14 @@ MEDIA_URL = "/media/"
 REST_SESSION_LOGIN = False
 
 # REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': [
-# #         'rest_framework.permissions.IsAuthenticated',
-# #         'rest_framework.authentication.BasicAuthentication',
-# #         'rest_framework.authentication.SessionAuthentication',
-#         'rest_framework.authentication.TokenAuthentication',
-#     ]
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.SessionAuthentication',
+#         'rest_framework.authentication.BasicAuthentication'
+#     ),
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.AllowAny',
+#     ),
 # }
-
 # SOCIALACCOUNT_PROVIDERS = {
 #     'kakao': {
 #         'SCOPE': ['email'],

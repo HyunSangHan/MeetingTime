@@ -1,7 +1,7 @@
 @import 'reset-css';
 
 img {
-    width: 200px; 
+    width: 150px; 
 }
 
 .trial-time{
@@ -9,12 +9,13 @@ img {
 }
 
 .main-profile {
-    max-width : 100%;
     border-radius: 50%;
+    width: 190px; 
 }
 
 .column {
     display: flex;
+    justify-content: center;
 }
 
 .info-list {
