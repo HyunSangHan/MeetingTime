@@ -3,7 +3,7 @@ import { Map, get } from 'immutable';
 import axios from 'axios';
 import { pender } from 'redux-pender';
 
-const GET_PROFILE = "GET_PROFILE";
+const GET_PROFILE = `GET_PROFILE`;
 const UPDATE_PROFILE = "UPDATE_PROFILE";
 const PROFILE_EDITED_AFTER = `PROFILE_EDITED_AFTER`;
 const PROFILE_EDITED_BEFORE = `PROFILE_EDITED_BEFORE`;
@@ -43,13 +43,19 @@ export default handleActions({
                                             .set('is_login_already', true),
         onFailure: (state, action) => state.set('is_login_already', false),
     }),
+    [PROFILE_EDITED_AFTER]: (state) => {
+        return state.set('is_edited_profile', true);
+    },
+    [PROFILE_EDITED_BEFORE]: (state) => {
+        return state.set('is_edited_profile', false);
+    },
     ...pender({
         type: UPDATE_PROFILE,
         onSuccess: (state, action) => state.set('my_profile', action.payload.data)
                                             .set('is_login_already', true),
         onFailure: (state, action) => state.set('is_login_already', false),
     }),
-    }, initialState);
+}, initialState);
 
 export const getMyProfile = createAction(
     GET_PROFILE,
@@ -66,6 +72,8 @@ export const getMyProfile = createAction(
     )
 );
 
+export const profileEditedAfter = createAction(PROFILE_EDITED_AFTER, payload => payload);
+export const profileEditedBefore = createAction(PROFILE_EDITED_BEFORE, payload => payload);
 export const ProfileUpdate = createAction(
     UPDATE_PROFILE,
     (payload) => axios({
@@ -103,6 +111,3 @@ export const CompanyUpdate = createAction(
         console.log("not working (update_profile)")
     )
 );
-
-export const profileEditedAfter = createAction(PROFILE_EDITED_AFTER, payload => payload);
-export const profileEditedBefore = createAction(PROFILE_EDITED_BEFORE, payload => payload);

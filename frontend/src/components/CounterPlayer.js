@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../css/info_styles.scss";
+// import "../css/info_styles.scss";
 import MaterialIcon from 'material-icons-react';
 import * as currentMatchingActions from '../modules/current_matching';
 import * as playerActions from '../modules/player';
@@ -89,7 +89,7 @@ class CounterPlayer extends Component {
                     <div className="column">
                         <img src={counter_profile.image || require("../images/noPhoto.jpg")}
                             alt={counter_profile.user.username}
-                            className="main-profile"
+                            className="main-profile" width="100px"
                         />
                         <ul className="info-list">
                             <li className="list-item">이름 : {counter_profile.user.username}</li>
@@ -149,7 +149,6 @@ class CounterPlayer extends Component {
                 }
                 </div>
             </div>
-         
         )
     };
 };

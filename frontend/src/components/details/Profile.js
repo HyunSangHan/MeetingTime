@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FooterScrollable from "./../FooterScrollable";
 import * as myProfileActions from "../../modules/my_profile";
-import "../../css/profile.scss";
+// import "../../css/profile.scss";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import Textarea from "react-textarea-autosize";
@@ -81,7 +81,7 @@ class Profile extends Component {
 
                 <div className="profile-image">
                     <img src={my_profile.image || require("../../images/noPhoto.jpg")}
-                        alt={my_profile.user.username} />
+                        alt={my_profile.user.username} width="100px"/>
                 </div>
 
                 <form

@@ -26,10 +26,10 @@ class JoinButton extends Component {
 
     render() {
         const { JoinActions, is_joined_already, is_login_already, joined_user, current_meeting } = this.props;
-        let button = null;
         const openTime = Date.parse(current_meeting.open_time)
         const closeTime = Date.parse(current_meeting.close_time)
         const nowTime = new Date().getTime()
+        let button = null;
 
         if (is_login_already) {
             if (nowTime < openTime) {

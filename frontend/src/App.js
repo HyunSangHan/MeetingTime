@@ -11,7 +11,6 @@ import { bindActionCreators } from 'redux';
 import * as myProfileActions from './modules/my_profile';
 import * as currentMeetingActions from './modules/current_meeting';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import Loading from './components/Loading';
 
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -30,7 +29,6 @@ class App extends Component {
         const { MyProfileActions, CurrentMeetingActions } = this.props;
         MyProfileActions.getMyProfile();
         CurrentMeetingActions.getCurrentMeeting();
-
         // //원본
         // console.log(new Date()) 
         // console.log("2019-09-09T08:25:39+09:00")
@@ -51,7 +49,7 @@ class App extends Component {
 
     
     render() {
-        const { is_login_already, current_meeting, my_profile } = this.props;
+        const { is_login_already, my_profile } = this.props;
         
         return (
             <BrowserRouter>
@@ -61,6 +59,7 @@ class App extends Component {
                                 <Initpage
                                     {...props}
                                     is_login_already={is_login_already}
+                                    my_profile={my_profile}
                                 />
                             )}
                         />
