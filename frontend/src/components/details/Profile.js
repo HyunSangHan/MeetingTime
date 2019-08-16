@@ -6,10 +6,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import Textarea from "react-textarea-autosize";
 import axios from "axios";
-import { Link, Redirect } from 'react-router-dom';
-import Dropzone from 'react-dropzone'
-//import Dropzone from "./Dropzone";
-import DraggableUploader from "../ImageUploader/draggableUploader";
+import { Link } from 'react-router-dom';
+
 
 class Profile extends Component {
 
@@ -46,16 +44,14 @@ class Profile extends Component {
     }
 
     handleImageSubmit = () => {
-        const fd = new FormData();
-        if (fd){
-        fd.append('image',this.state.image_value, this.state.image_value.name);
-        axios.patch('http://localhost:3000/profile/', fd)
+        const formData = new FormData();
+        const { image_value } = this.state;
+
+        formData.append('image', image_value, image_value.name);
+        axios.patch('http://localhost:3000/profile/', formData)
             .then(response => {
                 console.log(response);
             });
-        console.log("성공 ")
-        }
-        
     }
 
     handleSubmit = event => {
@@ -77,7 +73,7 @@ class Profile extends Component {
 
     render(){    
         const { my_profile } = this.props;
-        console.log(this.state);
+        const { age_value, company_value, team_intro_value, preview } = this.state;
         return (
             <div className="form-component" >
                 <h3 className="header">
@@ -100,10 +96,9 @@ class Profile extends Component {
                         className="image-uploader"
                     />
                     <button onClick={() => this.fileInput.click()}>사진 선택</button>
-                    {/* <button onClick={this.handleImageSubmit}>사진 업로드</button> */}
 
                     <h4>미리보기</h4>
-                    <img src={this.state.preview} />
+                    <img src={preview} />
                 </div>
                 
                 <form
@@ -126,20 +121,20 @@ class Profile extends Component {
                     <tr>
                         <td>연령대 :</td>
                         <td>
-                        <input
-                            type="number"
-                            placeholder="나이를 입력해주세요"
-                            value={this.state.age_value}
-                            onChange={this.handleInputChange}
-                            name="age_value"
-                            className="age-form"
-                        />
+                        <select name="age_value" value={age_value} placeholder="버튼을 눌러 연령대를 선택해주세요" onChange={this.handleInputChange}>
+                            <option>10</option>
+                            <option>20</option>
+                            <option>30</option>
+                            <option>40</option>
+                            <option>50</option>
+                            <option>60</option>
+                        </select>
                         </td>
                     </tr>
                     <tr>
                         <td>회사 :</td>
                         <td>
-                            <select name="company_value" value={this.state.company_value} onChange={this.handleInputChange}>
+                            <select name="company_value" value={company_value} placeholder="버튼을 눌러 회사를 선택해주세요" onChange={this.handleInputChange}>
                                 <option>삼성전자</option>
                                 <option>애플</option>   
                                 <option>구글</option>
@@ -158,7 +153,7 @@ class Profile extends Component {
                             <Textarea
                                 type="text"
                                 placeholder="팀 소개를 입력해주세요"
-                                value={this.state.team_intro_value}
+                                value={team_intro_value}
                                 onChange={this.handleInputChange}
                                 className="text-input"
                                 name="team_intro_value"
