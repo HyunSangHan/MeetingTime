@@ -6,7 +6,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import Textarea from "react-textarea-autosize";
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import Dropzone from 'react-dropzone'
+//import Dropzone from "./Dropzone";
+import DraggableUploader from "../ImageUploader/draggableUploader";
 
 class Profile extends Component {
 
@@ -16,7 +19,8 @@ class Profile extends Component {
             age_value: this.props.my_profile.age_range,
             company_value: this.props.my_profile.company.name,
             team_intro_value : this.props.my_profile.team_introduce,
-            image_value: this.props.my_profile.image,
+            image_value: null,
+            preview: null,
         }
     }
 
@@ -36,17 +40,22 @@ class Profile extends Component {
     handleImageChange = event => {
         console.log(event.target.files[0]);
         this.setState ({
-            image_value: event.target.files[0]
+            image_value: event.target.files[0],
+            preview: URL.createObjectURL(event.target.files[0])
         })
     }
 
     handleImageSubmit = () => {
         const fd = new FormData();
-        fd.append('image', this.state.image_value, this.state.image_value.name);
+        if (fd){
+        fd.append('image',this.state.image_value, this.state.image_value.name);
         axios.patch('http://localhost:3000/profile/', fd)
             .then(response => {
                 console.log(response);
             });
+        console.log("성공 ")
+        }
+        
     }
 
     handleSubmit = event => {
@@ -59,14 +68,16 @@ class Profile extends Component {
                     });
         MyProfileActions.CompanyUpdate({
                         company_value: company_value,
-                    });             
+                    });        
+        this.handleImageSubmit();     
+
     };
 
     
 
     render(){    
         const { my_profile } = this.props;
-
+        console.log(this.state);
         return (
             <div className="form-component" >
                 <h3 className="header">
@@ -79,17 +90,22 @@ class Profile extends Component {
                         alt={my_profile.user.username} />
                 </div>
 
-                <input
-                    style={{display: 'none'}}
-                    type="file"
-                    onChange={this.handleImageChange}
-                    ref={fileInput => this.fileInput = fileInput}
-                    name="image_value"
-                    className="image-uploader"
-                />
-                <button onClick={() => this.fileInput.click()}>사진 선택</button>
-                <button onClick={this.handleImageSubmit}>사진 업로드</button>
+                <div className="uploader">
+                    <input
+                        style={{display: 'none'}}
+                        type="file"
+                        onChange={this.handleImageChange}
+                        ref={fileInput => this.fileInput = fileInput}
+                        name="image_value"
+                        className="image-uploader"
+                    />
+                    <button onClick={() => this.fileInput.click()}>사진 선택</button>
+                    {/* <button onClick={this.handleImageSubmit}>사진 업로드</button> */}
 
+                    <h4>미리보기</h4>
+                    <img src={this.state.preview} />
+                </div>
+                
                 <form
                     className="form"
                     onSubmit={this.handleSubmit}

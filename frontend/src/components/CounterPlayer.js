@@ -100,6 +100,7 @@ class CounterPlayer extends Component {
                     </div>
                 </span>
                 <br/>
+                <div className='delete-button' onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) this.onCancel() }}>deletes</div>
                 <div className="counter-actions">
                 {!counter_profile.is_male ? 
                 <div  className="action-item">
