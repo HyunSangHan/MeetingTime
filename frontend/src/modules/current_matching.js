@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import { Map } from 'immutable';
+import { Map, get } from 'immutable';
 import axios from 'axios';
 import { pender } from 'redux-pender';
 
@@ -11,7 +11,6 @@ const initialState = Map({
     current_matching: {},
 });
 
-console.log(initialState);
 export default handleActions({
     ...pender({
         type: CURRENT_MATCHING,

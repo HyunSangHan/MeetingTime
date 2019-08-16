@@ -30,7 +30,6 @@ class App extends Component {
         const { MyProfileActions, CurrentMeetingActions } = this.props;
         MyProfileActions.getMyProfile();
         CurrentMeetingActions.getCurrentMeeting();
-
         // //원본
         // console.log(new Date()) 
         // console.log("2019-09-09T08:25:39+09:00")
@@ -61,6 +60,7 @@ class App extends Component {
                                 <Initpage
                                     {...props}
                                     is_login_already={is_login_already}
+                                    my_profile={my_profile}
                                 />
                             )}
                         />

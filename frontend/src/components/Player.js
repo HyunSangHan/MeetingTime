@@ -3,13 +3,6 @@ import "../css/player_styles.scss";
 import MyPlayer from "./MyPlayer";
 import CounterPlayer from "./CounterPlayer";
 
-import * as currentMatchingActions from "../modules/current_matching";
-import * as joinActions from '../modules/join';
-import * as playerActions from '../modules/player';
-import { bindActionCreators } from 'redux';
-import { connect } from "react-redux";
-
-
 class Player extends Component {
 
     constructor(props) {
@@ -36,27 +29,24 @@ class Player extends Component {
     }
 
     componentDidMount() {
-        const { JoinActions, PlayerActions, CurrentMatchingActions } = this.props;
-        CurrentMatchingActions.getCurrentMatching();
-        JoinActions.getJoinedUser();
-        PlayerActions.getCounterProfile();
     }
 
     render(){
         const{ action } = this.state;
-        const { current_matching, joined_user, is_counter_profile } = this.props;
+        const { PlayerActions, current_matching, my_profile, counter_profile, is_counter_profile, is_greenlight_on, joined_user } = this.props;
+        console.log(this.props);
         return (
             <div className="container">
                 <div className="white-box form-box">
                     {action === "user" && <MyPlayer
                                             current_matching={current_matching} 
-                                            joined_user={joined_user}
-                                          />
+                                            my_profile={my_profile}
+                                            />
                     }
                     {action === "counter_user" 
                         && is_counter_profile 
-                        && <CounterPlayer 
-                           />
+                        && <CounterPlayer
+                            />
                     }
                     {action === "counter_user"
                         && !is_counter_profile && <p className="no-matching">"현재 매칭된 상대가 없습니다."</p>
@@ -89,18 +79,4 @@ class Player extends Component {
 
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    JoinActions: bindActionCreators(joinActions, dispatch),
-    PlayerActions: bindActionCreators(playerActions, dispatch),
-    CurrentMatchingActions: bindActionCreators(currentMatchingActions, dispatch),
-});
-
-const mapStateToProps = (state) => ({
-    joined_user: state.join.get('joined_user'),
-    is_counter_profile: state.player.get('is_counter_profile'),
-    current_matching : state.current_matching.get('current_matching'),
-    is_current_matching: state.current_matching.get('is_current_matching'),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Player);
+export default Player;
