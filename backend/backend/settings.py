@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'django_crontab',
     'allauth.socialaccount.providers.kakao',
 ]
 
@@ -144,6 +145,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CRONJOBS = [
+    ('0 22 * * 3,5', 'meeting.cron.meeting', '>> /Users/jaewoo/Snulion7/MeetingTime1/backend/meeting.log'),
+    ('10,12,14,16 23 * * 3,5', 'meeting.cron.match', '>> /Users/jaewoo/Snulion7/MeetingTime1/backend/matching.log'),
+    ('11,13,15,17 23 * * 3,5', 'meeting.cron.match', '>> /Users/jaewoo/Snulion7/MeetingTime1/backend/kakao.log')
+    # 일단 확실히 matching이 된 후에 kakao가 생성되어야 해서 2분 간격으로 두고 1분 후에 생성되도롣 함
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
