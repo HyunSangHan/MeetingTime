@@ -24,7 +24,7 @@ class Main extends Component {
         super(props);
 
         this.state = {
-            time: 179,
+            time: 15,
             loading: true
         }
         this.startTimer = this.startTimer.bind(this);
@@ -69,8 +69,7 @@ class Main extends Component {
         .catch(err => console.log(err));
     }
 
-    startTimer() { //일단 넣어둔 함수TODO: 커스터마이징해야됨
-        // const { history } = this.props; //시간 관련해서 받아올 곳
+    startTimer() {
         this.setState(prevState => ({
             time: prevState.time,
         }));
@@ -96,7 +95,6 @@ class Main extends Component {
 
     render() {
         const { is_login_already, current_meeting, current_matching } = this.props;
-        console.log(current_matching);
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
         const meetingDay = this.getInputDayLabel(current_meeting.meeting_time);
@@ -119,45 +117,38 @@ class Main extends Component {
         }
 
         return (
-            <div className={"frame"}>
+            <div className={"App"}>
                 {
                     !is_login_already && <Redirect to="/"/>
                 }
 
 {/*PC와 모바일 공통*/}
-                <div className="up-bg flex-center frame-half">
-                    <div className={"up-bg-color fix"}/>
+                <div className="flex-center">
                     <Container>
                         <Row className={"App"}>
                             <Col xs={12}>
                                 <div className={"font-big font-white mt-4"}>
-                                    <div className="font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div>
                                     {meetingWeek} {meetingDay} {current_meeting.location}
+                                    <br/>
+                                    {this.state.time}초 남음 {/* TODO: 예시로 넣어둔 것으로, 추후 수정 필요 */}
+                                    <br/>
+                                    {current_matching.trial_time}번째 셔플 결과입니다.
                                 </div>
                             </Col>
                             <Col xs={12}>
-                                <div className={"font-1 font-white mt-3 opacity05"}>
-                                    {/* TODO: 카운트다운 들어갈 곳 */}
-
-                                    {current_matching.trial_time + "번째 매칭입니다."}
+                                <div className={"bg-white"}>
+                                    <div className={"bg-white"}>
+                                        {this.state.loading ? <Loading/> 
+                                        :
+                                        <Player
+                                        current_matching = {current_matching}
+                                        />
+                                        }  
+                                    </div>
                                 </div>
                             </Col>
                         </Row>
                     </Container>
-                </div>
-                <div className="down-bg frame-half bg-white absolute z-2">
-{/*모바일 전용*/}
-                    {/*<div className={"hover z-5"} onClick={this.props.testFunc}>이것은 테스트~~~!!여기를 클릭</div>*/}
-
-                    <div className={"profile bg-white pc-none"}>
-                        <div className={"pc-max-width bg-white z-2"}>
-                            {this.state.loading ? <Loading/> 
-                            :
-                            <Player  />
-                            }  
-                        </div>
-                    </div>
-                    
                 </div>
                 <Footer/>
             </div>

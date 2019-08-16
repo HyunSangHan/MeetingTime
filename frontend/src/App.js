@@ -55,7 +55,7 @@ class App extends Component {
         
         return (
             <BrowserRouter>
-                <div className="frame">
+                <div className="App">
                         <Route exact path="/"
                             render={(props) => (
                                 <Initpage
