@@ -83,7 +83,7 @@ class Main extends Component {
     }
 
     render() {
-        const {user, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting, current_matching, PlayerActions, counter_profile, is_counter_profile, is_greenlight_on } = this.props;
+        const {user, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting, current_matching, PlayerActions, counter_profile, is_counter_profile,  } = this.props;
 
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
@@ -143,7 +143,6 @@ class Main extends Component {
                                         PlayerActions={PlayerActions}
                                         counter_profile={counter_profile}
                                         is_counter_profile={is_counter_profile}
-                                        is_greenlight_on={is_greenlight_on}
                                         />  
                                     }  
                                     <Col xs={2} md={3} className={"flex-center"}>
@@ -176,12 +175,10 @@ const mapStateToProps = (state) => ({
     is_joined_popup_on: state.join.get('is_joined_popup_on'),
     is_joined_already: state.join.get('is_joined_already'),
     is_login_already: state.my_profile.get('is_login_already'),
-    is_login_already: state.my_profile.get('is_login_already'),
     joined_user: state.join.get('joined_user'),
     current_meeting: state.current_meeting.get('current_meeting'),
     current_matching: state.current_matching.get('current_matching'),
     counter_profile: state.player.get('counter_profile'),
-    is_greenlight_on: state.player.get('is_greenlight_on'),
     is_counter_profile: state.player.get('is_counter_profile'),
     is_current_matching: state.current_matching.get('is_current_matching'),
 })
