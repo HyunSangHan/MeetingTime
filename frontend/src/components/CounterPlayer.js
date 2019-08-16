@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import "../css/info_styles.scss";
 import MaterialIcon from 'material-icons-react';
+import GiftPopup from "./popups/GiftPopup";
 import * as playerActions from '../modules/player';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
+import Player from "./Player";
 
 class CounterPlayer extends Component {
 
@@ -13,7 +15,8 @@ class CounterPlayer extends Component {
             is_greenlight_on_male: this.props.current_matching.is_greenlight_male,
             is_greenlight_on_female: this.props.current_matching.is_greenlight_female,
             is_gift_on_male: this.props.current_matching.is_gift_male,
-            is_gift_on_female: this.props.current_matching.is_gift_female
+            is_gift_on_female: this.props.current_matching.is_gift_female,
+            
         };
 
     }
@@ -22,6 +25,7 @@ class CounterPlayer extends Component {
         const { PlayerActions, CurrentMatchingActions } = this.props;
         PlayerActions.getCounterProfile();
         CurrentMatchingActions.getCurrentMatching();
+    
     }
 
     handleGreenLight = (event) =>{
@@ -50,6 +54,7 @@ class CounterPlayer extends Component {
 
     };
 
+
     handleGift = (event) => {
         const { PlayerActions, counter_profile, CurrentMatchingActions } = this.props;
         const { is_gift_on_male, is_gift_on_female } = this.state;
@@ -62,23 +67,30 @@ class CounterPlayer extends Component {
             PlayerActions.handleGiftOn({ female: true });
             this.setState({ is_gift_on_female: true });
 
-        } else if (is_gift_on_male && !counter_profile.is_male) {
-            PlayerActions.handleGiftOff({ male: false });
-            this.setState({ is_gift_on_male: false });
+        // } else if (is_gift_on_male && !counter_profile.is_male) {
+        //     PlayerActions.handleGiftOff({ male: false });
+        //     this.setState({ is_gift_on_male: false });
 
-        } else if (is_gift_on_female && counter_profile.is_male) {
-            PlayerActions.handleGiftOff({ female: false });
-            this.setState({ is_gift_on_female: false });
-        }
+        // } else if (is_gift_on_female && counter_profile.is_male) {
+        //     PlayerActions.handleGiftOff({ female: false });
+        //     this.setState({ is_gift_on_female: false });
+        // }
 
+        PlayerActions.deletePopup();
         CurrentMatchingActions.getCurrentMatching();
-
-    };
     
+        }
+    };
+
+    handleGiftPopup = () => {
+        const { PlayerActions } = this.props;
+        PlayerActions.createPopup();
+    }
     
     render() {
-        const { counter_profile, current_matching } = this.props;  
+        const { is_gift_popup, counter_profile, current_matching } = this.props;  
         const { is_greenlight_on_male, is_greenlight_on_female, is_gift_on_male, is_gift_on_female } = this.state;
+        console.log(is_gift_popup);
 
         return (
             <div className="container">
@@ -100,7 +112,7 @@ class CounterPlayer extends Component {
                     </div>
                 </span>
                 <br/>
-                <div className='delete-button' onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) this.onCancel() }}>deletes</div>
+                {is_gift_popup ? <GiftPopup  handleGift={this.handleGift} /> :
                 <div className="counter-actions">
                 {!counter_profile.is_male ? 
                 <div  className="action-item">
@@ -115,7 +127,7 @@ class CounterPlayer extends Component {
                     </span>
                     
                     안주쏘기 :
-                    <span className="icon" onClick={this.handleGift}>
+                    <span className="icon" onClick={this.handleGiftPopup}>
                         {is_gift_on_male &&
                             <MaterialIcon icon="local_bar" fontSize="200px" color="orange" />
                         }
@@ -137,7 +149,7 @@ class CounterPlayer extends Component {
                     </span>
                     
                     안주쏘기 :
-                    <span className="icon" onClick={this.handleGift}>
+                    <span className="icon" onClick={this.handleGiftPopup}>
                         {is_gift_on_female &&
                             <MaterialIcon icon="local_bar" fontSize="200px" color="orange" />
                         }
@@ -148,6 +160,8 @@ class CounterPlayer extends Component {
                 </div>
                 }
                 </div>
+                } 
+                {/* 팝업용 분기 */}
             </div>
          
         )
@@ -163,6 +177,7 @@ const mapStateToProps = (state) => ({
     counter_profile: state.player.get('counter_profile'),
     is_greenlight_on: state.player.get('is_greenlight_on'),
     is_counter_profile: state.player.get('is_counter_profile'),
+    is_gift_popup : state.player.get('is_gift_popup'),
     current_matching: state.current_matching.get('current_matching'),
 })
 
