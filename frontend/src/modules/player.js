@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import { Map } from 'immutable';
+import { Map, get } from 'immutable';
 import axios from 'axios';
 import { pender } from 'redux-pender';
 
@@ -17,7 +17,25 @@ const DELETE_POPUP = "DELETE_POPUP";
 const initialState = Map({
     is_counter_profile: false,
     is_gift_popup: false,
-    is_gift_already: false
+    is_gift_already: false,
+
+    counter_profile: {
+        age_range: null,
+        company: {
+            name: null
+        },
+        created_at: null,
+        id: 21,
+        image: null,
+        is_male: false,
+        last_img_modified_at: null,
+        last_intro_modified_at: null,
+        last_login_at: null,
+        team_introduce: null,
+        user: {
+            username: null
+        }
+    },
 }); 
 
 export default handleActions({
@@ -43,16 +61,10 @@ export default handleActions({
         onFailure: (state, action) => state.set('is_gift_already', false)
     }),
 
-    // ...pender({
-    //     type: GIFT_OFF,
-    //     onSuccess: (state, action) => state.set('is_gift_popup', true),
-    //     onFailure: (state, action) => state.set('is_gift_popup', false)
-    // }),
-
     ...pender({
         type: COUNTER_PROFILE,
         onSuccess: (state, action) => state.set('counter_profile', action.payload.data)
-            .set('is_counter_profile', true),
+                                            .set('is_counter_profile', true),
         onFailure: (state, action) => state.set('is_counter_profile', false)
     }),
 }, initialState);
@@ -81,7 +93,7 @@ export const getCounterProfile = createAction(
 );
 
 
-//'''GreenLight Actions'''
+//'''GreenLight Actions [ON/OFF]'''
 export const handleGreenLightOn = createAction(
     GREEN_LIGHT_ON,
     (payload) => axios({
@@ -120,7 +132,7 @@ export const handleGreenLightOff = createAction(
         )
 );
 
-//'''Gift Actions'''
+//'''Gift Actions only On'''
 export const handleGiftOn = createAction(
     GIFT_ON,
     (payload) => axios({
@@ -139,22 +151,3 @@ export const handleGiftOn = createAction(
             console.log("not working (gift api)")
         )
 );
-
-// export const handleGiftOff = createAction(
-//     GIFT_OFF,
-//     (payload) => axios({
-//         method: "patch",
-//         url: '/current_matching/',
-//         data: {
-//             is_gift_male: payload.male,
-//             is_gift_female: payload.female
-//         }
-//     })
-//         .then((response) => {
-//             console.log(response);
-//             return response
-//         })
-//         .catch(
-//             console.log("not working (gift api)")
-//         )
-// );
