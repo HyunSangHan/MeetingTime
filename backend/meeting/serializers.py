@@ -41,6 +41,8 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = (
             "image",
+            "image_two",
+            "image_three",
             "is_male",
             "age_range",
             "created_at",

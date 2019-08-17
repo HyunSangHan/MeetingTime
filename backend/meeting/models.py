@@ -109,10 +109,6 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-    @property
-    def natural_time(self):
-        return naturaltime(self.last_intro_modified_at)
-
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
