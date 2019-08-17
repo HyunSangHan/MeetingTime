@@ -4,6 +4,7 @@ import './App.css';
 import Main from "./components/Main"
 import Profile from "./components/details/Profile";
 import Initpage from "./components/Initpage";
+import Email from "./components/Email";
 import CounterPlayer from "./components/CounterPlayer";
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -73,6 +74,17 @@ class App extends Component {
                             />
                         )}
                     />
+
+                    <Route exact path="/email"
+                        render={(props) => (
+                            <Email
+                                {...props}
+                                is_login_already={is_login_already}
+                            />
+                        )}
+                    />
+
+
                     <Route path="/profile"
                         render={(props) => (
                             <Profile
