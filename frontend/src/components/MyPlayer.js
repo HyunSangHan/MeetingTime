@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import "../css/info_styles.scss";
 import { Link } from 'react-router-dom';
-
+import * as myProfileActions from '../modules/my_profile';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class MyPlayer extends Component {
 
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount(){
+        const { MyProfileActions } = this.props;
+        MyProfileActions.getMyProfile();
     }
 
     render(){
@@ -43,4 +50,15 @@ class MyPlayer extends Component {
 
 };
 
-export default MyPlayer;
+// export default MyPlayer;
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    MyProfileActions: bindActionCreators(myProfileActions, dispatch),
+
+});
+
+const mapStateToProps = (state) => ({
+    my_profile: state.my_profile.get('my_profile'),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyPlayer);

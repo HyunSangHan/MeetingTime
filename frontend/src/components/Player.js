@@ -33,23 +33,22 @@ class Player extends Component {
 
     render(){
         const{ action } = this.state;
-        const { PlayerActions, current_matching, my_profile, counter_profile, is_counter_profile, is_greenlight_on, joined_user } = this.props;
+        const { PlayerActions, current_matching, my_profile, counter_profile, is_current_matching, is_counter_profile,  joined_user } = this.props;
         console.log(this.props);
         return (
             <div className="container">
                 <div className="white-box form-box">
                     {action === "user" && <MyPlayer
                                             current_matching={current_matching} 
-                                            my_profile={my_profile}
                                             />
                     }
                     {action === "counter_user" 
                         && is_counter_profile 
-                        && <CounterPlayer
-                            />
+                        && is_current_matching
+                        && <CounterPlayer />
                     }
                     {action === "counter_user"
-                        && !is_counter_profile && <p className="no-matching">"현재 매칭된 상대가 없습니다."</p>
+                        && !is_current_matching && <p className="no-matching">"현재 매칭된 상대가 없습니다."</p>
                     }
                 </div>
 

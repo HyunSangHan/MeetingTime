@@ -5,20 +5,27 @@ import "../../css/profile.scss";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import Textarea from "react-textarea-autosize";
-import { post } from "axios";
+import axios from "axios";
 import { Link } from 'react-router-dom';
 
-//import EditPW from "./EditPW";
 
 class Profile extends Component {
 
     constructor(props) {
+        console.log(props);
         super(props);
         this.state = {
             age_value: this.props.my_profile.age_range,
             company_value: this.props.my_profile.company.name,
-            team_intro_value : this.props.my_profile.team_introduce,
+            team_intro_value: this.props.my_profile.team_introduce,
             image_value: this.props.my_profile.image,
+            preview: null,
+
+            imgSrc: null,
+            imgSrcExt: null,
+            crop: {
+                aspect: 1/1
+            }
         }
     }
 
@@ -27,51 +34,58 @@ class Profile extends Component {
         MyProfileActions.getMyProfile();
     }
 
-
-    _handleInputChange = event => {
+    handleInputChange = event => {
         const { target: { value, name } } = event;
         this.setState({
+            is_age_changed: true,
             [name]: value
         });
     };
 
-    _handleImageChange = event => {
+    handleImageChange = event => {
+        console.log(event.target.files[0]);
         this.setState ({
-            image_value: event.target.files[0]
+            image_value: event.target.files[0],
+            preview: URL.createObjectURL(event.target.files[0])
         })
     }
 
-    _handleSubmit = event => {
-        const { MyProfileActions } = this.props;
-        const { age_value, company_value, team_intro_value, image_value } = this.state;
-        event.preventDefault();
-        MyProfileActions.ProfileUpdate({
-                        age_value: age_value,
-                        team_intro_value : team_intro_value,
-                    });
-        MyProfileActions.CompanyUpdate({
-                        company_value: company_value,
-                    });
-        this.fileUpload(image_value).then((response)=>{
-                                        console.log(response.data);
-                                        })                                   
-    };
-
-    fileUpload(file) {
-        const url = 'http://localhost:3000/profile/';
+    handleImageSubmit = () => {
         const formData = new FormData();
-        formData.append('image', file)
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
+        const { image_value } = this.state;
+        {
+        formData.append('image', image_value, image_value.name);
+        axios.patch('http://localhost:3000/profile/', formData)
+            .then(response => {
+                console.log(response);
+            });
         }
-        return post(url, formData, config)
     }
 
+    handleSubmit = event => {
+        const { MyProfileActions } = this.props;
+        const { age_value, company_value, team_intro_value, preview } = this.state;
+        console.log(this.state);
+        event.preventDefault();
+        
+        MyProfileActions.ProfileUpdate({
+            age_value: age_value,
+            team_intro_value : team_intro_value,
+        })
+        MyProfileActions.CompanyUpdate({
+            company_value: company_value,
+        })
+        if(preview){
+            this.handleImageSubmit();
+        } 
+        MyProfileActions.getMyProfile();
+    };
+
+    
+    
     render(){    
         const { my_profile } = this.props;
-
+        const { age_value, company_value, team_intro_value, preview } = this.state;
         return (
             <div className="form-component" >
                 <h3 className="header">
@@ -81,30 +95,36 @@ class Profile extends Component {
 
                 <div className="profile-image">
                     <img src={my_profile.image || require("../../images/noPhoto.jpg")}
-                        alt={my_profile.user.username} />
+                        alt="" />
                 </div>
 
+                <div className="uploader">
+                    <input
+                        style={{display: 'none'}}
+                        type="file"
+                        onChange={this.handleImageChange}
+                        ref={fileInput => this.fileInput = fileInput}
+                        name="image_value"
+                        className="image-uploader"
+                    />
+                    <button onClick={() => this.fileInput.click()}>사진 선택</button>
+
+                    <h4>미리보기</h4>
+                    <img src={preview} />
+                </div>
+                
                 <form
                     className="form"
-                    onSubmit={this._handleSubmit}
+                    onSubmit={this.handleSubmit}
                     method="patch"
                     encType="multipart/form-data"
                 >       
                 <table>
                     <tbody>
-                    <tr>
-                        <td className="image-uploader">
-                            <input 
-                                type="file"
-                                onChange={this._handleImageChange}
-                                name="image_value"
-                                className="image-uploader"
-                            />
-                        </td>
-                    </tr>
+                    
                     <tr>
                         <td>이름  :</td>
-                        <td className="not-change">{my_profile.user.username}</td>
+                        <td className="not-change">ㅎㅇ</td>
                     </tr>
                     <tr>
                         <td>성별  :</td> 
@@ -113,20 +133,20 @@ class Profile extends Component {
                     <tr>
                         <td>연령대 :</td>
                         <td>
-                        <input
-                            type="number"
-                            placeholder="나이를 입력해주세요"
-                            value={this.state.age_value}
-                            onChange={this._handleInputChange}
-                            name="age_value"
-                            className="age-form"
-                        />
+                        <select name="age_value" value={age_value}  onChange={this.handleInputChange}>
+                            <option>10</option>
+                            <option>20</option>
+                            <option>30</option>
+                            <option>40</option>
+                            <option>50</option>
+                            <option>60</option>
+                        </select>
                         </td>
                     </tr>
                     <tr>
                         <td>회사 :</td>
                         <td>
-                            <select name="company_value" value={this.state.company_value} onChange={this._handleInputChange}>
+                            <select name="company_value" value={company_value}  onChange={this.handleInputChange}>
                                 <option>삼성전자</option>
                                 <option>애플</option>   
                                 <option>구글</option>
@@ -144,9 +164,8 @@ class Profile extends Component {
                         <td>
                             <Textarea
                                 type="text"
-                                placeholder="팀 소개를 입력해주세요"
-                                value={this.state.team_intro_value}
-                                onChange={this._handleInputChange}
+                                value={team_intro_value}
+                                onChange={this.handleInputChange}
                                 className="text-input"
                                 name="team_intro_value"
                             />
@@ -156,7 +175,7 @@ class Profile extends Component {
                     </tbody>
                 </table>
                 <span className="buttons">
-                    <Link to="/matching" >
+                    <Link to="/" >
                         <button
                             type="button"
                             className="go-back"

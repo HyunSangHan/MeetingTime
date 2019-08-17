@@ -10,7 +10,6 @@ import reducers from './modules';
 import { Provider } from 'react-redux';
 import ReduxThunk from "redux-thunk";
 import penderMiddleware from "redux-pender";
-
 const middlewares = [ReduxThunk, penderMiddleware()];
 
 const store = compose(applyMiddleware(...middlewares))(createStore)(

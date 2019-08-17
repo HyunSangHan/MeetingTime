@@ -52,7 +52,7 @@ class App extends Component {
     
     render() {
         const { is_login_already, current_meeting, my_profile } = this.props;
-        
+        console.log(my_profile);
         return (
             <BrowserRouter>
                 <div className="frame">
@@ -88,7 +88,6 @@ class App extends Component {
                     <Route path="/profile"
                         render={(props) => (
                             <Profile
-                                {...props}
                             />
                         )} 
                     />
