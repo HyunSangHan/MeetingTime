@@ -1,6 +1,6 @@
 
 //모바일&PC 공통 CSS들어갈 곳
-.text-area {
+.up-text-area {
     box-sizing: border-box;
     width: 100%;
     position: relative;
@@ -11,7 +11,7 @@
     z-index: 1;
 }
 
-.upper-triangle-part {
+.up-triangle-part {
 
     width: 0;
     height: 0;
@@ -24,7 +24,7 @@
     margin-top:-10px;
 }
 
-.white-triangle-part {
+.up-white-triangle-part {
     width: 0;
     height: 0;
     border: solid 10px;
@@ -33,6 +33,41 @@
     left: 50%;
     margin-left:-5px;
     margin-top:-18px;
+    z-index: 2;
+}
+
+.down-text-area {
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+    margin-bottom: -2px;
+    height: 70%;
+    padding: 1px;
+    border: 0.5px solid #9013fe;
+    z-index: 1;
+}
+
+.down-triangle-part {
+    width: 0;
+    height: 0;
+    border: solid 10px;
+    border-color: #9013fe transparent transparent transparent;
+    box-sizing: border-box;
+    position: relative;
+    left:50%;
+    margin-left:-5px;
+    margin-bottom:-10px;
+}
+
+.down-white-triangle-part {
+    width: 0;
+    height: 0;
+    border: solid 10px;
+    border-color: white transparent transparent transparent;
+    position: relative;
+    left: 50%;
+    margin-left:-5px;
+    margin-bottom:-18px;
     z-index: 2;
 }
 
