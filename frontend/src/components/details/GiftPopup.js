@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../../App.css';
+import '../../css/Main.scss';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as playerActions from '../../modules/join';
@@ -19,38 +20,38 @@ class GiftPopup extends Component {
         
 
         return (
-            <div className={"App flex-center"}>
-            {counter_profile.is_male ?
-                <div className="box">
-                {current_matching.is_gift_female ?
-                    <div className={"copy-pop flex-center font-1"}>
-                        <h3>이미 안주를 쏘셨습니다.</h3>
-                        <button onClick={PlayerActions.deletePopup}>확인</button>
-                    </div>
-                :
-                    <div className={"copy-pop flex-center font-1"}>
-                        안주쏘기입니다. 이후 되돌릴 수 없습니다.
-                        <button onClick={handleGift}>확인</button>
-                        <button onClick={PlayerActions.deletePopup}>취소</button>
-                    </div>
-                }
-                </div>
-            :
-                <div className="box">
-                {current_matching.is_gift_male ?
-                    <div className={"copy-pop flex-center font-1"}>
-                        <h3>이미 안주를 쏘셨습니다.</h3>
-                        <button onClick={PlayerActions.deletePopup}>확인</button>
+            <div className="popup-container">
+                {counter_profile.is_male ?
+                    <div className="gift-popup">
+                    {current_matching.is_gift_female ?
+                        <div className={"box font_jua"}>
+                            <h3>이미 안주를 쏘셨습니다.</h3>
+                            <button className="pop-button font_jua" onClick={PlayerActions.deletePopup}>확인</button>
+                        </div>
+                        :
+                        <div className={"box font_jua"}>
+                            안주쏘기입니다. 이후 되돌릴 수 없습니다.
+                            <button className="pop-button font_jua" onClick={handleGift}>확인</button>
+                            <button className="pop-button font_jua" onClick={PlayerActions.deletePopup}>취소</button>
+                        </div>
+                    }
                     </div>
                     :
-                    <div className={"copy-pop flex-center font-1"}>
-                        안주쏘기입니다. 이후 되돌릴 수 없습니다.
-                        <button onClick={handleGift}>확인</button>
-                        <button onClick={PlayerActions.deletePopup}>취소</button>
+                    <div className="gift-popup">
+                    {current_matching.is_gift_male ?
+                        <div className={"box"}>
+                            <h3>이미 안주를 쏘셨습니다.</h3>
+                            <button className="pop-button font_jua" onClick={PlayerActions.deletePopup}>확인</button>
+                        </div>
+                        :
+                        <div className={"box"}>
+                            안주쏘기입니다. 이후 되돌릴 수 없습니다.
+                            <button className="pop-button font_jua" onClick={handleGift}>확인</button>
+                            <button className="pop-button font_jua" onClick={PlayerActions.deletePopup}>취소</button>
+                        </div>
+                    }
                     </div>
                 }
-                </div>
-            }
             </div>
             
         );

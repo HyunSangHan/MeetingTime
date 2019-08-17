@@ -4,6 +4,125 @@
     background-color: #f6f6f6;
 }
 
+
+
+.control-container{
+    width: 90%;
+    min-width: 375px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    .timer{
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+    .action-container{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .column{
+            .my-team{
+                width: 58px;
+                height: 58px;
+                border: 1.5px solid white;
+                border-radius: 12px;
+            }
+            .greenlight-back{
+                //그리라이트 백
+                width : 75px;
+                height: 75px;
+                background-color: #979797;
+                border-radius: 50%;
+                display:flex;
+                align-items: center;
+                justify-content: center;
+                .greenlight{
+                    width : 75px;
+                    height: 75px;
+                    background-color: #50e3c2;
+                    border-radius: 50%;
+                    display:flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    .call-button{
+                        width : 60px;
+                        height: 60px;
+                        background-color: #ffffff;
+                        border-radius: 50%;
+                        font-size: 23px;
+                        display:flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: #50e3c2;
+                    }
+                }
+            }
+            .gift{
+                cursor: pointer;
+                .gift-on{
+                    width: 58px;
+                    height: 58px;
+                    padding: 17px;
+                    border-radius: 50%;
+                    background-color: #9b9b9b;
+                    display:flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #ffffff;
+                    font-size: 14px;
+
+                }
+                .gift-off{
+                    width: 58px;
+                    height: 58px;
+                    padding: 17px;
+                    border-radius: 50%;
+                    background-color: #9013fe;
+                    display:flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #ffffff;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+//gift popup css
+.popup-container{
+    .gift-popup{
+        .box{
+            width: 50%;
+            min-width: 300px;
+            max-width: 700px;
+            height: 100px;
+            border: 2px solid #9013fe;
+            border-radius: 12px;
+            background-color : #50e3c2;
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 30px;
+            display:flex;
+            align-items: center;
+            justify-content: center;
+            
+            .pop-button{
+                width: 100px;
+                height: 50px;
+                background-color : #9013fe;
+                color: white;
+                font-size: 20px;
+                border: none;
+                border-radius: 12px;
+            }
+        }
+    }
+}
+
+
 @media(max-width: 767px){ /*Mobile*/
     //모바일(너비 767px이하)에만 해당되는 CSS들어갈 곳
 }
