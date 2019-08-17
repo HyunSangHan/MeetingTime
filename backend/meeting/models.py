@@ -7,9 +7,9 @@ from allauth.account.signals import user_signed_up
 from django.contrib.humanize.templatetags.humanize import naturaltime
 
 
-
 class Meeting(models.Model):
     open_time = models.DateTimeField()
+    prev_meeting_last_shuffle_time = models.DateTimeField(null=True)
     close_time = models.DateTimeField()
     first_shuffle_time = models.DateTimeField()
     second_shuffle_time = models.DateTimeField()
@@ -17,6 +17,7 @@ class Meeting(models.Model):
     meeting_time = models.DateTimeField()
     location = models.CharField(max_length=20)
     cutline = models.IntegerField(null=True, blank=True)
+    description = models.CharField(max_length=20, null=True, blank=True)
 
     def __str__(self):
         return f'미팅장소: {str(self.location)} / 오픈일자: {str(self.open_time).split(" ")[0]} / 미팅일자: {str(self.meeting_time).split(" ")[0]}'
@@ -94,13 +95,15 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True)
     image = models.ImageField(null=True, blank=True)
+    image_two = models.ImageField(null=True, blank=True)
+    image_three = models.ImageField(null=True, blank=True)
+    team_name = models.CharField(null=True, max_length=20)
     is_male = models.BooleanField(null=True)
     age_range = models.IntegerField(null=True, blank=True) #10, 20, 30, 40 예컨대 이런식
     created_at = models.DateTimeField(default=timezone.now)
     last_login_at = models.DateTimeField(default=timezone.now)
     team_introduce = models.TextField(blank=True, default="")
     last_intro_modified_at = models.DateTimeField(null=True, blank=True)
-    last_img_modified_at = models.DateTimeField(null=True, blank=True)
     validated = models.BooleanField(default=False)
 
     def __str__(self):
