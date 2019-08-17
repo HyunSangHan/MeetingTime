@@ -104,7 +104,6 @@ class Profile(models.Model):
     last_login_at = models.DateTimeField(default=timezone.now)
     team_introduce = models.TextField(blank=True, default="")
     last_intro_modified_at = models.DateTimeField(null=True, blank=True)
-    last_img_modified_at = models.DateTimeField(null=True, blank=True)
     validated = models.BooleanField(default=False)
 
     def __str__(self):
