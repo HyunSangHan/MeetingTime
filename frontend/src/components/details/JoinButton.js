@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import '../../css/Body.css';
-import '../../App.css';
+import '../../css/Initpage.scss'; //부모컴포넌트의CSS(SCSS)
+import '../../css/Waiting.scss'; //부모컴포넌트의CSS(SCSS)
+import '../../App.css'; //공통CSS
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as joinActions from '../../modules/join';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class JoinButton extends Component {
 

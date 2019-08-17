@@ -1,95 +1,114 @@
+//Profile.js, TeamProfile.js 모두 여기에
 
-.form-component{
-    background-color: darkgrey;
+//모바일&PC 공통 CSS들어갈 곳
+
+//아래는 연석이가 작성했던 부분 - 일단 지우지 않음
+
+// .form-component{
+//     background-color: darkgrey;
+// }
+
+// img{
+//     border-radius: 50%;
+//     width : 130px;
+// }
+
+// .profile-image {
+//     text-align: center;
+//     margin-bottom : 20px;
+// }
+
+// .header{
+//     text-align: center;
+//     margin-top : 40px;
+// }
+
+// .not-change{
+//     font-weight: 650;
+//     text-align: center;
+// }
+
+// .image-uploader{
+//     display: flex;
+//     justify-content: center;
+//     align-content: center;
+//     align-items: center;
+//     margin-left: auto;
+//     margin-right: auto;
+// }
+
+// .text-input{
+//     width: 400px;
+//     display: flex;
+//     margin-left: 20px;
+// }
+
+// table{
+//     margin-left: auto;
+//     margin-right: auto;
+// }
+
+// tr {
+//     text-align : center;
+//     td {
+//         padding-bottom : 1em;
+//     }   
+// }
+
+// .uploader{
+//     display: block;
+//     margin-left: auto;
+//     margin-right: auto;
+//     justify-content: center;
+//     text-align: center;
+// }
+
+
+// .buttons{
+//     display: block;
+//     text-align:center;
+//     margin-top: 20px;
+
+//     .go-back {
+//         display: inline-block;
+//         justify-content: center;
+//         background-color: lightblue;
+//         color : darkslategray;
+//         font-weight: 600;
+//         width : 120px;
+//         height: 35px;
+//         margin-right: 15px;
+//     }
+
+//     .button {
+//         display: inline-block;
+//         justify-content: center;
+//         background-color : lightcoral;
+//         color : darkslategray;
+//         font-weight: 600;
+//         width : 120px;
+//         height: 35px;
+//         margin-left: auto;
+//         margin-right: auto;
+//     }
+// }
+
+// .update-time {
+//     text-align : center;
+//     font-weight : 800;
+//     color : goldenrod;
+//     margin-top: 0;
+// }
+
+
+
+
+
+@media(max-width: 767px){ /*Mobile*/
+    //모바일(너비 767px이하)에만 해당되는 CSS들어갈 곳
+
 }
 
-img{
-    border-radius: 50%;
-    width : 130px;
-}
-
-.profile-image {
-    text-align: center;
-    margin-bottom : 20px;
-}
-
-.header{
-    text-align: center;
-    margin-top : 40px;
-}
-
-.not-change{
-    font-weight: 650;
-    text-align: center;
-}
-
-.image-uploader{
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.text-input{
-    width: 400px;
-    display: flex;
-    margin-left: 20px;
-}
-
-table{
-    margin-left: auto;
-    margin-right: auto;
-}
-
-tr {
-    text-align : center;
-    td {
-        padding-bottom : 1em;
-    }   
-}
-
-.uploader{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    justify-content: center;
-    text-align: center;
-}
-
-.buttons{
-    display: block;
-    text-align:center;
-    margin-top: 20px;
-
-    .go-back {
-        display: inline-block;
-        justify-content: center;
-        background-color: lightblue;
-        color : darkslategray;
-        font-weight: 600;
-        width : 120px;
-        height: 35px;
-        margin-right: 15px;
-    }
-
-    .button {
-        display: inline-block;
-        justify-content: center;
-        background-color : lightcoral;
-        color : darkslategray;
-        font-weight: 600;
-        width : 120px;
-        height: 35px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-
-.update-time {
-    text-align : center;
-    font-weight : 800;
-    color : goldenrod;
-    margin-top: 0;
+@media(min-width: 768px){ /*PC*/
+    //PC(너비 768px이상)에만 해당되는 CSS들어갈 곳
 }
