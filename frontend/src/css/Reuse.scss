@@ -103,15 +103,14 @@
     background-color: #ffffff;
     display: flex;
     .ArrowBack {
+        position: absolute;
         margin-left: 22.5px;
         margin-top: 19px;
     }
     .HeaderMessage {
-        position: relative;
-        top: 20px;
-        bottom: 15px;
-        width: 90px;
-        height: 19px;
+        padding-top: 20px;
+        padding-bottom: 15px;
+        height : 100%;
         font-family: AppleSDGothicNeo;
         font-size: 16px;
         font-weight: bold;
@@ -125,8 +124,8 @@
 }
 
 .MessageWrapper {
-    position: fixed;
-    width: 100vw;
+    // position: absolute;
+    width: 100%;
     display: flex;
     justify-content: center;
 }
