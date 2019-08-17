@@ -83,7 +83,7 @@ class Main extends Component {
     }
 
     render() {
-        const {user, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting, current_matching, PlayerActions, counter_profile, is_counter_profile,  } = this.props;
+        const {user, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting, is_current_matching, current_matching, PlayerActions, counter_profile, is_counter_profile,  } = this.props;
 
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
@@ -143,6 +143,7 @@ class Main extends Component {
                                         PlayerActions={PlayerActions}
                                         counter_profile={counter_profile}
                                         is_counter_profile={is_counter_profile}
+                                        is_current_matching={is_current_matching}
                                         />  
                                     }  
                                     <Col xs={2} md={3} className={"flex-center"}>

@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import Textarea from "react-textarea-autosize";
 import axios from "axios";
 import { Link } from 'react-router-dom';
-import ImgDropAndCrop from '../ImageUploader/ImgDropAndCrop';
 
 
 class Profile extends Component {
