@@ -458,18 +458,9 @@ class Profile(APIView):
     def patch(self, request, format=None):
         queryset = request.user.profile
         serializer = ProfileSerializer(queryset, data=request.data, partial=True)
-
         if serializer.is_valid():
-            new_username = request.data['user']['username']
-            if User.objects.filter(username=new_username).count() != 0:
-                return Response(status=status.HTTP_400_BAD_REQUEST)
-            else:
-                user = request.user
-                user.username = new_username
-                user.save()
-                serializer.save()
-                
-                return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
