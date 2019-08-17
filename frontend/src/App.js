@@ -31,7 +31,6 @@ class App extends Component {
         const { MyProfileActions, CurrentMeetingActions } = this.props;
         MyProfileActions.getMyProfile();
         CurrentMeetingActions.getCurrentMeeting();
-
         // //원본
         // console.log(new Date()) 
         // console.log("2019-09-09T08:25:39+09:00")
@@ -57,17 +56,17 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div className="frame">
+                        <Route exact path="/"
+                            render={(props) => (
+                                <Initpage
+                                    {...props}
+                                    is_login_already={is_login_already}
+                                    my_profile={my_profile}
+                                />
+                            )}
+                        />
 
-                    <Route exact path="/"
-                        render={(props) => (
-                            <Initpage
-                                {...props}
-                                is_login_already={is_login_already}
-                            />
-                        )}
-                    />
-
-                    <Route path="/matching"
+                        <Route path="/matching"
                         render={(props) => (
                             <Main
                                 {...props}

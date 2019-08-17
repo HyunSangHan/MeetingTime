@@ -20,8 +20,6 @@ class Initpage extends Component {
     }
 
     componentDidMount(){
-
-
         try {
             window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);    
             // 카카오 로그인 버튼을 생성
@@ -70,15 +68,15 @@ class Initpage extends Component {
         .catch(err => console.log(err));
     }
 
-    getInputDayLabel = (meetingTime) => {
+    getInputDayLabel = (time) => {
         const week = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
-        const today = new Date(meetingTime).getDay();
+        const today = new Date(time).getDay();
         const todayLabel = week[today];
         return todayLabel;
     }
     render() {
-        const { is_joined_popup_on, joined_user, JoinActions, is_joined_already, current_meeting } = this.props;
-        console.log(this.props);
+        const { my_profile, is_joined_popup_on, joined_user, JoinActions, is_joined_already, current_meeting } = this.props;
+
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
         const meetingDay = this.getInputDayLabel(current_meeting.meeting_time);
@@ -100,12 +98,28 @@ class Initpage extends Component {
             meetingWeek = ""
         }
 
+
         let authButton = null;
         if (this.props.is_login_already) {
-            authButton = <div className="App font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div>;
+            authButton = <div className="App">
+                <div className="App font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div>
+                <Link to="/profile" className="App w100percent">프로필 수정하기</Link>
+            </div>;
         } else {
             authButton = <div className="App"><a id="kakao-login-btn"></a></div>;
         }
+
+        // const meetingTimeBefore = new Date(my_profile.last_matching_time); //나중에 하위 필드 추가되면 수정필요
+        const meetingTimeBefore = new Date("2019-08-15T08:25:39+09:00"); //TODO:테스트용(수정필요)
+        const lastModifiedIntroAt = new Date(my_profile.last_intro_modified_at);
+        const lastModifiedImgAt = new Date(my_profile.last_img_modified_at);
+        const lastModifiedAt = ((lastModifiedIntroAt > lastModifiedImgAt ) ? lastModifiedIntroAt : lastModifiedImgAt);
+
+        let profileAlertMsg = null;
+        if (meetingTimeBefore > lastModifiedAt) {
+            profileAlertMsg = "그룹 등록을 먼저 해주세요.";
+        }
+        // console.log(joined_user.profile)
 
         return (
             <div>
@@ -136,6 +150,7 @@ class Initpage extends Component {
                                 />
                             </div>
                             { authButton }
+                            { profileAlertMsg }
                         </Col>
                     </Row>
                 </Container>

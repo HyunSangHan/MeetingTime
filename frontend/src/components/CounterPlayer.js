@@ -149,7 +149,6 @@ class CounterPlayer extends Component {
                 }
                 </div>
             </div>
-         
         )
     };
 };
