@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as joinActions from './../modules/join';
 
+
 class Initpage extends Component {
 
 
@@ -127,7 +128,7 @@ class Initpage extends Component {
         return (
             <div className="App">
                 {/*팝업*/}
-                {is_joined_popup_on &&
+                 {is_joined_popup_on &&
                     <div className={"App"}>
                         <div className={"flex-center"}>
                             <div className={"fix minus-height z-4"}>

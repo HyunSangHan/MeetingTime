@@ -1,13 +1,17 @@
 
 //모바일&PC 공통 CSS들어갈 곳
 
+
+
 .container {
     text-align:center;
     .spinner {
-        width: 60px;
+        
+        max-width: 100%;
         animation: spinner 1.2s steps(12) infinite;
     }
 }
+
 
 @keyframes spinner {
     from {

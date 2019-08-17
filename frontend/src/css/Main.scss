@@ -1,6 +1,8 @@
 //모바일&PC 공통 CSS들어갈 곳
 
-
+.main-container{
+    background-color: #f6f6f6;
+}
 
 @media(max-width: 767px){ /*Mobile*/
     //모바일(너비 767px이하)에만 해당되는 CSS들어갈 곳
@@ -11,6 +13,6 @@
     .container {
         width: 1200px;
         height: 667px;
-        background-color: #f6f6f6;
+        background-color: dartkgrey;
     }
 }

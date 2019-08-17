@@ -15,6 +15,7 @@ import * as myProfileActions from './modules/my_profile';
 import * as currentMeetingActions from './modules/current_meeting';
 import axios from 'axios';
 import Loading from './components/details/Loading';
+import TwoTab from './components/details/TwoTab';
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -52,11 +53,13 @@ class App extends Component {
 
     
     render() {
-        const { is_login_already, current_meeting, my_profile } = this.props;
-        console.log(my_profile);
+        const { is_login_already, current_meeting, my_profile, is_edited_profile } = this.props;
+        console.log(this.props);
         return (
+            
             <BrowserRouter>
                 <div className="App">
+                
                     <Route exact path="/"
                         render={(props) => (
                             <Initpage
@@ -132,6 +135,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
     is_login_already: state.my_profile.get('is_login_already'),
+    is_edited_profile: state.my_profile.get('is_edited_profile'),
     my_profile: state.my_profile.get('my_profile'),
     current_meeting: state.current_meeting.get('current_meeting'),
 })

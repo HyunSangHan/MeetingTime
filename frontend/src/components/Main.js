@@ -111,54 +111,31 @@ class Main extends Component {
         }
 
         return (
-            <div className={"App"}>
-                <div className="flex-center">
-                    <Container>
-                        <Row className={"App"}>
-                            <Col xs={12}>
-                                <div className={"font-big mt-4"}>
-                                    {meetingWeek} {meetingDay} {current_meeting.location}
-                                </div>
-                            </Col>
-                            <Col xs={12}>
-                                <div className={"font-1 mt-3 opacity05"}>
-                                    {this.state.time}초 남음 {/* TODO: 예시로 넣어둔 것으로, 추후 수정 필요 */}
-                                    <br/>
-                                    {current_matching.trial_time}번째 셔플 결과입니다.
-                                </div>
-                            </Col>
-                        </Row>
-                    </Container>
+                <div className="main-container">
+                    <div className="profile">  
+                        {this.state.loading
+                        ?
+                        <Loading/> 
+                        :
+                        <CounterPlayer
+                            my_profile={my_profile}
+                            PlayerActions={PlayerActions}
+                            counter_profile={counter_profile}
+                            is_counter_profile={is_counter_profile}
+                        />  
+                        }  
                 </div>
-                <div className="App">
-                    {/*<div className={"hover z-5"} onClick={this.props.testFunc}>이것은 테스트~~~!!여기를 클릭</div>*/}
-
-                    <div className={"profile"}>
-                        <div className={"App"}>
-                            <Container>    
-                                <Row className={"align-center deco-none"}>
-                                    {this.state.loading
-                                    ?
-                                    <Loading/> 
-                                    :
-                                    <CounterPlayer
-                                        my_profile={my_profile}
-                                        PlayerActions={PlayerActions}
-                                        counter_profile={counter_profile}
-                                        is_counter_profile={is_counter_profile}
-                                        />  
-                                    }  
-                                    <Col xs={2} md={3} className={"flex-center"}>
-                                    <Link to="/team_profile" className="App w100percent">내 팀 정보</Link>
-
-                                    </Col>
-                                </Row>
-                                
-                            </Container>
-                        </div>
-                    </div>
+                
+                <div className="control-container">
+                    <ControlTool 
+                        time={this.state.time} 
+                        my_profile={my_profile}
+                        PlayerActions={PlayerActions}
+                        counter_profile={counter_profile}
+                        is_counter_profile={is_counter_profile}
+                    /> 
+                    <br/>
                 </div>
-                <Footer/>
             </div>
         );
     }

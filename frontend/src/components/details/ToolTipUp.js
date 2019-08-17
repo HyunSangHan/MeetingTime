@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../../css/Reuse.scss'; //도구성컴포넌트의CSS(SCSS)
 import '../../App.css'; //공통CSS
 
+
 class ToolTipUp extends Component {
 
     // constructor(props){
@@ -17,7 +18,9 @@ class ToolTipUp extends Component {
 
         return (
             <div className={"App"}>
-                {/* UI 코드 들어갈 곳 */}
+                <div className="cont">
+                    <h1>tooltip입니다.</h1>
+                </div>
             </div>
         );
     }
