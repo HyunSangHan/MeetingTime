@@ -15,6 +15,7 @@ import * as myProfileActions from './modules/my_profile';
 import * as currentMeetingActions from './modules/current_meeting';
 import axios from 'axios';
 import Loading from './components/details/Loading';
+import TwoTab from './components/details/TwoTab';
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -52,7 +53,8 @@ class App extends Component {
 
     
     render() {
-        const { is_login_already, is_joined_already, current_meeting, my_profile } = this.props;
+
+        const { is_login_already, is_joined_already, current_meeting, my_profile  } = this.props;
         const openTime = Date.parse(current_meeting.open_time)
         const nowTime = new Date().getTime()
 

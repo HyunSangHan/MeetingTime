@@ -24,7 +24,6 @@ class ToolTipDown extends Component {
                     <div className="down-white-triangle-part"></div>
                     <div className="down-triangle-part"></div>
                 </div>
-                {/* UI 코드 들어갈 곳 */}
             </div>
         );
     }

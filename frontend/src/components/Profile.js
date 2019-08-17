@@ -25,7 +25,7 @@ class Profile extends Component {
     render(){    
         const { my_profile } = this.props;
 
-        return (
+        return (    
             <div className="App">
                 {/* test용 */}
                 {my_profile.user.username}

@@ -14,6 +14,7 @@ import { bindActionCreators } from 'redux';
 import * as joinActions from './../modules/join';
 import * as myProfileActions from './../modules/my_profile';
 
+
 class Initpage extends Component {
 
     constructor(props){
@@ -130,7 +131,7 @@ class Initpage extends Component {
         return (
             <div className="frame bg-init-color">
                 {/*팝업*/}
-                {is_joined_popup_on &&
+                 {is_joined_popup_on &&
                     <div className={"App"}>
                         <div className={"flex-center"}>
                             <div className={"fix minus-height z-4"}>

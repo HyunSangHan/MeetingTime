@@ -1,9 +1,11 @@
 .font-jua {
+  letter-spacing: -0.3px;
   font-family: 'Jua', sans-serif !important;
   letter-spacing: -0.3px;
 }
 
 .font-notosan {
+  letter-spacing: -0.3px;
   font-family: 'Noto Sans KR', sans-serif !important;
   letter-spacing: -0.3px;
 }
@@ -14,6 +16,11 @@
 
 .margin-auto {
   margin: auto;
+}
+
+.mh-auto{
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .inline-flex {

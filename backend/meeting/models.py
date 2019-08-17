@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 from allauth.account.signals import user_signed_up
-from django.contrib.humanize.templatetags.humanize import naturaltime
+#from django.contrib.humanize.templatetags.humanize import naturaltime
 
 
 class Meeting(models.Model):
