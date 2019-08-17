@@ -146,7 +146,7 @@ class Initpage extends Component {
                 <Container className={"font-white"}>
                     <Row>
                         <Col>
-                            <div className="App font-big"><b>{meetingWeek} {meetingDay} {current_meeting.location}</b></div>
+                            <div className="App font-big font-jua"><b>{meetingWeek} {meetingDay} {current_meeting.location}</b></div>
                             <div className="flex-center mb-3">
                                 <JoinButton 
                                     is_login_already={this.props.is_login_already}
