@@ -168,7 +168,6 @@ const mapStateToProps = (state) => ({
     counter_profile: state.player.get('counter_profile'),
     is_gift_popup : state.player.get('is_gift_popup'),
     current_matching: state.current_matching.get('current_matching'),
-    is_current_matching: state.current_matching.get('is_current_matching'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CounterPlayer);
