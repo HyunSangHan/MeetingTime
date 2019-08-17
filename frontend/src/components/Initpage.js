@@ -2,22 +2,19 @@
 import React, { Component } from 'react';
 import '../css/Initpage.scss';
 import '../App.css';
-import { Container, Row, Col, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import { Link } from 'react-router-dom';
-import Footer from "./../outdated/Footer";
 import axios from 'axios';
 import MeetingInfo from './details/MeetingInfo';
+import MakeTeamButton from './details/MakeTeamButton';
 import JoinButton from './details/JoinButton';
 import JoinedPopup from './details/JoinedPopup';
-import MakeTeamButton from './details/MakeTeamButton';
 import ToolTipUp from './details/ToolTipUp';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as joinActions from './../modules/join';
-import ToolTipDown from './details/ToolTipDown';
+import * as myProfileActions from './../modules/my_profile';
 
 class Initpage extends Component {
-
 
     constructor(props){
         super(props);
@@ -56,6 +53,8 @@ class Initpage extends Component {
         } catch (error) {
             console.log(error);
         }
+        const { MyProfileActions } = this.props;
+        MyProfileActions.getMyProfile();
     }
 
     kakaoLogout = () => () => {
@@ -79,7 +78,7 @@ class Initpage extends Component {
         return todayLabel;
     }
     render() {
-        const { my_profile, is_joined_popup_on, joined_user, JoinActions, is_joined_already, current_meeting } = this.props;
+        const { my_profile, is_joined_popup_on, joined_user, JoinActions, is_joined_already, current_meeting, is_login_already } = this.props;
 
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
@@ -102,33 +101,34 @@ class Initpage extends Component {
             meetingWeek = ""
         }
 
-
         let authButton = null;
-        if (this.props.is_login_already) {
-            authButton = <div className="App">
-                <div className="App font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div>
-                <Link to="/team_profile" className="App w100percent">그룹 등록하기</Link>
-            </div>;
+        if (is_login_already) {
+            authButton = 
+                <div className="mt-18">
+                    {/* <div className="App font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div> */}
+                    <Link to="/profile" className="font-grey font-bold font-16 w100percent" style={{ textDecoration: 'none' }}>개인정보수정</Link>
+                </div>;
         } else {
             authButton = <div className="App"><a id="kakao-login-btn"></a></div>;
         }
 
-        // const meetingTimeBefore = new Date(my_profile.last_matching_time); //나중에 하위 필드 추가되면 수정필요
-        const meetingTimeBefore = new Date("2019-08-15T08:25:39+09:00"); //TODO:테스트용(수정필요)
-        const lastModifiedIntroAt = new Date(my_profile.last_intro_modified_at);
-        const lastModifiedImgAt = new Date(my_profile.last_img_modified_at);
-        const lastModifiedAt = ((lastModifiedIntroAt > lastModifiedImgAt ) ? lastModifiedIntroAt : lastModifiedImgAt);
-
-        let profileAlertMsg = null;
-        if (meetingTimeBefore > lastModifiedAt) {
-            profileAlertMsg = "그룹 등록을 먼저 해주세요.";
+        const lastShuffledAt = new Date(my_profile.last_matching_time); //나중에 하위 필드 추가되면 수정필요
+        const lastTeamModifiedAt = new Date(my_profile.last_intro_modified_at);
+        let isMadeTeam = null;
+        if (lastShuffledAt < lastTeamModifiedAt) {
+            isMadeTeam = true;
+        } else {
+            isMadeTeam = false;
         }
-        // console.log(joined_user.profile)
+        let makeTeamButton = null;
+        if (is_login_already) {
+            makeTeamButton = <MakeTeamButton
+                            isMadeTeam = { isMadeTeam }
+                            />;
+        } 
 
         return (
-            <div className="App">
-                <ToolTipUp/>
-                <ToolTipDown/>
+            <div className="frame bg-init-color">
                 {/*팝업*/}
                 {is_joined_popup_on &&
                     <div className={"App"}>
@@ -144,25 +144,18 @@ class Initpage extends Component {
                         <div className={"frame-dark fix z-3"}/>
                     </div>
                 }
-
-            <div className={"frame flex-center bg-main-color"}>
-                <Container className={"font-white"}>
-                    <Row>
-                        <Col>
-                            <div className="App font-big font-jua"><b>{meetingWeek} {meetingDay} {current_meeting.location}</b></div>
-                            <div className="flex-center mb-3">
-                                <JoinButton 
-                                    is_login_already={this.props.is_login_already}
-                                />
-                            </div>
-                            { authButton }
-                            { profileAlertMsg }
-                        </Col>
-                    </Row>
-                </Container>
-                <Footer/>
-            </div>
-
+                <div className="container-shadow mh-auto">
+                    <MeetingInfo
+                        makeTeamButton = { makeTeamButton }
+                        isMadeTeam = { isMadeTeam }
+                        current_meeting = { current_meeting }
+                    />
+                </div>
+                <div className="fix-bottom w100percent mb-36">
+                    <JoinButton 
+                        is_login_already = {is_login_already} />
+                    { authButton }
+                </div>
             </div>
         );
     }
@@ -173,11 +166,13 @@ class Initpage extends Component {
 const mapDispatchToProps = (dispatch) => ({
     dispatch,
     JoinActions: bindActionCreators(joinActions, dispatch),
+    MyProfileActions: bindActionCreators(myProfileActions, dispatch),
 });
 
 const mapStateToProps = (state) => ({
     is_joined_popup_on: state.join.get('is_joined_popup_on'),
     joined_user: state.join.get('joined_user'),
+    is_login_already: state.my_profile.get('is_login_already'),
     current_meeting: state.current_meeting.get('current_meeting'),
 })
 
