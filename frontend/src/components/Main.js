@@ -1,13 +1,17 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import '../css/Body.css';
+import '../css/Main.scss';
 import '../App.css';
 import { Container, Row, Col } from 'reactstrap';
 import MaterialIcon from 'material-icons-react';
 import { Link, Redirect } from 'react-router-dom';
-import Footer from "./Footer";
-import Player from "./Player";
-import Loading from "./Loading";
+import Footer from "./../outdated/Footer";
+import Player from "../outdated/Player";
+import Header from "./details/Header";
+import CounterPlayer from "./details/CounterPlayer";
+import ControlTool from "./details/ControlTool";
+import ToolTipDown from "./details/ToolTipDown";
+import Loading from "./details/Loading";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as joinActions from '../modules/join';
@@ -137,7 +141,7 @@ class Main extends Component {
                                     ?
                                     <Loading/> 
                                     :
-                                    <Player
+                                    <CounterPlayer
                                         my_profile={my_profile}
                                         current_matching={current_matching}
                                         PlayerActions={PlayerActions}
@@ -147,9 +151,8 @@ class Main extends Component {
                                         />  
                                     }  
                                     <Col xs={2} md={3} className={"flex-center"}>
-                                        <div>
-                                            <MaterialIcon icon="arrow_forward_ios" size="23px" color="#f0f0f0"/>
-                                        </div>
+                                    <Link to="/team_profile" className="App w100percent">내 팀 정보</Link>
+
                                     </Col>
                                 </Row>
                                 

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-// import "../css/info_styles.scss";
+import '../../css/Main.scss'; //부모컴포넌트의CSS(SCSS)
+import '../../App.css'; //공통CSS
 import MaterialIcon from 'material-icons-react';
-import * as currentMatchingActions from '../modules/current_matching';
-import * as playerActions from '../modules/player';
+import * as currentMatchingActions from '../../modules/current_matching';
+import * as playerActions from '../../modules/player';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 
@@ -87,7 +88,7 @@ class CounterPlayer extends Component {
                 <br/>
                 <span>
                     <div className="column">
-                        <img src={counter_profile.image || require("../images/noPhoto.jpg")}
+                        <img src={counter_profile.image || require("./../../images/noPhoto.jpg")}
                             alt={counter_profile.user.username}
                             className="main-profile" width="100px"
                         />

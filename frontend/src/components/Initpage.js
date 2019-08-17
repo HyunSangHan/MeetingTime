@@ -1,13 +1,16 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import '../css/Body.css';
+import '../css/Initpage.scss';
 import '../App.css';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import { Link } from 'react-router-dom';
-import Footer from "./Footer";
+import Footer from "./../outdated/Footer";
 import axios from 'axios';
+import MeetingInfo from './details/MeetingInfo';
 import JoinButton from './details/JoinButton';
-import JoinedPopup from './popups/JoinedPopup';
+import JoinedPopup from './details/JoinedPopup';
+import MakeTeamButton from './details/MakeTeamButton';
+import ToolTipUp from './details/ToolTipUp';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as joinActions from './../modules/join';
@@ -103,7 +106,7 @@ class Initpage extends Component {
         if (this.props.is_login_already) {
             authButton = <div className="App">
                 <div className="App font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div>
-                <Link to="/profile" className="App w100percent">프로필 수정하기</Link>
+                <Link to="/team_profile" className="App w100percent">그룹 등록하기</Link>
             </div>;
         } else {
             authButton = <div className="App"><a id="kakao-login-btn"></a></div>;
@@ -122,7 +125,7 @@ class Initpage extends Component {
         // console.log(joined_user.profile)
 
         return (
-            <div>
+            <div className="App">
                 {/*팝업*/}
                 {is_joined_popup_on &&
                     <div className={"App"}>
