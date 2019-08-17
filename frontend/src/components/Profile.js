@@ -102,7 +102,7 @@ class Profile extends Component {
         const { my_profile } = this.props;
         const { age_value, company_value } = this.state;
         return (
-            <div className="form-component frame" >
+            <div className="form-component frame ProfileForm" >
                 <Header></Header>
                 <form
                     className="form"

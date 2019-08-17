@@ -39,7 +39,6 @@ class MyPlayer extends Component {
                     <Link to="/profile" className="update">
                         프로필 수정하기
                     </Link>
-                    <h3 className="update-time">{!my_profile.natural_time === null ? " 최종 수정 : " + my_profile.natural_time : "null"}</h3>
                 </span>
                 <span>
                     <div className="column">

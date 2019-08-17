@@ -41,13 +41,15 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = (
             "image",
+            "image_two",
+            "image_three",
             "is_male",
             "age_range",
             "created_at",
             "last_login_at",
+            "team_name",
             "team_introduce",
-            "last_intro_modified_at",
-            "company"
+            "last_intro_modified_at"
         )
     def to_representation(self, instance):
         response = super().to_representation(instance)
