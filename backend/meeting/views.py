@@ -440,7 +440,7 @@ class CounterProfile(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-class Profile(APIView):
+class CurrentProfile(APIView):
     def get(self, request, format=None):
         if request.user.is_authenticated:
             queryset = request.user.profile

@@ -8,6 +8,11 @@
     background-color: #f6f6f6;
 }
 
+.ProfileForm {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 800px;
+}
 
 .tab-bar{
     width: 90%;
@@ -232,9 +237,169 @@
 //     margin-top: 0;
 // }
 
+.SendButton {
+    width: 78px;
+    height: 44px;
+    opacity: 0.9;
+    border-radius: 12px;
+    background-color: #4a4a4a;
+    font-family: AppleSDGothicNeo;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: -0.3px;
+    text-align: center;
+    color: #ffffff;
+}
 
+.FixedButton {
+    display: flex;
+    justify-content: center;
+    .SubmitButton {
+        width: 335px;
+        height: 52px;
+        border-radius: 12px;
+        font-family: AppleSDGothicNeo;
+        font-size: 18px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: -0.3px;
+        text-align: center;
+        color: #ffffff;
+        position: fixed;
+        bottom: 20px;
+        align-items: center;
+    }
+}
 
+.WorkingButton {
+    background-color: #50e3c2;
+}
 
+.NotWorkingButton {
+    background-color: lightgrey;
+}
+
+.CategoryWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 5%;
+    padding-top: 23px;
+}
+.CategoryName {
+    font-family: AppleSDGothicNeo;
+    font-size: 15px;
+    font-weight: 800;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: -0.3px;
+    color: #4a4a4a;
+    margin-bottom: 2%;
+}
+
+.Gender {
+    width: 100%;
+    height: 44px;
+    background: #ffffff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 8px;
+    padding-left: 16px;
+
+    p {
+        margin: 0;
+        word-wrap: wrap;
+        word-break: break-all;
+    }
+}
+
+select[name='age_value'],
+select[name='company_value'] {
+    appearance: none;
+    width: 100%;
+    height: 44px;
+    background: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 8px;
+    padding-left: 16px;
+    background: url("http://cdn.onlinewebfonts.com/svg/img_3503.png") no-repeat 95% 50%;
+    background-size: 15px 11px;
+    background-color: #fff
+}
+
+.EmailSelect {
+    width: 100%;
+    display: flex;
+
+    input {
+        width: 40%;
+        height: 44px;
+        background: #ffffff;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 8px;
+        padding-left: 16px;
+        border: none;
+    }
+}
+
+.Send {
+    margin-top: 10px;
+}
+
+.EmailValidation {
+    width: 100%;
+    display: flex;
+    margin-top: 10px;
+
+    input {
+        width: 50%;
+        height: 44px;
+        background: #ffffff;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 8px;
+        padding-left: 16px;
+        border: none;
+    }
+
+    button {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 8px;
+        padding-left: 26.5px;
+        margin-left: 20px;
+    }
+}
+
+#EmailAt {
+    display: inline-block;
+    width: 70px;
+    font-size: 25px;
+    margin-top: 9px;
+}
+
+input:focus {
+    outline: none;
+}
+
+select:focus {
+    outline: none;
+}
 
 @media(max-width: 767px){ /*Mobile*/
     //모바일(너비 767px이하)에만 해당되는 CSS들어갈 곳
