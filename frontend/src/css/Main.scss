@@ -8,4 +8,9 @@
     
 @media(min-width: 768px){ /*PC*/
     //PC(너비 768px이상)에만 해당되는 CSS들어갈 곳
+    .container {
+        width: 1200px;
+        height: 667px;
+        background-color: #f6f6f6;
+    }
 }
