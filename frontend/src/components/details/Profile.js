@@ -6,7 +6,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import Textarea from "react-textarea-autosize";
 import axios from "axios";
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import ImgDropAndCrop from '../ImageUploader/ImgDropAndCrop';
 
 
 class Profile extends Component {
@@ -20,6 +21,12 @@ class Profile extends Component {
             team_intro_value: this.props.my_profile.team_introduce,
             image_value: this.props.my_profile.image,
             preview: null,
+
+            imgSrc: null,
+            imgSrcExt: null,
+            crop: {
+                aspect: 1/1
+            }
         }
     }
 
