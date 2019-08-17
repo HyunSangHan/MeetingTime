@@ -15,9 +15,7 @@ class MeetingInfo extends Component {
     // }
 
     render() {
-        const { current_meeting } = this.props;
-        // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기
-        console.log(this.props.test)
+        const { current_meeting, isMadeTeam } = this.props;
         return (
             <div className={"meeting-info-container mh-auto"}>
                 <div className="bg-circle left"> {/* 왼쪽원 */}</div>

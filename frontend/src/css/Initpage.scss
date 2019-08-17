@@ -53,6 +53,36 @@
     background-color: #9013fe;
 }
 
+.team-profile-img-warp {
+    width:100px;
+    height: 40px;
+    position: relative;
+}
+
+.team-profile-img-small {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    border: 2px solid white;
+    border-radius: 21px;
+    background-color: grey;
+}
+
+.first-img {
+    left: 0;
+    z-index: 2;
+}
+
+.second-img {
+    left: 30px;
+    z-index: 1;
+}
+
+.third-img {
+    left: 60px;
+    z-index: 0;
+}
+
 
 @media(max-width: 767px){ /*Mobile*/
     .left {

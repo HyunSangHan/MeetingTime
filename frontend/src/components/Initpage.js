@@ -113,16 +113,17 @@ class Initpage extends Component {
             authButton = <div className="App"><a id="kakao-login-btn"></a></div>;
         }
 
-        // const meetingTimeBefore = new Date(my_profile.last_matching_time); //나중에 하위 필드 추가되면 수정필요
-        const meetingTimeBefore = new Date("2019-08-15T08:25:39+09:00"); //TODO:테스트용(수정필요)
-        const lastModifiedIntroAt = new Date(my_profile.last_intro_modified_at);
-        // const lastModifiedImgAt = new Date(my_profile.last_img_modified_at);
-        // const lastModifiedAt = ((lastModifiedIntroAt > lastModifiedImgAt ) ? lastModifiedIntroAt : lastModifiedImgAt);
-
-        // let profileAlertMsg = null;
-        // if (meetingTimeBefore > lastModifiedAt) {
-        //     profileAlertMsg = "그룹 등록을 먼저 해주세요.";
-        // }
+        const lastShuffledAt = new Date(my_profile.last_matching_time); //나중에 하위 필드 추가되면 수정필요
+        const lastTeamModifiedAt = new Date(my_profile.last_intro_modified_at);
+        let isMadeTeam = null;
+        console.log(my_profile)
+        console.log(lastShuffledAt)
+        console.log(lastTeamModifiedAt)
+        if (lastShuffledAt < lastTeamModifiedAt) {
+            isMadeTeam = true;
+        } else {
+            isMadeTeam = false;
+        }
         // console.log(joined_user.profile)
 
         return (
@@ -142,26 +143,19 @@ class Initpage extends Component {
                         <div className={"frame-dark fix z-3"}/>
                     </div>
                 }
-
-                {/* <div className={"frame flex-center bg-main-color"}>
-                    <Container className={"font-white"}>
-                        <Row>
-                            <Col>
-                                <div className="App font-big font-jua"><b>{meetingWeek} {meetingDay} {current_meeting.location}</b></div>
+                                {/* <div className="App font-big font-jua"><b>{meetingWeek} {meetingDay} {current_meeting.location}</b></div>
                                 <div className="flex-center mb-3">
                                     <JoinButton 
                                         is_login_already={this.props.is_login_already}
                                     />
                                 </div>
                                 { authButton }
-                                { profileAlertMsg }
-                            </Col>
-                        </Row>
-                    </Container>
-                    <Footer/>
-                </div> */}
+                                { profileAlertMsg } */}
                 <MeetingInfo
-                    makeTeamButton = {<MakeTeamButton/>}
+                    makeTeamButton = {<MakeTeamButton
+                                        isMadeTeam = { isMadeTeam }
+                                        />}
+                    isMadeTeam = { isMadeTeam }
                 />
                 <div className="fix-bottom w100percent mb-36">
                     <JoinButton 
