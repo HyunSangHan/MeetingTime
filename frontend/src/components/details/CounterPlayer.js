@@ -58,11 +58,9 @@ class CounterPlayer extends Component {
 
         if (!is_gift_on_male && !counter_profile.is_male) {
             PlayerActions.handleGiftOn({ male: true });
-            this.setState({ is_gift_on_male: true });
 
         } else if (!is_gift_on_female && counter_profile.is_male) {
             PlayerActions.handleGiftOn({ female: true });
-            this.setState({ is_gift_on_female: true });
 
         //popup 닫기 및 매칭 업데이트해서 받기
         PlayerActions.deletePopup();
