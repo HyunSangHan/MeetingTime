@@ -7,7 +7,6 @@ import TeamProfile from "./components/TeamProfile";
 import Initpage from "./components/Initpage";
 import Waiting from "./components/Waiting";
 import CounterPlayer from "./components/details/CounterPlayer";
-import Email from "./components/details/Email";
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -51,7 +50,7 @@ class App extends Component {
 
     }
 
-    
+
     render() {
 
         const { is_login_already, is_joined_already, current_meeting, my_profile  } = this.props;
@@ -88,7 +87,7 @@ class App extends Component {
                             <Waiting
                                 {...props}
                             />
-                        )} 
+                        )}
                     /> */}
 
                     <Route path="/matching"
@@ -96,19 +95,10 @@ class App extends Component {
                             <Main
                                 {...props}
                                 my_profile={my_profile}
+                                is_validated={my_profile.validated}
                             />
                         )}
                     />
-
-                    <Route exact path="/email"
-                        render={(props) => (
-                            <Email
-                                {...props}
-                                is_login_already={is_login_already}
-                            />
-                        )}
-                    />
-
 
                     <Route path="/profile"
                         render={(props) => (
@@ -123,6 +113,7 @@ class App extends Component {
                         render={(props) => (
                             <TeamProfile
                                 {...props}
+                                is_validated={my_profile.validated}
                             />
                         )} 
                     />
@@ -130,6 +121,7 @@ class App extends Component {
                         render={(props) => (
                             <CounterPlayer
                                 {...props}
+                                is_validated={my_profile.validated}
                             />
                         )} 
                     />
