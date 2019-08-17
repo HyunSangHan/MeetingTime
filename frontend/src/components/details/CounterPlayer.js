@@ -25,13 +25,13 @@ class CounterPlayer extends Component {
         return (
             <div className="counter-container">
                     <div className="team-info">
-                        <div className="team-name">
+                        <div className="team-name font-notosan">
                             {counter_profile.team_name}
                         </div>
-                        <div className="age-range">
+                        <div className="age-range font-notosan">
                             {counter_profile.age_range}
                         </div>
-                        <div className="company">
+                        <div className="company font-notosan">
                             {counter_profile.company.name}
                         </div>
                     </div>

@@ -3,6 +3,7 @@ import * as myProfileActions from "../modules/my_profile";
 import "../css/Profile.scss";
 import '../App.css';
 import Header from './details/Header';
+import HeaderTeam from './details/HeaderTeam';
 import TwoTab from "./details/TwoTab";
 import TeamProfileNew from "./details/TeamProfileNew";
 import TeamProfilePrev from "./details/TeamProfilePrev";
@@ -28,6 +29,7 @@ class TeamProfile extends Component {
     render(){    
         return (
             <div className="tab-container">
+                <HeaderTeam/>
                 <TwoTab />
             </div>
         );
