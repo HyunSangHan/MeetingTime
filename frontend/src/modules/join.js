@@ -21,7 +21,6 @@ const initialState = Map({
             last_login_at: null,
             team_introduce: "",
             last_intro_modified_at: null,
-            last_img_modified_at: null,
             user: {
                 username: ""
             },

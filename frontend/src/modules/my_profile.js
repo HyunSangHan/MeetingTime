@@ -19,7 +19,6 @@ const initialState = Map({
         id: null,
         image: null,
         is_male: false,
-        last_img_modified_at: null,
         last_intro_modified_at: null,
         last_login_at: null,
         team_introduce: null,
@@ -28,7 +27,7 @@ const initialState = Map({
         }
     },
     is_edited_profile: true,
-}); 
+});
 
 export default handleActions({
     [PROFILE_EDITED_AFTER]: (state) => {
@@ -59,17 +58,13 @@ export default handleActions({
 
 export const getMyProfile = createAction(
     GET_PROFILE,
-    (payload) => axios({
+    () => axios({
         method: 'get',
-        url: '/profile',
+        url: '/profile'
     })
-    .then((response) => {
-        console.log(response);
+    .then((response) => {   
         return response
     })
-    .catch(
-        console.log("not working (profile)")
-    )
 );
 
 export const profileEditedAfter = createAction(PROFILE_EDITED_AFTER, payload => payload);
@@ -82,8 +77,6 @@ export const ProfileUpdate = createAction(
         url: '/profile/',
         data: {
             age_range: payload.age_value,
-            image: payload.image_value,
-            team_introduce : payload.team_intro_value,
         }
     })
     .then((response) => {
@@ -94,6 +87,27 @@ export const ProfileUpdate = createAction(
         console.log("not working (update_profile)")
     )
 );
+
+// 아래의 코드를 바탕으로 팀에서 업데이트를 할 때 다시 짜야할 것 같음!
+// export const ProfileUpdate = createAction(
+//     UPDATE_PROFILE,
+//     (payload) => axios({
+//         method: "patch",
+//         url: '/profile/',
+//         data: {
+//             age_range: payload.age_value,
+//             image: payload.image_value,
+//             team_introduce : payload.team_intro_value,
+//         }
+//     })
+//     .then((response) => {
+//         console.log(response);
+//         return response
+//     })
+//     .catch(
+//         console.log("not working (update_profile)")
+//     )
+// );
 
 export const CompanyUpdate = createAction(
     UPDATE_PROFILE,

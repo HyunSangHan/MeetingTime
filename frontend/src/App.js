@@ -89,8 +89,10 @@ class App extends Component {
                     <Route path="/profile"
                         render={(props) => (
                             <Profile
+                                {...props}
+                                my_profile_from_app={my_profile}
                             />
-                        )} 
+                        )}
                     />
 
 

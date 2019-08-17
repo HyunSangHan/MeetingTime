@@ -1,8 +1,10 @@
 .font-jua {
+  letter-spacing: -0.3px;
   font-family: 'Jua', sans-serif !important;
 }
 
 .font-notosan {
+  letter-spacing: -0.3px;
   font-family: 'Noto Sans KR', sans-serif !important;
 }
 
