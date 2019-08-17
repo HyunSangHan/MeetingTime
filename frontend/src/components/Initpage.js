@@ -14,6 +14,7 @@ import ToolTipUp from './details/ToolTipUp';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as joinActions from './../modules/join';
+import ToolTipDown from './details/ToolTipDown';
 
 class Initpage extends Component {
 
@@ -126,6 +127,8 @@ class Initpage extends Component {
 
         return (
             <div className="App">
+                <ToolTipUp/>
+                <ToolTipDown/>
                 {/*팝업*/}
                 {is_joined_popup_on &&
                     <div className={"App"}>
