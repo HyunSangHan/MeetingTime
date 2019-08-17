@@ -125,7 +125,7 @@ class Initpage extends Component {
             makeTeamButton = <MakeTeamButton
                             isMadeTeam = { isMadeTeam }
                             />;
-        }
+        } 
 
         return (
             <div className="frame bg-init-color">

@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import Textarea from "react-textarea-autosize";
 import { post } from "axios";
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import * as currentMeetingActions from './../modules/current_meeting';
 import * as joinActions from './../modules/join';
 

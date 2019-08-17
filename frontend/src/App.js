@@ -52,20 +52,42 @@ class App extends Component {
 
     
     render() {
-        const { is_login_already, current_meeting, my_profile } = this.props;
-        console.log(my_profile);
+        const { is_login_already, is_joined_already, current_meeting, my_profile } = this.props;
+        const openTime = Date.parse(current_meeting.open_time)
+        const nowTime = new Date().getTime()
+
         return (
             <BrowserRouter>
                 <div className="App">
+
+                    {nowTime > openTime && is_joined_already
+                    ?
                     <Route exact path="/"
                         render={(props) => (
-                            <Initpage
+                            <Waiting
                                 {...props}
-                                is_login_already={is_login_already}
-                                my_profile={my_profile}
                             />
                         )}
                     />
+                    :
+                    <Route exact path="/"
+                            render={(props) => (
+                                <Initpage
+                                    {...props}
+                                    is_login_already={is_login_already}
+                                    my_profile={my_profile}
+                                />
+                            )}
+                        />
+                    }
+
+                    {/* <Route path="/waiting"
+                        render={(props) => (
+                            <Waiting
+                                {...props}
+                            />
+                        )} 
+                    /> */}
 
                     <Route path="/matching"
                         render={(props) => (
@@ -93,15 +115,6 @@ class App extends Component {
                         )} 
                     />
 
-
-                    <Route path="/waiting"
-                        render={(props) => (
-                            <Waiting
-                                {...props}
-                            />
-                        )} 
-                    />
-
                     <Route path="/team_profile"
                         render={(props) => (
                             <TeamProfile
@@ -116,8 +129,6 @@ class App extends Component {
                             />
                         )} 
                     />
-                    {/*<Redirect from="/" to="/init" />*/}
-
                 </div>
             </BrowserRouter>
         );
@@ -132,6 +143,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
     is_login_already: state.my_profile.get('is_login_already'),
+    is_joined_already: state.join.get('is_joined_already'),
     my_profile: state.my_profile.get('my_profile'),
     current_meeting: state.current_meeting.get('current_meeting'),
 })
