@@ -4,8 +4,77 @@
     background-color: #f6f6f6;
 }
 
+//counter-profile component
+.counter-container{
+    width: 90%;
+    min-width: 375px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #ffffff;
+    padding-right: 28px;
+    padding-left: 28px;
+    padding-bottom: 36px;
+    border-radius: 12px;
+    .team-info{
+        display: flex;
+        margin-bottom: 10px;
+        .team-name{
+            font-weight: bold;
+            font-size: 22px;
+            color: #000000;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: -0.44px;
+            margin-right: 10px;
+        }
+        .age-range{
+            font-size: 13px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: 1.62;
+            letter-spacing: -0.3px;
+            color: #888888;
+            margin-right: 10px;
+        }
+        .company{
+            font-size: 13px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: 1.62;
+            letter-spacing: -0.3px;
+            color: #888888;
+        }
+    }
+    .team-intro{
+        text-align: justify;
+    }
+    .images{
+        display: flex;
+        flex : 1;
+        justify-content: space-between;
+        overflow: auto;
+        border: none;
+        img{
+            border-radius: 12px;
+            width : 231px;
+            height: 231px;
+            background-color: #ffffff;
+            opacity: 0.9;
+            margin-left: 3px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+    }
+}
 
 
+
+
+//control component
 .control-container{
     width: 90%;
     min-width: 375px;
