@@ -13,11 +13,10 @@
     width: 90%;
     min-width: 375px;
     max-width: 800px;
-    height: 53px;
+    height: 60px;
     margin-left: auto;
     margin-right: auto;
     border-bottom-style: solid;
-    margin-top: 100px;
     display: flex;
     justify-content: space-around;
     .change-link{
@@ -25,7 +24,7 @@
         display: flex;
         align-items: center;
         font-size: 16px;
-        font-weight: 600;
+        font-weight: 500;
         font-style: normal;
         font-stretch: normal;
         line-height: normal;
@@ -47,16 +46,7 @@
 //     }
 
 
-img{
-    border-radius: 12px;
-    width : 231px;
-    height: 231px;
-    background-color: #ffffff;
-    opacity: 0.9;
-    margin-left: 3px;
-    margin-right: 8px;
-    cursor: pointer;
-}
+
 
 ::-webkit-scrollbar {
     display : none;
@@ -75,7 +65,7 @@ img{
         justify-content: flex-start;
         padding-top: 25px;
         padding-bottom: 25px;
-        font-weight: 800;
+        font-weight: 600;
         font-size: 15px;
         width: 55px;
         height: 19px;
@@ -90,6 +80,16 @@ img{
         justify-content: space-between;
         overflow: auto;
         border: none;
+        img{
+            border-radius: 12px;
+            width : 231px;
+            height: 231px;
+            background-color: #ffffff;
+            opacity: 0.9;
+            margin-left: 3px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
     }
     .text-input{
         width: 100%;

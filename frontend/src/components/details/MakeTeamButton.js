@@ -13,12 +13,36 @@ class MakeTeamButton extends Component {
     // }
 
     render() {
-        const { } = this.props;
+        const { isMadeTeam } = this.props;
         // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기
+        let makeTeamButton = null;
+
+        console.log(isMadeTeam)
+        if (isMadeTeam) {
+            makeTeamButton =
+            <div className="mt-4 mh-auto team-profile-img-warp">
+                <div className="team-profile-img-small first-img">
+                </div>
+                <div className="team-profile-img-small second-img">
+                </div>
+                <div className="team-profile-img-small third-img">
+                </div>
+            </div>;
+        } else {
+            makeTeamButton =
+                <div className="make-team-button mt-4 mh-auto flex-center">
+                    <div className="font-notosan font-white font-16">
+                        함께 미팅할 그룹만들기
+                    </div>
+                </div>;
+        }
+
 
         return (
-            <div className={"App"}>
-                {/* UI 코드 들어갈 곳 */}
+            <div className="pb-36">
+                <Link to="/team_profile" style={{ textDecoration: 'none' }}>
+                    { makeTeamButton }
+                </Link>
             </div>
         );
     }

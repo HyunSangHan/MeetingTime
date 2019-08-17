@@ -18,8 +18,13 @@ class ToolTipUp extends Component {
 
         return (
             <div className={"App"}>
-                <div className="cont">
-                    <h1>tooltip입니다.</h1>
+
+                <div className="tool-tip-up">
+                    <div className="up-triangle-part"></div>
+                    <div className="up-white-triangle-part"></div>
+                    <div className="up-text-area">
+                        여기가 툴팁UP!
+                    </div>
                 </div>
             </div>
         );

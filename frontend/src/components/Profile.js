@@ -27,6 +27,8 @@ class Profile extends Component {
 
         return (    
             <div className="App">
+                {/* test용 */}
+                {my_profile.user.username}
             </div>
         );
     }

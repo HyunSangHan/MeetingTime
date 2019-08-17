@@ -17,7 +17,13 @@ class ToolTipDown extends Component {
 
         return (
             <div className={"App"}>
-                {/* UI 코드 들어갈 곳 */}
+                <div className="tool-tip-up">
+                    <div className="down-text-area">
+                        여기가 툴팁DOWN!
+                    </div>
+                    <div className="down-white-triangle-part"></div>
+                    <div className="down-triangle-part"></div>
+                </div>
             </div>
         );
     }

@@ -1,11 +1,13 @@
 .font-jua {
   letter-spacing: -0.3px;
   font-family: 'Jua', sans-serif !important;
+  letter-spacing: -0.3px;
 }
 
 .font-notosan {
   letter-spacing: -0.3px;
   font-family: 'Noto Sans KR', sans-serif !important;
+  letter-spacing: -0.3px;
 }
 
 .App {
@@ -50,6 +52,14 @@
   width: 100%;
 }
 
+.w6percent {
+  width: 5%;
+}
+
+.w47percent {
+  width: 47%;
+}
+
 .w50percent {
   width: 50%;
 }
@@ -78,7 +88,6 @@ h4 {
 .frame {
   width: 100vw;
   height: 100vh;
-  z-index: 0;
 }
 
 .frame-dark {
@@ -163,8 +172,27 @@ h4 {
   position: fixed;
 }
 
+.fix-bottom {
+  position: fixed;
+  bottom: 0;
+}
+
 .absolute {
   position: absolute;
+}
+
+.mh-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mv-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.mt--1 {
+  margin-top: -8px;
 }
 
 .mt-1 {
@@ -173,6 +201,10 @@ h4 {
 
 .mt-2 {
   margin-top: 16px;
+}
+
+.mt-18 {
+  margin-top: 18px;
 }
 
 .mt-3 {
@@ -207,6 +239,18 @@ h4 {
   margin-top: 100px;
 }
 
+.mb--16 {
+  margin-bottom: -16px;
+}
+
+.mb--36 {
+  margin-bottom: -36px;
+}
+
+.mb-05 {
+  margin-bottom: 4px;
+}
+
 .mb-1 {
   margin-bottom: 8px;
 }
@@ -215,12 +259,20 @@ h4 {
   margin-bottom: 16px;
 }
 
+.mb-18 {
+  margin-bottom: 18px;
+}
+
 .mb-3 {
   margin-bottom: 24px;
 }
 
 .mb-4 {
   margin-bottom: 32px;
+}
+
+.mb-36 {
+  margin-bottom: 36px;
 }
 
 .mb-5 {
@@ -287,6 +339,10 @@ h4 {
   padding-top: 32px;
 }
 
+.pt-36 {
+  padding-top: 36px;
+}
+
 .pt-5 {
   padding-top: 40px;
 }
@@ -317,6 +373,10 @@ h4 {
 
 .pb-4 {
   padding-bottom: 32px;
+}
+
+.pb-36 {
+  padding-bottom: 36px;
 }
 
 .pb-5 {
@@ -363,55 +423,32 @@ h4 {
   z-index: 4;
 }
 
-.font-0 {
-  font-family: "Apple SD Gothic Neo";
-  font-size: 0.75rem;
-  letter-spacing: -0.3px;
+.font-30 {
+  font-size: 30px;
 }
 
-.font-05 {
-  font-family: "Apple SD Gothic Neo";
-  font-size: 0.9rem !important;
-  letter-spacing: -0.3px;
+.font-20 {
+  font-size: 20px;
 }
 
-.font-1 {
-  font-family: "Apple SD Gothic Neo";
-  font-size: 1.0rem !important;
-  letter-spacing: -0.3px;
+.font-18 {
+  font-size: 18px;
 }
 
-.font-2 {
-  font-family: "Apple SD Gothic Neo";
-  font-size: 1.1rem !important;
-  letter-spacing: -0.3px;
+.font-16 {
+  font-size: 16px;
 }
 
-.font-3 {
-  font-family: "Apple SD Gothic Neo";
-  font-size: 1.4rem !important;
-  letter-spacing: -0.3px;
+.font-15 {
+  font-size: 15px;
 }
 
-.font-4 {
-  font-family: "Apple SD Gothic Neo";
-  font-size: 1.6rem !important;
+.font-64 {
+  font-size: 64px;
 }
 
-.font-5 {
-  font-family: "Apple SD Gothic Neo";
-  font-size: 1.8rem !important;
-}
-
-.font-6 {
-  font-family: "Apple SD Gothic Neo";
-  font-size: 2.0rem !important;
-}
-
-.font-big {
-  font-family: "Apple SD Gothic Neo";
-  font-size: 2.5rem !important;
-  font-weight: bolder;
+.font-80 {
+  font-size: 80px;
 }
 
 .font-white {
@@ -424,6 +461,14 @@ h4 {
 
 .font-black {
   color: black;
+}
+
+.font-purple {
+  color: #9013fe;
+}
+
+.font-bold {
+  font-weight: bold;
 }
 
 .font-bolder {
@@ -442,8 +487,8 @@ h4 {
   text-decoration: none;
 }
 
-.bg-main-color {
-  background-color: #4C4C4C;
+.bg-init-color {
+  background-color: #f6f6f6;
 }
 
 @media(max-width: 767px){ /*Mobile*/
