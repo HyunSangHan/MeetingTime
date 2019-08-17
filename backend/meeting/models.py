@@ -17,6 +17,7 @@ class Meeting(models.Model):
     meeting_time = models.DateTimeField()
     location = models.CharField(max_length=20)
     cutline = models.IntegerField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return f'미팅장소: {str(self.location)} / 오픈일자: {str(self.open_time).split(" ")[0]} / 미팅일자: {str(self.meeting_time).split(" ")[0]}'
