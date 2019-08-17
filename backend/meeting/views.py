@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
-from .models import Meeting, Profile, Matching, JoinedUser, KakaoChatting
+from .models import Meeting, Profile, Matching, JoinedUser, KakaoChatting, Validation
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import MeetingSerializer, ProfileSerializer, MatchingSerializer, JoinSerializer, CompanySerializer
@@ -14,6 +14,8 @@ from rest_auth.registration.views import SocialLoginView
 import requests
 import json
 from django.shortcuts import redirect
+from django.core.mail import send_mail
+import random
 
 def meeting_example():
     now = timezone.now()
@@ -119,6 +121,38 @@ def match_example():
 def logout(request):
     auth.logout(request)
     return redirect('http://localhost:3000/')
+
+
+class Email(APIView):
+    def post(self, request, format=None):
+        try:
+            Validation.objects.get(user=request.user).delete()
+        except:
+            pass
+        code = random.randrange(100000,999999)
+        send_mail(
+            '이메일 인증',
+            str(code),
+            'maeng9584@likelion.org',
+            # 발송자 이메일에는 일단 제 이메일을 넣어두었습니다.
+            [request.data["email"]],
+            fail_silently=False,
+        )
+        Validation.objects.create(user=request.user, code=code)
+
+        return Response(status=status.HTTP_201_CREATED)
+
+
+class SentValidation(APIView):
+    def post(self, request, format=None):
+        if request.user.validation.code == int(request.data['code']):
+            user = request.user
+            user.profile.validated = True
+            user.profile.save()
+            Validation.objects.get(user=user).delete()
+            return Response(status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
 def success_matching():

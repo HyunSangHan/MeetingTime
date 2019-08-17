@@ -51,7 +51,7 @@ export default handleActions({
     },
     ...pender({
         type: UPDATE_PROFILE,
-        onSuccess: (state, action) => state.set('my_profile', action.payload.data)
+        onSuccess: (state, action) => state.set('my_profile.user.username', action.payload.data)
                                             .set('is_login_already', true),
         onFailure: (state, action) => state.set('is_login_already', false),
     }),
@@ -74,6 +74,7 @@ export const getMyProfile = createAction(
 
 export const profileEditedAfter = createAction(PROFILE_EDITED_AFTER, payload => payload);
 export const profileEditedBefore = createAction(PROFILE_EDITED_BEFORE, payload => payload);
+
 export const ProfileUpdate = createAction(
     UPDATE_PROFILE,
     (payload) => axios({

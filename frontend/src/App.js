@@ -7,6 +7,7 @@ import TeamProfile from "./components/TeamProfile";
 import Initpage from "./components/Initpage";
 import Waiting from "./components/Waiting";
 import CounterPlayer from "./components/details/CounterPlayer";
+import Email from "./components/details/Email";
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -51,8 +52,8 @@ class App extends Component {
 
     
     render() {
-        const { is_login_already, my_profile } = this.props;
-        
+        const { is_login_already, current_meeting, my_profile } = this.props;
+        console.log(my_profile);
         return (
             <BrowserRouter>
                 <div className="App">
@@ -75,10 +76,19 @@ class App extends Component {
                         )}
                     />
 
+                    <Route exact path="/email"
+                        render={(props) => (
+                            <Email
+                                {...props}
+                                is_login_already={is_login_already}
+                            />
+                        )}
+                    />
+
+
                     <Route path="/profile"
                         render={(props) => (
                             <Profile
-                                {...props}
                             />
                         )} 
                     />

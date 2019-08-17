@@ -2,6 +2,10 @@
   font-family: 'Jua', sans-serif !important;
 }
 
+.font-notosan {
+  font-family: 'Noto Sans KR', sans-serif !important;
+}
+
 .App {
   text-align: center;
 }
