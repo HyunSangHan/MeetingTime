@@ -19,7 +19,6 @@ const initialState = Map({
         id: null,
         image: null,
         is_male: false,
-        last_img_modified_at: null,
         last_intro_modified_at: null,
         last_login_at: null,
         team_introduce: null,

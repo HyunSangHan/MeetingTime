@@ -34,20 +34,32 @@ class JoinButton extends Component {
 
         if (is_login_already) {
             if (nowTime < openTime) {
-                button = <div className={"big-button-black flex-center font-2 font-white"}>
-                            오픈대기중
-                        </div>;
+                button =
+                <div>
+                    <div className="mb-2 font-15 font-grey font-notosan">
+                        남은 시간 32:05:25
+                    </div>                
+                    <div className="join-button-wrap bg-color-waiting mh-auto flex-center">
+                        <div className="font-notosan">
+                            오픈 준비중
+                        </div>
+                    </div>
+                </div>;
             } else if (openTime <= nowTime && nowTime <= closeTime) {
                 if (is_joined_already) {
+                    // 추후 개발할 부분
                     button = <div className={"big-button-black flex-center font-2 font-white"}
                                 onClick={JoinActions.reclickJoinedPopup}>
                                 현재 순위: {joined_user.rank}위
                             </div>;
                 } else {
-                    button = <div className={"big-button-red flex-center font-2 font-white"}
-                                onClick={JoinActions.createJoinedPopup}>
-                                Join
-                            </div>;
+                    button = 
+                    <div className="join-button-wrap bg-color-join mh-auto flex-center">
+                        <div className="font-notosan"
+                            onClick={JoinActions.createJoinedPopup}>
+                            번호표 뽑기
+                        </div>
+                    </div>;
                 }
             } else {
                 
@@ -71,15 +83,20 @@ class JoinButton extends Component {
 
             }
         } else {
-            button = <div className={"big-button-red flex-center font-2 font-white"}
-                onClick={() => {window.alert('로그인이 필요한 서비스입니다.')}}>
-                Join
+            button = 
+            <div className="join-button-wrap bg-color-join mh-auto flex-center">
+                <div className="font-notosan"
+                    onClick={() => {window.alert('로그인이 필요한 서비스입니다.')}}>
+                    번호표 뽑기
+                </div>
             </div>;
         }
 
         return (
-            <div className={"App"}>
-                { button }
+            <div>
+                <div>
+                    { button }
+                </div>
             </div>
         );
     }

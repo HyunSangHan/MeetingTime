@@ -17,8 +17,14 @@ class MakeTeamButton extends Component {
         // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기
 
         return (
-            <div className={"App"}>
-                {/* UI 코드 들어갈 곳 */}
+            <div className="pb-36">
+                <Link to="/team_profile" style={{ textDecoration: 'none' }}>
+                    <div className="make-team-button mt-4 mh-auto flex-center">
+                            <div className="font-notosan font-white font-16">
+                                함께 미팅할 그룹만들기
+                            </div>
+                    </div>
+                </Link>
             </div>
         );
     }
