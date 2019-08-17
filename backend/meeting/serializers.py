@@ -46,8 +46,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             "created_at",
             "last_login_at",
             "team_introduce",
-            "last_img_modified_at",
-            "natural_time"
+            "last_img_modified_at"
             #"last_intro_modified_at"
         )
     def to_representation(self, instance):
