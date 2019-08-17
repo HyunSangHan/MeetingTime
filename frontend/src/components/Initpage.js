@@ -126,6 +126,7 @@ class Initpage extends Component {
 
         return (
             <div className="App">
+                <ToolTipUp/>
                 {/*팝업*/}
                 {is_joined_popup_on &&
                     <div className={"App"}>
