@@ -18,7 +18,6 @@ class Profile extends Component {
             company_value: this.props.my_profile_from_app.company.name,
             emailFront: "",
             code: "",
-            // changed: false,
         }
     }
 
@@ -33,20 +32,10 @@ class Profile extends Component {
         })
     }
 
-    // static getDerivedStateFromProps(nextProps, prevState) {
-    //     if (!prevState.changed) {
-    //         return {
-    //             age_value: nextProps.my_profile.age_range,
-    //             company_value: nextProps.my_profile.company.name
-    //         };
-    //     }
-    // }
-
     handleInputChange = event => {
         const { target: { value, name } } = event;
         this.setState({
             [name]: value
-            // changed: true
         });
     };
 
@@ -85,7 +74,7 @@ class Profile extends Component {
     }
 
     handleSubmit = event => {
-        const { MyProfileActions } = this.props;
+        const { MyProfileActions, history } = this.props;
         const { age_value, company_value } = this.state;
         console.log(this.state);
         event.preventDefault();
@@ -95,7 +84,10 @@ class Profile extends Component {
         MyProfileActions.CompanyUpdate({
             company_value: company_value,
         })
-        MyProfileActions.getMyProfile();
+        MyProfileActions.getMyProfile()
+        .then(() => {
+            history.push('/')
+        })
     };
 
     render(){
@@ -154,14 +146,14 @@ class Profile extends Component {
                             {(!this.props.sent) ?
                                 (
                                     <Fragment>
-                                        <button className="SendButton Send" type="submit" onClick={e => this.onSend(e)}>인증하기</button>
+                                        <button className="SendButton Send" type="button" onClick={e => this.onSend(e)}>인증하기</button>
                                     </Fragment>
                                 )
                                 : (
                                     <Fragment>
                                         <div className="EmailValidation">
                                             <input onChange={(e)=> {this.setState({code: e.target.value})}} placeholder="인증번호 입력"></input>
-                                            <button className="SendButton" type="submit" onClick={e => this.onValidate(e)}>인증</button>
+                                            <button className="SendButton" type="button" onClick={e => this.onValidate(e)}>인증</button>
                                         </div>
                                         {this.props.validated ?
                                             (<div className="ErrorMessage" style={{color: "blue"}}>인증되었습니다</div>)

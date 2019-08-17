@@ -26,7 +26,8 @@ const initialState = Map({
         team_introduce: null,
         user: {
             username: null
-        }
+        },
+        validated: false,
     },
     is_edited_profile: false,
 });
@@ -66,7 +67,7 @@ export const getMyProfile = createAction(
         method: 'get',
         url: '/profile'
     })
-    .then((response) => {   
+    .then((response) => {
         return response
     })
 );
