@@ -64,7 +64,6 @@ export const createJoinedPopup = createAction(
         url: '/join/',
     })
     .then((response) => {
-        console.log("this is working");
         console.log(response);
         return response
     })
@@ -79,7 +78,6 @@ export const getJoinedUser = createAction(
         url: '/join',
     })
     .then((response) => {
-        console.log("this is working");
         console.log(response);
         return response
     })

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../css/info_styles.scss";
+// import "../css/info_styles.scss";
 import { Link } from 'react-router-dom';
 import * as myProfileActions from '../modules/my_profile';
 import { connect } from 'react-redux';
@@ -25,6 +25,7 @@ class MyPlayer extends Component {
                         <img src={my_profile.image || require("../images/noPhoto.jpg")}
                             alt={my_profile.user.username} 
                             className="main-profile"
+                            width="100px"
                         />
                         <ul className="info-list">
                             <li className="list-item">이름 : {my_profile.user.username}</li>

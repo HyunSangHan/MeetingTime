@@ -3,13 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
     "@blueprintjs/core": "^3.18.0",
     "@blueprintjs/icons": "^3.10.0",
-    "axios": "^0.18.0",
-=======
     "axios": "^0.19.0",
->>>>>>> f3cccd700507d006cd7b0b3858e16544b1888782
     "bootstrap": "^4.3.1",
     "connected-react-router": "^6.5.2",
     "history": "^4.9.0",

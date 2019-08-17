@@ -31,6 +31,12 @@ const initialState = Map({
 }); 
 
 export default handleActions({
+    [PROFILE_EDITED_AFTER]: (state) => {
+        return state.set('is_edited_profile', true);
+    },
+    [PROFILE_EDITED_BEFORE]: (state) => {
+        return state.set('is_edited_profile', false);
+    },
     ...pender({
         type: GET_PROFILE,
         onSuccess: (state, action) => state.set('my_profile', action.payload.data)
