@@ -31,6 +31,12 @@ const initialState = Map({
 }); 
 
 export default handleActions({
+    [PROFILE_EDITED_AFTER]: (state) => {
+        return state.set('is_edited_profile', true);
+    },
+    [PROFILE_EDITED_BEFORE]: (state) => {
+        return state.set('is_edited_profile', false);
+    },
     ...pender({
         type: GET_PROFILE,
         onSuccess: (state, action) => state.set('my_profile', action.payload.data)
@@ -69,6 +75,7 @@ export const getMyProfile = createAction(
 export const profileEditedAfter = createAction(PROFILE_EDITED_AFTER, payload => payload);
 export const profileEditedBefore = createAction(PROFILE_EDITED_BEFORE, payload => payload);
 
+
 export const ProfileUpdate = createAction(
     UPDATE_PROFILE,
     (payload) => axios({
@@ -76,8 +83,6 @@ export const ProfileUpdate = createAction(
         url: '/profile/',
         data: {
             age_range: payload.age_value,
-            image: payload.image_value,
-            team_introduce : payload.team_intro_value,
         }
     })
     .then((response) => {
@@ -89,6 +94,7 @@ export const ProfileUpdate = createAction(
     )
 );
 
+
 export const CompanyUpdate = createAction(
     UPDATE_PROFILE,
     (payload) => axios({
@@ -96,6 +102,28 @@ export const CompanyUpdate = createAction(
         url: "/company/",
         data: {
             name: payload.company_value,
+        }
+    })
+    .then((response) => {
+        console.log(response);
+        return response
+    })
+    .catch(
+        console.log("not working (update_profile)")
+    )
+);
+
+export const TeamUpdate = createAction(
+    UPDATE_PROFILE,
+    (payload) => axios({
+        method: "patch",
+        url: '/profile/',
+        data: {
+            image: payload.image_value,
+            image_two: payload.image_two_value,
+            image_three: payload.image_three_value,
+            team_name: payload.team_name_value,
+            team_introduce : payload.team_intro_value,
         }
     })
     .then((response) => {

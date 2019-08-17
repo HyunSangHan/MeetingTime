@@ -1,9 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import '../css/Body.css';
-import '../App.css';
+import '../../App.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actions from './../modules/email';
+import * as actions from '../../modules/email';
 
 class Email extends Component {
 

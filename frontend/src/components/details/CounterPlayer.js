@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import "../css/info_styles.scss";
+import '../../css/Main.scss'; //부모컴포넌트의CSS(SCSS)
+import '../../App.css'; //공통CSS
 import MaterialIcon from 'material-icons-react';
-import GiftPopup from "./popups/GiftPopup";
-import * as currentMatchingActions from "../modules/current_matching";
-import * as playerActions from '../modules/player';
+import GiftPopup from "./GiftPopup";
+import * as currentMatchingActions from '../../modules/current_matching';
+import * as playerActions from '../../modules/player';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 
@@ -14,9 +15,7 @@ class CounterPlayer extends Component {
         this.state = {
             is_greenlight_on_male: this.props.current_matching.is_greenlight_male,
             is_greenlight_on_female: this.props.current_matching.is_greenlight_female,
-            is_gift_on_male: this.props.current_matching.is_gift_male,
-            is_gift_on_female: this.props.current_matching.is_gift_female,
-        };
+        };  
 
     }
 
@@ -79,17 +78,17 @@ class CounterPlayer extends Component {
     
     render() {
         const { is_gift_popup, counter_profile, current_matching } = this.props;  
-        const { is_greenlight_on_male, is_greenlight_on_female, is_gift_on_male, is_gift_on_female } = this.state;
-
+        const { is_greenlight_on_male, is_greenlight_on_female } = this.state;
+        
         return (
             <div className="container">
                 <h2 className="trial-time">당신의 { current_matching.trial_time } 번째 매칭상대</h2>
                 <br/>
                 <span>
                     <div className="column">
-                        <img src={counter_profile.image || require("../images/noPhoto.jpg")}
+                        <img src={counter_profile.image || require("./../../images/noPhoto.jpg")}
                             alt={counter_profile.user.username}
-                            className="main-profile"
+                            className="main-profile" width="100px"
                         />
                         <ul className="info-list">
                             <li className="list-item">이름 : {counter_profile.user.username}</li>
@@ -119,10 +118,10 @@ class CounterPlayer extends Component {
                     
                     안주쏘기 :
                     <span className="icon" onClick={this.handleGiftPopup}>
-                        {is_gift_on_male &&
+                        {current_matching.is_gift_male &&
                             <MaterialIcon icon="local_bar" fontSize="200px" color="orange" />
                         }
-                        {!is_gift_on_male &&
+                        {!current_matching.is_gift_male &&
                             <MaterialIcon icon="local_bar" fontSize="200px" color="black" />
                         }
                     </span>
@@ -141,10 +140,10 @@ class CounterPlayer extends Component {
                     
                     안주쏘기 :
                     <span className="icon" onClick={this.handleGiftPopup}>
-                        {is_gift_on_female &&
+                        {current_matching.is_gift_female &&
                             <MaterialIcon icon="local_bar" fontSize="200px" color="orange" />
                         }
-                        {!is_gift_on_female &&
+                        {!current_matching.is_gift_female &&
                             <MaterialIcon icon="local_bar" fontSize="200px" color="black" />
                         }
                     </span>
@@ -168,6 +167,7 @@ const mapStateToProps = (state) => ({
     counter_profile: state.player.get('counter_profile'),
     is_gift_popup : state.player.get('is_gift_popup'),
     current_matching: state.current_matching.get('current_matching'),
+    is_current_matching: state.current_matching.get('is_current_matching'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CounterPlayer);

@@ -2,18 +2,19 @@
 import React, { Component } from 'react';
 import './App.css';
 import Main from "./components/Main"
-import Profile from "./components/details/Profile";
+import Profile from "./components/Profile";
+import TeamProfile from "./components/TeamProfile";
 import Initpage from "./components/Initpage";
-import Email from "./components/Email";
-import CounterPlayer from "./components/CounterPlayer";
+import Waiting from "./components/Waiting";
+import CounterPlayer from "./components/details/CounterPlayer";
+import Email from "./components/details/Email";
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as myProfileActions from './modules/my_profile';
 import * as currentMeetingActions from './modules/current_meeting';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import Loading from './components/Loading';
+import Loading from './components/details/Loading';
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -55,18 +56,18 @@ class App extends Component {
         console.log(my_profile);
         return (
             <BrowserRouter>
-                <div className="frame">
-                        <Route exact path="/"
-                            render={(props) => (
-                                <Initpage
-                                    {...props}
-                                    is_login_already={is_login_already}
-                                    my_profile={my_profile}
-                                />
-                            )}
-                        />
+                <div className="App">
+                    <Route exact path="/"
+                        render={(props) => (
+                            <Initpage
+                                {...props}
+                                is_login_already={is_login_already}
+                                my_profile={my_profile}
+                            />
+                        )}
+                    />
 
-                        <Route path="/matching"
+                    <Route path="/matching"
                         render={(props) => (
                             <Main
                                 {...props}
@@ -88,6 +89,23 @@ class App extends Component {
                     <Route path="/profile"
                         render={(props) => (
                             <Profile
+                            />
+                        )} 
+                    />
+
+
+                    <Route path="/waiting"
+                        render={(props) => (
+                            <Waiting
+                                {...props}
+                            />
+                        )} 
+                    />
+
+                    <Route path="/team_profile"
+                        render={(props) => (
+                            <TeamProfile
+                                {...props}
                             />
                         )} 
                     />

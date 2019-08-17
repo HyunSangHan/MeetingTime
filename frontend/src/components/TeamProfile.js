@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import FooterScrollable from "./../FooterScrollable";
-import * as myProfileActions from "../../modules/my_profile";
-import "../../css/profile.scss";
+import * as myProfileActions from "../modules/my_profile";
+import "../css/Profile.scss";
+import '../App.css';
+import Header from './details/Header';
+import TwoTab from "./details/TwoTab";
+import TeamProfileNew from "./details/TeamProfileNew";
+import TeamProfilePrev from "./details/TeamProfilePrev";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import Textarea from "react-textarea-autosize";
 import axios from "axios";
 import { Link } from 'react-router-dom';
 
-
-class Profile extends Component {
+class TeamProfile extends Component {
 
     constructor(props) {
         console.log(props);
@@ -83,12 +86,12 @@ class Profile extends Component {
         return (
             <div className="form-component" >
                 <h3 className="header">
-                    "프로필 수정"
+                    미팅그룹
                 </h3>
                 <br/>
 
                 <div className="profile-image">
-                    <img src={my_profile.image || require("../../images/noPhoto.jpg")}
+                    <img src={my_profile.image || require("../images/noPhoto.jpg")}
                         alt="" />
                 </div>
 
@@ -186,7 +189,6 @@ class Profile extends Component {
             </form>
             <br/>
             <h3 className="update-time">{!my_profile.natural_time === null ? " 최종 수정 : " + my_profile.natural_time : "null"}</h3>
-            <FooterScrollable/>
         </div>
         );
     }
@@ -202,4 +204,4 @@ const mapStateToProps = (state) => ({
     my_profile: state.my_profile.get('my_profile'),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(TeamProfile);

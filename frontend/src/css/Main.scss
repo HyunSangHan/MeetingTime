@@ -1,0 +1,11 @@
+//모바일&PC 공통 CSS들어갈 곳
+
+
+
+@media(max-width: 767px){ /*Mobile*/
+    //모바일(너비 767px이하)에만 해당되는 CSS들어갈 곳
+}
+    
+@media(min-width: 768px){ /*PC*/
+    //PC(너비 768px이상)에만 해당되는 CSS들어갈 곳
+}

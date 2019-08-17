@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import "../css/player_styles.scss";
-import MyPlayer from "./MyPlayer";
-import CounterPlayer from "./CounterPlayer";
+// import "../css/player_styles.scss";
+import MyPlayer from "./../outdated/MyPlayer";
+import CounterPlayer from "../components/details/CounterPlayer";
 
 class Player extends Component {
 

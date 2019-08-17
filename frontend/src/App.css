@@ -1,3 +1,11 @@
+.font-jua {
+  font-family: 'Jua', sans-serif !important;
+}
+
+.font-notosan {
+  font-family: 'Noto Sans KR', sans-serif !important;
+}
+
 .App {
   text-align: center;
 }
@@ -91,31 +99,46 @@ h4 {
   text-align: right;
 }
 
+.flex {
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;}
+
 .flex-center {
-  display: flex;
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
   justify-content: center;
   align-items: center;
 }
 
 .flex-j-start {
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 
 .flex-j-end {
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
 
 .flex-a-start {
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
   display: flex;
   justify-content: center;
   align-items: flex-start;
 }
 
 .flex-a-end {
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -416,63 +439,7 @@ h4 {
   background-color: #4C4C4C;
 }
 
-@media(max-width: 370px){ /*Small Mobile*/
-
-  .frame-half {
-    width: 100vw;
-    height: 100vh;
-    z-index: 0;
-  }
-
-  .font-0 {
-    font-family: "Apple SD Gothic Neo";
-    font-size: 0.6rem;
-  }
-
-  .font-05 {
-    font-family: "Apple SD Gothic Neo";
-    font-size: 0.75rem !important;
-  }
-
-  .font-1 {
-    font-family: "Apple SD Gothic Neo";
-    font-size: 0.9rem !important;
-  }
-
-  .font-2 {
-    font-family: "Apple SD Gothic Neo";
-    font-size: 0.95rem !important;
-  }
-
-  .font-3 {
-    font-family: "Apple SD Gothic Neo";
-    font-size: 1.1rem !important;
-  }
-
-  .font-4 {
-    font-family: "Apple SD Gothic Neo";
-    font-size: 1.2rem !important;
-  }
-
-  .font-5 {
-    font-family: "Apple SD Gothic Neo";
-    font-size: 1.3rem !important;
-  }
-
-  .font-6 {
-    font-family: "Apple SD Gothic Neo";
-    font-size: 1.5rem !important;
-  }
-
-  .font-big {
-    font-family: "Apple SD Gothic Neo";
-    font-size: 2.0rem !important;
-    font-weight: bolder;
-  }
-
-}
-
-@media(max-width: 1024px){ /*Mobile & Tablet*/
+@media(max-width: 767px){ /*Mobile*/
   .mobile-none {
     display: none !important;
   }
@@ -490,7 +457,7 @@ h4 {
   }
 }
 
-@media(min-width: 1025px){ /*PC*/
+@media(min-width: 768px){ /*PC*/
   .pc-none {
     display: none !important;
   }
