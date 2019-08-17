@@ -33,7 +33,7 @@ urlpatterns = [
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
     path('logout/', views.logout, name='logout'),
     path('', include(router.urls)),
-    path('profile/', views.Profile.as_view()),
+    path('profile/', views.CurrentProfile.as_view()),
     path('email/', views.Email.as_view()),
     path('validate/', views.SentValidation.as_view()),
     path('company/', views.Company.as_view()),
