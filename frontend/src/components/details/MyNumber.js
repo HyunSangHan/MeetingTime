@@ -17,8 +17,13 @@ class MyNumber extends Component {
         // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기
 
         return (
-            <div className={"App"}>
-                {/* UI 코드 들어갈 곳 */}
+            <div className="number-info-container pt-36 mb--36">
+                <div className="font-18 font-bold font-notosan">
+                    선착순 번호
+                </div>
+                <div className="font-80 font-jua mt--1 mb--2">
+                    036 {/* 데이터 들어가야 할 곳 */}
+                </div>
             </div>
         );
     }

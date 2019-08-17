@@ -1,7 +1,22 @@
-//모바일&PC 공통 CSS들어갈 곳
+.waiting-header {
+    height: 88px;
+    background-color: #50e3c2;
+}
 
+.container-shadow {
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.1);
+}
 
+.number-info-container {
+    width: 100%;
+    height: auto;
+    min-height: 120px;
+    background-color: #fff;
+    z-index: 2;
 
+}
 @media(max-width: 767px){ /*Mobile*/
     //모바일(너비 767px이하)에만 해당되는 CSS들어갈 곳
 }

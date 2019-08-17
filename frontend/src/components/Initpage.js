@@ -101,9 +101,8 @@ class Initpage extends Component {
             meetingWeek = ""
         }
 
-
         let authButton = null;
-        if (this.props.is_login_already) {
+        if (is_login_already) {
             authButton = 
                 <div className="mt-18">
                     {/* <div className="App font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div> */}
@@ -116,15 +115,17 @@ class Initpage extends Component {
         const lastShuffledAt = new Date(my_profile.last_matching_time); //나중에 하위 필드 추가되면 수정필요
         const lastTeamModifiedAt = new Date(my_profile.last_intro_modified_at);
         let isMadeTeam = null;
-        console.log(my_profile)
-        console.log(lastShuffledAt)
-        console.log(lastTeamModifiedAt)
         if (lastShuffledAt < lastTeamModifiedAt) {
             isMadeTeam = true;
         } else {
             isMadeTeam = false;
         }
-        // console.log(joined_user.profile)
+        let makeTeamButton = null;
+        if (is_login_already) {
+            makeTeamButton = <MakeTeamButton
+                            isMadeTeam = { isMadeTeam }
+                            />;
+        }
 
         return (
             <div className="frame bg-init-color">
@@ -143,20 +144,13 @@ class Initpage extends Component {
                         <div className={"frame-dark fix z-3"}/>
                     </div>
                 }
-                                {/* <div className="App font-big font-jua"><b>{meetingWeek} {meetingDay} {current_meeting.location}</b></div>
-                                <div className="flex-center mb-3">
-                                    <JoinButton 
-                                        is_login_already={this.props.is_login_already}
-                                    />
-                                </div>
-                                { authButton }
-                                { profileAlertMsg } */}
-                <MeetingInfo
-                    makeTeamButton = {<MakeTeamButton
-                                        isMadeTeam = { isMadeTeam }
-                                        />}
-                    isMadeTeam = { isMadeTeam }
-                />
+                <div className="container-shadow mh-auto">
+                    <MeetingInfo
+                        makeTeamButton = { makeTeamButton }
+                        isMadeTeam = { isMadeTeam }
+                        current_meeting = { current_meeting }
+                    />
+                </div>
                 <div className="fix-bottom w100percent mb-36">
                     <JoinButton 
                         is_login_already = {is_login_already} />

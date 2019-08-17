@@ -1,10 +1,14 @@
-.meeting-info-container {
+.container-shadow {
     width: 90%;
+    max-width: 800px;
+    box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.meeting-info-container {
+    width: 100%;
     height: auto;
     min-height: 280px;
-    max-width: 800px;
     background-color: #fff;
-    box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.1);
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
     position: relative;
@@ -51,6 +55,10 @@
 
 .bg-color-join {
     background-color: #9013fe;
+}
+
+.bg-color-fail {
+    background-color: #999;
 }
 
 .team-profile-img-warp {

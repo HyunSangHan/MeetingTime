@@ -26,18 +26,18 @@ class MeetingInfo extends Component {
                 </div>
                     <div className="d-day mh-auto flex-center mb-3">{/* 디데이 */}
                         <div className="font-jua font-white font-18 mt-1">{/* 디데이 */}
-                            D-3
+                            D-3 {/* TODO: 데이터 넣어야함 */}
                         </div>
                     </div>
                     <div className="font-jua font-30 mb-1">{/* 디스크립션 */}
-                        자만추 모여라 in 강남
+                        { current_meeting.description } in { current_meeting.location }
                     </div>
                     <div className="font-notosan font-grey font-15 mb-1">{/* 일시 */}
-                        <strong>일시  </strong> 2019년 8월 31일 금요일
+                        <strong>일시 </strong> 2019년 8월 31일 금요일 {/* TODO: 데이터 넣어야함 */}
                     </div>
                     <div>
                         <div className="font-notosan font-grey font-15">{/* 장소 */}
-                            <strong>장소  </strong> 강남역 어딘가
+                            <strong>장소 </strong> { current_meeting.location} 근처 어딘가
                         </div>
                     </div>
                 </div>

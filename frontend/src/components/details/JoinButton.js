@@ -37,7 +37,7 @@ class JoinButton extends Component {
                 button =
                 <div>
                     <div className="mb-2 font-15 font-grey font-notosan">
-                        남은 시간 32:05:25
+                        남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
                     </div>                
                     <div className="join-button-wrap bg-color-waiting mh-auto flex-center">
                         <div className="font-notosan">
@@ -48,37 +48,76 @@ class JoinButton extends Component {
             } else if (openTime <= nowTime && nowTime <= closeTime) {
                 if (is_joined_already) {
                     // 추후 개발할 부분
-                    button = <div className={"big-button-black flex-center font-2 font-white"}
-                                onClick={JoinActions.reclickJoinedPopup}>
-                                현재 순위: {joined_user.rank}위
-                            </div>;
+                    button =
+                    <div>
+                        <div className="mb-2 font-15 font-grey font-notosan">
+                            남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
+                        </div>                
+                        <div className="join-button-wrap bg-color-waiting mh-auto flex-center">
+                            <div className="font-notosan"
+                            onClick={JoinActions.reclickJoinedPopup}>
+                                입장전
+                            </div>
+                        </div>
+                    </div>;
                 } else {
                     button = 
-                    <div className="join-button-wrap bg-color-join mh-auto flex-center">
-                        <div className="font-notosan"
-                            onClick={JoinActions.createJoinedPopup}>
-                            번호표 뽑기
+                    <div>
+                        <div className="mb-2 font-15 font-grey font-notosan">
+                            남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
+                        </div>      
+                        <div className="join-button-wrap bg-color-join mh-auto flex-center">
+                            <div className="font-notosan"
+                                onClick={JoinActions.createJoinedPopup}>
+                                번호표 뽑기
+                            </div>
                         </div>
                     </div>;
                 }
             } else {
-                
-                if (is_joined_already && joined_user.rank <= current_meeting.cutline) {
+                // else와 if를 뒤바꾸는게낫겠다
+                if (is_joined_already && joined_user.rank <= current_meeting.cutline && joined_user.rank != null) {
+                    console.log(joined_user.rank)
+                    console.log(current_meeting.cutline)
                     //for winner
-                    button = <Link to="/matching">
-                                <div className={"big-button-black flex-center font-2 font-white"}>
-                                    커트라인:{current_meeting.cutline}명<br/>매칭 입장하기
+                    button = 
+                    <div>
+                        <div className="mb-2 font-15 font-purple font-notosan">
+                            축하합니다! 선착순에 통과하였습니다!
+                        </div>
+                        <Link to="/matching" style={{ textDecoration: 'none' }}>
+                            <div className="join-button-wrap bg-color-join mh-auto flex-center">
+                                <div className="font-notosan">
+                                입장하기
                                 </div>
-                            </Link>;
-                } else if (is_joined_already && joined_user.rank > current_meeting.cutline) {
-                    //for loser
-                    button = <div className={"big-button-black flex-center font-2 font-white"}>
-                                커트라인:{current_meeting.cutline}명에<br/> 들지 못했어요
-                            </div>;
+                            </div>
+                        </Link>
+                    </div>;
+                } else if (is_joined_already && joined_user.rank > current_meeting.cutline && joined_user.rank != null) {
+                    // 나중에는 다음 미팅 알림받기로 변경
+                    button = 
+                    <div>
+                        <div className="mb-2 font-15 font-grey font-notosan">
+                            안타깝지만 선착순에 들지 못했어요ㅠㅠ
+                        </div>
+                        <div className="join-button-wrap bg-color-fail mh-auto flex-center">
+                            <div className="font-notosan">
+                                입장불가
+                            </div>
+                        </div>
+                    </div>;
                 } else {
-                    button = <div className={"big-button-black flex-center font-2 font-white"}>
+                    button = 
+                    <div>
+                        <div className="mb-2 font-15 font-grey font-notosan">
+                            이번 미팅은 이미 매칭이 진행중이에요ㅠㅠ 
+                        </div>
+                        <div className="join-button-wrap bg-color-fail mh-auto flex-center">
+                            <div className="font-notosan">
                                 다음 미팅을 기다려주세요
-                            </div>;
+                            </div>
+                        </div>
+                    </div>;
                 }
 
             }
@@ -87,7 +126,7 @@ class JoinButton extends Component {
             <div className="join-button-wrap bg-color-join mh-auto flex-center">
                 <div className="font-notosan"
                     onClick={() => {window.alert('로그인이 필요한 서비스입니다.')}}>
-                    번호표 뽑기
+                    이번주 미팅상대 찾기
                 </div>
             </div>;
         }
