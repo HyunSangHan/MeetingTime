@@ -19,16 +19,10 @@ class Profile extends Component {
             company_value: this.props.my_profile.company.name,
             team_intro_value: this.props.my_profile.team_introduce,
             image_value: this.props.my_profile.image,
-            preview: null,
-
-            imgSrc: null,
-            imgSrcExt: null,
-            crop: {
-                aspect: 1/1
+            preview: null
             }
         }
-    }
-
+    
     componentDidMount() {
         const { MyProfileActions } = this.props;
         MyProfileActions.getMyProfile();
@@ -37,9 +31,9 @@ class Profile extends Component {
     handleInputChange = event => {
         const { target: { value, name } } = event;
         this.setState({
-            is_age_changed: true,
             [name]: value
         });
+        console.log(name, value);
     };
 
     handleImageChange = event => {
