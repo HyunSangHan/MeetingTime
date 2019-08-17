@@ -21,7 +21,6 @@ import * as playerActions from '../modules/player';
 import * as myProfileActions from '../modules/my_profile';
 import axios from 'axios';
 
-
 class Main extends Component {
     constructor(props){
         super(props);

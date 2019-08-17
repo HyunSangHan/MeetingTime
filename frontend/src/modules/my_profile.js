@@ -26,10 +26,11 @@ const initialState = Map({
         team_introduce: null,
         user: {
             username: null
-        }
+        },
+        validated: false,
     },
     is_edited_profile: false,
-}); 
+});
 
 export default handleActions({
     ...pender({
@@ -62,17 +63,13 @@ export const deletePopup = createAction(DELETE_POPUP);
 
 export const getMyProfile = createAction(
     GET_PROFILE,
-    (payload) => axios({
+    () => axios({
         method: 'get',
-        url: '/profile',
+        url: '/profile'
     })
     .then((response) => {
-        console.log(response);
         return response
     })
-    .catch(
-        console.log("not working (profile)")
-    )
 );
 
 export const ProfileUpdate = createAction(
@@ -82,7 +79,6 @@ export const ProfileUpdate = createAction(
         url: '/profile/',
         data: {
             age_range: payload.age_value,
-            team_introduce : payload.team_intro_value,
         }
     })
     .then((response) => {

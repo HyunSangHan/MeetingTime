@@ -104,7 +104,7 @@ class Initpage extends Component {
 
         let authButton = null;
         if (is_login_already) {
-            authButton = 
+            authButton =
                 <div className="mt-18">
                     {/* <div className="App font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div> */}
                     <Link to="/profile" className="font-grey font-bold font-16 w100percent" style={{ textDecoration: 'none' }}>개인정보수정</Link>
