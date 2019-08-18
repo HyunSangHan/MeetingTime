@@ -1,0 +1,46 @@
+//연석이가 작성한 CSS
+
+.container{
+    background-color : #4c4c4c;
+    .no-matching{
+        color: white;
+        font-size: 40px;
+    }
+    .app-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 35px;
+        .appstores {
+        margin-top: 25px;
+        img {
+            height: 40px;
+            &:first-child {
+            margin-right: 10px;
+            }
+        }
+        }
+    }
+    .white-box {
+        text-align: center;
+        padding: 15px;
+        .change-link {
+        color: lightseagreen;
+        cursor: pointer;
+        }
+        .change-player {
+            color : white;
+            font-size: 18px;
+            font-weight: 400;
+            margin: 15px;
+        }
+        
+    }
+    .form-box {
+        margin-bottom: 10px;
+        padding: 0 40px;
+        padding-top: 30px;
+    }
+    
+
+}

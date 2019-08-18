@@ -21,6 +21,10 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env
+**/.env
+secrets.json
+**/secrets.json
 
 .idea/
 
@@ -37,3 +41,8 @@ __pycache__/
 local_settings.py
 **/local_settings.py
 **/db.sqlite3
+
+
+.vscode/
+*venv/
+**/migrations/**

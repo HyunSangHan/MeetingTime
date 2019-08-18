@@ -17,11 +17,29 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from meeting import views
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 router = routers.DefaultRouter()
 router.register('meeting_info', views.MeetingInfoView, 'meeting_info')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls))
+    path('join/', views.Join.as_view()),
+    path('current_meeting/', views.CurrentMeeting.as_view()),
+    path('counter_profile/', views.CounterProfile.as_view()),
+    path('rest-auth/', include('rest_auth.urls')),
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('logout/', views.logout, name='logout'),
+    path('', include(router.urls)),
+    path('profile/', views.CurrentProfile.as_view()),
+    path('email/', views.Email.as_view()),
+    path('validate/', views.SentValidation.as_view()),
+    path('company/', views.Company.as_view()),
+    path('current_matching/', views.CurrentMatching.as_view())
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += [
+    path('rest-auth/kakao/', views.KakaoLogin.as_view())
 ]
