@@ -23,7 +23,9 @@ class TeamProfileNew extends Component {
             preview_three: null,
 
             team_name_value: null,
-            team_intro_value: null
+            team_intro_value: null,
+
+            is_three_images: false,
         }
     }
 
@@ -102,7 +104,11 @@ class TeamProfileNew extends Component {
         const { MyProfileActions } = this.props;
         const { team_name_value, team_intro_value, preview, preview_two, preview_three, is_edited_profile } = this.state;
         event.preventDefault();
-        
+
+        if(preview && preview_two && preview_three){
+            this.setState({
+                is_three_images: true,
+            });
         MyProfileActions.createPopup();
         MyProfileActions.TeamUpdate({
             team_name_value : team_name_value,
@@ -119,10 +125,12 @@ class TeamProfileNew extends Component {
             this.handleImageSubmit_three();
         }
 
-        MyProfileActions.getMyProfile();
-        alert("그룹이 생성되었습니다.");
-    };
+        alert("새 그룹이 생성되었습니다.");
 
+        }else{
+            alert("세 이미지를 모두 채워주세요");
+        }
+    };
 
     render() {
         const { my_profile, is_edited_profile } = this.props;        // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기
