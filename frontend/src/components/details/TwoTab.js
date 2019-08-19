@@ -12,7 +12,7 @@ class TwoTab extends Component {
         super(props);
         
         this.state={
-            action : "new"
+            action : "prev"
         }
     }
    
