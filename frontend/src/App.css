@@ -1,17 +1,17 @@
 .font-jua {
   letter-spacing: -0.3px;
   font-family: 'Jua', sans-serif !important;
-  letter-spacing: -0.3px;
 }
 
 .font-notosan {
   letter-spacing: -0.3px;
   font-family: 'Noto Sans KR', sans-serif !important;
-  letter-spacing: -0.3px;
 }
 
 .App {
   text-align: center;
+  letter-spacing: -0.3px;
+  font-family: 'Noto Sans KR', sans-serif !important;
 }
 
 .margin-auto {
@@ -443,6 +443,10 @@ h4 {
   font-size: 15px;
 }
 
+.font-13 {
+  font-size: 13px;
+}
+
 .font-64 {
   font-size: 64px;
 }
@@ -457,6 +461,10 @@ h4 {
 
 .font-grey {
   color: grey;
+}
+
+.font-lightgrey {
+  color: #888;
 }
 
 .font-black {

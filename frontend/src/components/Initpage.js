@@ -78,6 +78,16 @@ class Initpage extends Component {
         const todayLabel = week[today];
         return todayLabel;
     }
+
+    blockJoin = () => () => {
+        const { history, isMadeTeam } = this.props;
+        if (!isMadeTeam) {
+            if(window.confirm("미팅에 참여하실 '팀'을 먼저 결성해야 번호표를 뽑으실 수 있어요. 미팅 그룹 생성 페이지로 이동하실래요?")){
+                history.push('/team_profile')
+            }    
+        }
+    }
+
     render() {
         const { my_profile, is_joined_popup_on, joined_user, JoinActions, is_joined_already, current_meeting, is_login_already } = this.props;
 
@@ -124,27 +134,12 @@ class Initpage extends Component {
         let makeTeamButton = null;
         if (is_login_already) {
             makeTeamButton = <MakeTeamButton
-                            isMadeTeam = { isMadeTeam }
+                                isMadeTeam = { isMadeTeam }
                             />;
         } 
 
         return (
             <div className="frame bg-init-color">
-                {/*팝업*/}
-                 {is_joined_popup_on &&
-                    <div className={"App"}>
-                        <div className={"flex-center"}>
-                            <div className={"fix minus-height z-4"}>
-                                <JoinedPopup
-                                    rank={joined_user.rank}
-                                    deletePopup={JoinActions.deletePopup}
-                                    is_joined_already={is_joined_already}
-                                />
-                            </div>
-                        </div>
-                        <div className={"frame-dark fix z-3"}/>
-                    </div>
-                }
                 <div className="container-shadow mh-auto">
                     <MeetingInfo
                         makeTeamButton = { makeTeamButton }
@@ -152,9 +147,12 @@ class Initpage extends Component {
                         current_meeting = { current_meeting }
                     />
                 </div>
-                <div className="fix-bottom w100percent mb-36">
+                <div className="fix-bottom w100percent mb-36"
+                    onClick={this.blockJoin()}>
                     <JoinButton 
-                        is_login_already = {is_login_already} />
+                        is_login_already = {is_login_already}
+                        isMadeTeam = {isMadeTeam}
+                    />
                     { authButton }
                 </div>
             </div>

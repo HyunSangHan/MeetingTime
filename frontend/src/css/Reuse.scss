@@ -102,11 +102,14 @@
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.05);
     background-color: #ffffff;
     display: flex;
+
     .ArrowBack {
         position: absolute;
         margin-left: 22.5px;
         margin-top: 19px;
+        cursor: pointer;
     }
+
     .HeaderMessage {
         padding-top: 20px;
         padding-bottom: 15px;
