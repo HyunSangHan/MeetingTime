@@ -31,8 +31,6 @@ class TeamProfilePrev extends Component {
     }
 
     componentDidMount(){
-        const { MyProfileActions } = this.props;
-        MyProfileActions.getMyProfile();
     }
 
     //수정 관련 함수들
@@ -73,7 +71,7 @@ class TeamProfilePrev extends Component {
     //이미지 제출 함수
     handleImageSubmit = () => {
         const formData = new FormData();
-        const { image_value, image_two_value, image_three_value, preview, preview_two, preview_three } = this.state;
+        const { image_value } = this.state;
         
         formData.append('image', image_value, image_value.name);
         axios.patch('http://localhost:3000/profile/', formData)
@@ -83,7 +81,7 @@ class TeamProfilePrev extends Component {
     }
     handleImageSubmit_two = () => {
         const formData = new FormData();
-        const { image_value, image_two_value, image_three_value, preview, preview_two, preview_three } = this.state;
+        const { image_two_value } = this.state;
         formData.append('image_two', image_two_value, image_two_value.name);
         console.log(formData);
         axios.patch('http://localhost:3000/profile/', formData)
@@ -94,7 +92,7 @@ class TeamProfilePrev extends Component {
 
     handleImageSubmit_three = () => {
         const formData = new FormData();
-        const { image_value, image_two_value, image_three_value, preview, preview_two, preview_three } = this.state;
+        const { image_three_value } = this.state;
         console.log(formData);
         formData.append('image_three', image_three_value, image_three_value.name);
         axios.patch('http://localhost:3000/profile/', formData)
@@ -132,7 +130,6 @@ class TeamProfilePrev extends Component {
 
 
     render() {
-        const { my_profile, is_edited_profile } = this.props;        // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기
         const { team_name_value, team_intro_value, preview, preview_two, preview_three } = this.state;
         return (
             <div className="team-container">
@@ -251,14 +248,4 @@ class TeamProfilePrev extends Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    MyProfileActions: bindActionCreators(myProfileActions, dispatch),
-});
-
-const mapStateToProps = (state) => ({
-    is_login_already: state.my_profile.get('is_login_already'),
-    is_edited_profile: state.my_profile.get('is_edited_profile'),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(TeamProfilePrev);
+export default TeamProfilePrev;
