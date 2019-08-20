@@ -26,7 +26,7 @@ class JoinButton extends Component {
     }
 
     render() {
-        const { JoinActions, is_joined_already, is_login_already, joined_user, current_meeting } = this.props;
+        const { JoinActions, is_joined_already, is_login_already, joined_user, current_meeting, is_current_matching } = this.props;
         const openTime = Date.parse(current_meeting.open_time)
         const closeTime = Date.parse(current_meeting.close_time)
         const nowTime = new Date().getTime()
@@ -76,7 +76,7 @@ class JoinButton extends Component {
                 }
             } else {
                 // else와 if를 뒤바꾸는게낫겠다
-                if (is_joined_already && joined_user.rank <= current_meeting.cutline && joined_user.rank != null) {
+                if ( is_current_matching && is_joined_already && joined_user.rank <= current_meeting.cutline && joined_user.rank != null) {
                     console.log(joined_user.rank)
                     console.log(current_meeting.cutline)
                     //for winner
