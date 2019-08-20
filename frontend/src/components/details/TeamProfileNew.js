@@ -129,107 +129,118 @@ class TeamProfileNew extends Component {
         const { MyProfileActions, team_name_value, team_intro_value, preview, preview_two, preview_three } = this.state;
         return (
             <div className="team-container">
-
-                <div className="title font-notosan">팀 멤버</div>
-
-                <div className="images">
-
-                    {!preview ?
-                        <img src={require("../../images/noPhoto.jpg")} 
-                            onClick={() => this.fileInput.click()}
-                        />
-                        :
-                        <img src={preview} onClick={() => this.fileInput.click()}/>
-                    }
-                    {!preview_two ? 
-                        <img src={require("../../images/noPhoto.jpg")}
-                            onClick={() => this.fileInput_two.click()}
-                        />
+                <div className="title font-notosan">팀 멤버
+                <span className="title-noti font-notosan ml-2">* 멤버수는 본인을 포함, 3명을 기본으로 합니다.</span>
+            </div>
+            <div className="images">
+                {!preview ?
+                    <div className="each-image flex-center" onClick={() => this.fileInput.click()}>
+                        <div className="App">
+                            <img className="smile" src={require("../../images/smile.png")} />
+                            <div className="mt-2 font-16 font-bold">
+                                사진을 업로드해주세요.
+                            </div>
+                        </div>
+                    </div>
                     :
-                        <img src={preview_two} onClick={() => this.fileInput_two.click()}/>
-                    }
-                    {!preview_three ?
-                        <img src={require("../../images/noPhoto.jpg")}
-                            onClick={() => this.fileInput_three.click()}
-                        />
-                    :
-                        <img src={preview_three} onClick={() => this.fileInput_three.click()}/>
-                    }
+                    <img className="each-image" src={preview} onClick={() => this.fileInput.click()}/>
+                }
+                {!preview_two ? 
+                    <div className="each-image flex-center" onClick={() => this.fileInput_two.click()}>
+                    <div className="App">
+                        <img className="smile" src={require("../../images/smile.png")} />
+                        <div className="mt-2 font-16 font-bold">
+                            사진을 업로드해주세요.
+                        </div>
+                    </div>
                 </div>
+            :
+                    <img className="each-image" src={preview_two} onClick={() => this.fileInput_two.click()}/>
+                }
+                {!preview_three ?
+                    <div className="each-image flex-center" onClick={() => this.fileInput_three.click()}>
+                    <div className="App">
+                        <img className="smile" src={require("../../images/smile.png")} />
+                        <div className="mt-2 font-16 font-bold">
+                            사진을 업로드해주세요.
+                        </div>
+                    </div>
+                </div>
+                :
+                <img className="each-image" src={preview_three} onClick={() => this.fileInput_three.click()}/>
+                }
+            </div>
 
-                    
-                    <form
-                        className="form"
-                        onSubmit={this.handleSubmit}
-                        method="patch"
-                        encType="multipart/form-data"
-                    >      
-                    {/* 이미지 업로더 숨기기 */}
-                        <input
-                            style={{display: 'none'}}
-                            type="file"
-                            onChange={this.handleImageChange}
-                            ref={fileInput => this.fileInput = fileInput}
-                            name="image_value"
-                            className="image-uploader"
-                        />
-                        <input
-                            style={{display: 'none'}}
-                            type="file"
-                            onChange={this.handleImageChange_two}
-                            ref={fileInput_two => this.fileInput_two = fileInput_two}
-                            name="image_two_value"
-                            className="image-uploader"
-                        />
-                        <input
-                            style={{display: 'none'}}
-                            type="file"
-                            onChange={this.handleImageChange_three}
-                            ref={fileInput_three => this.fileInput_three = fileInput_three}
-                            name="image_three_value"
-                            className="image-uploader"
-                        />
+                <form
+                    className="form"
+                    onSubmit={this.handleSubmit}
+                    method="patch"
+                    encType="multipart/form-data"
+                >      
+                {/* 이미지 업로더 숨기기 */}
+                    <input
+                        style={{display: 'none'}}
+                        type="file"
+                        onChange={this.handleImageChange}
+                        ref={fileInput => this.fileInput = fileInput}
+                        name="image_value"
+                        className="image-uploader"
+                    />
+                    <input
+                        style={{display: 'none'}}
+                        type="file"
+                        onChange={this.handleImageChange_two}
+                        ref={fileInput_two => this.fileInput_two = fileInput_two}
+                        name="image_two_value"
+                        className="image-uploader"
+                    />
+                    <input
+                        style={{display: 'none'}}
+                        type="file"
+                        onChange={this.handleImageChange_three}
+                        ref={fileInput_three => this.fileInput_three = fileInput_three}
+                        name="image_three_value"
+                        className="image-uploader"
+                    />
+                
+                    <div className="title font-notosan">팀 이름</div>
+                    <input
+                        type="text"
+                        value={team_name_value}
+                        onChange={this.handleInputChange}
+                        className="text-input font-notosan"
+                        name="team_name_value"
+                        placeholder="10자 이내로 작성해주세요"
+                    />
 
-                    
-                        <div className="title font-notosan">팀 이름</div>
-                        <input
+                    <div className="title font-notosan">팀 소개</div>
+                    <div className="team-intro">
+                        <Textarea
                             type="text"
-                            value={team_name_value}
+                            value={team_intro_value}
                             onChange={this.handleInputChange}
                             className="text-input font-notosan"
-                            name="team_name_value"
-                            placeholder="10자 이내로 작성해주세요"
+                            name="team_intro_value"
+                            placeholder="30자 이내로 작성해주세요"
                         />
-                        
-
-                        <div className="title font-notosan">팀 소개</div>
-                        <div className="team_intro">
-                            <Textarea
-                                type="text"
-                                value={team_intro_value}
-                                onChange={this.handleInputChange}
-                                className="text-input font-notosan"
-                                name="team_intro_value"
-                                placeholder="30자 이내로 작성해주세요"
-                            />
-                        </div>
-                        <div className="FixedButton">
-                            {(true) ?
-                            (
-                                <button className="SubmitButton WorkingButton">그룹만들기</button>
-                            ) : (
-                                <button type="button" className="SubmitButton NotWorkingButton" onClick={() => alert("입력을 완료해주세요.")}>그룹만들기</button>
-                            )
-                            }
-                        </div>
-                    </form>
-
-                    {/* {is_edited_profile && 
-                    <div className="team-popup">
-                        <TeamPopup MyProfileActions={MyProfileActions}/>
                     </div>
-                    } */}
-        </div>
+                    <div className="ButtonWrap">
+                        {(true) ?
+                        (
+                            <button className="SubmitButton WorkingButton">그룹만들기</button>
+                        ) : (
+                            <button type="button" className="SubmitButton NotWorkingButton" onClick={() => alert("입력을 완료해주세요.")}>그룹만들기</button>
+                        )
+                        }
+                    </div>
+                </form>
+
+                {/* {is_edited_profile && 
+                <div className="team-popup">
+                    <TeamPopup MyProfileActions={MyProfileActions}/>
+                </div>
+                } */}
+            </div>
         );
     }
 }

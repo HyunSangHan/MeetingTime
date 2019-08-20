@@ -90,6 +90,11 @@ h4 {
   height: 100vh;
 }
 
+.frame-scrollable {
+  width: 100vw;
+  min-height: 100vh;
+}
+
 .frame-dark {
   width: 100vw;
   height: 100vh;

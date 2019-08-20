@@ -53,7 +53,7 @@ class JoinButton extends Component {
                         </div>                
                         <div className="join-button-wrap bg-color-waiting mh-auto flex-center">
                             <div className="font-notosan">
-                                입장전
+                                입장대기중
                             </div>
                         </div>
                     </div>;

@@ -142,25 +142,25 @@ class TeamProfilePrev extends Component {
                 <div className="images">
 
                     {!preview ?
-                        <img src={my_profile.image || require("../../images/noPhoto.jpg")} 
+                        <img className="each-image" src={my_profile.image || require("../../images/noPhoto.jpg")} 
                             onClick={() => this.fileInput.click()}
                         />
                         :
-                        <img src={preview} onClick={() => this.fileInput.click()}/>
+                        <img className="each-image" src={preview} onClick={() => this.fileInput.click()}/>
                     }
                     {!preview_two ? 
-                        <img src={my_profile.image_two || require("../../images/noPhoto.jpg")}
+                        <img className="each-image" src={my_profile.image_two || require("../../images/noPhoto.jpg")}
                             onClick={() => this.fileInput_two.click()}
                         />
                     :
-                        <img src={preview_two} onClick={() => this.fileInput_two.click()}/>
+                        <img className="each-image" src={preview_two} onClick={() => this.fileInput_two.click()}/>
                     }
                     {!preview_three ?
-                        <img src={my_profile.image_three || require("../../images/noPhoto.jpg")}
+                        <img className="each-image" src={my_profile.image_three || require("../../images/noPhoto.jpg")}
                             onClick={() => this.fileInput_three.click()}
                         />
                     :
-                        <img src={preview_three} onClick={() => this.fileInput_three.click()}/>
+                        <img className="each-image" src={preview_three} onClick={() => this.fileInput_three.click()}/>
                     }
                 </div>
 
@@ -210,7 +210,7 @@ class TeamProfilePrev extends Component {
                         
 
                         <div className="title font-notosan">팀 소개</div>
-                        <div className="team_intro">
+                        <div className="team-intro">
                             <Textarea
                                 type="text"
                                 value={team_intro_value}
@@ -220,7 +220,7 @@ class TeamProfilePrev extends Component {
                                 placeholder="30자 이내로 작성해주세요"
                             />
                         </div>
-                        <div className="FixedButton">
+                        <div className="ButtonWrap">
                             {(true) ?
                             (
                                 <button className="SubmitButton WorkingButton">그룹만들기</button>

@@ -25,7 +25,7 @@ class TeamProfile extends Component {
 
     render(){    
         return (
-            <div className="frame bg-init-color" >
+            <div className="frame-scrollable bg-init-color" >
                 <Header
                     content = {"미팅 그룹 생성"}
                 />

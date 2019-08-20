@@ -8,6 +8,7 @@
     margin: 0 auto;
     width: 90%;
     max-width: 800px;
+    text-align: justify;
 }
 
 .tab-wrap {
@@ -32,18 +33,16 @@
         font-style: normal;
         font-stretch: normal;
         line-height: normal;
-        color: #000000;
+        color: #000;
     }
 }
 
 .title{
-    display:flex;
-    justify-content: flex-start;
+    text-align: left;
     margin-top: 25px;
-    margin-bottom: 2%;
+    margin-bottom: 12px;
     font-weight: 600;
     font-size: 15px;
-    width: 55px;
     height: 19px;
     font-style: normal;
     font-stretch: normal;
@@ -51,31 +50,47 @@
     color: #4a4a4a;
 }
 
-.images{
-    display: flex;
-    flex : 1;
-    justify-content: space-between;
-    overflow: auto;
-    border: none;
+.title-noti {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: #9013fe;
+}
 
-    img{
+.images{
+    overflow: auto;
+    display: flex;
+
+    .smile {
+        width: 42px;
+        height: 42px;
+    }
+
+    .each-image{
+        color: #ccc;
+        object-fit: cover;
         border-radius: 12px;
-        width : 231px;
-        height: 231px;
-        background-color: #ffffff;
-        opacity: 0.9;
-        margin-left: 3px;
-        margin-right: 8px;
+        width : 255px;
+        min-width : 255px;
+        height: 255px;
+        max-height: 255px;
+        background-color: #fff;
+        // opacity: 0.9;
+        margin-right: 16px;
         cursor: pointer;
+    }
+
+    .each-image:last-child {
+        margin-right: 0;
     }
 }
 
 .text-input{
     width: 100%;
     min-height: 44px;
-    min-width: 330px;
+    // min-width: 330px;
     border-radius: 12px;
-    background-color: #ffffff;
+    background-color: #fff;
     opacity: 0.9;
     box-shadow: none;
     padding: 12px 16px 12px 16px;
@@ -83,6 +98,10 @@
     overflow: hidden;
     outline: none;
     resize: none;
+}
+
+.text-input::placeholder {
+    color: #bbb;
 }
 
 .button{
@@ -104,7 +123,35 @@
     font-weight: bold;
 }
 
-.team-popup{
+.FixedButton {
+    display: flex;
+    justify-content: center;
+
+    .SubmitButton {
+        width: 90%;
+        max-width: 800px;
+        height: 52px;
+        border: 0;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: -0.3px;
+        text-align: center;
+        color: #ffffff;
+        position: fixed;
+        bottom: 20px;
+        align-items: center;
+    }
+}
+
+.team-intro {
+    margin-bottom: 100px;
+}
+
+.team-popup {
     position: absolute;
     top: 50%;
     width: 40%;
@@ -129,29 +176,6 @@
     letter-spacing: -0.3px;
     text-align: center;
     color: #ffffff;
-}
-
-.FixedButton {
-    display: flex;
-    justify-content: center;
-    .SubmitButton {
-        width: 90%;
-        max-width: 800px;
-        height: 52px;
-        border: 0;
-        border-radius: 12px;
-        font-size: 18px;
-        font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: -0.3px;
-        text-align: center;
-        color: #ffffff;
-        position: fixed;
-        bottom: 20px;
-        align-items: center;
-    }
 }
 
 .WorkingButton {
@@ -204,9 +228,9 @@ select[name='company_value'] {
     height: 44px;
     border: none;
     border-radius: 12px;
-    padding: 8px;
+    padding-right: 8px;
     padding-left: 16px;
-    background: url("http://cdn.onlinewebfonts.com/svg/img_3503.png") no-repeat 95% 50%;
+    background: url("http://cdn.onlinewebfonts.com/svg/img_3503.png") no-repeat calc(100% - 18px) 50%;
     background-size: 10px 8px;
     background-color: #fff
 }
@@ -230,13 +254,13 @@ select[name='company_value'] {
 }
 
 .Send {
-    margin-top: 10px;
+    margin-top: 14px;
 }
 
 .EmailValidation {
     width: 100%;
     display: flex;
-    margin-top: 10px;
+    margin-top: 14px;
 
     input {
         width: 50%;
@@ -277,10 +301,50 @@ select:focus {
 }
 
 @media(max-width: 767px){ /*Mobile*/
-    //모바일(너비 767px이하)에만 해당되는 CSS들어갈 곳
-
+    .ButtonWrap {
+        display: flex;
+        justify-content: center;
+        .SubmitButton {
+            margin-top : -75px;
+            width: 100%;
+            max-width: 800px;
+            height: 52px;
+            border: 0;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: -0.3px;
+            text-align: center;
+            color: #ffffff;
+            align-items: center;
+        }
+    }
 }
 
 @media(min-width: 768px){ /*PC*/
-    //PC(너비 768px이상)에만 해당되는 CSS들어갈 곳
+    .ButtonWrap {
+        display: flex;
+        justify-content: center;
+        .SubmitButton {
+            width: 90%;
+            max-width: 800px;
+            height: 52px;
+            border: 0;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: -0.3px;
+            text-align: center;
+            color: #ffffff;
+            position: fixed;
+            bottom: 20px;
+            align-items: center;
+        }
+    }
 }
