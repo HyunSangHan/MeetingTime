@@ -130,7 +130,6 @@ class JoinButton extends Component {
                         </div>
                     </div>;
                 }
-
             }
         } else {
             button = 

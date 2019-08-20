@@ -139,14 +139,14 @@ class Profile extends Component {
                                 <div className="CategoryName">이메일</div>
                                 <div className="EmailSelect">
                                     <input onChange={(e)=> {this.setState({emailFront: e.target.value})}} placeholder="입력"></input>
-                                    <span id="EmailAt">@</span>
-                                    <select name="company_value" value={company_value} onChange={this.handleInputChange}>
+                                    {/* <span id="EmailAt">@</span> */}
+                                    <select name="company_value" className="ml-2" value={company_value} onChange={this.handleInputChange}>
                                         <option value> - </option>
-                                        <option value="네이버">navercorp.com</option>
-                                        <option value="삼성">samsung.com</option>
-                                        <option value="멋쟁이사자처럼">likelion.org</option>
-                                        <option value="구글">google.com</option>
-                                        <option value="테슬라">tesla.com</option>
+                                        <option value="네이버">@navercorp.com</option>
+                                        <option value="삼성">@samsung.com</option>
+                                        <option value="멋쟁이사자처럼">@likelion.org</option>
+                                        <option value="구글">@google.com</option>
+                                        <option value="테슬라">@tesla.com</option>
                                     </select>
                                 </div>
                                 {(!this.props.sent) ?

@@ -25,7 +25,7 @@ class TeamProfile extends Component {
 
     render(){    
         return (
-            <div className="tab-container">
+            <div className="frame bg-init-color" >
                 <Header
                     content = {"미팅 그룹 생성"}
                 />

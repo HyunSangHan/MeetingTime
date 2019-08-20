@@ -94,6 +94,7 @@ class Initpage extends Component {
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
         const meetingDay = this.getInputDayLabel(current_meeting.meeting_time);
+        const isExpired = new Date().getTime() - Date.parse(current_meeting.close_time) > 0
 
         let meetingWeek = null;
         if (nowTime.getDay() < meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() <= 561600000) {
@@ -132,7 +133,7 @@ class Initpage extends Component {
             isMadeTeam = false;
         }
         let makeTeamButton = null;
-        if (is_login_already) {
+        if (is_login_already && !isExpired) {
             makeTeamButton = <MakeTeamButton
                                 isMadeTeam = { isMadeTeam }
                             />;
@@ -147,12 +148,13 @@ class Initpage extends Component {
                         current_meeting = { current_meeting }
                     />
                 </div>
-                <div className="fix-bottom w100percent mb-36"
-                    onClick={this.blockJoin()}>
-                    <JoinButton 
-                        is_login_already = {is_login_already}
-                        isMadeTeam = {isMadeTeam}
-                    />
+                <div className="fix-bottom w100percent mb-36">
+                    <div onClick={this.blockJoin()}>
+                        <JoinButton 
+                            is_login_already = {is_login_already}
+                            isMadeTeam = {isMadeTeam}
+                        />
+                    </div>
                     { authButton }
                 </div>
             </div>
@@ -160,7 +162,6 @@ class Initpage extends Component {
     }
     
 }
-
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,

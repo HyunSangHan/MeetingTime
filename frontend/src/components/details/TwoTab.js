@@ -14,12 +14,13 @@ class TwoTab extends Component {
             action : "new"
         }
     }
-   
+
     changeAction_new = () => {
         this.setState({
             action: "new"
         });
     }
+
     changeAction_old = () => {
         this.setState({
             action: "prev"
@@ -33,25 +34,23 @@ class TwoTab extends Component {
         const { action } = this.state;
         return (
             <div className={"form-conmponent"}>
-                {/* UI 코드 들어갈 곳 */}
-                <div className="tab-bar">
-                    <div
-                        className="change-link font-notosan"
-                        onClick={this.changeAction_new}
-                    >
-                    새로운 그룹
-                    </div>
-                    <div
-                        className="change-link font-notosan"
-                        onClick={this.changeAction_old}
-                    >
-                    지난 그룹
+                <div className="tab-wrap">
+                    <div className="tab-content">
+                        <div
+                            className="change-link font-notosan"
+                            onClick={this.changeAction_new}
+                        >
+                        새로운 그룹
+                        </div>
+                        <div
+                            className="change-link font-notosan"
+                            onClick={this.changeAction_old}
+                        >
+                        지난 그룹
+                        </div>
                     </div>
                 </div>
-                {/* <span className="bottom-line-one"/>
-                <span className="bottom-line-two"/> */}
-
-                <div className="team-container">
+                <div className="profile-form">
                     {action === "new" && <TeamProfileNew/>}
                     {action === "prev" && <TeamProfilePrev/>}
                 </div>

@@ -198,7 +198,7 @@ class TeamProfileNew extends Component {
                             onChange={this.handleInputChange}
                             className="text-input font-notosan"
                             name="team_name_value"
-                            placeholder="10자이내로 작성해주세요"
+                            placeholder="10자 이내로 작성해주세요"
                         />
                         
 
@@ -210,14 +210,18 @@ class TeamProfileNew extends Component {
                                 onChange={this.handleInputChange}
                                 className="text-input font-notosan"
                                 name="team_intro_value"
-                                placeholder="30자이내로 작성해주세요"
+                                placeholder="30자 이내로 작성해주세요"
                             />
                         </div>
-                        <input
-                            type="submit"
-                            value="그룹 만들기"
-                            className="button font-notosan"
-                        />
+                        <div className="FixedButton">
+                            {(true) ?
+                            (
+                                <button className="SubmitButton WorkingButton">그룹만들기</button>
+                            ) : (
+                                <button type="button" className="SubmitButton NotWorkingButton" onClick={() => alert("입력을 완료해주세요.")}>그룹만들기</button>
+                            )
+                            }
+                        </div>
                     </form>
 
                     {/* {is_edited_profile && 
