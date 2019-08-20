@@ -7,6 +7,8 @@ const GET_PROFILE = `GET_PROFILE`;
 const UPDATE_PROFILE = `UPDATE_PROFILE`;
 const CREATE_POPUP = `CREATE_POPUP`;
 const DELETE_POPUP = `DELETE_POPUP`;
+const NEW_TAB_ON = `NEW_TAB_ON`;
+const PREV_TAB_ON = `PREV_TAB_ON`;
 
 const initialState = Map({
     is_login_already: false,
@@ -30,6 +32,7 @@ const initialState = Map({
         validated: false,
     },
     is_edited_profile: false,
+    clicked_tab: "new",
 });
 
 export default handleActions({
@@ -54,11 +57,19 @@ export default handleActions({
                                             .set('is_login_already', true),
         onFailure: (state, action) => state.set('is_login_already', false),
     }),
+
+    [NEW_TAB_ON]: (state) => {
+        return state.set('clicked_tab', "new")
+    },
+
+    [PREV_TAB_ON]: (state) => {
+        return state.set('clicked_tab', "prev")
+    },
+
 }, initialState);
 
 //팝업용 액션
 export const createPopup = createAction(CREATE_POPUP);
-
 export const deletePopup = createAction(DELETE_POPUP);
 
 export const getMyProfile = createAction(
@@ -72,7 +83,7 @@ export const getMyProfile = createAction(
     })
 );
 
-export const ProfileUpdate = createAction(
+export const profileUpdate = createAction(
     UPDATE_PROFILE,
     (payload) => axios({
         method: "patch",
@@ -90,8 +101,7 @@ export const ProfileUpdate = createAction(
     )
 );
 
-
-export const CompanyUpdate = createAction(
+export const companyUpdate = createAction(
     UPDATE_PROFILE,
     (payload) => axios({
         method: "patch",
@@ -109,7 +119,7 @@ export const CompanyUpdate = createAction(
     )
 );
 
-export const TeamUpdate = createAction(
+export const teamUpdate = createAction(
     UPDATE_PROFILE,
     (payload) => axios({
         method: "patch",
@@ -130,3 +140,7 @@ export const TeamUpdate = createAction(
         console.log("not working (update_profile)")
     )
 );
+
+//TwoTab.js용
+export const newTabOn = createAction(NEW_TAB_ON);
+export const prevTabOn = createAction(PREV_TAB_ON);

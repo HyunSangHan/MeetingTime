@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom'; //다른 페이지로 링크 걸 때 �
 import Textarea from "react-textarea-autosize";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import * as myProfileActions from "../../modules/my_profile";
+import * as myProfileActions from "../modules/my_profile";
 import axios from "axios";
-import TeamPopup from "./TeamPopup";
+import TeamPopup from "../components/details/TeamPopup";
 
 class TeamProfileNew extends Component {
 
@@ -142,19 +142,19 @@ class TeamProfileNew extends Component {
             </div>
             <div className="images">
                 {!preview ?
-                    <div className="each-image flex-center" onClick={() => this.fileInput.click()}>
-                        <div className="App">
-                            <img className="smile" src={require("../../images/smile.png")} />
-                            <div className="mt-2 font-16 font-bold">
-                                멤버1(본인) 사진
-                            </div>
+                <div className="each-image flex-center" onClick={() => this.fileInput.click()}>
+                    <div className="App">
+                        <img className="smile" src={require("../../images/smile.png")} />
+                        <div className="mt-2 font-16 font-bold">
+                            멤버1(본인) 사진
                         </div>
                     </div>
-                    :
-                    <img className="each-image" src={preview} onClick={() => this.fileInput.click()}/>
+                </div>
+                :
+                <img className="each-image" src={preview} onClick={() => this.fileInput.click()}/>
                 }
                 {!preview_two ? 
-                    <div className="each-image flex-center" onClick={() => this.fileInput_two.click()}>
+                <div className="each-image flex-center" onClick={() => this.fileInput_two.click()}>
                     <div className="App">
                         <img className="smile" src={require("../../images/smile.png")} />
                         <div className="mt-2 font-16 font-bold">
@@ -162,11 +162,11 @@ class TeamProfileNew extends Component {
                         </div>
                     </div>
                 </div>
-            :
+                :
                     <img className="each-image" src={preview_two} onClick={() => this.fileInput_two.click()}/>
                 }
                 {!preview_three ?
-                    <div className="each-image flex-center" onClick={() => this.fileInput_three.click()}>
+                <div className="each-image flex-center" onClick={() => this.fileInput_three.click()}>
                     <div className="App">
                         <img className="smile" src={require("../../images/smile.png")} />
                         <div className="mt-2 font-16 font-bold">
