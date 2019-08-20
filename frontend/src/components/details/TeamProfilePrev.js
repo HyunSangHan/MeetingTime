@@ -137,7 +137,7 @@ class TeamProfilePrev extends Component {
         return (
             <div className="team-container">
 
-                <div className="title font-notosan">팀 멤버</div>
+                <div className="title font-notosan">팀 사진</div>
 
                 <div className="images">
 

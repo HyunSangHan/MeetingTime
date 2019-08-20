@@ -137,7 +137,7 @@ class TeamProfileNew extends Component {
         const { MyProfileActions, team_name_value, team_intro_value, preview, preview_two, preview_three } = this.state;
         return (
             <div className="team-container">
-                <div className="title font-notosan">팀 멤버
+                <div className="title font-notosan">팀 사진
                 <span className="title-noti font-notosan ml-2">* 멤버수는 본인을 포함, 3명을 기본으로 합니다.</span>
             </div>
             <div className="images">
@@ -146,7 +146,7 @@ class TeamProfileNew extends Component {
                         <div className="App">
                             <img className="smile" src={require("../../images/smile.png")} />
                             <div className="mt-2 font-16 font-bold">
-                                사진을 업로드해주세요.
+                                멤버1(본인) 사진
                             </div>
                         </div>
                     </div>
@@ -158,7 +158,7 @@ class TeamProfileNew extends Component {
                     <div className="App">
                         <img className="smile" src={require("../../images/smile.png")} />
                         <div className="mt-2 font-16 font-bold">
-                            사진을 업로드해주세요.
+                            멤버2 사진
                         </div>
                     </div>
                 </div>
@@ -170,7 +170,7 @@ class TeamProfileNew extends Component {
                     <div className="App">
                         <img className="smile" src={require("../../images/smile.png")} />
                         <div className="mt-2 font-16 font-bold">
-                            사진을 업로드해주세요.
+                            멤버3 사진
                         </div>
                     </div>
                 </div>

@@ -49,7 +49,7 @@ class TwoTab extends Component {
                             action === 'prev' ? "active" : ""
                             )}
                             onClick={this.changeAction_prev}                        >
-                        지난 그룹
+                        지난번 그룹
                         </div>
                     </div>
                 </div>

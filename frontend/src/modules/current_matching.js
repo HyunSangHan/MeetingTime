@@ -26,11 +26,11 @@ export const getCurrentMatching = createAction(
         method: 'get',
         url: '/current_matching',
     })
-        .then((response) => {
-            console.log(response);
-            return response
-        })
-        .catch(
-            console.log("not working (current_matching)")
-        )
+    .then((response) => {
+        console.log(response);
+        return response
+    })
+    .catch(
+        console.log("not working (current_matching)")
+    )
 );
