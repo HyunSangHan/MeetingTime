@@ -4,6 +4,7 @@ import '../../App.css'; //공통CSS
 import { Link } from 'react-router-dom'; //다른 페이지로 링크 걸 때 필요
 import TeamProfileNew from "./TeamProfileNew";
 import TeamProfilePrev from "./TeamProfilePrev";
+import classNames from 'classnames';
 
 class TwoTab extends Component {
 
@@ -11,7 +12,7 @@ class TwoTab extends Component {
         super(props);
         
         this.state={
-            action : "new"
+            action : "prev"
         }
     }
 
@@ -20,8 +21,7 @@ class TwoTab extends Component {
             action: "new"
         });
     }
-
-    changeAction_old = () => {
+    changeAction_prev = () => {
         this.setState({
             action: "prev"
         });
@@ -36,16 +36,19 @@ class TwoTab extends Component {
             <div className={"form-conmponent"}>
                 <div className="tab-wrap">
                     <div className="tab-content">
-                        <div
-                            className="change-link font-notosan"
+                        <div className={classNames(
+                            "change-link font-notosan", 
+                            action === 'new' ? "active" : ""
+                            )}
                             onClick={this.changeAction_new}
                         >
                         새로운 그룹
                         </div>
-                        <div
-                            className="change-link font-notosan"
-                            onClick={this.changeAction_old}
-                        >
+                        <div className={classNames(
+                            "change-link font-notosan", 
+                            action === 'prev' ? "active" : ""
+                            )}
+                            onClick={this.changeAction_prev}                        >
                         지난 그룹
                         </div>
                     </div>
