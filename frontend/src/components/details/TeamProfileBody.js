@@ -214,11 +214,13 @@ class TeamProfileBody extends Component {
                         </div>
                     </form>
                 </div>
+
                 {is_edited_profile && 
                     <div className="team-pop">
                         <TeamPopup MyProfileActions={MyProfileActions}/>
                     </div>
                 }
+
                 <div className="images-wrap">
                     <div className="images">
                         {!preview ?

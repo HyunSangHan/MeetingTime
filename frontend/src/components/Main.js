@@ -12,7 +12,6 @@ import CounterPlayer from "./details/CounterPlayer";
 import ControlTool from "./details/ControlTool";
 import ToolTipDown from "./details/ToolTipDown";
 import Loading from "./details/Loading";
-import GiftPopup from "./details/GiftPopup";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as joinActions from '../modules/join';
@@ -134,15 +133,7 @@ class Main extends Component {
                         />  
                         }  
                     </div>
-                    <div className="gift-pop">
-                        {is_gift_popup ? <GiftPopup 
-                                            PlayerActions={PlayerActions}
-                                            is_gift_popup={is_gift_popup}
-                                            counter_profile={counter_profile}
-                                            current_matching={current_matching}
-                                            handleGift={this.handleGift} 
-                                         /> : null}
-                    </div>
+                   
                     <div className="control-container">
                         <ControlTool 
                             time={this.state.time} 
@@ -150,6 +141,8 @@ class Main extends Component {
                             PlayerActions={PlayerActions}
                             counter_profile={counter_profile}
                             is_counter_profile={is_counter_profile}
+                            is_gift_popup={is_gift_popup}
+                            current_matching={current_matching}
                         /> 
                         <br/>
                     </div>

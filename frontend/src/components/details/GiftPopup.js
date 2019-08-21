@@ -22,7 +22,7 @@ class GiftPopup extends Component {
                     <div className="gift-popup">
                     {current_matching.is_gift_female ?
                         <div className="message-box font_jua">
-                            <p onClick={PlayerActions.createPopup}>이미 안주를 쏘셨습니다.</p>
+                            <p>이미 안주를 쏘셨습니다.</p>
                             <button className="pop-button font_jua" onClick={PlayerActions.deletePopup}>확인</button>
                         </div>
                         :
@@ -37,7 +37,7 @@ class GiftPopup extends Component {
                     <div className="gift-popup">
                     {current_matching.is_gift_male ?
                         <div className="message-box font_jua">
-                            <p onClick={PlayerActions.createPopup}>이미 안주를 쏘셨습니다.</p>
+                            <p>이미 안주를 쏘셨습니다.</p>
                             <button className="pop-button font_jua" onClick={PlayerActions.deletePopup}>확인</button>
                         </div>
                         :
