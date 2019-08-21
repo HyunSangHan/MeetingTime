@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import '../../css/Main.scss'; //부모컴포넌트의CSS(SCSS)
 import '../../App.css'; //공통CSS
 import { Link } from 'react-router-dom'; //다른 페이지로 링크 걸 때 필요
-import GiftPopup from "./GiftPopup";
 import MaterialIcon from 'material-icons-react';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
@@ -29,7 +28,6 @@ class ControlTool extends Component {
     handleGreenLight = () =>{
         const { PlayerActions, counter_profile, CurrentMatchingActions } = this.props;
         const { is_greenlight_on_male, is_greenlight_on_female } = this.state;
-        
 
         if (!is_greenlight_on_male && !counter_profile.is_male){
             PlayerActions.handleGreenLightOn({ male: true });
@@ -79,6 +77,7 @@ class ControlTool extends Component {
         const { is_gift_popup, my_profile, counter_profile, current_matching, time } = this.props;  
         const { is_greenlight_on_male, is_greenlight_on_female } = this.state;
         // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기
+        console.log(is_gift_popup);
 
         return (
             <div className="control-container">
@@ -133,10 +132,8 @@ class ControlTool extends Component {
                             </div>
                         </div>
                         }
-                    </div>
-
-                        
-                    {is_gift_popup ? <GiftPopup handleGift={this.handleGift} /> :
+                    </div>   
+                    
                     <div className="column">
                         {!counter_profile.is_male ? 
                         <div className="gift" onClick={this.handleGiftPopup}>
@@ -166,7 +163,6 @@ class ControlTool extends Component {
                         </div>
                         }
                     </div>
-                    }
                 </div>
             </div>
         );

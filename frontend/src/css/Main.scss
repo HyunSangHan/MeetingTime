@@ -2,6 +2,7 @@
 
 .main-container{
     background-color: #f6f6f6;
+    position: relative;
 }
 
 //counter-profile component
@@ -106,6 +107,57 @@
     }
 }
 
+//gift popup css
+.gift-pop{
+    position: absolute;
+    top: 250px;
+    left: 50%;
+    right: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.popup-container{
+    .gift-popup{
+        .message-box{
+            width: 70%;
+            min-width: 400px;
+            max-width: 700px;
+            height: 140px;
+            border-radius: 12px;
+            background-color : #50e3c2;
+            color: white;
+            font-size: 22px;
+            font-weight: 800;
+            padding: 30px;
+            display: -webkit-flex !important;
+            display: -ms-flexbox !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            p{
+                margin-right: 15px;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+            .pop-button{
+                width: 100px;
+                height: 50px;
+                background-color : #9013fe;
+                color: white;
+                font-size: 20px;
+                font-weight: 800;
+                border: none;
+                border-radius: 12px;
+            }
+        }
+    }
+}
+
 //control component
 .control-container{
     width: 90%;
@@ -113,6 +165,7 @@
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    position: relative;
     .timer{
         justify-content: center;
         margin-bottom: 10px;
@@ -204,39 +257,7 @@
     }
 }
 
-//gift popup css
-.popup-container{
-    .gift-popup{
-        .box{
-            width: 50%;
-            min-width: 300px;
-            max-width: 700px;
-            height: 100px;
-            border: 2px solid #9013fe;
-            border-radius: 12px;
-            background-color : #50e3c2;
-            color: white;
-            font-size: 10px;
-            font-weight: 800;
-            padding: 30px;
-            display: -webkit-flex !important;
-            display: -ms-flexbox !important;
-            display: flex !important;
-            align-items: center;
-            justify-content: center;
-            
-            .pop-button{
-                width: 100px;
-                height: 50px;
-                background-color : #9013fe;
-                color: white;
-                font-size: 20px;
-                border: none;
-                border-radius: 12px;
-            }
-        }
-    }
-}
+
 
 
 @media(max-width: 479px){ /*Mobile*/

@@ -12,6 +12,7 @@ import CounterPlayer from "./details/CounterPlayer";
 import ControlTool from "./details/ControlTool";
 import ToolTipDown from "./details/ToolTipDown";
 import Loading from "./details/Loading";
+import GiftPopup from "./details/GiftPopup";
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import * as joinActions from '../modules/join';
@@ -86,7 +87,7 @@ class Main extends Component {
     }
 
     render() {
-        const {user, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting, is_current_matching, current_matching, PlayerActions, counter_profile, is_counter_profile,  } = this.props;
+        const {user, is_gift_popup, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting, is_current_matching, current_matching, PlayerActions, counter_profile, is_counter_profile,  } = this.props;
 
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
@@ -132,18 +133,26 @@ class Main extends Component {
                             is_counter_profile={is_counter_profile}
                         />  
                         }  
-                </div>
-                
-                <div className="control-container">
-                    <ControlTool 
-                        time={this.state.time} 
-                        my_profile={my_profile}
-                        PlayerActions={PlayerActions}
-                        counter_profile={counter_profile}
-                        is_counter_profile={is_counter_profile}
-                    /> 
-                    <br/>
-                </div>
+                    </div>
+                    <div className="gift-pop">
+                        {is_gift_popup ? <GiftPopup 
+                                            PlayerActions={PlayerActions}
+                                            is_gift_popup={is_gift_popup}
+                                            counter_profile={counter_profile}
+                                            current_matching={current_matching}
+                                            handleGift={this.handleGift} 
+                                         /> : null}
+                    </div>
+                    <div className="control-container">
+                        <ControlTool 
+                            time={this.state.time} 
+                            my_profile={my_profile}
+                            PlayerActions={PlayerActions}
+                            counter_profile={counter_profile}
+                            is_counter_profile={is_counter_profile}
+                        /> 
+                        <br/>
+                    </div>
             </div>
         );
     }
@@ -167,6 +176,7 @@ const mapStateToProps = (state) => ({
     current_matching: state.current_matching.get('current_matching'),
     counter_profile: state.player.get('counter_profile'),
     is_counter_profile: state.player.get('is_counter_profile'),
+    is_gift_popup: state.player.get('is_gift_popup'),
     is_current_matching: state.current_matching.get('is_current_matching'),
 })
 
