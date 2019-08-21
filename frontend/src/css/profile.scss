@@ -25,13 +25,17 @@
     max-width: 800px;
     height: 54px;
     // border-bottom-style: solid;
-    display: flex;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
     justify-content: space-around;
     color: grey;
 
     .change-link{
         height: 100%;
-        display: flex;
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;      
         align-items: center;
         justify-content: center;
         font-size: 16px;
@@ -41,6 +45,8 @@
     }
 
     .active {
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
         display: flex !important;
         border-bottom: 1px solid black;
         color: #000 !important;
@@ -74,7 +80,9 @@
 .images-wrap {
     position: absolute;
     width: 100%;
-    display: flex;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;  
     justify-content: center;
     z-index: 1;
     top: 32px;;
@@ -82,7 +90,9 @@
 
 .images{
     overflow: auto;
-    display: flex;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
 
     .smile {
         width: 42px;
@@ -153,7 +163,9 @@
 }
 
 .FixedButton {
-    display: flex;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
     justify-content: center;
 
     .SubmitButton {
@@ -216,7 +228,9 @@
 }
 
 .CategoryWrapper {
-    display: flex;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
     flex-direction: column;
     align-items: flex-start;
     padding-top: 23px;
@@ -237,7 +251,9 @@
     height: 44px;
     background: #ffffff;
     border-radius: 12px;
-    display: flex;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
     align-items: center;
     flex-wrap: wrap;
     padding: 8px;
@@ -266,14 +282,18 @@ select[name='company_value'] {
 
 .EmailSelect {
     width: 100%;
-    display: flex;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
 
     input {
         width: 40%;
         height: 44px;
         background: #ffffff;
         border-radius: 12px;
-        display: flex;
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
         align-items: center;
         flex-wrap: wrap;
         padding: 8px;
@@ -288,7 +308,9 @@ select[name='company_value'] {
 
 .EmailValidation {
     width: 100%;
-    display: flex;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
     margin-top: 14px;
 
     input {
@@ -296,7 +318,9 @@ select[name='company_value'] {
         height: 44px;
         background: #ffffff;
         border-radius: 12px;
-        display: flex;
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
         align-items: center;
         flex-wrap: wrap;
         padding: 8px;
@@ -305,7 +329,9 @@ select[name='company_value'] {
     }
 
     button {
-        display: flex;
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
         align-items: center;
         flex-wrap: wrap;
         padding: 8px;
@@ -331,7 +357,9 @@ select:focus {
 
 @media(max-width: 767px){ /*Mobile*/
     .ButtonWrap {
-        display: flex;
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
         justify-content: center;
         .SubmitButton {
             margin-top : -75px;
@@ -355,7 +383,9 @@ select:focus {
 
 @media(min-width: 768px){ /*PC1*/
     .ButtonWrap {
-        display: flex;
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
         justify-content: center;
         .SubmitButton {
             width: 90%;
@@ -382,7 +412,9 @@ select:focus {
     .images-wrap {
         position: absolute;
         width: 100%;
-        display: flex;
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
         justify-content: center;
         z-index: 1;
         top: 32px;
@@ -390,7 +422,9 @@ select:focus {
         .images{
             width: 800px;
             overflow: auto;
-            display: flex;
+            display: -webkit-flex !important;
+            display: -ms-flexbox !important;
+            display: flex !important;
             justify-content: center;
         
             .smile {

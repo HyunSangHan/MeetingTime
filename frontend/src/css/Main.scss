@@ -17,7 +17,9 @@
     padding-bottom: 36px;
     border-radius: 12px;
     .team-info{
-        display: flex;
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
         margin-bottom: 10px;
         align-items: center;
         .team-name{
@@ -54,7 +56,9 @@
         text-align: justify;
     }
     .images{
-        display: flex;
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
         flex : 1;
         justify-content: space-between;
         overflow: auto;
@@ -84,7 +88,9 @@
         margin-bottom: 10px;
     }
     .action-container{
-        display: flex;
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
         justify-content: space-between;
         align-items: center;
         .column{
@@ -101,7 +107,9 @@
                 height: 75px;
                 background-color: #979797;
                 border-radius: 50%;
-                display:flex;
+                display: -webkit-flex !important;
+                display: -ms-flexbox !important;
+                display: flex !important;
                 align-items: center;
                 justify-content: center;
                 .greenlight{
@@ -109,7 +117,9 @@
                     height: 75px;
                     background-color: #50e3c2;
                     border-radius: 50%;
-                    display:flex;
+                    display: -webkit-flex !important;
+                    display: -ms-flexbox !important;
+                    display: flex !important;
                     align-items: center;
                     justify-content: center;
                     cursor: pointer;
@@ -119,7 +129,9 @@
                         background-color: #ffffff;
                         border-radius: 50%;
                         font-size: 23px;
-                        display:flex;
+                        display: -webkit-flex !important;
+                        display: -ms-flexbox !important;
+                        display: flex !important;
                         align-items: center;
                         justify-content: center;
                         color: #50e3c2;
@@ -134,7 +146,9 @@
                     padding: 17px;
                     border-radius: 50%;
                     background-color: #9b9b9b;
-                    display:flex;
+                    display: -webkit-flex !important;
+                    display: -ms-flexbox !important;
+                    display: flex !important;
                     align-items: center;
                     justify-content: center;
                     color: #ffffff;
@@ -147,7 +161,9 @@
                     padding: 17px;
                     border-radius: 50%;
                     background-color: #9013fe;
-                    display:flex;
+                    display: -webkit-flex !important;
+                    display: -ms-flexbox !important;
+                    display: flex !important;
                     align-items: center;
                     justify-content: center;
                     color: #ffffff;
@@ -173,7 +189,9 @@
             font-size: 10px;
             font-weight: 800;
             padding: 30px;
-            display:flex;
+            display: -webkit-flex !important;
+            display: -ms-flexbox !important;
+            display: flex !important;
             align-items: center;
             justify-content: center;
             
