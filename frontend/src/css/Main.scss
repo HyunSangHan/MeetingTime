@@ -8,13 +8,14 @@
 .counter-container{
     width: 90%;
     min-width: 375px;
-    max-width: 800px;
+    max-width: 900px;
+    position: relative;
     margin-left: auto;
     margin-right: auto;
     background-color: #ffffff;
-    padding-right: 28px;
-    padding-left: 28px;
-    padding-bottom: 36px;
+    padding-right: 45px;
+    padding-left: 45px;
+    padding-bottom: 24px;
     border-radius: 12px;
     .team-info{
         display: -webkit-flex !important;
@@ -22,6 +23,7 @@
         display: flex !important;
         margin-bottom: 10px;
         align-items: center;
+        padding-top: 18px;
         .team-name{
             font-weight: bold;
             font-size: 22px;
@@ -52,26 +54,48 @@
             color: #888888;
         }
     }
+
     .team-intro{
         text-align: justify;
+        margin-bottom: 0px;
+        p{
+            margin: 0;
+        }
     }
-    .images{
+
+    .margin-wrap{
+        position: relative;
+        min-height: 310px;
+    }
+
+    .images-wrap {
+        position: absolute;
+        width: 100%;
         display: -webkit-flex !important;
         display: -ms-flexbox !important;
-        display: flex !important;
-        flex : 1;
-        justify-content: space-between;
-        overflow: auto;
-        border: none;
-        img{
-            border-radius: 12px;
-            width : 231px;
-            height: 231px;
-            object-fit: cover;
-            background-color: #ffffff;
-            opacity: 0.9;
-            margin-left: 3px;
-            margin-right: 8px;
+        display: flex !important;  
+        justify-content: center;
+        z-index: 1;
+        bottom: 0px;
+        .images{
+            overflow: auto;
+            display: -webkit-flex !important;
+            display: -ms-flexbox !important;
+            display: flex !important;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+
+            img{
+                border-radius: 12px;
+                width : 255px;
+                height: 255px;
+                object-fit: cover;
+                background-color: #ffffff;
+                opacity: 0.9;
+                margin-left: 3px;
+                margin-right: 8px;
+            }
         }
     }
 }
@@ -209,10 +233,187 @@
 }
 
 
-@media(max-width: 767px){ /*Mobile*/
-    //모바일(너비 767px이하)에만 해당되는 CSS들어갈 곳
+@media(max-width: 479px){ /*Mobile*/
+    .title-images {
+        margin-bottom: 274px;
+    }
+
+    .each-image{
+        color: #ccc;
+        object-fit: cover;
+        border-radius: 12px;
+        width : 231px;
+        min-width : 231px;
+        height: 231px;
+        max-height: 231px;
+        background-color: #fff;
+        // opacity: 0.9;
+        margin-right: 16px;
+        cursor: pointer;
+    }
+
+    .each-image:first-child {
+        margin-left: 5%;
+    }
+
+    .ButtonWrap {
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        justify-content: center;
+
+        .SubmitButton {
+            margin-top : -75px;
+            width: 100%;
+            max-width: 800px;
+            height: 52px;
+            border: 0;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: -0.3px;
+            text-align: center;
+            color: #ffffff;
+            align-items: center;
+        }
+    }
 }
-    
-@media(min-width: 768px){ /*PC*/
-    //PC(너비 768px이상)에만 해당되는 CSS들어갈 곳
+
+@media(min-width: 480px){ /*Tablet*/
+    .each-image{
+        color: #ccc;
+        object-fit: cover;
+        border-radius: 12px;
+        width : 255px;
+        min-width : 255px;
+        height: 255px;
+        max-height: 255px;
+        background-color: #fff;
+        // opacity: 0.9;
+        margin-right: 16px;
+        cursor: pointer;
+    }
+
+    .each-image:first-child {
+        margin-left: 5%;
+    }
+
+    .ButtonWrap {
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        justify-content: center;
+        .SubmitButton {
+            margin-top : -75px;
+            width: 100%;
+            max-width: 800px;
+            height: 52px;
+            border: 0;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: -0.3px;
+            text-align: center;
+            color: #ffffff;
+            align-items: center;
+        }
+    }
+}
+
+@media(min-width: 768px){ /*PC1*/
+    .each-image{
+        color: #ccc;
+        object-fit: cover;
+        border-radius: 12px;
+        width : 255px;
+        min-width : 255px;
+        height: 255px;
+        max-height: 255px;
+        background-color: #fff;
+        // opacity: 0.9;
+        margin-right: 16px;
+        cursor: pointer;
+    }
+
+    .each-image:first-child {
+        margin-left: 5%;
+    }
+
+    .ButtonWrap {
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        justify-content: center;
+        .SubmitButton {
+            width: 90%;
+            max-width: 800px;
+            height: 52px;
+            border: 0;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: -0.3px;
+            text-align: center;
+            color: #ffffff;
+            position: fixed;
+            bottom: 20px;
+            align-items: center;
+        }
+    }
+}
+
+@media(min-width: 889px){ /*PC2(for swipe)*/
+    .images-wrap {
+        position: absolute;
+        width: 100%;
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        justify-content: center;
+        z-index: 1;
+        top: 32px;
+        
+        .images{
+            width: 800px;
+            overflow: auto;
+            display: -webkit-flex !important;
+            display: -ms-flexbox !important;
+            display: flex !important;
+            justify-content: center;
+        
+        
+            .each-image{
+                color: #ccc;
+                object-fit: cover;
+                border-radius: 12px;
+                width : 255px;
+                min-width : 255px;
+                height: 255px;
+                max-height: 255px;
+                background-color: #fff;
+                // opacity: 0.9;
+                margin-right: 16px;
+                cursor: pointer;
+            }
+
+            .each-image:first-child {
+                margin-left: 16px;
+            }
+        
+            .last-child-gap {
+                width: 0;
+                min-width: 0;
+                margin: 0;
+            }
+        }
+    }
 }
