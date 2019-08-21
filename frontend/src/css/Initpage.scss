@@ -2,6 +2,8 @@
     width: 90%;
     max-width: 800px;
     box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
 }
 
 .meeting-info-container {
@@ -42,11 +44,12 @@
 
 .join-button-wrap {
     width: 90%;
-    max-width: 768px;
+    max-width: 800px;
     height: 52px;
     border-radius: 12px;
     color: white;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .bg-color-waiting {

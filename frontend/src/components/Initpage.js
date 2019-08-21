@@ -78,12 +78,23 @@ class Initpage extends Component {
         const todayLabel = week[today];
         return todayLabel;
     }
+
+    blockJoin = (bool) => () => {
+        const { history } = this.props;
+        if (!bool) {
+            if(window.confirm("미팅에 참여하실 '팀'을 먼저 결성해야 번호표를 으실 수 있어요. 미팅 그룹 생성 페이지로 이동하실래요?")){
+                history.push('/team_profile')
+            }    
+        }
+    }
+
     render() {
-        const { my_profile, is_joined_popup_on, joined_user, JoinActions, is_joined_already, current_meeting, is_login_already } = this.props;
+        const { my_profile, current_meeting, is_login_already } = this.props;
 
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
         const meetingDay = this.getInputDayLabel(current_meeting.meeting_time);
+        const isExpired = new Date().getTime() - Date.parse(current_meeting.close_time) > 0
 
         let meetingWeek = null;
         if (nowTime.getDay() < meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() <= 561600000) {
@@ -113,8 +124,9 @@ class Initpage extends Component {
             authButton = <div className="App"><a id="kakao-login-btn"></a></div>;
         }
 
-        const lastShuffledAt = new Date(my_profile.last_matching_time); //나중에 하위 필드 추가되면 수정필요
+        const lastShuffledAt = new Date(current_meeting.prev_meeting_last_shuffle_time); //나중에 하위 필드 추가되면 수정필요
         const lastTeamModifiedAt = new Date(my_profile.last_intro_modified_at);
+
         let isMadeTeam = null;
         if (lastShuffledAt < lastTeamModifiedAt) {
             isMadeTeam = true;
@@ -122,39 +134,27 @@ class Initpage extends Component {
             isMadeTeam = false;
         }
         let makeTeamButton = null;
-        if (is_login_already) {
+        if (is_login_already && !isExpired) {
             makeTeamButton = <MakeTeamButton
-                            isMadeTeam = { isMadeTeam }
+                                isMadeTeam = { isMadeTeam }
                             />;
         } 
 
         return (
             <div className="frame bg-init-color">
-                {/*팝업*/}
-                 {is_joined_popup_on &&
-                    <div className={"App"}>
-                        <div className={"flex-center"}>
-                            <div className={"fix minus-height z-4"}>
-                                <JoinedPopup
-                                    rank={joined_user.rank}
-                                    deletePopup={JoinActions.deletePopup}
-                                    is_joined_already={is_joined_already}
-                                />
-                            </div>
-                        </div>
-                        <div className={"frame-dark fix z-3"}/>
-                    </div>
-                }
                 <div className="container-shadow mh-auto">
                     <MeetingInfo
                         makeTeamButton = { makeTeamButton }
-                        isMadeTeam = { isMadeTeam }
                         current_meeting = { current_meeting }
                     />
                 </div>
                 <div className="fix-bottom w100percent mb-36">
-                    <JoinButton 
-                        is_login_already = {is_login_already} />
+                    <div onClick={this.blockJoin(isMadeTeam)}>
+                        <JoinButton 
+                            is_login_already = {is_login_already}
+                            isMadeTeam = {isMadeTeam}
+                        />
+                    </div>
                     { authButton }
                 </div>
             </div>
@@ -162,7 +162,6 @@ class Initpage extends Component {
     }
     
 }
-
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,

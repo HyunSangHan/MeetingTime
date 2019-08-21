@@ -8,8 +8,6 @@ import { Link, Redirect } from 'react-router-dom';
 import Footer from "./../outdated/Footer";
 import Player from "../outdated/Player";
 import Header from "./details/Header";
-import HeaderMain from './details/HeaderMain';
-
 import CounterPlayer from "./details/CounterPlayer";
 import ControlTool from "./details/ControlTool";
 import ToolTipDown from "./details/ToolTipDown";
@@ -28,7 +26,7 @@ class Main extends Component {
         super(props);
 
         this.state = {
-            time: 15,
+            time: 60,
             loading: true
         }
         this.startTimer = this.startTimer.bind(this);
@@ -96,24 +94,32 @@ class Main extends Component {
 
         let meetingWeek = null;
         if (nowTime.getDay() < meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() <= 561600000) {
-            meetingWeek = "이번"
+            meetingWeek = "이번주"
         } else if (nowTime.getDay() < meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() > 561600000) {
-            meetingWeek = "다음"
+            meetingWeek = "다음주"
         } else if (nowTime.getDay() > meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() <= 561600000) {
-            meetingWeek = "다음"
+            meetingWeek = "다음주"
         } else if (nowTime.getDay() > meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() > 561600000) {
-            meetingWeek = "다다음"
+            meetingWeek = "다다음주"
         } else if (nowTime.getDay() === meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() <= 561600000) {
-            meetingWeek = "이번"
+            meetingWeek = "이번주"
         } else if (nowTime.getDay() === meetingTime.getDay() && meetingTime.getTime() - nowTime.getTime() > 561600000) {
-            meetingWeek = "다음"
+            meetingWeek = "다음주"
         } else {
             meetingWeek = ""
         }
 
+        const content =
+            <div className="inline-flex">
+                {meetingWeek} {meetingDay} {current_meeting.location} 미팅
+                <div className="ml-1 font-lightgrey font-13">남은 셔플 {4 - current_matching.trial_time}회</div>
+            </div>;
+
         return (
                 <div className="main-container">
-                    <HeaderMain/>
+                    <Header
+                        content={content}
+                    />
                     <div className="profile">  
                         {this.state.loading
                         ?

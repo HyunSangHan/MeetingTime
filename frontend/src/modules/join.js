@@ -3,13 +3,10 @@ import { Map, get } from 'immutable';
 import axios from 'axios';
 import { pender } from 'redux-pender';
 
-const DELETE_POPUP = `DELETE_POPUP`;
-const CREATE_JOINED_POPUP = `CREATE_JOINED_POPUP`;
-const RECLICK_JOINED_POPUP = `RECLICK_JOINED_POPUP`;
+const CREATE_JOINED_USER = `CREATE_JOINED_USER`;
 const GET_JOINED_USER = `GET_JOINED_USER`;
 
 const initialState = Map({
-    is_joined_popup_on: false,
     is_joined_already: false,
     joined_user: {
         profile: {
@@ -35,14 +32,9 @@ const initialState = Map({
 }); 
 
 export default handleActions({
-    [DELETE_POPUP]: (state) => {
-        return state.set('is_joined_popup_on', false)
-                    .set('is_joined_already', true);
-    },
     ...pender({
-        type: CREATE_JOINED_POPUP,
-        onSuccess: (state, action) => state.set('joined_user', action.payload.data)
-                                            .set('is_joined_popup_on', true),
+        type: CREATE_JOINED_USER,
+        onSuccess: (state, action) => state.set('joined_user', action.payload.data),
     }),
     ...pender({
         type: GET_JOINED_USER,
@@ -50,14 +42,10 @@ export default handleActions({
                                             .set('is_joined_already', true),
         onFailure: (state) => state.set('is_joined_already', false),
     }),
-    [RECLICK_JOINED_POPUP]: (state, action) => {
-        return state.set('is_joined_popup_on', true);
-    },
 }, initialState);
 
-export const deletePopup = createAction(DELETE_POPUP, payload => payload);
-export const createJoinedPopup = createAction(
-    CREATE_JOINED_POPUP,
+export const createJoinedUser = createAction(
+    CREATE_JOINED_USER,
     (payload) => axios({
         method: 'post',
         url: '/join/',
@@ -84,4 +72,3 @@ export const getJoinedUser = createAction(
         console.log("not working")
     )
 );
-export const reclickJoinedPopup = createAction(RECLICK_JOINED_POPUP, payload => payload);
