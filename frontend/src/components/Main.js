@@ -57,7 +57,7 @@ class Main extends Component {
     componentWillReceiveProps = nextProps => {
         if (nextProps.is_joined_already) {
             this.setState({
-                loading: false
+                loading: false,
             });
         }
     };
