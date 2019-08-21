@@ -93,28 +93,11 @@
     display: -webkit-flex !important;
     display: -ms-flexbox !important;
     display: flex !important;
+    width: 100%;
 
     .smile {
         width: 42px;
         height: 42px;
-    }
-
-    .each-image{
-        color: #ccc;
-        object-fit: cover;
-        border-radius: 12px;
-        width : 255px;
-        min-width : 255px;
-        height: 255px;
-        max-height: 255px;
-        background-color: #fff;
-        // opacity: 0.9;
-        margin-right: 16px;
-        cursor: pointer;
-    }
-
-    .each-image:first-child {
-        margin-left: 5%;
     }
 
     .last-child-gap {
@@ -340,13 +323,6 @@ select[name='company_value'] {
     }
 }
 
-#EmailAt {
-    display: inline-block;
-    width: 70px;
-    font-size: 25px;
-    margin-top: 9px;
-}
-
 input:focus {
     outline: none;
 }
@@ -355,7 +331,74 @@ select:focus {
     outline: none;
 }
 
-@media(max-width: 767px){ /*Mobile*/
+@media(max-width: 479px){ /*Mobile*/
+    .title-images {
+        margin-bottom: 274px;
+    }
+
+    .each-image{
+        color: #ccc;
+        object-fit: cover;
+        border-radius: 12px;
+        width : 231px;
+        min-width : 231px;
+        height: 231px;
+        max-height: 231px;
+        background-color: #fff;
+        // opacity: 0.9;
+        margin-right: 16px;
+        cursor: pointer;
+    }
+
+    .each-image:first-child {
+        margin-left: 5%;
+    }
+
+    .ButtonWrap {
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        justify-content: center;
+
+        .SubmitButton {
+            margin-top : -75px;
+            width: 100%;
+            max-width: 800px;
+            height: 52px;
+            border: 0;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: -0.3px;
+            text-align: center;
+            color: #ffffff;
+            align-items: center;
+        }
+    }
+}
+
+@media(min-width: 480px){ /*Tablet*/
+    .each-image{
+        color: #ccc;
+        object-fit: cover;
+        border-radius: 12px;
+        width : 255px;
+        min-width : 255px;
+        height: 255px;
+        max-height: 255px;
+        background-color: #fff;
+        // opacity: 0.9;
+        margin-right: 16px;
+        cursor: pointer;
+    }
+
+    .each-image:first-child {
+        margin-left: 5%;
+    }
+
     .ButtonWrap {
         display: -webkit-flex !important;
         display: -ms-flexbox !important;
@@ -382,6 +425,24 @@ select:focus {
 }
 
 @media(min-width: 768px){ /*PC1*/
+    .each-image{
+        color: #ccc;
+        object-fit: cover;
+        border-radius: 12px;
+        width : 255px;
+        min-width : 255px;
+        height: 255px;
+        max-height: 255px;
+        background-color: #fff;
+        // opacity: 0.9;
+        margin-right: 16px;
+        cursor: pointer;
+    }
+
+    .each-image:first-child {
+        margin-left: 5%;
+    }
+
     .ButtonWrap {
         display: -webkit-flex !important;
         display: -ms-flexbox !important;
@@ -408,7 +469,7 @@ select:focus {
     }
 }
 
-@media(min-width: 800px){ /*PC2(for swipe)*/
+@media(min-width: 889px){ /*PC2(for swipe)*/
     .images-wrap {
         position: absolute;
         width: 100%;

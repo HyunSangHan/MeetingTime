@@ -134,7 +134,14 @@ class TeamProfilePrev extends Component {
         return (
             <div className="team-container">
                 <div className="profile-form">
-                    <div className="title font-notosan title-images">팀 사진</div>
+                    <div className="team-container title-images">
+                        <div className="title font-notosan">
+                            팀 사진
+                            {!this.props.my_profile.created_at &&
+                            <span className="title-noti font-notosan ml-2">* 멤버수는 본인을 포함, 3명을 기본으로 합니다.</span>
+                            }
+                        </div>
+                    </div>
                     <form
                         className="form"
                         onSubmit={this.handleSubmit}
@@ -191,7 +198,7 @@ class TeamProfilePrev extends Component {
                             />
                         </div>
                         <div className="ButtonWrap">
-                            {(true) ?
+                            {(true) ? //버튼 활성화/비활성화 분기 로직 들어갈 곳
                             (
                                 <button className="SubmitButton WorkingButton">그룹만들기</button>
                             ) : (

@@ -79,17 +79,17 @@ class Initpage extends Component {
         return todayLabel;
     }
 
-    blockJoin = () => () => {
-        const { history, isMadeTeam } = this.props;
-        if (!isMadeTeam) {
-            if(window.confirm("미팅에 참여하실 '팀'을 먼저 결성해야 번호표를 뽑으실 수 있어요. 미팅 그룹 생성 페이지로 이동하실래요?")){
+    blockJoin = (bool) => () => {
+        const { history } = this.props;
+        if (!bool) {
+            if(window.confirm("미팅에 참여하실 '팀'을 먼저 결성해야 번호표를 으실 수 있어요. 미팅 그룹 생성 페이지로 이동하실래요?")){
                 history.push('/team_profile')
             }    
         }
     }
 
     render() {
-        const { my_profile, is_joined_popup_on, joined_user, JoinActions, is_joined_already, current_meeting, is_login_already } = this.props;
+        const { my_profile, current_meeting, is_login_already } = this.props;
 
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
@@ -124,8 +124,9 @@ class Initpage extends Component {
             authButton = <div className="App"><a id="kakao-login-btn"></a></div>;
         }
 
-        const lastShuffledAt = new Date(my_profile.last_matching_time); //나중에 하위 필드 추가되면 수정필요
+        const lastShuffledAt = new Date(current_meeting.prev_meeting_last_shuffle_time); //나중에 하위 필드 추가되면 수정필요
         const lastTeamModifiedAt = new Date(my_profile.last_intro_modified_at);
+
         let isMadeTeam = null;
         if (lastShuffledAt < lastTeamModifiedAt) {
             isMadeTeam = true;
@@ -144,12 +145,11 @@ class Initpage extends Component {
                 <div className="container-shadow mh-auto">
                     <MeetingInfo
                         makeTeamButton = { makeTeamButton }
-                        isMadeTeam = { isMadeTeam }
                         current_meeting = { current_meeting }
                     />
                 </div>
                 <div className="fix-bottom w100percent mb-36">
-                    <div onClick={this.blockJoin()}>
+                    <div onClick={this.blockJoin(isMadeTeam)}>
                         <JoinButton 
                             is_login_already = {is_login_already}
                             isMadeTeam = {isMadeTeam}

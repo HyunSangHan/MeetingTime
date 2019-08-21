@@ -15,7 +15,7 @@ class MeetingInfo extends Component {
     // }
 
     render() {
-        const { current_meeting, isMadeTeam } = this.props;
+        const { current_meeting } = this.props;
         return (
             <div className={"meeting-info-container mh-auto"}>
                 <div className="bg-circle left"> {/* 왼쪽원 */}</div>

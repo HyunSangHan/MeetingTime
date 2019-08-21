@@ -86,10 +86,7 @@ class JoinButton extends Component {
                     }
                 }
             } else {
-                // else와 if를 뒤바꾸는게낫겠다
                 if ( is_current_matching && is_joined_already && joined_user.rank <= current_meeting.cutline && joined_user.rank != null) {
-                    console.log(joined_user.rank)
-                    console.log(current_meeting.cutline)
                     //for winner
                     button = 
                     <div>
