@@ -31,8 +31,6 @@ class TeamProfilePrev extends Component {
     }
 
     componentDidMount(){
-        const { MyProfileActions } = this.props;
-        MyProfileActions.getMyProfile();
     }
 
     //수정 관련 함수들
@@ -73,7 +71,7 @@ class TeamProfilePrev extends Component {
     //이미지 제출 함수
     handleImageSubmit = () => {
         const formData = new FormData();
-        const { image_value, image_two_value, image_three_value, preview, preview_two, preview_three } = this.state;
+        const { image_value } = this.state;
         
         formData.append('image', image_value, image_value.name);
         axios.patch('http://localhost:3000/profile/', formData)
@@ -83,7 +81,7 @@ class TeamProfilePrev extends Component {
     }
     handleImageSubmit_two = () => {
         const formData = new FormData();
-        const { image_value, image_two_value, image_three_value, preview, preview_two, preview_three } = this.state;
+        const { image_two_value } = this.state;
         formData.append('image_two', image_two_value, image_two_value.name);
         console.log(formData);
         axios.patch('http://localhost:3000/profile/', formData)
@@ -94,7 +92,7 @@ class TeamProfilePrev extends Component {
 
     handleImageSubmit_three = () => {
         const formData = new FormData();
-        const { image_value, image_two_value, image_three_value, preview, preview_two, preview_three } = this.state;
+        const { image_three_value } = this.state;
         console.log(formData);
         formData.append('image_three', image_three_value, image_three_value.name);
         axios.patch('http://localhost:3000/profile/', formData)
@@ -132,39 +130,18 @@ class TeamProfilePrev extends Component {
 
 
     render() {
-        const { my_profile, is_edited_profile } = this.props;        // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기
-        const { MyProfileActions, team_name_value, team_intro_value, preview, preview_two, preview_three } = this.state;
+        const { team_name_value, team_intro_value, preview, preview_two, preview_three } = this.state;
         return (
             <div className="team-container">
-
-                <div className="title font-notosan">팀 멤버</div>
-
-                <div className="images">
-
-                    {!preview ?
-                        <img src={my_profile.image || require("../../images/noPhoto.jpg")} 
-                            onClick={() => this.fileInput.click()}
-                        />
-                        :
-                        <img src={preview} onClick={() => this.fileInput.click()}/>
-                    }
-                    {!preview_two ? 
-                        <img src={my_profile.image_two || require("../../images/noPhoto.jpg")}
-                            onClick={() => this.fileInput_two.click()}
-                        />
-                    :
-                        <img src={preview_two} onClick={() => this.fileInput_two.click()}/>
-                    }
-                    {!preview_three ?
-                        <img src={my_profile.image_three || require("../../images/noPhoto.jpg")}
-                            onClick={() => this.fileInput_three.click()}
-                        />
-                    :
-                        <img src={preview_three} onClick={() => this.fileInput_three.click()}/>
-                    }
-                </div>
-
-                    
+                <div className="profile-form">
+                    <div className="team-container title-images">
+                        <div className="title font-notosan">
+                            팀 사진
+                            {!this.props.my_profile.created_at &&
+                            <span className="title-noti font-notosan ml-2">* 멤버수는 본인을 포함, 3명을 기본으로 합니다.</span>
+                            }
+                        </div>
+                    </div>
                     <form
                         className="form"
                         onSubmit={this.handleSubmit}
@@ -205,26 +182,30 @@ class TeamProfilePrev extends Component {
                             onChange={this.handleInputChange}
                             className="text-input font-notosan"
                             name="team_name_value"
-                            placeholder="10자이내로 작성해주세요"
+                            placeholder="10자 이내로 작성해주세요"
                         />
                         
 
                         <div className="title font-notosan">팀 소개</div>
-                        <div className="team_intro">
+                        <div className="team-intro">
                             <Textarea
                                 type="text"
                                 value={team_intro_value}
                                 onChange={this.handleInputChange}
                                 className="text-input font-notosan"
                                 name="team_intro_value"
-                                placeholder="30자이내로 작성해주세요"
+                                placeholder="30자 이내로 작성해주세요"
                             />
                         </div>
-                        <input
-                            type="submit"
-                            value="그룹 만들기"
-                            className="button font-notosan"
-                        />
+                        <div className="ButtonWrap">
+                            {(true) ? //버튼 활성화/비활성화 분기 로직 들어갈 곳
+                            (
+                                <button className="SubmitButton WorkingButton">그룹만들기</button>
+                            ) : (
+                                <button type="button" className="SubmitButton NotWorkingButton" onClick={() => alert("입력을 완료해주세요.")}>그룹만들기</button>
+                            )
+                            }
+                        </div>
                     </form>
 
                     {/* {is_edited_profile && 
@@ -232,20 +213,51 @@ class TeamProfilePrev extends Component {
                         <TeamPopup MyProfileActions={MyProfileActions}/>
                     </div>
                     } */}
-        </div>
+                </div>
+                <div className="images-wrap">
+                    <div className="images">
+                        {!preview ?
+                        <div className="each-image flex-center" onClick={() => this.fileInput.click()}>
+                            <div className="App">
+                                <img className="smile" src={require("../../images/smile.png")} />
+                                <div className="mt-2 font-16 font-bold">
+                                    멤버1(본인) 사진
+                                </div>
+                            </div>
+                        </div>
+                        :
+                        <img className="each-image" src={preview} onClick={() => this.fileInput.click()}/>
+                        }
+                        {!preview_two ? 
+                        <div className="each-image flex-center" onClick={() => this.fileInput_two.click()}>
+                            <div className="App">
+                                <img className="smile" src={require("../../images/smile.png")} />
+                                <div className="mt-2 font-16 font-bold">
+                                    멤버2 사진
+                                </div>
+                            </div>
+                        </div>
+                        :
+                        <img className="each-image" src={preview_two} onClick={() => this.fileInput_two.click()}/>
+                        }
+                        {!preview_three ?
+                        <div className="each-image flex-center" onClick={() => this.fileInput_three.click()}>
+                            <div className="App">
+                                <img className="smile" src={require("../../images/smile.png")} />
+                                <div className="mt-2 font-16 font-bold">
+                                    멤버3 사진
+                                </div>
+                            </div>
+                        </div>
+                        :
+                        <img className="each-image" src={preview_three} onClick={() => this.fileInput_three.click()}/>
+                        }
+                        <div className="last-child-gap"></div>
+                    </div>
+                </div>
+            </div>
         );
     }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    MyProfileActions: bindActionCreators(myProfileActions, dispatch),
-});
-
-const mapStateToProps = (state) => ({
-    is_login_already: state.my_profile.get('is_login_already'),
-    is_edited_profile: state.my_profile.get('is_edited_profile'),
-    my_profile: state.my_profile.get('my_profile'),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(TeamProfilePrev);
+export default TeamProfilePrev;

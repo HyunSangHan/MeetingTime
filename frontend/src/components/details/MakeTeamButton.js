@@ -17,7 +17,6 @@ class MakeTeamButton extends Component {
         // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기
         let makeTeamButton = null;
 
-        console.log(isMadeTeam)
         if (isMadeTeam) {
             makeTeamButton =
             <div className="mt-4 mh-auto team-profile-img-warp">

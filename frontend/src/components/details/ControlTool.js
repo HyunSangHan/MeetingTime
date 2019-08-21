@@ -86,9 +86,9 @@ class ControlTool extends Component {
                 {/* 임시적으로 1분 미만의 시간 카운트  */}
                 <div className="timer font-notosan">
                     {time < 10 ? 
-                        <div> 0 0 : 0 {time} </div>
+                        <div> 00 : 0 {time} </div>
                     : 
-                        <div> 0 0 : {time} </div>
+                        <div> 00 : {time} </div>
                     }
                 </div>
 
@@ -136,7 +136,7 @@ class ControlTool extends Component {
                     </div>
 
                         
-                    {is_gift_popup ? <GiftPopup  handleGift={this.handleGift} /> :
+                    {is_gift_popup ? <GiftPopup handleGift={this.handleGift} /> :
                     <div className="column">
                         {!counter_profile.is_male ? 
                         <div className="gift" onClick={this.handleGiftPopup}>

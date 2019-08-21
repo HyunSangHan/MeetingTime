@@ -31,17 +31,30 @@ class Waiting extends Component {
 
     render(){    
         const { joined_user, current_meeting, is_login_already, is_current_matching } = this.props;
+        const closeTime = Date.parse(current_meeting.close_time)
+        const nowTime = new Date().getTime()
+
+        let numberInfo = null
+        if (nowTime < closeTime) {
+            numberInfo = 
+            <MyNumber
+                rank = { joined_user.rank} 
+            />
+        } else {
+            numberInfo = 
+            <ResultNumber
+                cutline = { current_meeting.cutline }
+                rank = { joined_user.rank }
+            />
+        }
+
         return (
             <div className="frame bg-init-color">
                 <div className="container-shadow mh-auto">
                     <div className="waiting-header flex-center">
                         <img src={require("./../images/callCall.png")} width="100px" alt="logo" />
                     </div>
-                    {/* <MyNumber /> */}
-                    <ResultNumber
-                        cutline = { current_meeting.cutline }
-                        rank = { joined_user.rank }
-                    />
+                    { numberInfo }
                     <MeetingInfo
                         makeTeamButton = { null }
                         isMadeTeam = { true }
