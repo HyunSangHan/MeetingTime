@@ -331,6 +331,54 @@ select:focus {
     outline: none;
 }
 
+//team pop-up
+.team-pop{
+    display: flex;
+    justify-content: center;
+}
+
+.team-popup{
+    position: absolute;
+    top: 230px;
+    z-index: 2;
+    .message-box{
+        width: 70%;
+        min-width: 400px;
+        max-width: 700px;
+        height: 140px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 12px;
+        background-color : #50e3c2;
+        color: white;
+        font-size: 22px;
+        font-weight: 800;
+        padding: 25px;
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        p{
+            margin-right: 15px;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .pop-button{
+            width: 100px;
+            height: 50px;
+            background-color : #9013fe;
+            color: white;
+            font-size: 20px;
+            font-weight: 800;
+            border: none;
+            border-radius: 12px;
+        }
+    }
+}
+
+
+
 @media(max-width: 479px){ /*Mobile*/
     .title-images {
         margin-bottom: 274px;

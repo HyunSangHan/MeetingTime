@@ -9,7 +9,8 @@ import * as myProfileActions from "../../modules/my_profile";
 import axios from "axios";
 import TeamPopup from './TeamPopup';
 
-class TeamProfilePrev extends Component {
+
+class TeamProfileBody extends Component {
 
     constructor(props){
         super(props);
@@ -101,20 +102,23 @@ class TeamProfilePrev extends Component {
             });
         }
         
+    handleTeamPopup = () => {
+        const { MyProfileActions } = this.props;
+        MyProfileActions.createPopup();
+        //this.handleSubmit();
+    }
+
     handleSubmit = event => {
         const { MyProfileActions } = this.props;
         const { team_name_value, team_intro_value, preview, preview_two, preview_three } = this.state;
         event.preventDefault();
-        console.log(this.state);
-        MyProfileActions.TeamUpdate({
+
+        MyProfileActions.teamUpdate({
             team_name_value : team_name_value,
-            team_intro_value : team_intro_value,
+            team_intro_value : team_intro_value
         })
 
-        MyProfileActions.createPopup();
-        this.setState({
-            is_popup: true
-        })
+        
         if(preview){
             this.handleImageSubmit();
         }
@@ -130,6 +134,7 @@ class TeamProfilePrev extends Component {
 
 
     render() {
+        const { MyProfileActions, is_edited_profile } = this.props;
         const { team_name_value, team_intro_value, preview, preview_two, preview_three } = this.state;
         return (
             <div className="team-container">
@@ -197,23 +202,23 @@ class TeamProfilePrev extends Component {
                                 placeholder="30자 이내로 작성해주세요"
                             />
                         </div>
+
                         <div className="ButtonWrap">
                             {(true) ? //버튼 활성화/비활성화 분기 로직 들어갈 곳
                             (
-                                <button className="SubmitButton WorkingButton">그룹만들기</button>
+                                <button className="SubmitButton WorkingButton" onClick={this.handleTeamPopup}>그룹만들기</button>
                             ) : (
                                 <button type="button" className="SubmitButton NotWorkingButton" onClick={() => alert("입력을 완료해주세요.")}>그룹만들기</button>
                             )
                             }
                         </div>
                     </form>
-
-                    {/* {is_edited_profile && 
-                    <div className="team-popup">
+                </div>
+                {is_edited_profile && 
+                    <div className="team-pop">
                         <TeamPopup MyProfileActions={MyProfileActions}/>
                     </div>
-                    } */}
-                </div>
+                }
                 <div className="images-wrap">
                     <div className="images">
                         {!preview ?
@@ -260,4 +265,4 @@ class TeamProfilePrev extends Component {
     }
 }
 
-export default TeamProfilePrev;
+export default TeamProfileBody;
