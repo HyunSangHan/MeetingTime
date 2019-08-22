@@ -7,15 +7,30 @@ import { Link } from 'react-router-dom'; //다른 페이지로 링크 걸 때 �
 
 class MeetingInfo extends Component {
 
-    // constructor(props){
-    //     super(props);
-    // }
+    getInputDayLabel = (time) => {
+        const week = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+        const today = time.getDay();
+        const todayLabel = week[today];
+        return todayLabel;
+    }
 
-    // componentDidMount(){
-    // }
+    getDDay = (time) => {
+        const nowTime = new Date();
+        const meetingTime = time;
+        const gap = nowTime.getDate() - meetingTime.getDate()
+        if (gap < 0){
+            return gap;
+        } else if (gap === 0){
+            return "-day";
+        } else {
+            return "+" + gap;
+        }
+    }
 
     render() {
         const { current_meeting } = this.props;
+        const meetingTime = new Date(current_meeting.meeting_time);
+
         return (
             <div className={"meeting-info-container mh-auto"}>
                 <div className="bg-circle left"> {/* 왼쪽원 */}</div>
@@ -26,14 +41,14 @@ class MeetingInfo extends Component {
                 </div>
                     <div className="d-day mh-auto flex-center mb-3">{/* 디데이 */}
                         <div className="font-jua font-white font-18 mt-1">{/* 디데이 */}
-                            D-3 {/* TODO: 데이터 넣어야함 */}
+                            D{this.getDDay(meetingTime)}
                         </div>
                     </div>
                     <div className="font-jua font-30 mb-1">{/* 디스크립션 */}
                         { current_meeting.description } in { current_meeting.location }
                     </div>
                     <div className="font-notosan font-grey font-15 mb-1">{/* 일시 */}
-                        <strong>일시 </strong>{'\u00A0'}2019년 8월 31일 금요일 {/* TODO: 데이터 넣어야함 */}
+                        <strong>일시 </strong>{'\u00A0'}{meetingTime.getFullYear()}년 {meetingTime.getMonth()+1}월 {meetingTime.getDate()}일 {this.getInputDayLabel(meetingTime)}
                     </div>
                     <div>
                         <div className="font-notosan font-grey font-15">{/* 장소 */}
