@@ -9,7 +9,7 @@ import * as myProfileActions from "../../modules/my_profile";
 import axios from "axios";
 import TeamPopup from './TeamPopup';
 
-class TeamProfilePrev extends Component {
+class TeamProfileBody extends Component {
 
     constructor(props){
         super(props);
@@ -106,7 +106,7 @@ class TeamProfilePrev extends Component {
         const { team_name_value, team_intro_value, preview, preview_two, preview_three } = this.state;
         event.preventDefault();
         console.log(this.state);
-        MyProfileActions.TeamUpdate({
+        MyProfileActions.teamUpdate({
             team_name_value : team_name_value,
             team_intro_value : team_intro_value,
         })
@@ -260,4 +260,4 @@ class TeamProfilePrev extends Component {
     }
 }
 
-export default TeamProfilePrev;
+export default TeamProfileBody;

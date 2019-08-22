@@ -24,7 +24,7 @@ class JoinButton extends Component {
     }
 
     render() {
-        const { JoinActions, is_joined_already, is_login_already, joined_user, current_meeting, is_current_matching, isMadeTeam } = this.props;
+        const { JoinActions, is_joined_already, is_login_already, joined_user, current_meeting, isMadeTeam } = this.props;
         const openTime = Date.parse(current_meeting.open_time)
         const closeTime = Date.parse(current_meeting.close_time)
         const nowTime = new Date().getTime()
@@ -86,7 +86,7 @@ class JoinButton extends Component {
                     }
                 }
             } else {
-                if ( is_current_matching && is_joined_already && joined_user.rank <= current_meeting.cutline && joined_user.rank != null) {
+                if ( is_joined_already && joined_user.rank <= current_meeting.cutline && joined_user.rank != null) {
                     //for winner
                     button = 
                     <div>

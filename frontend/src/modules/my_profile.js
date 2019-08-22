@@ -81,6 +81,9 @@ export const getMyProfile = createAction(
     .then((response) => {
         return response
     })
+    .catch(
+        console.log("not working (get_profile)")
+    )
 );
 
 export const profileUpdate = createAction(

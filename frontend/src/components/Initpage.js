@@ -140,8 +140,8 @@ class Initpage extends Component {
             authButton = 
             <div className="join-button-wrap bg-color-kakao mh-auto flex-center mt-2" onClick={this.kakaoLogin()}>
                 <div className="font-notosan" style={{"color":"#3b1c1c"}}>
-                    <img src={require("../images/kakaoIcon.png")} style={{"height":"28px", "margin-right":"6px"}}/>
-                    카카오 계정으로 로그인
+                    <img src={require("../images/kakaoIcon.png")} style={{"height":"28px", marginRight:"6px"}}/>
+                    카카오계정으로 로그인
                 </div>
             </div>;
         }

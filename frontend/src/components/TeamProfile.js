@@ -51,11 +51,13 @@ class TeamProfile extends Component {
                 />
                 {action === "new" &&
                 <TeamProfileBody
+                    MyProfileActions = {MyProfileActions}
                     my_profile = {this.state.empty_profile}
                     is_edited_profile = {is_edited_profile}
                 />}
                 {action === "prev" &&
                 <TeamProfileBody
+                    MyProfileActions = {MyProfileActions}
                     my_profile = {my_profile}
                     is_edited_profile = {is_edited_profile}
                 />}

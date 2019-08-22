@@ -456,6 +456,10 @@ class CurrentProfile(APIView):
 
     def patch(self, request, format=None):
         queryset = request.user.profile
+
+        if request.data['team_name'] is not None:
+            queryset.last_intro_modified_at = timezone.now()
+
         serializer = ProfileSerializer(queryset, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
