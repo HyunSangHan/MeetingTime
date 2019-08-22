@@ -22,12 +22,9 @@ class TeamProfileBody extends Component {
             preview: null,
             preview_two: null,
             preview_three: null,
-
-            //세장다 올려야 팀 만들수 있게..!
-
+            has_three_images: false,
             team_name_value: this.props.my_profile.team_name,
             team_intro_value: this.props.my_profile.team_introduce,
-
         }
     }
 
@@ -135,7 +132,8 @@ class TeamProfileBody extends Component {
 
     render() {
         const { MyProfileActions, is_edited_profile } = this.props;
-        const { team_name_value, team_intro_value, preview, preview_two, preview_three, image_value, image_two_value, image_three_value } = this.state;
+        const { team_name_value, team_intro_value, preview, preview_two, preview_three, image_value, image_two_value, image_three_value, has_three_images } = this.state;
+        
         return (
             <div className="team-container">
                 <div className="profile-form">
@@ -204,7 +202,7 @@ class TeamProfileBody extends Component {
                         </div>
 
                         <div className="ButtonWrap">
-                            {(true) ? //버튼 활성화/비활성화 분기 로직 들어갈 곳
+                            {((preview && preview_two && preview_three) || (image_value && image_two_value && image_three_value)) ? 
                             (
                                 <button className="SubmitButton WorkingButton" onClick={this.handleTeamPopup}>그룹만들기</button>
                             ) : (
