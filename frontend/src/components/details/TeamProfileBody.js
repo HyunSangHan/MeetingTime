@@ -102,16 +102,16 @@ class TeamProfileBody extends Component {
             });
         }
         
-    handleTeamPopup = () => {
+    handleTeamPopup = event => {
         const { MyProfileActions } = this.props;
         MyProfileActions.createPopup();
-        //this.handleSubmit();
+        event.preventDefault();
+        this.handleSubmit();
     }
 
     handleSubmit = event => {
         const { MyProfileActions } = this.props;
         const { team_name_value, team_intro_value, preview, preview_two, preview_three } = this.state;
-        event.preventDefault();
 
         MyProfileActions.teamUpdate({
             team_name_value : team_name_value,
@@ -135,7 +135,7 @@ class TeamProfileBody extends Component {
 
     render() {
         const { MyProfileActions, is_edited_profile } = this.props;
-        const { team_name_value, team_intro_value, preview, preview_two, preview_three } = this.state;
+        const { team_name_value, team_intro_value, preview, preview_two, preview_three, image_value, image_two_value, image_three_value } = this.state;
         return (
             <div className="team-container">
                 <div className="profile-form">
@@ -225,36 +225,48 @@ class TeamProfileBody extends Component {
                     <div className="images">
                         {!preview ?
                         <div className="each-image flex-center" onClick={() => this.fileInput.click()}>
+                            {image_value ?
+                            <img className="user-image" src={image_value} />
+                            :
                             <div className="App">
                                 <img className="smile" src={require("../../images/smile.png")} />
                                 <div className="mt-2 font-16 font-bold">
                                     멤버1(본인) 사진
                                 </div>
                             </div>
+                            }
                         </div>
                         :
                         <img className="each-image" src={preview} onClick={() => this.fileInput.click()}/>
                         }
                         {!preview_two ? 
                         <div className="each-image flex-center" onClick={() => this.fileInput_two.click()}>
+                            {image_two_value ?
+                            <img className="user-image" src={image_two_value} />
+                            :
                             <div className="App">
                                 <img className="smile" src={require("../../images/smile.png")} />
                                 <div className="mt-2 font-16 font-bold">
                                     멤버2 사진
                                 </div>
                             </div>
+                            }
                         </div>
                         :
                         <img className="each-image" src={preview_two} onClick={() => this.fileInput_two.click()}/>
                         }
                         {!preview_three ?
                         <div className="each-image flex-center" onClick={() => this.fileInput_three.click()}>
+                            {image_three_value ?
+                            <img className="user-image" src={image_three_value} />
+                            :
                             <div className="App">
                                 <img className="smile" src={require("../../images/smile.png")} />
                                 <div className="mt-2 font-16 font-bold">
                                     멤버3 사진
                                 </div>
                             </div>
+                            }
                         </div>
                         :
                         <img className="each-image" src={preview_three} onClick={() => this.fileInput_three.click()}/>

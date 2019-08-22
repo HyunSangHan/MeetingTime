@@ -95,6 +95,7 @@
     display: flex !important;
     width: 100%;
 
+ 
     .smile {
         width: 42px;
         height: 42px;
@@ -443,6 +444,12 @@ select:focus {
         cursor: pointer;
     }
 
+    .user-image{
+        width: 255px;
+        height: 255px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
     .each-image:first-child {
         margin-left: 5%;
     }
