@@ -86,7 +86,7 @@ class Main extends Component {
     }
 
     render() {
-        const {user, is_gift_popup, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting, is_current_matching, current_matching, PlayerActions, counter_profile, is_counter_profile,  } = this.props;
+        const {user, is_gift_popup, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting, is_current_matching, current_matching, PlayerActions, CurrentMatchingActions, counter_profile, is_counter_profile,  } = this.props;
 
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
@@ -139,6 +139,7 @@ class Main extends Component {
                             time={this.state.time} 
                             my_profile={my_profile}
                             PlayerActions={PlayerActions}
+                            CurrentMatchingActions={CurrentMatchingActions}
                             counter_profile={counter_profile}
                             is_counter_profile={is_counter_profile}
                             is_gift_popup={is_gift_popup}

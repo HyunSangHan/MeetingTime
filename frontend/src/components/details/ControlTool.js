@@ -21,9 +21,7 @@ class ControlTool extends Component {
     }
 
     componentDidMount() {
-        const { PlayerActions, CurrentMatchingActions } = this.props;
-        PlayerActions.getCounterProfile();
-        CurrentMatchingActions.getCurrentMatching();
+       
     }
 
     handleGreenLight = () =>{
@@ -47,8 +45,6 @@ class ControlTool extends Component {
             this.setState({ is_greenlight_on_female: false });
         }
 
-        CurrentMatchingActions.getCurrentMatching();
-
     };
 
 
@@ -58,15 +54,11 @@ class ControlTool extends Component {
 
         if (!is_gift_on_male && !counter_profile.is_male) {
             PlayerActions.handleGiftOn({ male: true });
-
         } else if (!is_gift_on_female && counter_profile.is_male) {
             PlayerActions.handleGiftOn({ female: true });
-
-        //popup 닫기 및 매칭 업데이트해서 받기
+        }
         PlayerActions.deletePopup();
         CurrentMatchingActions.getCurrentMatching();
-    
-        }
     };
 
     handleGiftPopup = () => {
@@ -77,7 +69,6 @@ class ControlTool extends Component {
     render() {
         const { PlayerActions, is_gift_popup, my_profile, counter_profile, current_matching, time } = this.props;  
         const { is_greenlight_on_male, is_greenlight_on_female } = this.state;
-        // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기
         console.log(is_gift_popup);
 
         return (
@@ -108,7 +99,6 @@ class ControlTool extends Component {
                 <div className="action-container">
                     <div className="column">
                         <Link to="/team_profile">
-                            {/* 대표사진 */}
                             <img className="my-team" src={my_profile.image || require("../../images/noPhoto.jpg")} />
                         </Link> 
                     </div>
@@ -120,12 +110,12 @@ class ControlTool extends Component {
                             <div className="greenlight move-1" onClick={this.handleGreenLight}>
                                 {is_greenlight_on_male &&
                                     <div className="call-button font-jua">
-                                        콜?
+                                        콜!!
                                     </div> 
                                 }
                                 {!is_greenlight_on_male &&
                                     <div className="call-button font-jua">
-                                        콜!!
+                                        콜?
                                     </div> 
                                 }
                             </div>
@@ -135,12 +125,12 @@ class ControlTool extends Component {
                             <div className="greenlight move-1" onClick={this.handleGreenLight}>
                                 {is_greenlight_on_female &&
                                     <div className="call-button font-jua">
-                                        콜?
+                                        콜!!
                                     </div> 
                                 }
                                 {!is_greenlight_on_female &&
                                     <div className="call-button font-jua">
-                                        콜!!
+                                        콜?
                                     </div> 
                                 }
                             </div>
@@ -171,7 +161,7 @@ class ControlTool extends Component {
                             }
                             {!current_matching.is_gift_female &&
                                 <div className="gift-off font-jua">
-                                    안주쏘기2
+                                    안주쏘기
                                 </div> 
                             }
                         </div>
@@ -183,17 +173,4 @@ class ControlTool extends Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    PlayerActions: bindActionCreators(playerActions, dispatch),
-    CurrentMatchingActions: bindActionCreators(currentMatchingActions, dispatch),
-});
-
-const mapStateToProps = (state) => ({
-    counter_profile: state.player.get('counter_profile'),
-    is_gift_popup : state.player.get('is_gift_popup'),
-    current_matching: state.current_matching.get('current_matching'),
-    is_current_matching: state.current_matching.get('is_current_matching'),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(ControlTool);
+export default ControlTool;
