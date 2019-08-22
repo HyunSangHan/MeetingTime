@@ -33,11 +33,11 @@ class MeetingInfo extends Component {
                         { current_meeting.description } in { current_meeting.location }
                     </div>
                     <div className="font-notosan font-grey font-15 mb-1">{/* 일시 */}
-                        <strong>일시 </strong> 2019년 8월 31일 금요일 {/* TODO: 데이터 넣어야함 */}
+                        <strong>일시 </strong>{'\u00A0'}2019년 8월 31일 금요일 {/* TODO: 데이터 넣어야함 */}
                     </div>
                     <div>
                         <div className="font-notosan font-grey font-15">{/* 장소 */}
-                            <strong>장소 </strong> { current_meeting.location} 근처 어딘가
+                            <strong>장소 </strong>{'\u00A0'}{ current_meeting.location} 근처 어딘가
                         </div>
                     </div>
                 </div>

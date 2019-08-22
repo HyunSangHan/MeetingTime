@@ -130,9 +130,8 @@ class JoinButton extends Component {
             }
         } else {
             button = 
-            <div className="join-button-wrap bg-color-join mh-auto flex-center">
-                <div className="font-notosan"
-                    onClick={() => {window.alert('로그인이 필요한 서비스입니다.')}}>
+            <div className="join-button-wrap bg-color-fail mh-auto flex-center">
+                <div className="font-notosan">
                     이번주 미팅상대 찾기
                 </div>
             </div>;

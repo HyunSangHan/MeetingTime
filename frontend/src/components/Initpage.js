@@ -25,37 +25,48 @@ class Initpage extends Component {
         try {
             window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY);    
             // 카카오 로그인 버튼을 생성
-            window.Kakao.Auth.createLoginButton({
-                container: '#kakao-login-btn',
-                success: function(authObj) {
-                    // 로그인 성공시, 장고의 KAKAO Login API를 호출함
-                    axios.post("/rest-auth/kakao/", {
-                        access_token: authObj.access_token,
-                        code: process.env.REACT_APP_KAKAO_REST_API_KEY
-                    })
-                    .then( response => {
-                        axios.get("/profile")
-                        .then(response => {
-                            console.log("[로그인성공] " + response.data.user.username + "(회사:" + response.data.company.name + ")")
-                            window.location.reload();
-                        })
-                        .catch(err => console.log(err));
-                    })
-                    .catch( err => {
-                        console.log(err);
-                    });
+            // window.Kakao.Auth.createLoginButton({
+            //     container: '#kakao-login-btn',
+            //     success: function(authObj) {
 
-                },
-                fail: function(err) {
-                    alert(JSON.stringify(err));
-                    console.log(err);
-                }
-            });        
+            //     },
+            //     fail: function(err) {
+            //         alert(JSON.stringify(err));
+            //         console.log(err);
+            //     }
+            // });        
         } catch (error) {
             console.log(error);
         }
         const { MyProfileActions } = this.props;
         MyProfileActions.getMyProfile();
+    }
+
+    kakaoLogin = () => () => {
+        // 로그인 창을 띄웁니다.
+        Kakao.Auth.login({
+            success: function(authObj) {
+                // 로그인 성공시, 장고의 KAKAO Login API를 호출함
+                axios.post("/rest-auth/kakao/", {
+                    access_token: authObj.access_token,
+                    code: process.env.REACT_APP_KAKAO_REST_API_KEY
+                })
+                .then( response => {
+                    axios.get("/profile")
+                    .then(response => {
+                        console.log("[로그인성공] " + response.data.user.username + "(회사:" + response.data.company.name + ")")
+                        window.location.reload();
+                    })
+                    .catch(err => console.log(err));
+                })
+                .catch( err => {
+                    console.log(err);
+                });
+            },
+            fail: function(err) {
+                alert(JSON.stringify(err));
+            }
+        });
     }
 
     kakaoLogout = () => () => {
@@ -80,11 +91,15 @@ class Initpage extends Component {
     }
 
     blockJoin = (bool) => () => {
-        const { history } = this.props;
-        if (!bool) {
-            if(window.confirm("미팅에 참여하실 '팀'을 먼저 결성해야 번호표를 으실 수 있어요. 미팅 그룹 생성 페이지로 이동하실래요?")){
-                history.push('/team_profile')
-            }    
+        const { history, is_login_already } = this.props;
+        if (is_login_already) {
+            if (!bool) {
+                if(window.confirm("미팅에 참여하실 '팀'을 먼저 결성해야 번호표를 뽑으실 수 있어요. 미팅 그룹 생성 페이지로 이동하실래요?")){
+                    history.push('/team_profile')
+                }
+            }
+        } else {
+            window.alert("로그인이 필요한 서비스입니다.")
         }
     }
 
@@ -121,7 +136,14 @@ class Initpage extends Component {
                     <Link to="/profile" className="font-grey font-bold font-16 w100percent" style={{ textDecoration: 'none' }}>개인정보수정</Link>
                 </div>;
         } else {
-            authButton = <div className="App"><a id="kakao-login-btn"></a></div>;
+            // authButton = <div className="App"><a id="kakao-login-btn"></a></div>;
+            authButton = 
+            <div className="join-button-wrap bg-color-kakao mh-auto flex-center mt-2" onClick={this.kakaoLogin()}>
+                <div className="font-notosan" style={{"color":"#3b1c1c"}}>
+                    <img src={require("../images/kakaoIcon.png")} style={{"height":"28px", "margin-right":"6px"}}/>
+                    카카오 계정으로 로그인
+                </div>
+            </div>;
         }
 
         const lastShuffledAt = new Date(current_meeting.prev_meeting_last_shuffle_time); //나중에 하위 필드 추가되면 수정필요

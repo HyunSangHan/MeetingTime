@@ -6,12 +6,10 @@ const Loading = props => (
     <div className="container">
         <img
             src={require("../../images/loading.png")}
-            className="spinner"
+            style={{"width" : "30px"}}
             alt="loading"
         />
     </div>
 )
-
-
 
 export default Loading;
