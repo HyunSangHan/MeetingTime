@@ -17,7 +17,15 @@ class MeetingInfo extends Component {
     getDDay = (time) => {
         const nowTime = new Date();
         const meetingTime = time;
-        const gap = nowTime.getDate() - meetingTime.getDate()
+        let gap = null;
+
+        if (nowTime.getMonth() === meetingTime.getMonth()) {
+            gap = nowTime.getDate() - meetingTime.getDate()
+        } else {
+            const gapTime = meetingTime.getTime() - nowTime.getTime();
+            gap = Math.floor(gapTime / (1000 * 60 * 60 * 24));    
+        }
+
         if (gap < 0){
             return gap;
         } else if (gap === 0){
