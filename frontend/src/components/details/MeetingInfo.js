@@ -14,18 +14,11 @@ class MeetingInfo extends Component {
         return todayLabel;
     }
 
-    getDDay = (time) => {
+    getDateGap = (time) => {
         const nowTime = new Date();
-        const meetingTime = time;
-        let gap = null;
-
-        if (nowTime.getMonth() === meetingTime.getMonth()) {
-            gap = nowTime.getDate() - meetingTime.getDate()
-        } else {
-            const gapTime = meetingTime.getTime() - nowTime.getTime();
-            gap = Math.floor(gapTime / (1000 * 60 * 60 * 24));    
-        }
-
+        const nowDate = new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate(), 0, 0, 0, 0)
+        const targetDate = new Date(time.getFullYear(), time.getMonth(), time.getDate(), 0, 0, 0, 0)
+        const gap = Math.floor((nowDate - targetDate) / (1000 * 60 * 60 * 24));    
         if (gap < 0){
             return gap;
         } else if (gap === 0){
@@ -49,7 +42,7 @@ class MeetingInfo extends Component {
                 </div>
                     <div className="d-day mh-auto flex-center mb-3">{/* 디데이 */}
                         <div className="font-jua font-white font-18 mt-1">{/* 디데이 */}
-                            D{this.getDDay(meetingTime)}
+                            D{this.getDateGap(meetingTime)}
                         </div>
                     </div>
                     <div className="font-jua font-30 mb-1">{/* 디스크립션 */}

@@ -4,7 +4,6 @@ import '../App.css';
 import MeetingInfo from './details/MeetingInfo';
 import MyNumber from './details/MyNumber';
 import ResultNumber from './details/ResultNumber';
-import CountDown from './details/CountDown';
 import JoinButton from './details/JoinButton';
 import JoinedPopup from './details/JoinedPopup';
 import { bindActionCreators } from 'redux';

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as joinActions from '../../modules/join';
 import { Link, Redirect } from 'react-router-dom';
+import CountDown from './CountDown';
 
 class JoinButton extends Component {
 
@@ -37,6 +38,9 @@ class JoinButton extends Component {
                 <div>
                     <div className="mb-2 font-15 font-grey font-notosan">
                         남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
+                        <CountDown
+                            meetingTime={meetingTime}
+                        />
                     </div>                
                     <div className="join-button-wrap bg-color-waiting mh-auto flex-center">
                         <div className="font-notosan">
@@ -51,6 +55,9 @@ class JoinButton extends Component {
                     <div>
                         <div className="mb-2 font-15 font-grey font-notosan">
                             남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
+                            <CountDown
+                                meetingTime={meetingTime}
+                            />
                         </div>                
                         <div className="join-button-wrap bg-color-waiting mh-auto flex-center">
                             <div className="font-notosan">
@@ -64,6 +71,9 @@ class JoinButton extends Component {
                         <div>
                             <div className="mb-2 font-15 font-grey font-notosan">
                                 남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
+                                <CountDown
+                                    meetingTime={meetingTime}
+                                />
                             </div>
                             <div className="join-button-wrap bg-color-join mh-auto flex-center"
                                 onClick={this.join(joinActions)}>
@@ -77,6 +87,9 @@ class JoinButton extends Component {
                         <div>
                             <div className="mb-2 font-15 font-grey font-notosan">
                                 남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
+                                <CountDown
+                                    meetingTime={meetingTime}
+                                />
                             </div>
                             <div className="join-button-wrap bg-color-fail mh-auto flex-center">
                                 <div className="font-notosan">

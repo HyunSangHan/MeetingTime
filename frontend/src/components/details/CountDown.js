@@ -18,6 +18,7 @@ class CountDown extends Component {
 
         return (
             <div className={"App"}>
+                {this.props.meetingTime}
                 {/* UI 코드 들어갈 곳 */}
             </div>
         );
