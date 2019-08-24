@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import '../../css/Main.scss'; //부모컴포넌트의CSS(SCSS)
 import '../../App.css'; //공통CSS
 import { Link } from 'react-router-dom'; //다른 페이지로 링크 걸 때 필요
+import CountDown from "./CountDown";
 import GiftPopup from "./GiftPopup";
 import MaterialIcon from 'material-icons-react';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import * as currentMatchingActions from '../../modules/current_matching';
 import * as playerActions from '../../modules/player';
+import current_meeting from '../../modules/current_meeting';
 
 class ControlTool extends Component {
 
@@ -76,20 +78,26 @@ class ControlTool extends Component {
     }
 
     render() {
-        const { is_gift_popup, my_profile, counter_profile, current_matching, time } = this.props;  
+        const { is_gift_popup, my_profile, counter_profile, current_matching, current_meeting, time } = this.props;  
         const { is_greenlight_on_male, is_greenlight_on_female } = this.state;
-        // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기
+
+        let countDown = null;
+        if (current_matching.trial_time === 1) {
+            countDown = <CountDown time = {new Date(current_meeting.first_shuffle_time)} />;
+        } else if (current_matching.trial_time === 2) {
+            countDown = <CountDown time = {new Date(current_meeting.second_shuffle_time)} />;
+        } else if (current_matching.trial_time === 3) {
+            countDown = <CountDown time = {new Date(current_meeting.third_shuffle_time)} />;
+        } else if (current_matching.trial_time === 4) {
+            countDown = <CountDown time = {new Date(current_meeting.third_shuffle_time)} />; //수정필요
+        }
 
         return (
             <div className="control-container">
 
                 {/* 임시적으로 1분 미만의 시간 카운트  */}
                 <div className="timer font-notosan">
-                    {time < 10 ? 
-                        <div> 00 : 0 {time} </div>
-                    : 
-                        <div> 00 : {time} </div>
-                    }
+                    {countDown}
                 </div>
 
                 <div className="action-container">

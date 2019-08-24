@@ -141,6 +141,7 @@ class Main extends Component {
                         PlayerActions={PlayerActions}
                         counter_profile={counter_profile}
                         is_counter_profile={is_counter_profile}
+                        current_meeting={current_meeting}
                     /> 
                     <br/>
                 </div>

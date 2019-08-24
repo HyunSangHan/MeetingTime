@@ -37,9 +37,9 @@ class JoinButton extends Component {
                 button =
                 <div>
                     <div className="mb-2 font-15 font-grey font-notosan">
-                        남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
+                        남은 시간
                         <CountDown
-                            meetingTime={meetingTime}
+                            time={openTime}
                         />
                     </div>                
                     <div className="join-button-wrap bg-color-waiting mh-auto flex-center">
@@ -50,13 +50,12 @@ class JoinButton extends Component {
                 </div>;
             } else if (openTime <= nowTime && nowTime <= closeTime) {
                 if (is_joined_already) {
-                    // 추후 개발할 부분
                     button =
                     <div>
                         <div className="mb-2 font-15 font-grey font-notosan">
-                            남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
+                            남은 시간
                             <CountDown
-                                meetingTime={meetingTime}
+                                time={closeTime}
                             />
                         </div>                
                         <div className="join-button-wrap bg-color-waiting mh-auto flex-center">
@@ -70,9 +69,9 @@ class JoinButton extends Component {
                         button = 
                         <div>
                             <div className="mb-2 font-15 font-grey font-notosan">
-                                남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
+                                남은 시간
                                 <CountDown
-                                    meetingTime={meetingTime}
+                                    time={closeTime}
                                 />
                             </div>
                             <div className="join-button-wrap bg-color-join mh-auto flex-center"
@@ -86,9 +85,9 @@ class JoinButton extends Component {
                         button = 
                         <div>
                             <div className="mb-2 font-15 font-grey font-notosan">
-                                남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
+                                남은 시간
                                 <CountDown
-                                    meetingTime={meetingTime}
+                                    time={closeTime}
                                 />
                             </div>
                             <div className="join-button-wrap bg-color-fail mh-auto flex-center">
@@ -100,7 +99,7 @@ class JoinButton extends Component {
                     }
                 }
             } else {
-                if ( is_joined_already && joined_user.rank <= current_meeting.cutline && joined_user.rank != null) {
+                if ( is_joined_already && joined_user.rank <= current_meeting.cutline && joined_user.rank != null && nowTime < closeTime) {
                     //for winner
                     button = 
                     <div>
@@ -110,12 +109,12 @@ class JoinButton extends Component {
                         <Link to="/matching" style={{ textDecoration: 'none' }}>
                             <div className="join-button-wrap bg-color-join mh-auto flex-center">
                                 <div className="font-notosan">
-                                입장하기
+                                    입장하기
                                 </div>
                             </div>
                         </Link>
                     </div>;
-                } else if (is_joined_already && joined_user.rank > current_meeting.cutline && joined_user.rank != null) {
+                } else if (is_joined_already && joined_user.rank > current_meeting.cutline && joined_user.rank != null && nowTime < closeTime) {
                     // 나중에는 다음 미팅 알림받기로 변경
                     button = 
                     <div>
