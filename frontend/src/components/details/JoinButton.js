@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import '../../css/Initpage.scss'; //부모컴포넌트의CSS(SCSS)
 import '../../css/Waiting.scss'; //부모컴포넌트의CSS(SCSS)
 import '../../App.css'; //공통CSS
@@ -151,11 +151,9 @@ class JoinButton extends Component {
         }
 
         return (
-            <div>
-                <div>
-                    { button }
-                </div>
-            </div>
+            <Fragment>
+                { button }
+            </Fragment>
         );
     }
 }

@@ -78,7 +78,7 @@ class ControlTool extends Component {
     }
 
     render() {
-        const { is_gift_popup, my_profile, counter_profile, current_matching, current_meeting, time } = this.props;  
+        const { is_gift_popup, my_profile, counter_profile, current_matching, current_meeting } = this.props;  
         const { is_greenlight_on_male, is_greenlight_on_female } = this.state;
 
         let countDown = null;
@@ -96,7 +96,7 @@ class ControlTool extends Component {
             <div className="control-container">
 
                 {/* 임시적으로 1분 미만의 시간 카운트  */}
-                <div className="timer font-notosan">
+                <div className="timer font-notosan font-13">
                     {countDown}
                 </div>
 

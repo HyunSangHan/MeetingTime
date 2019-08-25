@@ -33,7 +33,6 @@ class TeamPopup extends Component {
                         <h3>사진이 모두 업로드 되어야 팀을 생성하실 수 있습니다.</h3>
                         <button onClick={MyProfileActions.deletePopup}>확인</button>
                     </div>
-             
                 </div> */}
             </div>
         );

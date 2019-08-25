@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import '../../css/Reuse.scss'; //도구성컴포넌트의CSS(SCSS)
 import '../../App.css'; //공통CSS
 import { Link } from 'react-router-dom'; //다른 페이지로 링크 걸 때 필요
@@ -71,9 +71,9 @@ class CountDown extends Component {
         }
 
         return (
-            <span className={"ml-1"}>
+            <Fragment>
                 {notification}
-            </span>
+            </Fragment>
         );
     }
 }

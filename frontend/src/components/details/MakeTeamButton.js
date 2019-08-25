@@ -4,7 +4,7 @@ import '../../App.css'; //공통CSS
 import { Link } from 'react-router-dom'; //다른 페이지로 링크 걸 때 필요
 
 class MakeTeamButton extends Component {
-    
+
     render() {
         const { isMadeTeam } = this.props;
         // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기

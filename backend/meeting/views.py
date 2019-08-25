@@ -204,6 +204,7 @@ class CurrentMatching(APIView):
         joined_user = JoinedUser.objects.filter(meeting=self.current_meeting, profile=my_profile).last()
         if my_profile.is_male:
             matching = Matching.objects.filter(trial_time=self.trial_time, joined_male=joined_user).last()
+            print(matching)
         else:
             matching = Matching.objects.filter(trial_time=self.trial_time, joined_female=joined_user).last()
 
