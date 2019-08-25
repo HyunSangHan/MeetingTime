@@ -81,9 +81,9 @@ export const getMyProfile = createAction(
     .then((response) => {
         return response
     })
-    .catch(
-        console.log("not working (get_profile)")
-    )
+    .catch((err) => {
+        console.log("not working (get_profile) - " + err)
+    })
 );
 
 export const profileUpdate = createAction(
@@ -99,9 +99,9 @@ export const profileUpdate = createAction(
         console.log(response);
         return response
     })
-    .catch(
-        console.log("not working (update_profile)")
-    )
+    .catch((err) => {
+        console.log("not working (update_profile) - " + err)
+    })
 );
 
 export const companyUpdate = createAction(
@@ -117,9 +117,9 @@ export const companyUpdate = createAction(
         console.log(response);
         return response
     })
-    .catch(
-        console.log("not working (update_profile)")
-    )
+    .catch((err) => {
+        console.log("not working (update_profile) - " + err)
+    })
 );
 
 export const teamUpdate = createAction(
@@ -139,9 +139,9 @@ export const teamUpdate = createAction(
         console.log(response);
         return response
     })
-    .catch(
-        console.log("not working (update_profile)")
-    )
+    .catch((err) => {
+        console.log("not working (update_profile) - " + err)
+    })
 );
 
 //TwoTab.js용

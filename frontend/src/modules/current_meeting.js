@@ -27,7 +27,7 @@ export const getCurrentMeeting = createAction(
         console.log(response);
         return response
     })
-    .catch(
-        console.log("not working XXXXX")
-    )
+    .catch((err) => {
+        console.log("not working - " + err)
+    })
 );
