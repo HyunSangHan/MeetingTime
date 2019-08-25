@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import '../../css/Initpage.scss'; //부모컴포넌트의CSS(SCSS)
 import '../../css/Waiting.scss'; //부모컴포넌트의CSS(SCSS)
 import '../../App.css'; //공통CSS
@@ -35,7 +35,7 @@ class JoinButton extends Component {
         if (is_login_already) {
             if (nowTime < openTime) {
                 button =
-                <div>
+                <Fragment>
                     <div className="mb-2 font-15 font-grey font-notosan">
                         남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
                         <CountDown
@@ -47,12 +47,12 @@ class JoinButton extends Component {
                             오픈 준비중
                         </div>
                     </div>
-                </div>;
+                </Fragment>;
             } else if (openTime <= nowTime && nowTime <= closeTime) {
                 if (is_joined_already) {
                     // 추후 개발할 부분
                     button =
-                    <div>
+                    <Fragment>
                         <div className="mb-2 font-15 font-grey font-notosan">
                             남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
                             <CountDown
@@ -64,11 +64,11 @@ class JoinButton extends Component {
                                 입장대기중
                             </div>
                         </div>
-                    </div>;
+                    </Fragment>;
                 } else {
                     if (isMadeTeam) {
                         button = 
-                        <div>
+                        <Fragment>
                             <div className="mb-2 font-15 font-grey font-notosan">
                                 남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
                                 <CountDown
@@ -81,10 +81,10 @@ class JoinButton extends Component {
                                     번호표 뽑기
                                 </div>
                             </div>
-                        </div>;    
+                        </Fragment>;    
                     } else {
                         button = 
-                        <div>
+                        <Fragment>
                             <div className="mb-2 font-15 font-grey font-notosan">
                                 남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
                                 <CountDown
@@ -96,14 +96,14 @@ class JoinButton extends Component {
                                     번호표 뽑기
                                 </div>
                             </div>
-                        </div>;    
+                        </Fragment>;    
                     }
                 }
             } else {
                 if ( is_joined_already && joined_user.rank <= current_meeting.cutline && joined_user.rank != null) {
                     //for winner
                     button = 
-                    <div>
+                    <Fragment>
                         <div className="mb-2 font-15 font-purple font-notosan">
                             축하합니다! 커트라인을 넘었습니다!
                         </div>
@@ -114,11 +114,11 @@ class JoinButton extends Component {
                                 </div>
                             </div>
                         </Link>
-                    </div>;
+                    </Fragment>;
                 } else if (is_joined_already && joined_user.rank > current_meeting.cutline && joined_user.rank != null) {
                     // 나중에는 다음 미팅 알림받기로 변경
                     button = 
-                    <div>
+                    <Fragment>
                         <div className="mb-2 font-15 font-grey font-notosan">
                             안타깝지만 선착순에 들지 못했어요ㅠㅠ
                         </div>
@@ -127,10 +127,10 @@ class JoinButton extends Component {
                                 입장불가
                             </div>
                         </div>
-                    </div>;
+                    </Fragment>;
                 } else {
                     button = 
-                    <div>
+                    <Fragment>
                         <div className="mb-2 font-15 font-grey font-notosan">
                             이번 미팅은 이미 매칭이 진행중이에요ㅠㅠ 
                         </div>
@@ -139,7 +139,7 @@ class JoinButton extends Component {
                                 다음 미팅을 기다려주세요
                             </div>
                         </div>
-                    </div>;
+                    </Fragment>;
                 }
             }
         } else {
@@ -152,11 +152,9 @@ class JoinButton extends Component {
         }
 
         return (
-            <div>
-                <div>
-                    { button }
-                </div>
-            </div>
+            <Fragment>
+                { button }
+            </Fragment>
         );
     }
 }

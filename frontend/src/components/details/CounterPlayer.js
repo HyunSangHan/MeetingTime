@@ -24,34 +24,34 @@ class CounterPlayer extends Component {
         
         return (
             <div className="counter-container">
-                    <div className="team-info">
-                        <div className="team-name font-notosan">
-                            {counter_profile.team_name}
-                        </div>
-                        <div className="age-range font-notosan">
-                            {counter_profile.age_range}
-                        </div>
-                        <div className="company font-notosan">
-                            {counter_profile.company.name}
-                        </div>
+                <div className="team-info">
+                    <div className="team-name font-notosan">
+                        {counter_profile.team_name}
                     </div>
-                    <div className="team-intro font-notosan">
-                        <p>{counter_profile.team_introduce}</p>
+                    <div className="age-range font-notosan">
+                        {counter_profile.age_range}
                     </div>
-                    <div className="images">
-                        <img src={counter_profile.image || require("./../../images/noPhoto.jpg")} />
-                        <img src={counter_profile.image_two || require("./../../images/noPhoto.jpg")} />
-                        <img src={counter_profile.image_three || require("./../../images/noPhoto.jpg")} />
+                    <div className="company font-notosan">
+                        {counter_profile.company.name}
                     </div>
+                </div>
+                <div className="team-intro font-notosan">
+                    <p>{counter_profile.team_introduce}</p>
+                </div>
+                <div className="images">
+                    <img src={counter_profile.image || require("./../../images/noPhoto.jpg")} />
+                    <img src={counter_profile.image_two || require("./../../images/noPhoto.jpg")} />
+                    <img src={counter_profile.image_three || require("./../../images/noPhoto.jpg")} />
+                </div>
 
-                        {/* <ul className="info-list">
-                            <li className="list-item">이름 : {counter_profile.user.username}</li>
-                            <li className="list-item">성별 : {counter_profile.is_male ? "남" : "여"}</li>
-                            <li className="list-item">연령대 : {counter_profile.age_range ? counter_profile.age_range + "대" : "몰라요"}</li>
-                            <li className="list-item">회사명 : {counter_profile.company.name}</li>
-                            <li className="list-item">팀소개 : {counter_profile.team_introduce}</li>
-                        </ul> */}
-                   
+                    {/* <ul className="info-list">
+                        <li className="list-item">이름 : {counter_profile.user.username}</li>
+                        <li className="list-item">성별 : {counter_profile.is_male ? "남" : "여"}</li>
+                        <li className="list-item">연령대 : {counter_profile.age_range ? counter_profile.age_range + "대" : "몰라요"}</li>
+                        <li className="list-item">회사명 : {counter_profile.company.name}</li>
+                        <li className="list-item">팀소개 : {counter_profile.team_introduce}</li>
+                    </ul> */}
+                
             </div>
         )
     };
