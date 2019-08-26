@@ -37,19 +37,11 @@ class CountDown extends Component {
         }, 1000);
     }
 
-    // timeNotification = (seconds) => () => {
-    // }
-    a = function timeNotification() {
-
-    }
-
-    render() {
-        const { gapSecondTotal } = this.state;
-
-        let gapDatePart = parseInt(gapSecondTotal / (60 * 60 * 24));
-        let gapHourPart = parseInt((gapSecondTotal - gapDatePart * 60 * 60 * 24) / (60 * 60));
-        let gapMinutePart = parseInt((gapSecondTotal - gapDatePart * 60 * 60 * 24 - gapHourPart * 60 * 60) / 60);
-        let gapSecondPart = gapSecondTotal - gapDatePart * 60 * 60 * 24 - gapHourPart * 60 * 60 - gapMinutePart * 60;
+    timeNotification = seconds => {
+        let gapDatePart = parseInt(seconds / (60 * 60 * 24));
+        let gapHourPart = parseInt((seconds - gapDatePart * 60 * 60 * 24) / (60 * 60));
+        let gapMinutePart = parseInt((seconds - gapDatePart * 60 * 60 * 24 - gapHourPart * 60 * 60) / 60);
+        let gapSecondPart = seconds - gapDatePart * 60 * 60 * 24 - gapHourPart * 60 * 60 - gapMinutePart * 60;
 
         if (gapHourPart < 10 && gapDatePart !== 0) {
             gapHourPart = "0" + gapHourPart
@@ -69,10 +61,17 @@ class CountDown extends Component {
         } else {
             notification = gapDatePart+"일 "+gapHourPart+":"+gapMinutePart+":"+gapSecondPart
         }
+        return notification
+    }
+
+    render() {
+        const { gapSecondTotal } = this.state;
 
         return (
             <Fragment>
-                {notification}
+            {gapSecondTotal > 0 &&
+                this.timeNotification(gapSecondTotal)
+            }
             </Fragment>
         );
     }
