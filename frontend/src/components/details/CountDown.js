@@ -1,15 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import '../../css/Reuse.scss'; //도구성컴포넌트의CSS(SCSS)
 import '../../App.css'; //공통CSS
-import { Link } from 'react-router-dom'; //다른 페이지로 링크 걸 때 필요
 
 class CountDown extends Component {
 
     constructor(props){
         super(props);
-        const nowTime = new Date()
+        const nowTime = new Date().getTime()
         const targetTime = this.props.time
-        const gapSecondTotal = Math.floor((targetTime - nowTime.getTime()) / 1000)
+        const gapSecondTotal = Math.floor((targetTime - nowTime) / 1000)
         this.state = {
             gapSecondTotal : gapSecondTotal
         }
@@ -38,10 +37,10 @@ class CountDown extends Component {
     }
 
     timeNotification = seconds => {
-        let gapDatePart = parseInt(seconds / (60 * 60 * 24));
-        let gapHourPart = parseInt((seconds - gapDatePart * 60 * 60 * 24) / (60 * 60));
-        let gapMinutePart = parseInt((seconds - gapDatePart * 60 * 60 * 24 - gapHourPart * 60 * 60) / 60);
-        let gapSecondPart = seconds - gapDatePart * 60 * 60 * 24 - gapHourPart * 60 * 60 - gapMinutePart * 60;
+        const gapDatePart = parseInt(seconds / (60 * 60 * 24));
+        const gapHourPart = parseInt((seconds - gapDatePart * 60 * 60 * 24) / (60 * 60));
+        const gapMinutePart = parseInt((seconds - gapDatePart * 60 * 60 * 24 - gapHourPart * 60 * 60) / 60);
+        const gapSecondPart = seconds - gapDatePart * 60 * 60 * 24 - gapHourPart * 60 * 60 - gapMinutePart * 60;
 
         if (gapHourPart < 10 && gapDatePart !== 0) {
             gapHourPart = "0" + gapHourPart
@@ -55,11 +54,11 @@ class CountDown extends Component {
             gapSecondPart = "0" + gapSecondPart
         }
 
-        let notification;
+        let notification = null;
         if (gapDatePart < 1) {
-            notification = gapHourPart+":"+gapMinutePart+":"+gapSecondPart
+            notification = "남은시간 " + gapHourPart + ":" + gapMinutePart + ":" + gapSecondPart
         } else {
-            notification = gapDatePart+"일 "+gapHourPart+":"+gapMinutePart+":"+gapSecondPart
+            notification = "남은시간 " + gapDatePart +"일 " + gapHourPart + ":" + gapMinutePart + ":" + gapSecondPart
         }
         return notification
     }
@@ -69,9 +68,9 @@ class CountDown extends Component {
 
         return (
             <Fragment>
-            {gapSecondTotal > 0 &&
-                this.timeNotification(gapSecondTotal)
-            }
+                {gapSecondTotal > 0 &&
+                    this.timeNotification(gapSecondTotal)
+                }
             </Fragment>
         );
     }
