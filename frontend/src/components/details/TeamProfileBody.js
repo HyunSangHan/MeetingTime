@@ -9,7 +9,8 @@ import * as myProfileActions from "../../modules/my_profile";
 import axios from "axios";
 import TeamPopup from './TeamPopup';
 
-class TeamProfilePrev extends Component {
+
+class TeamProfileBody extends Component {
 
     constructor(props){
         super(props);
@@ -21,12 +22,9 @@ class TeamProfilePrev extends Component {
             preview: null,
             preview_two: null,
             preview_three: null,
-
-            //세장다 올려야 팀 만들수 있게..!
-
+            has_three_images: false,
             team_name_value: this.props.my_profile.team_name,
             team_intro_value: this.props.my_profile.team_introduce,
-
         }
     }
 
@@ -101,20 +99,23 @@ class TeamProfilePrev extends Component {
             });
         }
         
+    handleTeamPopup = event => {
+        const { MyProfileActions } = this.props;
+        MyProfileActions.createPopup();
+        event.preventDefault();
+        this.handleSubmit();
+    }
+
     handleSubmit = event => {
         const { MyProfileActions } = this.props;
         const { team_name_value, team_intro_value, preview, preview_two, preview_three } = this.state;
-        event.preventDefault();
-        console.log(this.state);
-        MyProfileActions.TeamUpdate({
+
+        MyProfileActions.teamUpdate({
             team_name_value : team_name_value,
-            team_intro_value : team_intro_value,
+            team_intro_value : team_intro_value
         })
 
-        MyProfileActions.createPopup();
-        this.setState({
-            is_popup: true
-        })
+        
         if(preview){
             this.handleImageSubmit();
         }
@@ -130,7 +131,9 @@ class TeamProfilePrev extends Component {
 
 
     render() {
-        const { team_name_value, team_intro_value, preview, preview_two, preview_three } = this.state;
+        const { MyProfileActions, is_edited_profile } = this.props;
+        const { team_name_value, team_intro_value, preview, preview_two, preview_three, image_value, image_two_value, image_three_value, has_three_images } = this.state;
+        
         return (
             <div className="team-container">
                 <div className="profile-form">
@@ -197,57 +200,71 @@ class TeamProfilePrev extends Component {
                                 placeholder="30자 이내로 작성해주세요"
                             />
                         </div>
+
                         <div className="ButtonWrap">
-                            {(true) ? //버튼 활성화/비활성화 분기 로직 들어갈 곳
+                            {((preview && preview_two && preview_three) || (image_value && image_two_value && image_three_value)) ? 
                             (
-                                <button className="SubmitButton WorkingButton">그룹만들기</button>
+                                <button className="SubmitButton WorkingButton" onClick={this.handleTeamPopup}>그룹만들기</button>
                             ) : (
                                 <button type="button" className="SubmitButton NotWorkingButton" onClick={() => alert("입력을 완료해주세요.")}>그룹만들기</button>
                             )
                             }
                         </div>
                     </form>
+                </div>
 
-                    {/* {is_edited_profile && 
-                    <div className="team-popup">
+                {is_edited_profile && 
+                    <div className="team-pop">
                         <TeamPopup MyProfileActions={MyProfileActions}/>
                     </div>
-                    } */}
-                </div>
+                }
+
                 <div className="images-wrap">
                     <div className="images">
                         {!preview ?
                         <div className="each-image flex-center" onClick={() => this.fileInput.click()}>
+                            {image_value ?
+                            <img className="user-image" src={image_value} />
+                            :
                             <div className="App">
                                 <img className="smile" src={require("../../images/smile.png")} />
                                 <div className="mt-2 font-16 font-bold">
                                     멤버1(본인) 사진
                                 </div>
                             </div>
+                            }
                         </div>
                         :
                         <img className="each-image" src={preview} onClick={() => this.fileInput.click()}/>
                         }
                         {!preview_two ? 
                         <div className="each-image flex-center" onClick={() => this.fileInput_two.click()}>
+                            {image_two_value ?
+                            <img className="user-image" src={image_two_value} />
+                            :
                             <div className="App">
                                 <img className="smile" src={require("../../images/smile.png")} />
                                 <div className="mt-2 font-16 font-bold">
                                     멤버2 사진
                                 </div>
                             </div>
+                            }
                         </div>
                         :
                         <img className="each-image" src={preview_two} onClick={() => this.fileInput_two.click()}/>
                         }
                         {!preview_three ?
                         <div className="each-image flex-center" onClick={() => this.fileInput_three.click()}>
+                            {image_three_value ?
+                            <img className="user-image" src={image_three_value} />
+                            :
                             <div className="App">
                                 <img className="smile" src={require("../../images/smile.png")} />
                                 <div className="mt-2 font-16 font-bold">
                                     멤버3 사진
                                 </div>
                             </div>
+                            }
                         </div>
                         :
                         <img className="each-image" src={preview_three} onClick={() => this.fileInput_three.click()}/>
@@ -260,4 +277,4 @@ class TeamProfilePrev extends Component {
     }
 }
 
-export default TeamProfilePrev;
+export default TeamProfileBody;

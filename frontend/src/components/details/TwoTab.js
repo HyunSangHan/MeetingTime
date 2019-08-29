@@ -22,7 +22,8 @@ class TwoTab extends Component {
                             "change-link font-notosan", 
                             clicked_tab === 'prev' ? "active" : ""
                             )}
-                            onClick={MyProfileActions.prevTabOn}                        >
+                            onClick={MyProfileActions.prevTabOn}                        
+                        >
                         지난번 그룹
                         </div>
                     </div>

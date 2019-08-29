@@ -49,14 +49,17 @@ class TeamProfile extends Component {
                     MyProfileActions = {MyProfileActions}
                     clicked_tab = {clicked_tab}
                 />
+
                 {action === "new" &&
                 <TeamProfileBody
+                    MyProfileActions={MyProfileActions}
                     my_profile = {this.state.empty_profile}
                     is_edited_profile = {is_edited_profile}
                 />}
                 {action === "prev" &&
                 <TeamProfileBody
                     my_profile = {my_profile}
+                    MyProfileActions={MyProfileActions}
                     is_edited_profile = {is_edited_profile}
                 />}
             </div>
