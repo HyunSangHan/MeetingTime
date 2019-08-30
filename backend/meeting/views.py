@@ -32,7 +32,9 @@ def meeting_example():
     # 2분마다 셔플
 
 def match_example():
-    current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+    current_meeting = Meeting.objects.all().order_by('meeting_time').last()
+    if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first() is not None:
+        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
     if timezone.now() < current_meeting.first_shuffle_time:
         trial_time = 1
     elif timezone.now() < current_meeting.second_shuffle_time:
@@ -156,7 +158,9 @@ class SentValidation(APIView):
 
 
 def success_matching():
-    current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+    current_meeting = Meeting.objects.all().order_by('meeting_time').last()
+    if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first() is not None:
+        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
     matchings = Matching.objects.filter(joined_male__meeting=current_meeting)
     for match in matchings:
         if match.is_greenlight_male and match.is_greenlight_female and (not match.joined_male.is_matched or not match.joined_female.is_matched):
@@ -181,7 +185,9 @@ class MeetingInfoView(viewsets.ModelViewSet):
 
 
 class CurrentMatching(APIView):
-    current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+    current_meeting = Meeting.objects.all().order_by('meeting_time').last()
+    if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first() is not None:
+        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
 
     if timezone.now() < current_meeting.first_shuffle_time:
         trial_time = 1
@@ -317,8 +323,12 @@ class CurrentMatching(APIView):
 class CurrentMeeting(APIView):
     def get(self, request, format=None):
         print(str(request.user) + "로그인성공여부:" + str(request.user.is_authenticated))
+        queryset = Meeting.objects.all().order_by('meeting_time').last()
         # 미팅일자가 현재보다 미래인 경우 + 가장 빨리 디가오는 미팅 순으로 정렬해서 + 가장 앞에 있는 미팅일정 1개만 쿼리셋에 담기
-        queryset = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+        if current_meeting is not None:
+            queryset = current_meeting
+
         if queryset is not None:
             serializer = MeetingSerializer(queryset)
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -354,7 +364,9 @@ class CurrentMeeting(APIView):
 
 
 class Join(APIView):
-    current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+    current_meeting = Meeting.objects.all().order_by('meeting_time').last()
+    if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first() is not None:
+        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
 
     def get(self, request, format=None):
         my_profile = request.user.profile
@@ -421,7 +433,9 @@ class Join(APIView):
 class CounterProfile(APIView):
     def get(self, request, format=None):
         my_profile = request.user.profile
-        current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+        current_meeting = Meeting.objects.all().order_by('meeting_time').last()
+        if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first() is not None:
+            current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
         joined_user = JoinedUser.objects.filter(profile=my_profile, meeting=current_meeting).first()
 
         if my_profile.is_male:
@@ -456,6 +470,10 @@ class CurrentProfile(APIView):
 
     def patch(self, request, format=None):
         queryset = request.user.profile
+
+        if request.data['team_name'] is not None:
+            queryset.last_intro_modified_at = timezone.now()
+
         serializer = ProfileSerializer(queryset, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()

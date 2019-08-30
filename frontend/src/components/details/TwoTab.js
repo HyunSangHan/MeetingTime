@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import '../../css/Profile.scss'; //부모컴포넌트의CSS(SCSS)
 import '../../App.css'; //공통CSS
 import classNames from 'classnames';
@@ -7,7 +7,7 @@ class TwoTab extends Component {
     render() {
         const { MyProfileActions, clicked_tab } = this.props;
         return (
-            <div>
+            <Fragment>
                 <div className="tab-wrap">
                     <div className="tab-content">
                         <div className={classNames(
@@ -28,7 +28,7 @@ class TwoTab extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Fragment>
         );
     }
 }

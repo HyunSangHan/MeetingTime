@@ -4,24 +4,8 @@ import '../../App.css'; //공통CSS
 
 
 class CounterPlayer extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-        };  
-
-    }
-
-    componentDidMount() {
-
-    }
-
-    
-    
     render() {
         const { counter_profile } = this.props;  
-
-        
         return (
             <div className="total-container">
                 <div className="counter-container">
