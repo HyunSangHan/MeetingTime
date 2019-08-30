@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import '../../css/Main.scss';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as playerActions from '../../modules/join';
-import * as currentMatchingActions from "../../modules/current_matching";
-import MaterialIcon from 'material-icons-react';
 
 class GiftPopup extends Component {
 

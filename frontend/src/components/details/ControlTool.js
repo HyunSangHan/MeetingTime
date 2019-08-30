@@ -25,7 +25,7 @@ class ControlTool extends Component {
     }
 
     handleGreenLight = () =>{
-        const { PlayerActions, counter_profile, CurrentMatchingActions } = this.props;
+        const { PlayerActions, counter_profile } = this.props;
         const { is_greenlight_on_male, is_greenlight_on_female } = this.state;
 
         if (!is_greenlight_on_male && !counter_profile.is_male){

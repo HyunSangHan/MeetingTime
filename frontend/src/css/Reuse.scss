@@ -1,4 +1,3 @@
-
 //모바일&PC 공통 CSS들어갈 곳
 .up-text-area {
     box-sizing: border-box;
@@ -12,16 +11,15 @@
 }
 
 .up-triangle-part {
-
     width: 0;
     height: 0;
     border: solid 10px;
     border-color: transparent transparent #9013fe transparent;
     box-sizing: border-box;
     position: relative;
-    left:50%;
-    margin-left:-5px;
-    margin-top:-10px;
+    left: 50%;
+    margin-left: -5px;
+    margin-top: -10px;
 }
 
 .up-white-triangle-part {
@@ -31,8 +29,8 @@
     border-color: transparent transparent white transparent;
     position: relative;
     left: 50%;
-    margin-left:-5px;
-    margin-top:-18px;
+    margin-left: -5px;
+    margin-top: -18px;
     z-index: 2;
 }
 
@@ -54,9 +52,9 @@
     border-color: #9013fe transparent transparent transparent;
     box-sizing: border-box;
     position: relative;
-    left:50%;
-    margin-left:-5px;
-    margin-bottom:-10px;
+    left: 50%;
+    margin-left: -5px;
+    margin-bottom: -10px;
 }
 
 .down-white-triangle-part {
@@ -66,8 +64,8 @@
     border-color: white transparent transparent transparent;
     position: relative;
     left: 50%;
-    margin-left:-5px;
-    margin-bottom:-18px;
+    margin-left: -5px;
+    margin-bottom: -18px;
     z-index: 2;
 }
 
@@ -82,15 +80,11 @@
     line-height: 1.62;
     letter-spacing: -0.4px;
     color: #9013fe;
-
 }
 
-
-
 .container {
-    text-align:center;
+    text-align: center;
     .spinner {
-        
         max-width: 100%;
         animation: spinner 1.2s steps(12) infinite;
     }
@@ -104,18 +98,16 @@
     display: -webkit-flex !important;
     display: -ms-flexbox !important;
     display: flex !important;
-
     .ArrowBack {
         position: absolute;
         margin-left: 22.5px;
         margin-top: 19px;
         cursor: pointer;
     }
-
     .HeaderMessage {
         padding-top: 20px;
         padding-bottom: 15px;
-        height : 100%;
+        height: 100%;
         font-family: AppleSDGothicNeo;
         font-size: 16px;
         font-weight: bold;
@@ -146,10 +138,12 @@
     }
 }
 
-@media(max-width: 767px){ /*Mobile*/
-//모바일(너비 767px이하)에만 해당되는 CSS들어갈 곳
+@media(max-width: 767px) {
+    /*Mobile*/
+    //모바일(너비 767px이하)에만 해당되는 CSS들어갈 곳
 }
 
-@media(min-width: 768px){ /*PC*/
-//PC(너비 768px이상)에만 해당되는 CSS들어갈 곳
+@media(min-width: 768px) {
+    /*PC*/
+    //PC(너비 768px이상)에만 해당되는 CSS들어갈 곳
 }

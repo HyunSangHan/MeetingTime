@@ -10,7 +10,7 @@ const Loading = props => (
             alt="loading"
         />
     </div>
-)
+);
 
 
 

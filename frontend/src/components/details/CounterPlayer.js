@@ -61,17 +61,10 @@ class CounterPlayer extends Component {
                                     </div>
                                 </div>
                     
-                                <div className="last-child-gap"></div>
+                                <div className="last-child-gap"/>
                             </div>
                         </div>
                     </div>
-                        {/* <ul className="info-list">
-                            <li className="list-item">이름 : {counter_profile.user.username}</li>
-                            <li className="list-item">성별 : {counter_profile.is_male ? "남" : "여"}</li>
-                            <li className="list-item">연령대 : {counter_profile.age_range ? counter_profile.age_range + "대" : "몰라요"}</li>
-                            <li className="list-item">회사명 : {counter_profile.company.name}</li>
-                            <li className="list-item">팀소개 : {counter_profile.team_introduce}</li>
-                        </ul> */}
                    
             </div>
         )

@@ -21,8 +21,8 @@ class ToolTipDown extends Component {
                     <div className="down-text-area">
                         여기가 툴팁DOWN!
                     </div>
-                    <div className="down-white-triangle-part"></div>
-                    <div className="down-triangle-part"></div>
+                    <div className="down-white-triangle-part"/>
+                    <div className="down-triangle-part"/>
                 </div>
             </div>
         );
