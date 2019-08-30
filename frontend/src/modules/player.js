@@ -45,6 +45,7 @@ export default handleActions({
     },
 
     [DELETE_POPUP]: (state) => {
+        console.log('팝업삭제눌림');
         return state.set('is_gift_popup', false)
     },
 
@@ -74,7 +75,6 @@ export default handleActions({
 
 //GIFT CONFIRM POPUP
 export const createPopup = createAction(CREATE_POPUP);
-
 export const deletePopup = createAction(DELETE_POPUP);
 
 //'''Get Counter_profile'''
@@ -88,9 +88,9 @@ export const getCounterProfile = createAction(
             console.log(response);
             return response
         })
-        .catch(
-            console.log("not working (counter_profile)")
-        )
+        .catch((err) => {
+            console.log("not working (counter_profile) - " + err)
+        })
 );
 
 
@@ -109,9 +109,9 @@ export const handleGreenLightOn = createAction(
         console.log(response);
         return response
     })
-    .catch(
-        console.log("not working (greenlight api)")
-    )
+    .catch((err) => {
+        console.log("not working (greenlight api) - " + err)
+    })
 );
 
 export const handleGreenLightOff = createAction(
@@ -128,9 +128,9 @@ export const handleGreenLightOff = createAction(
             console.log(response);
             return response
         })
-        .catch(
-            console.log("not working (greenlight api)")
-        )
+        .catch((err) => {
+            console.log("not working (greenlight api) - " + err)
+        })
 );
 
 //'''Gift Actions only On'''
@@ -148,7 +148,7 @@ export const handleGiftOn = createAction(
             console.log(response);
             return response
         })
-        .catch(
-            console.log("not working (gift api)")
-        )
+        .catch((err) => {
+            console.log("not working (gift api) - " + err)
+        })
 );

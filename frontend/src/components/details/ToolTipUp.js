@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import '../../css/Reuse.scss'; //도구성컴포넌트의CSS(SCSS)
 import '../../App.css'; //공통CSS
 
-
 class ToolTipUp extends Component {
     render() {
         return (

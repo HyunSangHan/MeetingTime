@@ -54,9 +54,9 @@ export const createJoinedUser = createAction(
         console.log(response);
         return response
     })
-    .catch(
-        console.log("not working")
-    )
+    .catch((err) => {
+        console.log("not working - " + err)
+    })
 );
 export const getJoinedUser = createAction(
     GET_JOINED_USER,
@@ -68,7 +68,7 @@ export const getJoinedUser = createAction(
         console.log(response);
         return response
     })
-    .catch(
-        console.log("not working")
-    )
+    .catch((err) => {
+        console.log("not working - " + err)
+    })
 );

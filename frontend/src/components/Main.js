@@ -55,7 +55,7 @@ class Main extends Component {
     componentWillReceiveProps = nextProps => {
         if (nextProps.is_joined_already) {
             this.setState({
-                loading: false
+                loading: false,
             });
         }
     };
@@ -86,7 +86,7 @@ class Main extends Component {
     }
 
     render() {
-        const {user, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting, is_current_matching, current_matching, PlayerActions, counter_profile, is_counter_profile,  } = this.props;
+        const {user, is_gift_popup, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting, is_current_matching, current_matching, PlayerActions, CurrentMatchingActions, counter_profile, is_counter_profile,  } = this.props;
 
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
@@ -132,19 +132,21 @@ class Main extends Component {
                             is_counter_profile={is_counter_profile}
                         />  
                         }  
-                </div>
-                
-                <div className="control-container">
-                    <ControlTool 
-                        time={this.state.time} 
-                        my_profile={my_profile}
-                        PlayerActions={PlayerActions}
-                        counter_profile={counter_profile}
-                        is_counter_profile={is_counter_profile}
-                        current_meeting={current_meeting}
-                    /> 
-                    <br/>
-                </div>
+                    </div>
+                    <div className="control-container">
+                        <ControlTool 
+                            time={this.state.time} 
+                            my_profile={my_profile}
+                            PlayerActions={PlayerActions}
+                            CurrentMatchingActions={CurrentMatchingActions}
+                            counter_profile={counter_profile}
+                            is_counter_profile={is_counter_profile}
+                            is_gift_popup={is_gift_popup}
+                            current_matching={current_matching}
+                            current_meeting={current_meeting}
+                        /> 
+                        <br/>
+                    </div>
             </div>
         );
     }
@@ -168,6 +170,7 @@ const mapStateToProps = (state) => ({
     current_matching: state.current_matching.get('current_matching'),
     counter_profile: state.player.get('counter_profile'),
     is_counter_profile: state.player.get('is_counter_profile'),
+    is_gift_popup: state.player.get('is_gift_popup'),
     is_current_matching: state.current_matching.get('is_current_matching'),
 })
 

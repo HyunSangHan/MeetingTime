@@ -49,6 +49,7 @@ class TeamProfile extends Component {
                     MyProfileActions = {MyProfileActions}
                     clicked_tab = {clicked_tab}
                 />
+
                 {action === "new" &&
                 <TeamProfileBody
                     MyProfileActions = {MyProfileActions}
@@ -59,6 +60,7 @@ class TeamProfile extends Component {
                 <TeamProfileBody
                     MyProfileActions = {MyProfileActions}
                     my_profile = {my_profile}
+                    MyProfileActions={MyProfileActions}
                     is_edited_profile = {is_edited_profile}
                 />}
             </div>
