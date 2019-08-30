@@ -17,9 +17,9 @@ class Header extends Component {
     render() {
         return (
             <div className="Rectangle">
-            <div className="ArrowBack" onClick={() => this.props.history.goBack()}>
-                <MaterialIcon icon="arrow_back_ios" size="23x" color="black" />
-            </div>
+                <div className="ArrowBack" onClick={() => this.props.history.goBack()}>
+                    <MaterialIcon icon="arrow_back_ios" size="23x" color="black" />
+                </div>
                 <div className="MessageWrapper">
                     <span className="HeaderMessage">{this.props.content}</span>
                 </div>

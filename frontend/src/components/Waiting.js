@@ -4,7 +4,6 @@ import '../App.css';
 import MeetingInfo from './details/MeetingInfo';
 import MyNumber from './details/MyNumber';
 import ResultNumber from './details/ResultNumber';
-import CountDown from './details/CountDown';
 import JoinButton from './details/JoinButton';
 import JoinedPopup from './details/JoinedPopup';
 import { bindActionCreators } from 'redux';
@@ -12,7 +11,6 @@ import { connect } from "react-redux";
 import Textarea from "react-textarea-autosize";
 import { post } from "axios";
 import { Link, Redirect } from 'react-router-dom';
-import * as currentMatchingActions from './../modules/current_matching';
 import * as currentMeetingActions from './../modules/current_meeting';
 import * as joinActions from './../modules/join';
 
@@ -23,14 +21,13 @@ class Waiting extends Component {
     }
 
     componentDidMount() {
-        const { JoinActions, CurrentMeetingActions, CurrentMatchingActions } = this.props;
+        const { JoinActions, CurrentMeetingActions } = this.props;
         JoinActions.getJoinedUser();
         CurrentMeetingActions.getCurrentMeeting();
-        CurrentMatchingActions.getCurrentMatching();
     }
 
     render(){    
-        const { joined_user, current_meeting, is_login_already, is_current_matching } = this.props;
+        const { joined_user, current_meeting, is_login_already } = this.props;
         const closeTime = Date.parse(current_meeting.close_time)
         const nowTime = new Date().getTime()
 
@@ -63,8 +60,7 @@ class Waiting extends Component {
                 </div>
                 <div className="fix-bottom w100percent mb-36">
                     <JoinButton 
-                        is_login_already = {is_login_already}
-                        is_current_matching = {is_current_matching} />
+                        is_login_already = {is_login_already} />
                 </div>
             </div>
         );
@@ -75,14 +71,12 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     JoinActions: bindActionCreators(joinActions, dispatch),
     CurrentMeetingActions: bindActionCreators(currentMeetingActions, dispatch),
-    CurrentMatchingActions: bindActionCreators(currentMatchingActions, dispatch),
 });
 
 const mapStateToProps = (state) => ({
     joined_user: state.join.get('joined_user'),
     current_meeting: state.current_meeting.get('current_meeting'),
     is_login_already: state.my_profile.get('is_login_already'),
-    is_current_matching: state.current_matching.get('is_current_matching'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Waiting);
