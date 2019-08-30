@@ -14,8 +14,8 @@ class ControlTool extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            is_greenlight_on_male: this.props.current_matching.is_greenlight_male,
-            is_greenlight_on_female: this.props.current_matching.is_greenlight_female,
+            is_greenlight_male_on: this.props.current_matching.is_greenlight_male,
+            is_greenlight_female_on: this.props.current_matching.is_greenlight_female,
         };  
 
     }
@@ -26,23 +26,23 @@ class ControlTool extends Component {
 
     handleGreenLight = () =>{
         const { PlayerActions, counter_profile } = this.props;
-        const { is_greenlight_on_male, is_greenlight_on_female } = this.state;
+        const { is_greenlight_male_on, is_greenlight_female_on } = this.state;
 
-        if (!is_greenlight_on_male && !counter_profile.is_male){
+        if (!is_greenlight_male_on && !counter_profile.is_male){
             PlayerActions.handleGreenLightOn({ male: true });
-            this.setState({ is_greenlight_on_male : true }); 
+            this.setState({ is_greenlight_male_on : true });
             
-        } else if (!is_greenlight_on_female && counter_profile.is_male){
+        } else if (!is_greenlight_female_on && counter_profile.is_male){
             PlayerActions.handleGreenLightOn({ female: true });
-            this.setState({ is_greenlight_on_female: true });
+            this.setState({ is_greenlight_female_on: true });
 
-        } else if (is_greenlight_on_male && !counter_profile.is_male){
+        } else if (is_greenlight_male_on && !counter_profile.is_male){
             PlayerActions.handleGreenLightOff({ male: false });
-            this.setState({ is_greenlight_on_male: false });
+            this.setState({ is_greenlight_male_on: false });
             
-        } else if (is_greenlight_on_female && counter_profile.is_male){
+        } else if (is_greenlight_female_on && counter_profile.is_male){
             PlayerActions.handleGreenLightOff({ female: false });
-            this.setState({ is_greenlight_on_female: false });
+            this.setState({ is_greenlight_female_on: false });
         }
 
     };
@@ -68,7 +68,7 @@ class ControlTool extends Component {
 
     render() {
         const { PlayerActions, is_gift_popup, my_profile, counter_profile, current_matching, time } = this.props;  
-        const { is_greenlight_on_male, is_greenlight_on_female } = this.state;
+        const { is_greenlight_male_on, is_greenlight_female_on } = this.state;
         console.log(is_gift_popup);
 
         return (
@@ -105,15 +105,15 @@ class ControlTool extends Component {
 
 
                     <div className="column">      
-                        {!counter_profile.is_male ? 
+                        {my_profile.is_male ?
                         <div className="greenlight-back">
                             <div className="greenlight move-1" onClick={this.handleGreenLight}>
-                                {is_greenlight_on_male &&
+                                {is_greenlight_male_on &&
                                     <div className="call-button font-jua">
                                         콜!!
                                     </div> 
                                 }
-                                {!is_greenlight_on_male &&
+                                {!is_greenlight_male_on &&
                                     <div className="call-button font-jua">
                                         콜?
                                     </div> 
@@ -123,12 +123,12 @@ class ControlTool extends Component {
                         :
                         <div className="greenlight-back">
                             <div className="greenlight move-1" onClick={this.handleGreenLight}>
-                                {is_greenlight_on_female &&
+                                {is_greenlight_female_on &&
                                     <div className="call-button font-jua">
                                         콜!!
                                     </div> 
                                 }
-                                {!is_greenlight_on_female &&
+                                {!is_greenlight_female_on &&
                                     <div className="call-button font-jua">
                                         콜?
                                     </div> 
@@ -139,7 +139,7 @@ class ControlTool extends Component {
                     </div>   
                     
                     <div className="column">
-                        {!counter_profile.is_male ? 
+                        {my_profile.is_male ?
                         <div className="gift" onClick={this.handleGiftPopup}>
                             {current_matching.is_gift_male &&
                                 <div className="gift-on font-jua">
