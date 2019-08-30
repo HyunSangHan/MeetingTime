@@ -4,24 +4,8 @@ import '../../App.css'; //공통CSS
 
 
 class CounterPlayer extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-        };  
-
-    }
-
-    componentDidMount() {
-
-    }
-
-    
-    
     render() {
         const { counter_profile } = this.props;  
-
-        
         return (
             <div className="counter-container">
                 <div className="team-info">
@@ -38,20 +22,35 @@ class CounterPlayer extends Component {
                 <div className="team-intro font-notosan">
                     <p>{counter_profile.team_introduce}</p>
                 </div>
-                <div className="images">
-                    <img src={counter_profile.image || require("./../../images/noPhoto.jpg")} />
-                    <img src={counter_profile.image_two || require("./../../images/noPhoto.jpg")} />
-                    <img src={counter_profile.image_three || require("./../../images/noPhoto.jpg")} />
+                <div className="margin-wrap">
+                    <div className="images-wrap">
+                        <div className="images">
+                            <div className="each-image flex-center" >
+                                <div className="App">
+                                    <img src={counter_profile.image || require("./../../images/noPhoto.jpg")} />
+                                </div>
+                            </div>
+                            <div className="each-image flex-center" >
+                                <div className="App">
+                                    <img src={counter_profile.image_two || require("./../../images/noPhoto.jpg")} />
+                                </div>
+                            </div>
+                            <div className="each-image flex-center" >
+                                <div className="App">
+                                    <img src={counter_profile.image_three || require("./../../images/noPhoto.jpg")} />
+                                </div>
+                            </div>
+                            <div className="last-child-gap"></div>
+                        </div>
+                    </div>
                 </div>
-
-                    {/* <ul className="info-list">
-                        <li className="list-item">이름 : {counter_profile.user.username}</li>
-                        <li className="list-item">성별 : {counter_profile.is_male ? "남" : "여"}</li>
-                        <li className="list-item">연령대 : {counter_profile.age_range ? counter_profile.age_range + "대" : "몰라요"}</li>
-                        <li className="list-item">회사명 : {counter_profile.company.name}</li>
-                        <li className="list-item">팀소개 : {counter_profile.team_introduce}</li>
-                    </ul> */}
-                
+                {/* <ul className="info-list">
+                    <li className="list-item">이름 : {counter_profile.user.username}</li>
+                    <li className="list-item">성별 : {counter_profile.is_male ? "남" : "여"}</li>
+                    <li className="list-item">연령대 : {counter_profile.age_range ? counter_profile.age_range + "대" : "몰라요"}</li>
+                    <li className="list-item">회사명 : {counter_profile.company.name}</li>
+                    <li className="list-item">팀소개 : {counter_profile.team_introduce}</li>
+                </ul> */}
             </div>
         )
     };

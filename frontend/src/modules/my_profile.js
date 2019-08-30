@@ -122,7 +122,7 @@ export const companyUpdate = createAction(
     })
 );
 
-export const teamUpdate = createAction(
+export const teamUpdate= createAction(
     UPDATE_PROFILE,
     (payload) => axios({
         method: "patch",

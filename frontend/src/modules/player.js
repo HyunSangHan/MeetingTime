@@ -45,6 +45,7 @@ export default handleActions({
     },
 
     [DELETE_POPUP]: (state) => {
+        console.log('팝업삭제눌림');
         return state.set('is_gift_popup', false)
     },
 
