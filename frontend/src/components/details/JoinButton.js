@@ -35,11 +35,11 @@ class JoinButton extends Component {
         if (is_login_already) {
             if (nowTime < openTime) {
                 button =
-                <Fragment>
+                <div>
                     <div className="mb-2 font-15 font-grey font-notosan">
-                        남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
+                        남은 시간
                         <CountDown
-                            meetingTime={meetingTime}
+                            time={openTime}
                         />
                     </div>                
                     <div className="join-button-wrap bg-color-waiting mh-auto flex-center">
@@ -47,16 +47,15 @@ class JoinButton extends Component {
                             오픈 준비중
                         </div>
                     </div>
-                </Fragment>;
+                </div>;
             } else if (openTime <= nowTime && nowTime <= closeTime) {
                 if (is_joined_already) {
-                    // 추후 개발할 부분
                     button =
-                    <Fragment>
+                    <div>
                         <div className="mb-2 font-15 font-grey font-notosan">
-                            남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
+                            남은 시간
                             <CountDown
-                                meetingTime={meetingTime}
+                                time={closeTime}
                             />
                         </div>                
                         <div className="join-button-wrap bg-color-waiting mh-auto flex-center">
@@ -64,15 +63,15 @@ class JoinButton extends Component {
                                 입장대기중
                             </div>
                         </div>
-                    </Fragment>;
+                    </div>;
                 } else {
                     if (isMadeTeam) {
                         button = 
-                        <Fragment>
+                        <div>
                             <div className="mb-2 font-15 font-grey font-notosan">
-                                남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
+                                남은 시간
                                 <CountDown
-                                    meetingTime={meetingTime}
+                                    time={closeTime}
                                 />
                             </div>
                             <div className="join-button-wrap bg-color-join mh-auto flex-center"
@@ -81,14 +80,14 @@ class JoinButton extends Component {
                                     번호표 뽑기
                                 </div>
                             </div>
-                        </Fragment>;    
+                        </div>;    
                     } else {
                         button = 
-                        <Fragment>
+                        <div>
                             <div className="mb-2 font-15 font-grey font-notosan">
-                                남은 시간 32:05:25 {/* TODO: 실제 데이터 넣어야함 */}
+                                남은 시간
                                 <CountDown
-                                    meetingTime={meetingTime}
+                                    time={closeTime}
                                 />
                             </div>
                             <div className="join-button-wrap bg-color-fail mh-auto flex-center">
@@ -96,29 +95,29 @@ class JoinButton extends Component {
                                     번호표 뽑기
                                 </div>
                             </div>
-                        </Fragment>;    
+                        </div>;    
                     }
                 }
             } else {
-                if ( is_joined_already && joined_user.rank <= current_meeting.cutline && joined_user.rank != null) {
+                if ( is_joined_already && joined_user.rank <= current_meeting.cutline && joined_user.rank != null && nowTime < closeTime) {
                     //for winner
                     button = 
-                    <Fragment>
+                    <div>
                         <div className="mb-2 font-15 font-purple font-notosan">
                             축하합니다! 커트라인을 넘었습니다!
                         </div>
                         <Link to="/matching" style={{ textDecoration: 'none' }}>
                             <div className="join-button-wrap bg-color-join mh-auto flex-center">
                                 <div className="font-notosan">
-                                입장하기
+                                    입장하기
                                 </div>
                             </div>
                         </Link>
-                    </Fragment>;
-                } else if (is_joined_already && joined_user.rank > current_meeting.cutline && joined_user.rank != null) {
+                    </div>;
+                } else if (is_joined_already && joined_user.rank > current_meeting.cutline && joined_user.rank != null && nowTime < closeTime) {
                     // 나중에는 다음 미팅 알림받기로 변경
                     button = 
-                    <Fragment>
+                    <div>
                         <div className="mb-2 font-15 font-grey font-notosan">
                             안타깝지만 선착순에 들지 못했어요ㅠㅠ
                         </div>
@@ -127,10 +126,10 @@ class JoinButton extends Component {
                                 입장불가
                             </div>
                         </div>
-                    </Fragment>;
+                    </div>;
                 } else {
                     button = 
-                    <Fragment>
+                    <div>
                         <div className="mb-2 font-15 font-grey font-notosan">
                             이번 미팅은 이미 매칭이 진행중이에요ㅠㅠ 
                         </div>
@@ -139,7 +138,7 @@ class JoinButton extends Component {
                                 다음 미팅을 기다려주세요
                             </div>
                         </div>
-                    </Fragment>;
+                    </div>;
                 }
             }
         } else {

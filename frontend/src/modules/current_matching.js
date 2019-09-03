@@ -30,7 +30,7 @@ export const getCurrentMatching = createAction(
         console.log(response);
         return response
     })
-    .catch((err) => {
-        console.log("not working (current_matching) - " + err)
+    .catch((err)=>{
+        console.log(err + "not working (current_matching)")
     })
 );
