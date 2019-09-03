@@ -54,13 +54,11 @@ class CountDown extends Component {
             gapSecondPart = "0" + gapSecondPart
         }
 
-        let notification = null;
         if (gapDatePart < 1) {
-            notification = "남은시간 " + gapHourPart + ":" + gapMinutePart + ":" + gapSecondPart
+            return "남은시간 " + gapHourPart + ":" + gapMinutePart + ":" + gapSecondPart
         } else {
-            notification = "남은시간 " + gapDatePart +"일 " + gapHourPart + ":" + gapMinutePart + ":" + gapSecondPart
+            return "남은시간 " + gapDatePart +"일 " + gapHourPart + ":" + gapMinutePart + ":" + gapSecondPart
         }
-        return notification
     }
 
     render() {
