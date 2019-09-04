@@ -12,10 +12,12 @@
     text-align: center;
     display: flex;
     justify-content: center;
+    max-width: 840px;
+    min-width: 375px;
     .counter-container {
-        width: 90%;
+        width: 100%;
         min-width: 375px;
-        max-width: 900px;
+        max-width: 840px;
         margin-left: auto;
         margin-right: auto;
         background-color: #ffffff;
@@ -80,72 +82,49 @@
 
         .margin-wrap {
             position: relative;
-            min-height: 300px;
+            min-height: 290px;
             display: flex;
             justify-content: center;
         }
     }
+}
 
-    .images-wrapper {
-        position: absolute;
-        left: 44px;
-        bottom : 24px;
-        width: 90%;
-        max-width: 900px;
-        min-width: 500px;
-        height: 280px;
-        display: -webkit-flex !important;
-        display: -ms-flexbox !important;
-        display: flex !important;
-        justify-content: space-between;
-        z-index: 1;
-        .images {
-            overflow: auto;
-            display: -webkit-flex !important;
-            display: -ms-flexbox !important;
-            display: flex !important;
-            height: 280px;
-            justify-content: space-between;
-            margin-left: auto;
-            margin-right: auto;
+.images-wrapper {
+    position: absolute;
+    width: 100%;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;  
+    justify-content: center;
+    z-index: 1;
+    bottom: 24px;
+}
 
-            img {
-                border-radius: 12px;
-                width: 255px;
-                height: 255px;
-                object-fit: cover;
-                background-color: #ffffff;
-                opacity: 0.9;
-                margin-left: 3px;
-                margin-right: 8px;
-            }
-            .each-image {
-                    color: #ccc;
-                    object-fit: cover;
-                    border-radius: 12px;
-                    width: 255px;
-                    min-width: 255px;
-                    height: 255px;
-                    max-height: 255px;
-                    background-color: #fff;
-                    // opacity: 0.9;
-                    margin-right: 16px;
-                    cursor: pointer;
-                }
-
-                .each-image:first-child {
-                    margin-left: 5%;
-                }
-
-                .last-child-gap {
-                    width: 0;
-                    min-width: 0;
-                    margin: 0;
-                }
-
-        }
+.images{
+    overflow: auto;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    width: 100%;
+    .each-image {
+        border-radius: 12px;
+        width: 255px;
+        height: 255px;
+        object-fit: cover;
+        background-color: #ffffff;
+        opacity: 0.9;
+        margin-left: 3px;
+        margin-right: 8px;
+        cursor: pointer;
+    }
+ 
+    .last-child-gap {
+        margin-left: -16px;
+        width: 5%;
+        min-width: 5%;
     }
 }
+
 //gift popup css
 .gift-pop {
     position: absolute;
@@ -295,17 +274,18 @@
     }
 }
 
-@media(max-width: 479px) {
-    /*Mobile*/
+
+@media(max-width: 479px){ /*Mobile*/
     .title-images {
         margin-bottom: 274px;
     }
-    .each-image {
+
+    .each-image{
         color: #ccc;
         object-fit: cover;
         border-radius: 12px;
-        width: 231px;
-        min-width: 231px;
+        width : 231px;
+        min-width : 231px;
         height: 231px;
         max-height: 231px;
         background-color: #fff;
@@ -313,16 +293,26 @@
         margin-right: 16px;
         cursor: pointer;
     }
+
+    .user-image{
+        width: 231px;
+        height: 231px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
     .each-image:first-child {
         margin-left: 5%;
     }
+
     .ButtonWrap {
         display: -webkit-flex !important;
         display: -ms-flexbox !important;
         display: flex !important;
         justify-content: center;
+
         .SubmitButton {
-            margin-top: -75px;
+            margin-top : -75px;
             width: 100%;
             max-width: 800px;
             height: 52px;
@@ -341,14 +331,13 @@
     }
 }
 
-@media(min-width: 480px) {
-    /*Tablet*/
-    .each-image {
+@media(min-width: 480px){ /*Tablet*/
+    .each-image{
         color: #ccc;
         object-fit: cover;
         border-radius: 12px;
-        width: 255px;
-        min-width: 255px;
+        width : 255px;
+        min-width : 255px;
         height: 255px;
         max-height: 255px;
         background-color: #fff;
@@ -356,16 +345,24 @@
         margin-right: 16px;
         cursor: pointer;
     }
+
+    .user-image{
+        width: 255px;
+        height: 255px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
     .each-image:first-child {
         margin-left: 5%;
     }
+
     .ButtonWrap {
         display: -webkit-flex !important;
         display: -ms-flexbox !important;
         display: flex !important;
         justify-content: center;
         .SubmitButton {
-            margin-top: -75px;
+            margin-top : -75px;
             width: 100%;
             max-width: 800px;
             height: 52px;
@@ -384,14 +381,13 @@
     }
 }
 
-@media(min-width: 768px) {
-    /*PC1*/
-    .each-image {
+@media(min-width: 768px){ /*PC1*/
+    .each-image{
         color: #ccc;
         object-fit: cover;
         border-radius: 12px;
-        width: 255px;
-        min-width: 255px;
+        width : 255px;
+        min-width : 255px;
         height: 255px;
         max-height: 255px;
         background-color: #fff;
@@ -399,9 +395,11 @@
         margin-right: 16px;
         cursor: pointer;
     }
+
     .each-image:first-child {
         margin-left: 5%;
     }
+
     .ButtonWrap {
         display: -webkit-flex !important;
         display: -ms-flexbox !important;
@@ -428,57 +426,52 @@
     }
 }
 
-@media(min-width: 889px) {
-    /*PC2(for swipe)*/
-    .total-container {
-        max-width: 990px;
-        min-width: 400px;
-        position: relative;
-        display: flex;
+@media(min-width: 889px){ /*PC2(for swipe)*/
+    .images-wrapper {
+        position: absolute;
+        width: 100%;
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
         justify-content: center;
-        .images-wrapper {
-            position: absolute;
-            left: 44px;
-            bottom : 24px;
-            width: 90%;
-            max-width: 900px;
-            height: 280px;
+        z-index: 1;
+        bottom: 28px;
+        
+        .images{
+            width: 840px;
+            overflow: auto;
             display: -webkit-flex !important;
             display: -ms-flexbox !important;
             display: flex !important;
-            justify-content: space-between;
-            z-index: 1;
-            .images {
-                width: 900px;
-                overflow: auto;
-                display: -webkit-flex !important;
-                display: -ms-flexbox !important;
-                display: flex !important;
-                justify-content: space-between;
+            justify-content: center;
+        
+            .smile {
+                width: 42px;
+                height: 42px;
+            }
+        
+            .each-image{
+                color: #ccc;
+                object-fit: cover;
+                border-radius: 12px;
+                width : 255px;
+                min-width : 255px;
+                height: 255px;
+                max-height: 255px;
+                background-color: #fff;
+                // opacity: 0.9;
+                margin-right: 16px;
+                cursor: pointer;
+            }
 
-                .each-image {
-                    color: #ccc;
-                    object-fit: cover;
-                    border-radius: 12px;
-                    width: 255px;
-                    min-width: 255px;
-                    height: 255px;
-                    max-height: 255px;
-                    background-color: #fff;
-                    // opacity: 0.9;
-                    margin-right: 16px;
-                    cursor: pointer;
-                }
-
-                .each-image:first-child {
-                    margin-left: 5%;
-                }
-
-                .last-child-gap {
-                    width: 0;
-                    min-width: 0;
-                    margin: 0;
-                }
+            .each-image:first-child {
+                margin-left: 16px;
+            }
+        
+            .last-child-gap {
+                width: 0;
+                min-width: 0;
+                margin: 0;
             }
         }
     }

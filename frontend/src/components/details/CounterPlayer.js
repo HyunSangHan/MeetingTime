@@ -27,28 +27,22 @@ class CounterPlayer extends Component {
                         <div className="margin-wrap" />
                 </div>
                 <div className="images-wrapper">
-                            <div className="images">
-                                <div className="each-image flex-center" >
-                                    <div className="App">
-                                        <img src={counter_profile.image || require("./../../images/noPhoto.jpg")} />
-                                    </div>
-                                </div>
+                    <div className="images">
+                        <div className="each-image flex-center" >
+                            <img className="user-image" src={counter_profile.image || require("./../../images/noPhoto.jpg")} />
+                        </div>
 
-                                <div className="each-image flex-center" >
-                                    <div className="App">
-                                        <img src={counter_profile.image_two || require("./../../images/noPhoto.jpg")} />
-                                    </div>
-                                </div>
+                        <div className="each-image flex-center" >
+                            <img className="user-image" src={counter_profile.image_two || require("./../../images/noPhoto.jpg")} />
+                        </div>
 
 
-                                <div className="each-image flex-center" >
-                                    <div className="App">
-                                        <img src={counter_profile.image_three || require("./../../images/noPhoto.jpg")} />
-                                    </div>
-                                </div>
+                        <div className="each-image flex-center" >
+                            <img className="user-image" src={counter_profile.image_three || require("./../../images/noPhoto.jpg")} />
+                        </div>
 
-                                <div className="last-child-gap"/>
-                            </div>
+                        <div className="last-child-gap"/>
+                    </div>
                 </div>
             </div>
         )
