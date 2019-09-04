@@ -49,12 +49,11 @@ class ControlTool extends Component {
 
 
     handleGift = () => {
-        const { PlayerActions, counter_profile, CurrentMatchingActions } = this.props;
-        const { is_gift_on_male, is_gift_on_female } = this.state;
+        const { PlayerActions, current_matching, counter_profile, CurrentMatchingActions } = this.props;
 
-        if (!is_gift_on_male && !counter_profile.is_male) {
+        if (!current_matching.is_gift_male && !counter_profile.is_male) {
             PlayerActions.handleGiftOn({ male: true });
-        } else if (!is_gift_on_female && counter_profile.is_male) {
+        } else if (!current_matching.is_gift_female && counter_profile.is_male) {
             PlayerActions.handleGiftOn({ female: true });
         }
         PlayerActions.deletePopup();
@@ -69,7 +68,6 @@ class ControlTool extends Component {
     render() {
         const { PlayerActions, is_gift_popup, my_profile, counter_profile, current_matching, time } = this.props;  
         const { is_greenlight_male_on, is_greenlight_female_on } = this.state;
-        console.log(is_gift_popup);
 
         return (
             <div className="control-container">
