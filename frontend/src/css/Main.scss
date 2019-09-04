@@ -1,7 +1,6 @@
 //모바일&PC 공통 CSS들어갈 곳
 .main-container {
     background-color: #f6f6f6;
-    position: relative;
 }
 
 //counter-profile component
@@ -187,6 +186,7 @@
     .timer {
         justify-content: center;
         margin-bottom: 10px;
+        color: #333;
     }
     .action-container {
         display: -webkit-flex !important;
@@ -443,6 +443,7 @@
             display: -webkit-flex !important;
             display: -ms-flexbox !important;
             display: flex !important;
+            align-items: center;
             justify-content: center;
         
             .smile {
@@ -475,4 +476,13 @@
             }
         }
     }
+}
+
+
+@media(max-width: 767px){ /*Mobile*/
+    //모바일(너비 767px이하)에만 해당되는 CSS들어갈 곳
+}
+    
+@media(min-width: 768px){ /*PC*/
+    //PC(너비 768px이상)에만 해당되는 CSS들어갈 곳
 }

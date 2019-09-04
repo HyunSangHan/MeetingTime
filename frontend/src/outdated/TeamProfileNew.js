@@ -110,7 +110,7 @@ class TeamProfileNew extends Component {
                 is_three_images: true,
             });
         MyProfileActions.createPopup();
-        MyProfileActions.teamUpdate({
+        MyProfileActions.TeamUpdate({
             team_name_value : team_name_value,
             team_intro_value : team_intro_value,
         })
@@ -232,11 +232,10 @@ class TeamProfileNew extends Component {
                             placeholder="30자 이내로 작성해주세요"
                         />
                     </div>
-
                     <div className="ButtonWrap">
                         {(true) ?
                         (
-                            <button className="SubmitButton WorkingButton" onclick={this.handleTeamPopup}>그룹만들기</button>
+                            <button className="SubmitButton WorkingButton">그룹만들기</button>
                         ) : (
                             <button type="button" className="SubmitButton NotWorkingButton" onClick={() => alert("입력을 완료해주세요.")}>그룹만들기</button>
                         )
@@ -244,7 +243,11 @@ class TeamProfileNew extends Component {
                     </div>
                 </form>
 
-                
+                {/* {is_edited_profile && 
+                <div className="team-popup">
+                    <TeamPopup MyProfileActions={MyProfileActions}/>
+                </div>
+                } */}
             </div>
         );
     }

@@ -34,9 +34,6 @@ export const sendEmail = createAction(
     .then((response) => {
         return response
     })
-    .catch((err) => {
-        console.log("not working - " + err)
-    })
 );
 
 export const validateEmail = createAction(
@@ -51,7 +48,7 @@ export const validateEmail = createAction(
     .then((response) => {
         return response
     })
-    .catch((err) => {
-        console.log("not working - " + err)
-    })
+    .catch(
+        console.log("not working")
+    )
 );
