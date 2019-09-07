@@ -1,6 +1,11 @@
 //모바일&PC 공통 CSS들어갈 곳
 .main-container {
     background-color: #f6f6f6;
+    width: 100%;
+    min-width: 375px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
 //counter-profile component
@@ -11,29 +16,28 @@
     text-align: center;
     display: flex;
     justify-content: center;
+    margin-top: 45px;
     max-width: 840px;
-    min-width: 375px;
+    width: 90%;
+
     .counter-container {
         width: 100%;
-        min-width: 375px;
         max-width: 840px;
+        padding-left: 26px;
+        padding-right: 26px;
         margin-left: auto;
         margin-right: auto;
         background-color: #ffffff;
-        padding-right: 28px;
-        padding-left: 28px;
-        padding-bottom: 24px;
+        padding-bottom: 32px;
         border-radius: 12px;
 
         .team-info {
             display: -webkit-flex !important;
             display: -ms-flexbox !important;
             display: flex !important;
-            margin-bottom: 10px;
-            padding-left: 10px;
-            padding-right: 10px;
+            margin-bottom: 7px;
             align-items: center;
-            padding-top: 18px;
+            padding-top: 24px;
 
             .team-name {
                 font-weight: bold;
@@ -69,11 +73,8 @@
         }
 
         .team-intro {
-            padding-left: 10px;
-            padding-right: 10px;
             text-align: justify;
             margin-bottom: 0px;
-
             p {
                 margin: 0;
             }
@@ -81,7 +82,7 @@
 
         .margin-wrap {
             position: relative;
-            min-height: 290px;
+            height: 270px;
             display: flex;
             justify-content: center;
         }
@@ -96,7 +97,7 @@
     display: flex !important;  
     justify-content: center;
     z-index: 1;
-    bottom: 24px;
+    bottom: 32px;
 }
 
 .images{
@@ -112,15 +113,13 @@
         object-fit: cover;
         background-color: #ffffff;
         opacity: 0.9;
-        margin-left: 3px;
-        margin-right: 8px;
         cursor: pointer;
     }
  
     .last-child-gap {
-        margin-left: -16px;
-        width: 5%;
-        min-width: 5%;
+        margin-left: -26px !important;
+        width: 26px !important;
+        min-width: 26px !important;
     }
 }
 
@@ -177,9 +176,9 @@
 
 //control component
 .control-container {
-    width: 90%;
-    min-width: 375px;
-    max-width: 800px;
+    width: 95%;
+    max-width: 880px;
+    margin-top: 70px;
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -276,6 +275,10 @@
 
 
 @media(max-width: 479px){ /*Mobile*/
+    .margin-wrap{
+        max-height: 250px;
+    }
+
     .title-images {
         margin-bottom: 274px;
     }
@@ -290,7 +293,7 @@
         max-height: 231px;
         background-color: #fff;
         // opacity: 0.9;
-        margin-right: 16px;
+        margin-right: 14px;
         cursor: pointer;
     }
 
@@ -302,8 +305,9 @@
     }
 
     .each-image:first-child {
-        margin-left: 5%;
+        margin-left: 26px !important;
     }
+
 
     .ButtonWrap {
         display: -webkit-flex !important;
@@ -332,6 +336,7 @@
 }
 
 @media(min-width: 480px){ /*Tablet*/
+
     .each-image{
         color: #ccc;
         object-fit: cover;
@@ -342,7 +347,7 @@
         max-height: 255px;
         background-color: #fff;
         // opacity: 0.9;
-        margin-right: 16px;
+        margin-right: 14px;
         cursor: pointer;
     }
 
@@ -352,9 +357,11 @@
         object-fit: cover;
         border-radius: 12px;
     }
+
     .each-image:first-child {
-        margin-left: 5%;
+        margin-left: 26px !important;
     }
+
 
     .ButtonWrap {
         display: -webkit-flex !important;
@@ -382,6 +389,7 @@
 }
 
 @media(min-width: 768px){ /*PC1*/
+
     .each-image{
         color: #ccc;
         object-fit: cover;
@@ -392,13 +400,14 @@
         max-height: 255px;
         background-color: #fff;
         // opacity: 0.9;
-        margin-right: 16px;
+        margin-right: 14px;
         cursor: pointer;
     }
 
     .each-image:first-child {
-        margin-left: 5%;
+        margin-left: 26px !important;
     }
+
 
     .ButtonWrap {
         display: -webkit-flex !important;
@@ -436,7 +445,7 @@
         justify-content: center;
         z-index: 1;
         bottom: 28px;
-        
+
         .images{
             width: 840px;
             overflow: auto;
@@ -445,7 +454,8 @@
             display: flex !important;
             align-items: center;
             justify-content: center;
-        
+            
+
             .smile {
                 width: 42px;
                 height: 42px;
@@ -461,12 +471,12 @@
                 max-height: 255px;
                 background-color: #fff;
                 // opacity: 0.9;
-                margin-right: 16px;
+                margin-right: 14px;
                 cursor: pointer;
             }
 
             .each-image:first-child {
-                margin-left: 16px;
+                margin-left: 26px !important;
             }
         
             .last-child-gap {
