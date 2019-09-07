@@ -17,14 +17,12 @@
     display: flex;
     justify-content: center;
     margin-top: 45px;
-    max-width: 840px;
-    width: 90%;
+    max-width: 960px;
 
     .counter-container {
-        width: 100%;
-        max-width: 840px;
-        padding-left: 26px;
-        padding-right: 26px;
+        width: 90%;
+        padding-left: 30px;
+        padding-right: 30px;
         margin-left: auto;
         margin-right: auto;
         background-color: #ffffff;
@@ -117,9 +115,9 @@
     }
  
     .last-child-gap {
-        margin-left: -26px !important;
-        width: 26px !important;
-        min-width: 26px !important;
+        margin-left: -30px !important;
+        width: 11% !important;
+        min-width: 11% !important;
     }
 }
 
@@ -305,7 +303,7 @@
     }
 
     .each-image:first-child {
-        margin-left: 26px !important;
+        margin-left: 12% !important;
     }
 
 
@@ -359,7 +357,7 @@
     }
 
     .each-image:first-child {
-        margin-left: 26px !important;
+        margin-left: 10% !important;
     }
 
 
@@ -405,7 +403,7 @@
     }
 
     .each-image:first-child {
-        margin-left: 26px !important;
+        margin-left: 9% !important;
     }
 
 
@@ -476,12 +474,13 @@
             }
 
             .each-image:first-child {
-                margin-left: 26px !important;
+                
+                margin-left: 9% !important;
             }
         
             .last-child-gap {
-                width: 0;
-                min-width: 0;
+                width: 10px;
+                min-width: 20px;
                 margin: 0;
             }
         }
