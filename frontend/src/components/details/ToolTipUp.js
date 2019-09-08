@@ -5,11 +5,14 @@ import '../../App.css'; //공통CSS
 class ToolTipUp extends Component {
     render() {
         return (
-            <div className="tool-tip-up">
-                <div className="up-triangle-part"></div>
-                <div className="up-white-triangle-part"></div>
-                <div className="up-text-area">
-                    여기가 툴팁UP!
+            <div className={"App"}>
+
+                <div className="tool-tip-up">
+                    <div className="up-triangle-part"/>
+                    <div className="up-white-triangle-part"/>
+                    <div className="up-text-area">
+                        여기가 툴팁UP!
+                    </div>
                 </div>
             </div>
         );

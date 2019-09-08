@@ -10,6 +10,6 @@ const Loading = props => (
             alt="loading"
         />
     </div>
-)
+);
 
 export default Loading;

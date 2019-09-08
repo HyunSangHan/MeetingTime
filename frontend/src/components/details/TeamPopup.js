@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import '../../App.css';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import myProfileActions from '../../modules/my_profile';
-import MaterialIcon from 'material-icons-react';
-import { Link } from 'react-router-dom';
+
 
 class TeamPopup extends Component {
 

@@ -16,59 +16,50 @@ class ControlTool extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            is_greenlight_on_male: this.props.current_matching.is_greenlight_male,
-            is_greenlight_on_female: this.props.current_matching.is_greenlight_female,
+            is_greenlight_male_on: this.props.current_matching.is_greenlight_male,
+            is_greenlight_female_on: this.props.current_matching.is_greenlight_female,
         };  
 
     }
 
     componentDidMount() {
-        const { PlayerActions, CurrentMatchingActions } = this.props;
-        PlayerActions.getCounterProfile();
-        CurrentMatchingActions.getCurrentMatching();
+
     }
 
-    handleGreenLight = () =>{
-        const { PlayerActions, counter_profile, CurrentMatchingActions } = this.props;
-        const { is_greenlight_on_male, is_greenlight_on_female } = this.state;
-        
+    handleGreenLight = () => {
+        const { PlayerActions, counter_profile } = this.props;
+        const { is_greenlight_male_on, is_greenlight_female_on } = this.state;
 
-        if (!is_greenlight_on_male && !counter_profile.is_male){
+        if (!is_greenlight_male_on && !counter_profile.is_male) {
             PlayerActions.handleGreenLightOn({ male: true });
-            this.setState({ is_greenlight_on_male : true }); 
-            
-        } else if (!is_greenlight_on_female && counter_profile.is_male){
+            this.setState({ is_greenlight_male_on: true });
+
+        } else if (!is_greenlight_female_on && counter_profile.is_male) {
             PlayerActions.handleGreenLightOn({ female: true });
-            this.setState({ is_greenlight_on_female: true });
+            this.setState({ is_greenlight_female_on: true });
 
-        } else if (is_greenlight_on_male && !counter_profile.is_male){
+        } else if (is_greenlight_male_on && !counter_profile.is_male) {
             PlayerActions.handleGreenLightOff({ male: false });
-            this.setState({ is_greenlight_on_male: false });
-            
-        } else if (is_greenlight_on_female && counter_profile.is_male){
-            PlayerActions.handleGreenLightOff({ female: false });
-            this.setState({ is_greenlight_on_female: false });
-        }
+            this.setState({ is_greenlight_male_on: false });
 
-        CurrentMatchingActions.getCurrentMatching();
+        } else if (is_greenlight_female_on && counter_profile.is_male) {
+            PlayerActions.handleGreenLightOff({ female: false });
+            this.setState({ is_greenlight_female_on: false });
+        }
 
     };
 
 
     handleGift = () => {
-        const { PlayerActions, counter_profile, CurrentMatchingActions } = this.props;
-        const { is_gift_on_male, is_gift_on_female } = this.state;
+        const { PlayerActions, current_matching, counter_profile, CurrentMatchingActions } = this.props;
 
-        if (!is_gift_on_male && !counter_profile.is_male) {
+        if (!current_matching.is_gift_male && !counter_profile.is_male) {
             PlayerActions.handleGiftOn({ male: true });
-
-        } else if (!is_gift_on_female && counter_profile.is_male) {
+        } else if (!current_matching.is_gift_female && counter_profile.is_male) {
             PlayerActions.handleGiftOn({ female: true });
 
-        //popup 닫기 및 매칭 업데이트해서 받기
         PlayerActions.deletePopup();
         CurrentMatchingActions.getCurrentMatching();
-    
         }
     };
 
@@ -78,8 +69,8 @@ class ControlTool extends Component {
     }
 
     render() {
-        const { is_gift_popup, my_profile, counter_profile, current_matching, current_meeting } = this.props;  
-        const { is_greenlight_on_male, is_greenlight_on_female } = this.state;
+        const { PlayerActions, is_gift_popup, my_profile, counter_profile, current_matching, current_meeting } = this.props;  
+        const { is_greenlight_male_on, is_greenlight_female_on } = this.state;
 
         let countDown = null;
         if (current_matching.trial_time === 1) {
@@ -94,6 +85,19 @@ class ControlTool extends Component {
 
         return (
             <div className="control-container">
+
+                <div className="gift-pop">
+                    {is_gift_popup
+                        &&
+                        <GiftPopup
+                            PlayerActions={PlayerActions}
+                            is_gift_popup={is_gift_popup}
+                            counter_profile={counter_profile}
+                            current_matching={current_matching}
+                            handleGift={this.handleGift}
+                        />
+                    }
+                </div>
 
                 {/* 임시적으로 1분 미만의 시간 카운트  */}
                 <div className="timer font-notosan font-13">
@@ -110,17 +114,17 @@ class ControlTool extends Component {
 
 
                     <div className="column">      
-                        {!counter_profile.is_male ? 
+                        {my_profile.is_male ?
                         <div className="greenlight-back">
                             <div className="greenlight move-1" onClick={this.handleGreenLight}>
-                                {is_greenlight_on_male &&
-                                    <div className="call-button font-jua">
-                                        콜?
-                                    </div> 
-                                }
-                                {!is_greenlight_on_male &&
+                                {is_greenlight_male_on &&
                                     <div className="call-button font-jua">
                                         콜!!
+                                    </div> 
+                                }
+                                {!is_greenlight_male_on &&
+                                    <div className="call-button font-jua">
+                                        콜?
                                     </div> 
                                 }
                             </div>
@@ -128,14 +132,14 @@ class ControlTool extends Component {
                         :
                         <div className="greenlight-back">
                             <div className="greenlight move-1" onClick={this.handleGreenLight}>
-                                {is_greenlight_on_female &&
-                                    <div className="call-button font-jua">
-                                        콜?
-                                    </div> 
-                                }
-                                {!is_greenlight_on_female &&
+                                {is_greenlight_female_on &&
                                     <div className="call-button font-jua">
                                         콜!!
+                                    </div> 
+                                }
+                                {!is_greenlight_female_on &&
+                                    <div className="call-button font-jua">
+                                        콜?
                                     </div> 
                                 }
                             </div>
@@ -144,9 +148,8 @@ class ControlTool extends Component {
                     </div>
 
                         
-                    {is_gift_popup ? <GiftPopup handleGift={this.handleGift} /> :
                     <div className="column">
-                        {!counter_profile.is_male ? 
+                        {my_profile.is_male ?
                         <div className="gift" onClick={this.handleGiftPopup}>
                             {current_matching.is_gift_male &&
                                 <div className="gift-on font-jua">
@@ -174,7 +177,6 @@ class ControlTool extends Component {
                         </div>
                         }
                     </div>
-                    }
                 </div>
             </div>
         );

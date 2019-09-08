@@ -40,6 +40,6 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
     is_joined_popup_on: state.join.get('is_joined_popup_on'),
     is_joined_already: state.join.get('is_joined_already'),
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(JoinedPopup);

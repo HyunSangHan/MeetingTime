@@ -46,7 +46,7 @@ class TeamProfileBody extends Component {
             image_value: event.target.files[0],
             preview: URL.createObjectURL(event.target.files[0])
         })
-    }
+    };
 
     //두번째 이미지 관련 함수
     handleImageChange_two = event => {
@@ -55,7 +55,7 @@ class TeamProfileBody extends Component {
             image_two_value: event.target.files[0],
             preview_two: URL.createObjectURL(event.target.files[0])
         })
-    }
+    };
 
     //세번째 이미지 관련 함수
     handleImageChange_three = event => {
@@ -64,7 +64,7 @@ class TeamProfileBody extends Component {
             image_three_value: event.target.files[0],
             preview_three: URL.createObjectURL(event.target.files[0])
         })
-    }
+    };
     //이미지 제출 함수
     handleImageSubmit = () => {
         const formData = new FormData();
@@ -85,7 +85,7 @@ class TeamProfileBody extends Component {
             .then(response => {
                 console.log(response);
             });
-        }
+        };
 
     handleImageSubmit_three = () => {
         const formData = new FormData();
@@ -96,14 +96,14 @@ class TeamProfileBody extends Component {
             .then(response => {
                 console.log(response);
             });
-        }
+        };
         
     handleTeamPopup = event => {
         const { MyProfileActions } = this.props;
         MyProfileActions.createPopup();
         event.preventDefault();
         this.handleSubmit();
-    }
+    };
 
     handleSubmit = event => {
         const { MyProfileActions } = this.props;
@@ -114,7 +114,7 @@ class TeamProfileBody extends Component {
         MyProfileActions.teamUpdate({
             team_name_value : team_name_value,
             team_intro_value : team_intro_value
-        })
+        });
 
         
         if(preview){
@@ -270,7 +270,7 @@ class TeamProfileBody extends Component {
                         :
                         <img className="each-image" src={preview_three} onClick={() => this.fileInput_three.click()}/>
                         }
-                        <div className="last-child-gap"></div>
+                        <div className="last-child-gap"/>
                     </div>
                 </div>
             </div>

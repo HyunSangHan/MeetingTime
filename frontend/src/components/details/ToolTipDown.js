@@ -16,12 +16,14 @@ class ToolTipDown extends Component {
         // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기
 
         return (
-            <div className="tool-tip-up">
-                <div className="down-text-area">
-                    여기가 툴팁DOWN!
+            <div className={"App"}>
+                <div className="tool-tip-up">
+                    <div className="down-text-area">
+                        여기가 툴팁DOWN!
+                    </div>
+                    <div className="down-white-triangle-part"/>
+                    <div className="down-triangle-part"/>
                 </div>
-                <div className="down-white-triangle-part"></div>
-                <div className="down-triangle-part"></div>
             </div>
         );
     }
