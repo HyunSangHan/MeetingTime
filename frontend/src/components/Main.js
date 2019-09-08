@@ -109,20 +109,18 @@ class Main extends Component {
                         />  
                         }  
                     </div>
-                    <div className="control-container">
-                        <ControlTool 
-                            time={this.state.time} 
-                            my_profile={my_profile}
-                            PlayerActions={PlayerActions}
-                            CurrentMatchingActions={CurrentMatchingActions}
-                            counter_profile={counter_profile}
-                            is_counter_profile={is_counter_profile}
-                            is_gift_popup={is_gift_popup}
-                            current_matching={current_matching}
-                            current_meeting={current_meeting}
-                        /> 
-                        <br/>
-                    </div>
+                    <ControlTool 
+                        time={this.state.time} 
+                        my_profile={my_profile}
+                        PlayerActions={PlayerActions}
+                        CurrentMatchingActions={CurrentMatchingActions}
+                        counter_profile={counter_profile}
+                        is_counter_profile={is_counter_profile}
+                        is_gift_popup={is_gift_popup}
+                        current_matching={current_matching}
+                        current_meeting={current_meeting}
+                    /> 
+                    <br/>
             </div>
         );
     }
