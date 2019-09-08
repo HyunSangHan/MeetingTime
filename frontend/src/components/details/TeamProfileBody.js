@@ -138,7 +138,7 @@ class TeamProfileBody extends Component {
         return (
             <div className="team-container">
                 <div className="profile-form">
-                    <div className="team-container title-images">
+                    <div className="team-container title-imgs">
                         <div className="title font-notosan">
                             팀 사진
                             {!this.props.my_profile.created_at &&
@@ -220,12 +220,12 @@ class TeamProfileBody extends Component {
                     </div>
                 }
 
-                <div className="images-wrap">
-                    <div className="images">
+                <div className="imgs-wrap">
+                    <div className="imgs">
                         {!preview ?
-                        <div className="each-image flex-center" onClick={() => this.fileInput.click()}>
+                        <div className="each-img flex-center" onClick={() => this.fileInput.click()}>
                             {image_value ?
-                            <img className="user-image" src={image_value} />
+                            <img className="user-img" src={image_value} />
                             :
                             <div className="App">
                                 <img className="smile" src={require("../../images/smile.png")} />
@@ -236,12 +236,12 @@ class TeamProfileBody extends Component {
                             }
                         </div>
                         :
-                        <img className="each-image" src={preview} onClick={() => this.fileInput.click()}/>
+                        <img className="each-img" src={preview} onClick={() => this.fileInput.click()}/>
                         }
                         {!preview_two ? 
-                        <div className="each-image flex-center" onClick={() => this.fileInput_two.click()}>
+                        <div className="each-img flex-center" onClick={() => this.fileInput_two.click()}>
                             {image_two_value ?
-                            <img className="user-image" src={image_two_value} />
+                            <img className="user-img" src={image_two_value} />
                             :
                             <div className="App">
                                 <img className="smile" src={require("../../images/smile.png")} />
@@ -252,12 +252,12 @@ class TeamProfileBody extends Component {
                             }
                         </div>
                         :
-                        <img className="each-image" src={preview_two} onClick={() => this.fileInput_two.click()}/>
+                        <img className="each-img" src={preview_two} onClick={() => this.fileInput_two.click()}/>
                         }
                         {!preview_three ?
-                        <div className="each-image flex-center" onClick={() => this.fileInput_three.click()}>
+                        <div className="each-img flex-center" onClick={() => this.fileInput_three.click()}>
                             {image_three_value ?
-                            <img className="user-image" src={image_three_value} />
+                            <img className="user-img" src={image_three_value} />
                             :
                             <div className="App">
                                 <img className="smile" src={require("../../images/smile.png")} />
@@ -268,7 +268,7 @@ class TeamProfileBody extends Component {
                             }
                         </div>
                         :
-                        <img className="each-image" src={preview_three} onClick={() => this.fileInput_three.click()}/>
+                        <img className="each-img" src={preview_three} onClick={() => this.fileInput_three.click()}/>
                         }
                         <div className="last-child-gap"/>
                     </div>

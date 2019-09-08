@@ -73,11 +73,11 @@
     color: #9013fe;
 }
 
-.title-images {
+.title-imgs {
     margin-bottom: 298px;
 }
 
-.images-wrap {
+.imgs-wrap {
     position: absolute;
     width: 100%;
     display: -webkit-flex !important;
@@ -88,7 +88,7 @@
     top: 32px;
 }
 
-.images{
+.imgs{
     overflow: auto;
     display: -webkit-flex !important;
     display: -ms-flexbox !important;
@@ -381,11 +381,11 @@ select:focus {
 
 
 @media(max-width: 479px){ /*Mobile*/
-    .title-images {
+    .title-imgs {
         margin-bottom: 274px;
     }
 
-    .each-image{
+    .each-img{
         color: #ccc;
         object-fit: cover;
         border-radius: 12px;
@@ -399,7 +399,7 @@ select:focus {
         cursor: pointer;
     }
 
-    .each-image:first-child {
+    .each-img:first-child {
         margin-left: 5%;
     }
 
@@ -430,7 +430,7 @@ select:focus {
 }
 
 @media(min-width: 480px){ /*Tablet*/
-    .each-image{
+    .each-img{
         color: #ccc;
         object-fit: cover;
         border-radius: 12px;
@@ -444,13 +444,13 @@ select:focus {
         cursor: pointer;
     }
 
-    .user-image{
+    .user-img{
         width: 255px;
         height: 255px;
         object-fit: cover;
         border-radius: 12px;
     }
-    .each-image:first-child {
+    .each-img:first-child {
         margin-left: 5%;
     }
 
@@ -480,7 +480,7 @@ select:focus {
 }
 
 @media(min-width: 768px){ /*PC1*/
-    .each-image{
+    .each-img{
         color: #ccc;
         object-fit: cover;
         border-radius: 12px;
@@ -494,7 +494,7 @@ select:focus {
         cursor: pointer;
     }
 
-    .each-image:first-child {
+    .each-img:first-child {
         margin-left: 5%;
     }
 
@@ -525,7 +525,7 @@ select:focus {
 }
 
 @media(min-width: 889px){ /*PC2(for swipe)*/
-    .images-wrap {
+    .imgs-wrap {
         position: absolute;
         width: 100%;
         display: -webkit-flex !important;
@@ -535,7 +535,7 @@ select:focus {
         z-index: 1;
         top: 32px;
         
-        .images{
+        .imgs{
             width: 800px;
             overflow: auto;
             display: -webkit-flex !important;
@@ -548,7 +548,7 @@ select:focus {
                 height: 42px;
             }
         
-            .each-image{
+            .each-img{
                 color: #ccc;
                 object-fit: cover;
                 border-radius: 12px;
@@ -562,7 +562,7 @@ select:focus {
                 cursor: pointer;
             }
 
-            .each-image:first-child {
+            .each-img:first-child {
                 margin-left: 16px;
             }
         
