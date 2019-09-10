@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import { Map, get } from 'immutable';
+import { Map } from 'immutable';
 import axios from 'axios';
 import { pender } from 'redux-pender';
 
@@ -51,7 +51,6 @@ export const createJoinedUser = createAction(
         url: '/join/',
     })
     .then((response) => {
-        console.log(response);
         return response
     })
     .catch((err) => {

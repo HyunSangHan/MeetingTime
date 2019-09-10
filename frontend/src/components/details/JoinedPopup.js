@@ -8,10 +8,6 @@ import MaterialIcon from 'material-icons-react';
 
 class JoinedPopup extends Component {
 
-    constructor(props){
-        super(props);
-    };
-
     render() {
         const { is_joined_already } = this.props;
         let popup = null;

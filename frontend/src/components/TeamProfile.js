@@ -7,18 +7,16 @@ import TwoTab from "./details/TwoTab";
 import TeamProfileBody from "./details/TeamProfileBody";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import Textarea from "react-textarea-autosize";
 
 class TeamProfile extends Component {
 
     constructor(props) {
-        console.log(props);
         super(props);
         this.state = {
             empty_profile: {
                 age_range: null,
                 company: {
-                    name: null
+                    name: ""
                 },
                 created_at: null,
                 id: null,
@@ -28,40 +26,39 @@ class TeamProfile extends Component {
                 is_male: false,
                 last_intro_modified_at: null,
                 last_login_at: null,
-                team_introduce: null,
+                team_introduce: "",
                 user: {
-                    username: null
+                    username: ""
                 },
                 validated: false,
-            },
+            }
         }
     }
 
     render(){
-        const { MyProfileActions, my_profile, is_edited_profile, clicked_tab } = this.props;
-        const action = this.props.clicked_tab;
+        const { is_edited_profile } = this.state;
+        const { my_profile, action, MyProfileActions } = this.props;
         return (
             <div className="frame-scrollable bg-init-color" >
                 <Header
                     content = {"미팅 그룹 생성"}
                 />
                 <TwoTab
+                    clicked_tab = {action}
                     MyProfileActions = {MyProfileActions}
-                    clicked_tab = {clicked_tab}
                 />
 
-                {action === "new" &&
+                { action === "new" &&
                 <TeamProfileBody
-                    MyProfileActions = {MyProfileActions}
                     my_profile = {this.state.empty_profile}
                     is_edited_profile = {is_edited_profile}
+                    clicked_tab = {action}
                 />}
-                {action === "prev" &&
+                { action === "prev" &&
                 <TeamProfileBody
-                    MyProfileActions = {MyProfileActions}
                     my_profile = {my_profile}
-                    MyProfileActions={MyProfileActions}
                     is_edited_profile = {is_edited_profile}
+                    clicked_tab = {action}
                 />}
             </div>
         );
@@ -74,10 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-    is_login_already: state.my_profile.get('is_login_already'),
-    is_edited_profile: state.my_profile.get('is_edited_profile'),
-    my_profile: state.my_profile.get('my_profile'),
-    clicked_tab: state.my_profile.get('clicked_tab'),
+    action: state.my_profile.get('action'),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeamProfile);

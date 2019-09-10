@@ -1,13 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import * as myProfileActions from "../modules/my_profile";
-import * as emailActions from '../modules/email';
 import "../css/Profile.scss";
 import '../App.css';
 import Header from './details/Header';
-import { bindActionCreators } from 'redux';
-import { connect } from "react-redux";
-import Textarea from "react-textarea-autosize";
-import { Link } from 'react-router-dom';
 
 class Profile extends Component {
 
@@ -19,17 +13,6 @@ class Profile extends Component {
             emailFront: "",
             code: "",
         }
-    }
-
-    componentDidMount() {
-        const { MyProfileActions } = this.props;
-        MyProfileActions.getMyProfile()
-        .then(() => {
-            this.setState({
-                age_value: this.props.my_profile.age_range,
-                company_value: this.props.my_profile.company.name
-            })
-        })
     }
 
     handleInputChange = event => {
@@ -58,6 +41,9 @@ class Profile extends Component {
                 break;
             case "테슬라":
                 emailCompany = "@tesla.com";
+                break;
+            default:
+                emailCompany = "";
                 break;
         }
         EmailActions.sendEmail({
@@ -111,7 +97,7 @@ class Profile extends Component {
                         </div>
                         <div className="title">연령대</div>
                         <select name="age_value" value={age_value} onChange={this.handleInputChange}>
-                            <option disabled selected value> - 선택 - </option>
+                            <option disabled value> - 선택 - </option>
                             <option>10</option>
                             <option>20</option>
                             <option>30</option>
@@ -121,7 +107,7 @@ class Profile extends Component {
                         </select>
                         <div className="title">회사명</div>
                         <select name="company_value" value={company_value} onChange={this.handleInputChange}>
-                            <option disabled selected value> - 선택 - </option>
+                            <option disabled value> - 선택 - </option>
                             <option>네이버</option>
                             <option>삼성</option>
                             <option>멋쟁이사자처럼</option>
@@ -144,7 +130,7 @@ class Profile extends Component {
                         {(!this.props.sent) ?
                             (
                                 <Fragment>
-                                    <button className="SendButton Send" type="button" onClick={e => this.onSend(e)}>인증하기</button>
+                                    <button className="SendButton Send" type="button" onClick={() => alert('테스트페이지입니다.')}>인증하기</button>
                                 </Fragment>
                             )
                             : (
@@ -176,17 +162,4 @@ class Profile extends Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    MyProfileActions: bindActionCreators(myProfileActions, dispatch),
-    EmailActions: bindActionCreators(emailActions, dispatch),
-});
-
-const mapStateToProps = (state) => ({
-    is_login_already: state.my_profile.get('is_login_already'),
-    my_profile: state.my_profile.get('my_profile'),
-    sent: state.email.get('sent'),
-    validated: state.email.get('validated'),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default Profile;

@@ -7,10 +7,6 @@ import { bindActionCreators } from 'redux';
 
 class MyPlayer extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount(){
         const { MyProfileActions } = this.props;
         MyProfileActions.getMyProfile();

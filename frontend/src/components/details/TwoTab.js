@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 class TwoTab extends Component {
     render() {
-        const { MyProfileActions, clicked_tab } = this.props;
+        const { clicked_tab, MyProfileActions } = this.props;
         return (
             <Fragment>
                 <div className="tab-wrap">
@@ -14,7 +14,7 @@ class TwoTab extends Component {
                             "change-link font-notosan", 
                             clicked_tab === 'new' ? "active" : ""
                             )}
-                            onClick={MyProfileActions.newTabOn}
+                            onClick={ MyProfileActions.newTabOn }
                         >
                         새로운 그룹
                         </div>
@@ -22,7 +22,7 @@ class TwoTab extends Component {
                             "change-link font-notosan", 
                             clicked_tab === 'prev' ? "active" : ""
                             )}
-                            onClick={MyProfileActions.prevTabOn}                        
+                            onClick={ MyProfileActions.prevTabOn }
                         >
                         지난번 그룹
                         </div>

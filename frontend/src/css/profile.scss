@@ -188,7 +188,7 @@
 }
 
 .SendButton {
-    width: 78px;
+    width: 84px;
     height: 44px;
     opacity: 0.9;
     border-radius: 12px;
@@ -397,6 +397,13 @@ select:focus {
         // opacity: 0.9;
         margin-right: 16px;
         cursor: pointer;
+
+        .user-img{
+            width: 231px;
+            height: 231px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
     }
 
     .each-img:first-child {

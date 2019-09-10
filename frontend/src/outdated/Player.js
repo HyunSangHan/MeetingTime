@@ -33,14 +33,15 @@ class Player extends Component {
 
     render(){
         const{ action } = this.state;
-        const { PlayerActions, current_matching, my_profile, counter_profile, is_current_matching, is_counter_profile,  joined_user } = this.props;
+        const { current_matching, is_current_matching, is_counter_profile } = this.props;
         console.log(this.props);
         return (
             <div className="container">
                 <div className="white-box form-box">
-                    {action === "user" && <MyPlayer
-                                            current_matching={current_matching} 
-                                            />
+                    {action === "user" && 
+                        <MyPlayer
+                            current_matching={current_matching} 
+                        />
                     }
                     {action === "counter_user" 
                         && is_counter_profile 

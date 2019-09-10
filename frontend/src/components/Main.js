@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import '../css/Main.scss';
 import '../App.css';
-import { Container, Row, Col } from 'reactstrap';
 import MaterialIcon from 'material-icons-react';
 import { Link, Redirect } from 'react-router-dom';
 import Footer from "./../outdated/Footer";
@@ -19,41 +18,8 @@ import * as currentMeetingActions from '../modules/current_meeting';
 import * as currentMatchingActions from "../modules/current_matching";
 import * as playerActions from '../modules/player';
 import * as myProfileActions from '../modules/my_profile';
-import axios from 'axios';
 
 class Main extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            loading: true
-        }
-    }
-
-    componentDidMount() {
-        const { CurrentMeetingActions, CurrentMatchingActions, PlayerActions, JoinActions, is_joined_already, is_login_already } = this.props;
-        CurrentMeetingActions.getCurrentMeeting();
-        CurrentMatchingActions.getCurrentMatching();
-        PlayerActions.getCounterProfile();  
-        if (!is_joined_already){
-            JoinActions.getJoinedUser();
-        } else {
-            this.setState({
-                loading: false
-            });
-        }
-        {
-            !is_login_already && <Redirect to="/"/>
-        }
-    }
-
-    componentWillReceiveProps = nextProps => {
-        if (nextProps.is_joined_already) {
-            this.setState({
-                loading: false,
-            });
-        }
-    };
-
     getInputDayLabel = (time) => {
         const week = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
         const today = new Date(time).getDay();
@@ -87,8 +53,8 @@ class Main extends Component {
 
         const content =
             <div className="inline-flex">
-                {meetingWeek} {meetingDay} {current_meeting.location} 미팅
-                <div className="ml-1 font-lightgrey font-13">남은 셔플 {4 - current_matching.trial_time}회</div>
+                이번주 금요일 in 강남
+                <div className="ml-1 font-lightgrey font-13">남은 셔플 2회</div>
             </div>;
 
         return (
@@ -97,20 +63,15 @@ class Main extends Component {
                         content={content}
                     />
                     <div className="profile">  
-                        {this.state.loading
-                        ?
-                        <Loading/> 
-                        :
                         <CounterPlayer
                             my_profile={my_profile}
                             PlayerActions={PlayerActions}
                             counter_profile={counter_profile}
                             is_counter_profile={is_counter_profile}
                         />  
-                        }  
                     </div>
                     <ControlTool 
-                        time={this.state.time} 
+                        time={6000} 
                         my_profile={my_profile}
                         PlayerActions={PlayerActions}
                         CurrentMatchingActions={CurrentMatchingActions}

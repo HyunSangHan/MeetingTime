@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import { Map, get } from 'immutable';
+import { Map } from 'immutable';
 import axios from 'axios';
 import { pender } from 'redux-pender';
 
@@ -32,7 +32,7 @@ const initialState = Map({
         validated: false,
     },
     is_edited_profile: false,
-    clicked_tab: "new",
+    action: "prev",
 });
 
 export default handleActions({
@@ -59,11 +59,11 @@ export default handleActions({
     }),
 
     [NEW_TAB_ON]: (state) => {
-        return state.set('clicked_tab', "new")
+        return state.set('action', "new")
     },
 
     [PREV_TAB_ON]: (state) => {
-        return state.set('clicked_tab', "prev")
+        return state.set('action', "prev")
     },
 
 }, initialState);

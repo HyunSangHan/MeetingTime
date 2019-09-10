@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import { Map, get } from 'immutable';
+import { Map } from 'immutable';
 import axios from 'axios';
 import { pender } from 'redux-pender';
 
@@ -8,7 +8,6 @@ const COUNTER_PROFILE = "COUNTER_PROFILE";
 const GREEN_LIGHT_ON = "GREEN_LIGHT_ON";
 const GREEN_LIGHT_OFF = "GREEN_LIGHT_OFF";
 const GIFT_ON = "GIFT_ON";
-const GIFT_OFF = "GIFT_OFF";
 const CREATE_POPUP = "CREATE_POPUP";
 const DELETE_POPUP = "DELETE_POPUP";
 

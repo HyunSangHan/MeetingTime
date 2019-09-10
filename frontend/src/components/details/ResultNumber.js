@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import '../../css/Waiting.scss'; //부모컴포넌트의CSS(SCSS)
 import '../../App.css'; //공통CSS
-import { Link } from 'react-router-dom'; //다른 페이지로 링크 걸 때 필요
 
 class ResultNumber extends Component {
 
     render() {
         const { cutline, rank} = this.props;
-        // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기
 
         let judgment = "|";
         if (cutline > rank) {

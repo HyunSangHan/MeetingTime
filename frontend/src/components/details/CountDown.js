@@ -6,11 +6,8 @@ class CountDown extends Component {
 
     constructor(props){
         super(props);
-        const nowTime = new Date().getTime()
-        const targetTime = this.props.time
-        const gapSecondTotal = Math.floor((targetTime - nowTime) / 1000)
         this.state = {
-            gapSecondTotal : gapSecondTotal
+            gapSecondTotal : 3600
         }
         this.startTimer = this.startTimer.bind(this);
     }
