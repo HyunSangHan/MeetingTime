@@ -7,7 +7,6 @@ class MakeTeamButton extends Component {
 
     render() {
         const { isMadeTeam, my_profile } = this.props;
-        // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기
         let makeTeamButton = null;
 
         if (isMadeTeam) {

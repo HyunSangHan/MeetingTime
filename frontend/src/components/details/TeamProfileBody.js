@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import '../../css/Profile.scss'; //부모컴포넌트의CSS(SCSS)
 import '../../App.css'; //공통CSS
-import { Link } from 'react-router-dom'; //다른 페이지로 링크 걸 때 필요
 import Textarea from "react-textarea-autosize";
-import { bindActionCreators } from 'redux';
-import { connect } from "react-redux";
-import * as myProfileActions from "../../modules/my_profile";
 import axios from "axios";
 import TeamPopup from './TeamPopup';
 
@@ -25,9 +21,6 @@ class TeamProfileBody extends Component {
             team_name_value: this.props.my_profile.team_name,
             team_intro_value: this.props.my_profile.team_introduce,
         }
-    }
-
-    componentDidMount(){
     }
 
     //수정 관련 함수들

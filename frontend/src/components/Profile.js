@@ -6,8 +6,6 @@ import '../App.css';
 import Header from './details/Header';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import Textarea from "react-textarea-autosize";
-import { Link } from 'react-router-dom';
 
 class Profile extends Component {
 
@@ -33,7 +31,16 @@ class Profile extends Component {
     }
 
     handleInputChange = event => {
-        const { target: { value, name } } = event;
+        let { value, name } = event.target;
+        if (value === "10대") {
+            value = 10;
+        } else if (value === "20대") {
+            value = 20;
+        } else if (value === "30대") {
+            value = 30;
+        } else if (value === "40대") {
+            value = 40;
+        } 
         this.setState({
             [name]: value
         });
@@ -110,14 +117,13 @@ class Profile extends Component {
                             <p>{my_profile.is_male ? "남자" : "여자"}</p>
                         </div>
                         <div className="title">연령대</div>
-                        <select name="age_value" value={age_value} onChange={this.handleInputChange}>
+                        <select name="age_value" value={age_value + "대"} onChange={this.handleInputChange}>
                             <option disabled selected value> - 선택 - </option>
-                            <option>10</option>
-                            <option>20</option>
-                            <option>30</option>
-                            <option>40</option>
-                            <option>50</option>
-                            <option>60</option>
+                            <option>10대</option>
+                            <option>20대</option>
+                            <option>30대</option>
+                            <option>40대</option>
+                            {/* <option>기타</option> */}
                         </select>
                         <div className="title">회사명</div>
                         <select name="company_value" value={company_value} onChange={this.handleInputChange}>

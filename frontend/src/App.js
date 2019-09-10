@@ -13,8 +13,6 @@ import { bindActionCreators } from 'redux';
 import * as myProfileActions from './modules/my_profile';
 import * as currentMeetingActions from './modules/current_meeting';
 import axios from 'axios';
-import Loading from './components/details/Loading';
-import TwoTab from './components/details/TwoTab';
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -39,13 +37,7 @@ class App extends Component {
 
                     {nowTime > openTime && is_joined_already
                     ?
-                    <Route exact path="/"
-                        render={(props) => (
-                            <Waiting
-                                {...props}
-                            />
-                        )}
-                    />
+                    <Route exact path="/" component={Waiting}/>
                     :
                     <Route exact path="/"
                             render={(props) => (
