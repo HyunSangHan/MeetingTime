@@ -21,35 +21,11 @@ axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 class App extends Component {
 
-    constructor(props){
-        super(props);
-
-        this.state = {
-    }
-}
-
     componentDidMount () {
         const { MyProfileActions, CurrentMeetingActions } = this.props;
         MyProfileActions.getMyProfile();
         CurrentMeetingActions.getCurrentMeeting();
-        // //원본
-        // console.log(new Date()) 
-        // console.log("2019-09-09T08:25:39+09:00")
-
-        // //스트링용
-        // console.log(Date(new Date().toLocaleString()))
-        // console.log(new Date("2019-09-09T08:25:39+09:00"))
-
-        // //요일뽑기
-        // console.log(this.getInputDayLabel(Date(new Date().toLocaleString())))
-        // console.log(this.getInputDayLabel("2019-09-09T08:25:39+09:00"))
-
-        // //부등호 비교용
-        // console.log(new Date().getTime()) 
-        // console.log(Date.parse("2019-09-09T08:25:39+09:00"))
-
     }
-
 
     render() {
 
@@ -82,14 +58,6 @@ class App extends Component {
                         />
                     }
 
-                    {/* <Route path="/waiting"
-                        render={(props) => (
-                            <Waiting
-                                {...props}
-                            />
-                        )}
-                    /> */}
-
                     <Route path="/matching"
                         render={(props) => (
                             <Main
@@ -117,6 +85,7 @@ class App extends Component {
                             />
                         )} 
                     />
+
                     <Route path="/matching_result"
                         render={(props) => (
                             <CounterPlayer

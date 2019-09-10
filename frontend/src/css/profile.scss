@@ -399,6 +399,13 @@ select:focus {
         cursor: pointer;
     }
 
+    .user-img{
+        width: 231px;
+        height: 231px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
     .each-img:first-child {
         margin-left: 5%;
     }

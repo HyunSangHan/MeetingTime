@@ -160,6 +160,7 @@ class TeamProfileBody extends Component {
                             ref={fileInput => this.fileInput = fileInput}
                             name="image_value"
                             className="image-uploader"
+                            accept="image/*"
                         />
                         <input
                             style={{display: 'none'}}
@@ -168,6 +169,7 @@ class TeamProfileBody extends Component {
                             ref={fileInput_two => this.fileInput_two = fileInput_two}
                             name="image_two_value"
                             className="image-uploader"
+                            accept="image/*"
                         />
                         <input
                             style={{display: 'none'}}
@@ -176,6 +178,7 @@ class TeamProfileBody extends Component {
                             ref={fileInput_three => this.fileInput_three = fileInput_three}
                             name="image_three_value"
                             className="image-uploader"
+                            accept="image/*"
                         />
 
                     
