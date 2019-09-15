@@ -24,13 +24,9 @@ import axios from 'axios';
 class Main extends Component {
     constructor(props){
         super(props);
-
         this.state = {
-            time: 60,
             loading: true
         }
-        this.startTimer = this.startTimer.bind(this);
-
     }
 
     componentDidMount() {
@@ -45,8 +41,6 @@ class Main extends Component {
                 loading: false
             });
         }
-        this.startTimer();
-
         {
             !is_login_already && <Redirect to="/"/>
         }
@@ -59,24 +53,6 @@ class Main extends Component {
             });
         }
     };
-
-    startTimer() { //일단 넣어둔 함수TODO: 커스터마이징해야됨
-        // const { history } = this.props; //시간 관련해서 받아올 곳
-        this.setState(prevState => ({
-            time: prevState.time,
-        }));
-        this.timer = setInterval(() => this.setState(prevState => ({
-            ...prevState,
-            time: prevState.time - 1
-        })), 1000);
-        this.ifTimer = setInterval(() => {
-            const { time } = this.state;
-            if (time <= 0) {
-                window.location.reload(); //리프레시
-                clearInterval(this.timer, this.ifTimer);
-            }
-        }, 1000);
-    }
 
     getInputDayLabel = (time) => {
         const week = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
@@ -133,20 +109,18 @@ class Main extends Component {
                         />  
                         }  
                     </div>
-                    <div className="control-container">
-                        <ControlTool 
-                            time={this.state.time} 
-                            my_profile={my_profile}
-                            PlayerActions={PlayerActions}
-                            CurrentMatchingActions={CurrentMatchingActions}
-                            counter_profile={counter_profile}
-                            is_counter_profile={is_counter_profile}
-                            is_gift_popup={is_gift_popup}
-                            current_matching={current_matching}
-                            current_meeting={current_meeting}
-                        /> 
-                        <br/>
-                    </div>
+                    <ControlTool 
+                        time={this.state.time} 
+                        my_profile={my_profile}
+                        PlayerActions={PlayerActions}
+                        CurrentMatchingActions={CurrentMatchingActions}
+                        counter_profile={counter_profile}
+                        is_counter_profile={is_counter_profile}
+                        is_gift_popup={is_gift_popup}
+                        current_matching={current_matching}
+                        current_meeting={current_meeting}
+                    /> 
+                    <br/>
             </div>
         );
     }

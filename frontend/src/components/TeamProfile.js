@@ -7,7 +7,6 @@ import TwoTab from "./details/TwoTab";
 import TeamProfileBody from "./details/TeamProfileBody";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import Textarea from "react-textarea-autosize";
 
 class TeamProfile extends Component {
 

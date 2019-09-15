@@ -2,7 +2,8 @@
 .main-container {
     background-color: #f6f6f6;
     width: 100%;
-    min-width: 375px;
+    // min-width: 375px;
+    height: 100vh;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -16,13 +17,10 @@
     text-align: center;
     display: flex;
     justify-content: center;
-    margin-top: 45px;
-    max-width: 960px;
 
     .counter-container {
         width: 90%;
-        padding-left: 30px;
-        padding-right: 30px;
+        max-width: 880px;
         margin-left: auto;
         margin-right: auto;
         background-color: #ffffff;
@@ -34,6 +32,9 @@
             display: -ms-flexbox !important;
             display: flex !important;
             margin-bottom: 7px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 87%;
             align-items: center;
             padding-top: 24px;
 
@@ -56,7 +57,6 @@
                 line-height: 1.62;
                 letter-spacing: -0.3px;
                 color: #888888;
-                margin-right: 10px;
             }
 
             .company {
@@ -73,9 +73,10 @@
         .team-intro {
             text-align: justify;
             margin-bottom: 0px;
-            p {
-                margin: 0;
-            }
+            margin-left: auto;
+            margin-right: auto;
+            width: 87%;
+            font-size: 14px;
         }
 
         .margin-wrap {
@@ -105,17 +106,11 @@
     display: flex !important;
     width: 100%;
     .each-image {
-        border-radius: 12px;
-        width: 255px;
-        height: 255px;
-        object-fit: cover;
-        background-color: #ffffff;
-        opacity: 0.9;
-        cursor: pointer;
+        margin-right: 14px;
     }
- 
+
     .last-child-gap {
-        margin-left: -30px !important;
+        margin-left: -14px !important;
         width: 11% !important;
         min-width: 11% !important;
     }
@@ -139,7 +134,7 @@
     .gift-popup {
         .message-box {
             width: 70%;
-            min-width: 400px;
+            // min-width: 400px;
             max-width: 700px;
             height: 140px;
             border-radius: 12px;
@@ -174,17 +169,25 @@
 
 //control component
 .control-container {
-    width: 95%;
+    position : absolute;
+    bottom : 20px;
+    width: 100%;
+}
+
+.control-tool {
+    width: 90%;
     max-width: 880px;
     margin-top: 70px;
     margin-left: auto;
     margin-right: auto;
     position: relative;
+
     .timer {
         justify-content: center;
         margin-bottom: 10px;
         color: #333;
     }
+
     .action-container {
         display: -webkit-flex !important;
         display: -ms-flexbox !important;
@@ -192,6 +195,7 @@
         justify-content: space-between;
         align-items: center;
         .column {
+
             .my-team {
                 object-fit: cover;
                 width: 58px;
@@ -199,6 +203,7 @@
                 border: 1.5px solid white;
                 border-radius: 12px;
             }
+
             .greenlight-back {
                 //그리라이트 백
                 width: 75px;
@@ -236,6 +241,7 @@
                     }
                 }
             }
+
             .gift {
                 cursor: pointer;
                 .gift-on {
@@ -251,7 +257,9 @@
                     justify-content: center;
                     color: #ffffff;
                     font-size: 14px;
+                    line-height: 15px;
                 }
+
                 .gift-off {
                     width: 58px;
                     height: 58px;
@@ -265,14 +273,18 @@
                     justify-content: center;
                     color: #ffffff;
                     font-size: 14px;
+                    line-height: 15px;
                 }
             }
         }
     }
 }
 
-
 @media(max-width: 479px){ /*Mobile*/
+    .top-m {
+        margin-top: 5vw;
+    }
+
     .margin-wrap{
         max-height: 250px;
     }
@@ -282,17 +294,7 @@
     }
 
     .each-image{
-        color: #ccc;
-        object-fit: cover;
-        border-radius: 12px;
-        width : 231px;
-        min-width : 231px;
-        height: 231px;
-        max-height: 231px;
-        background-color: #fff;
-        // opacity: 0.9;
         margin-right: 14px;
-        cursor: pointer;
     }
 
     .user-image{
@@ -303,7 +305,7 @@
     }
 
     .each-image:first-child {
-        margin-left: 12% !important;
+        margin-left: 11% !important;
     }
 
 
@@ -335,37 +337,30 @@
 
 @media(min-width: 480px){ /*Tablet*/
 
+    .top-m {
+        margin-top: 35px;
+    }
     .each-image{
-        color: #ccc;
-        object-fit: cover;
-        border-radius: 12px;
-        width : 255px;
-        min-width : 255px;
-        height: 255px;
-        max-height: 255px;
-        background-color: #fff;
-        // opacity: 0.9;
         margin-right: 14px;
-        cursor: pointer;
     }
 
     .user-image{
-        width: 255px;
-        height: 255px;
+        width: 246px;
+        height: 246px;
         object-fit: cover;
         border-radius: 12px;
     }
 
     .each-image:first-child {
-        margin-left: 10% !important;
+        margin-left: 11% !important;
     }
-
 
     .ButtonWrap {
         display: -webkit-flex !important;
         display: -ms-flexbox !important;
         display: flex !important;
         justify-content: center;
+
         .SubmitButton {
             margin-top : -75px;
             width: 100%;
@@ -387,31 +382,24 @@
 }
 
 @media(min-width: 768px){ /*PC1*/
+    .top-m {
+        margin-top: 45px;
+    }
 
     .each-image{
-        color: #ccc;
-        object-fit: cover;
-        border-radius: 12px;
-        width : 255px;
-        min-width : 255px;
-        height: 255px;
-        max-height: 255px;
-        background-color: #fff;
-        // opacity: 0.9;
         margin-right: 14px;
-        cursor: pointer;
     }
 
     .each-image:first-child {
-        margin-left: 9% !important;
+        margin-left: 11% !important;
     }
-
 
     .ButtonWrap {
         display: -webkit-flex !important;
         display: -ms-flexbox !important;
         display: flex !important;
         justify-content: center;
+
         .SubmitButton {
             width: 90%;
             max-width: 800px;
@@ -433,7 +421,7 @@
     }
 }
 
-@media(min-width: 889px){ /*PC2(for swipe)*/
+@media(min-width: 980px){ /*PC2(for swipe)*/
     .images-wrapper {
         position: absolute;
         width: 100%;
@@ -442,10 +430,9 @@
         display: flex !important;
         justify-content: center;
         z-index: 1;
-        bottom: 28px;
+        bottom: 32px;
 
         .images{
-            width: 840px;
             overflow: auto;
             display: -webkit-flex !important;
             display: -ms-flexbox !important;
@@ -453,45 +440,13 @@
             align-items: center;
             justify-content: center;
             
-
-            .smile {
-                width: 42px;
-                height: 42px;
-            }
-        
             .each-image{
-                color: #ccc;
-                object-fit: cover;
-                border-radius: 12px;
-                width : 255px;
-                min-width : 255px;
-                height: 255px;
-                max-height: 255px;
-                background-color: #fff;
-                // opacity: 0.9;
                 margin-right: 14px;
-                cursor: pointer;
             }
 
             .each-image:first-child {
-                
-                margin-left: 9% !important;
-            }
-        
-            .last-child-gap {
-                width: 10px;
-                min-width: 20px;
-                margin: 0;
+                margin-left: 11% !important;
             }
         }
     }
-}
-
-
-@media(max-width: 767px){ /*Mobile*/
-    //모바일(너비 767px이하)에만 해당되는 CSS들어갈 곳
-}
-    
-@media(min-width: 768px){ /*PC*/
-    //PC(너비 768px이상)에만 해당되는 CSS들어갈 곳
 }

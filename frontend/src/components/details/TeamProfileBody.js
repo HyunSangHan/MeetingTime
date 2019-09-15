@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import '../../css/Profile.scss'; //부모컴포넌트의CSS(SCSS)
 import '../../App.css'; //공통CSS
-import { Link } from 'react-router-dom'; //다른 페이지로 링크 걸 때 필요
 import Textarea from "react-textarea-autosize";
-import { bindActionCreators } from 'redux';
-import { connect } from "react-redux";
-import * as myProfileActions from "../../modules/my_profile";
 import axios from "axios";
 import TeamPopup from './TeamPopup';
 
@@ -25,9 +21,6 @@ class TeamProfileBody extends Component {
             team_name_value: this.props.my_profile.team_name,
             team_intro_value: this.props.my_profile.team_introduce,
         }
-    }
-
-    componentDidMount(){
     }
 
     //수정 관련 함수들
@@ -138,7 +131,7 @@ class TeamProfileBody extends Component {
         return (
             <div className="team-container">
                 <div className="profile-form">
-                    <div className="team-container title-images">
+                    <div className="team-container title-imgs">
                         <div className="title font-notosan">
                             팀 사진
                             {!this.props.my_profile.created_at &&
@@ -160,6 +153,7 @@ class TeamProfileBody extends Component {
                             ref={fileInput => this.fileInput = fileInput}
                             name="image_value"
                             className="image-uploader"
+                            accept="image/*"
                         />
                         <input
                             style={{display: 'none'}}
@@ -168,6 +162,7 @@ class TeamProfileBody extends Component {
                             ref={fileInput_two => this.fileInput_two = fileInput_two}
                             name="image_two_value"
                             className="image-uploader"
+                            accept="image/*"
                         />
                         <input
                             style={{display: 'none'}}
@@ -176,6 +171,7 @@ class TeamProfileBody extends Component {
                             ref={fileInput_three => this.fileInput_three = fileInput_three}
                             name="image_three_value"
                             className="image-uploader"
+                            accept="image/*"
                         />
 
                     
@@ -220,12 +216,12 @@ class TeamProfileBody extends Component {
                     </div>
                 }
 
-                <div className="images-wrap">
-                    <div className="images">
+                <div className="imgs-wrap">
+                    <div className="imgs">
                         {!preview ?
-                        <div className="each-image flex-center" onClick={() => this.fileInput.click()}>
+                        <div className="each-img flex-center" onClick={() => this.fileInput.click()}>
                             {image_value ?
-                            <img className="user-image" src={image_value} />
+                            <img className="user-img" src={image_value} />
                             :
                             <div className="App">
                                 <img className="smile" src={require("../../images/smile.png")} />
@@ -236,12 +232,12 @@ class TeamProfileBody extends Component {
                             }
                         </div>
                         :
-                        <img className="each-image" src={preview} onClick={() => this.fileInput.click()}/>
+                        <img className="each-img" src={preview} onClick={() => this.fileInput.click()}/>
                         }
                         {!preview_two ? 
-                        <div className="each-image flex-center" onClick={() => this.fileInput_two.click()}>
+                        <div className="each-img flex-center" onClick={() => this.fileInput_two.click()}>
                             {image_two_value ?
-                            <img className="user-image" src={image_two_value} />
+                            <img className="user-img" src={image_two_value} />
                             :
                             <div className="App">
                                 <img className="smile" src={require("../../images/smile.png")} />
@@ -252,12 +248,12 @@ class TeamProfileBody extends Component {
                             }
                         </div>
                         :
-                        <img className="each-image" src={preview_two} onClick={() => this.fileInput_two.click()}/>
+                        <img className="each-img" src={preview_two} onClick={() => this.fileInput_two.click()}/>
                         }
                         {!preview_three ?
-                        <div className="each-image flex-center" onClick={() => this.fileInput_three.click()}>
+                        <div className="each-img flex-center" onClick={() => this.fileInput_three.click()}>
                             {image_three_value ?
-                            <img className="user-image" src={image_three_value} />
+                            <img className="user-img" src={image_three_value} />
                             :
                             <div className="App">
                                 <img className="smile" src={require("../../images/smile.png")} />
@@ -268,7 +264,7 @@ class TeamProfileBody extends Component {
                             }
                         </div>
                         :
-                        <img className="each-image" src={preview_three} onClick={() => this.fileInput_three.click()}/>
+                        <img className="each-img" src={preview_three} onClick={() => this.fileInput_three.click()}/>
                         }
                         <div className="last-child-gap"/>
                     </div>

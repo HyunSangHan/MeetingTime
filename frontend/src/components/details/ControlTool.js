@@ -85,97 +85,97 @@ class ControlTool extends Component {
 
         return (
             <div className="control-container">
-
-                <div className="gift-pop">
-                    {is_gift_popup
-                        &&
-                        <GiftPopup
-                            PlayerActions={PlayerActions}
-                            is_gift_popup={is_gift_popup}
-                            counter_profile={counter_profile}
-                            current_matching={current_matching}
-                            handleGift={this.handleGift}
-                        />
-                    }
-                </div>
-
-                {/* 임시적으로 1분 미만의 시간 카운트  */}
-                <div className="timer font-notosan font-13">
-                    {countDown}
-                </div>
-
-                <div className="action-container">
-                    <div className="column">
-                        <Link to="/team_profile">
-                            {/* 대표사진 */}
-                            <img className="my-team" src={my_profile.image || require("../../images/noPhoto.jpg")} />
-                        </Link> 
-                    </div>
-
-
-                    <div className="column">      
-                        {my_profile.is_male ?
-                        <div className="greenlight-back">
-                            <div className="greenlight move-1" onClick={this.handleGreenLight}>
-                                {is_greenlight_male_on &&
-                                    <div className="call-button font-jua">
-                                        콜!!
-                                    </div> 
-                                }
-                                {!is_greenlight_male_on &&
-                                    <div className="call-button font-jua">
-                                        콜?
-                                    </div> 
-                                }
-                            </div>
-                        </div>
-                        :
-                        <div className="greenlight-back">
-                            <div className="greenlight move-1" onClick={this.handleGreenLight}>
-                                {is_greenlight_female_on &&
-                                    <div className="call-button font-jua">
-                                        콜!!
-                                    </div> 
-                                }
-                                {!is_greenlight_female_on &&
-                                    <div className="call-button font-jua">
-                                        콜?
-                                    </div> 
-                                }
-                            </div>
-                        </div>
+                <div className="control-tool">
+                    <div className="gift-pop">
+                        {is_gift_popup
+                            &&
+                            <GiftPopup
+                                PlayerActions={PlayerActions}
+                                is_gift_popup={is_gift_popup}
+                                counter_profile={counter_profile}
+                                current_matching={current_matching}
+                                handleGift={this.handleGift}
+                            />
                         }
                     </div>
 
-                        
-                    <div className="column">
-                        {my_profile.is_male ?
-                        <div className="gift" onClick={this.handleGiftPopup}>
-                            {current_matching.is_gift_male &&
-                                <div className="gift-on font-jua">
-                                    안주쏘기
-                                </div> 
-                            }
-                            {!current_matching.is_gift_male &&
-                                <div className="gift-off font-jua">
-                                    안주쏘기
-                                </div> 
+                    {/* 임시적으로 1분 미만의 시간 카운트  */}
+                    <div className="timer font-notosan font-13">
+                        {countDown}
+                    </div>
+
+                    <div className="action-container">
+                        <div className="column">
+                            <Link to="/team_profile">
+                                {/* 대표사진 */}
+                                <img className="my-team" src={my_profile.image || require("../../images/noPhoto.jpg")} />
+                            </Link> 
+                        </div>
+
+                        <div className="column">      
+                            {my_profile.is_male ?
+                            <div className="greenlight-back">
+                                <div className="greenlight move-1" onClick={this.handleGreenLight}>
+                                    {is_greenlight_male_on &&
+                                        <div className="call-button font-jua">
+                                            콜!!
+                                        </div> 
+                                    }
+                                    {!is_greenlight_male_on &&
+                                        <div className="call-button font-jua">
+                                            콜?
+                                        </div> 
+                                    }
+                                </div>
+                            </div>
+                            :
+                            <div className="greenlight-back">
+                                <div className="greenlight move-1" onClick={this.handleGreenLight}>
+                                    {is_greenlight_female_on &&
+                                        <div className="call-button font-jua">
+                                            콜!!
+                                        </div> 
+                                    }
+                                    {!is_greenlight_female_on &&
+                                        <div className="call-button font-jua">
+                                            콜?
+                                        </div> 
+                                    }
+                                </div>
+                            </div>
                             }
                         </div>
-                        :
-                        <div className="gift" onClick={this.handleGiftPopup}>
-                            {current_matching.is_gift_female &&
-                                <div className="gift-on font-jua">
-                                    안주쏘기
-                                </div> 
-                            }
-                            {!current_matching.is_gift_female &&
-                                <div className="gift-off font-jua">
-                                    안주쏘기2
-                                </div> 
+
+                            
+                        <div className="column">
+                            {my_profile.is_male ?
+                            <div className="gift" onClick={this.handleGiftPopup}>
+                                {current_matching.is_gift_male &&
+                                    <div className="gift-on font-jua">
+                                        안주쏘기
+                                    </div> 
+                                }
+                                {!current_matching.is_gift_male &&
+                                    <div className="gift-off font-jua">
+                                        안주쏘기
+                                    </div> 
+                                }
+                            </div>
+                            :
+                            <div className="gift" onClick={this.handleGiftPopup}>
+                                {current_matching.is_gift_female &&
+                                    <div className="gift-on font-jua">
+                                        안주쏘기
+                                    </div> 
+                                }
+                                {!current_matching.is_gift_female &&
+                                    <div className="gift-off font-jua">
+                                        안주쏘기
+                                    </div> 
+                                }
+                            </div>
                             }
                         </div>
-                        }
                     </div>
                 </div>
             </div>

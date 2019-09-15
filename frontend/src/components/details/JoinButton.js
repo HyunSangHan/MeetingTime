@@ -99,7 +99,7 @@ class JoinButton extends Component {
                     }
                 }
             } else {
-                if ( is_joined_already && joined_user.rank <= current_meeting.cutline && joined_user.rank != null && nowTime < closeTime) {
+                if ( is_joined_already && joined_user.rank <= current_meeting.cutline && joined_user.rank != null && nowTime > closeTime) {
                     //for winner
                     button = 
                     <div>
@@ -114,7 +114,7 @@ class JoinButton extends Component {
                             </div>
                         </Link>
                     </div>;
-                } else if (is_joined_already && joined_user.rank > current_meeting.cutline && joined_user.rank != null && nowTime < closeTime) {
+                } else if (is_joined_already && joined_user.rank > current_meeting.cutline && joined_user.rank != null && nowTime > closeTime) {
                     // 나중에는 다음 미팅 알림받기로 변경
                     button = 
                     <div>

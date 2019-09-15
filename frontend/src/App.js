@@ -13,43 +13,17 @@ import { bindActionCreators } from 'redux';
 import * as myProfileActions from './modules/my_profile';
 import * as currentMeetingActions from './modules/current_meeting';
 import axios from 'axios';
-import Loading from './components/details/Loading';
-import TwoTab from './components/details/TwoTab';
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 class App extends Component {
 
-    constructor(props){
-        super(props);
-
-        this.state = {
-    }
-}
-
     componentDidMount () {
         const { MyProfileActions, CurrentMeetingActions } = this.props;
         MyProfileActions.getMyProfile();
         CurrentMeetingActions.getCurrentMeeting();
-        // //원본
-        // console.log(new Date()) 
-        // console.log("2019-09-09T08:25:39+09:00")
-
-        // //스트링용
-        // console.log(Date(new Date().toLocaleString()))
-        // console.log(new Date("2019-09-09T08:25:39+09:00"))
-
-        // //요일뽑기
-        // console.log(this.getInputDayLabel(Date(new Date().toLocaleString())))
-        // console.log(this.getInputDayLabel("2019-09-09T08:25:39+09:00"))
-
-        // //부등호 비교용
-        // console.log(new Date().getTime()) 
-        // console.log(Date.parse("2019-09-09T08:25:39+09:00"))
-
     }
-
 
     render() {
 
@@ -63,13 +37,7 @@ class App extends Component {
 
                     {nowTime > openTime && is_joined_already
                     ?
-                    <Route exact path="/"
-                        render={(props) => (
-                            <Waiting
-                                {...props}
-                            />
-                        )}
-                    />
+                    <Route exact path="/" component={Waiting}/>
                     :
                     <Route exact path="/"
                             render={(props) => (
@@ -81,14 +49,6 @@ class App extends Component {
                             )}
                         />
                     }
-
-                    {/* <Route path="/waiting"
-                        render={(props) => (
-                            <Waiting
-                                {...props}
-                            />
-                        )}
-                    /> */}
 
                     <Route path="/matching"
                         render={(props) => (
@@ -117,6 +77,7 @@ class App extends Component {
                             />
                         )} 
                     />
+
                     <Route path="/matching_result"
                         render={(props) => (
                             <CounterPlayer

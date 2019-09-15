@@ -149,6 +149,7 @@ class Initpage extends Component {
         const lastShuffledAt = new Date(current_meeting.prev_meeting_last_shuffle_time); //나중에 하위 필드 추가되면 수정필요
         const lastTeamModifiedAt = new Date(my_profile.last_intro_modified_at);
 
+        console.log(lastShuffledAt, lastTeamModifiedAt)
         let isMadeTeam = null;
         if (lastShuffledAt < lastTeamModifiedAt) {
             isMadeTeam = true;
@@ -159,6 +160,7 @@ class Initpage extends Component {
         if (is_login_already && !isExpired) {
             makeTeamButton = <MakeTeamButton
                                 isMadeTeam = { isMadeTeam }
+                                my_profile = { my_profile }
                             />;
         } 
 
