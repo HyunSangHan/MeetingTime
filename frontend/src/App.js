@@ -35,10 +35,10 @@ class App extends Component {
             <BrowserRouter>
                 <div className="App">
 
-                    {nowTime > openTime && is_joined_already
+                    {/* {nowTime > openTime && is_joined_already
                     ?
                     <Route exact path="/" component={Waiting}/>
-                    :
+                    : */}
                     <Route exact path="/"
                             render={(props) => (
                                 <Initpage
@@ -48,7 +48,7 @@ class App extends Component {
                                 />
                             )}
                         />
-                    }
+                    {/* } */}
 
                     <Route path="/matching"
                         render={(props) => (
