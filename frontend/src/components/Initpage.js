@@ -8,7 +8,6 @@ import MeetingInfo from './details/MeetingInfo';
 import MakeTeamButton from './details/MakeTeamButton';
 import JoinButton from './details/JoinButton';
 import JoinedPopup from './details/JoinedPopup';
-import ToolTipUp from './details/ToolTipUp';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as joinActions from './../modules/join';

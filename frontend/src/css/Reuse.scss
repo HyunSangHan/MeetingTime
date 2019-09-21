@@ -4,10 +4,12 @@
     width: 100%;
     position: relative;
     margin-top: -2px;
-    height: 70%;
-    padding: 1px;
+    padding: 4px 7px;
     border: 0.5px solid #9013fe;
+    background-color: white;
     z-index: 1;
+    border-radius: 4px;
+    letter-spacing: 0 !important;
 }
 
 .up-triangle-part {
@@ -17,8 +19,6 @@
     border-color: transparent transparent #9013fe transparent;
     box-sizing: border-box;
     position: relative;
-    left: 50%;
-    margin-left: -5px;
     margin-top: -10px;
 }
 
@@ -28,8 +28,6 @@
     border: solid 10px;
     border-color: transparent transparent white transparent;
     position: relative;
-    left: 50%;
-    margin-left: -5px;
     margin-top: -18px;
     z-index: 2;
 }
@@ -53,7 +51,6 @@
     box-sizing: border-box;
     position: relative;
     left: 50%;
-    margin-left: -5px;
     margin-bottom: -10px;
 }
 
@@ -64,22 +61,13 @@
     border-color: white transparent transparent transparent;
     position: relative;
     left: 50%;
-    margin-left: -5px;
     margin-bottom: -18px;
     z-index: 2;
 }
 
 .tool-tip-up {
-    text-align: center;
-    width: 150px;
-    height: 30px;
-    font-size: 10px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.62;
-    letter-spacing: -0.4px;
-    color: #9013fe;
+    position: absolute;
+    top: 313px;
 }
 
 .container {
