@@ -4,18 +4,18 @@
     width: 100%;
     position: relative;
     margin-top: -2px;
-    padding: 4px 7px;
-    border: 0.5px solid #9013fe;
+    padding: 4px 10px;
+    border: 3px solid #9013fe;
     background-color: white;
     z-index: 1;
-    border-radius: 4px;
+    border-radius: 2px;
     letter-spacing: 0 !important;
 }
 
 .up-triangle-part {
     width: 0;
     height: 0;
-    border: solid 10px;
+    border: solid 13px;
     border-color: transparent transparent #9013fe transparent;
     box-sizing: border-box;
     position: relative;
@@ -25,10 +25,12 @@
 .up-white-triangle-part {
     width: 0;
     height: 0;
-    border: solid 10px;
+    border: solid 9px;
     border-color: transparent transparent white transparent;
     position: relative;
-    margin-top: -18px;
+    margin-top: -17px;
+    margin-left: 4px;
+    margin-bottom: -3px;
     z-index: 2;
 }
 
@@ -37,31 +39,36 @@
     width: 100%;
     position: relative;
     margin-bottom: -2px;
-    height: 70%;
-    padding: 1px;
-    border: 0.5px solid #9013fe;
+    // height: 70%;
+    padding: 4px 10px;
+    border: 3px solid #9013fe;
     z-index: 1;
+    border-radius: 2px;
+    letter-spacing: 0 !important;
 }
 
 .down-triangle-part {
     width: 0;
     height: 0;
-    border: solid 10px;
-    border-color: #9013fe transparent transparent transparent;
+    border: solid 13px;
+    border-color: transparent transparent #9013fe transparent;
     box-sizing: border-box;
     position: relative;
-    left: 50%;
+    // left: 50%;
     margin-bottom: -10px;
 }
 
 .down-white-triangle-part {
     width: 0;
     height: 0;
-    border: solid 10px;
+    border: solid 9px;
     border-color: white transparent transparent transparent;
     position: relative;
-    left: 50%;
-    margin-bottom: -18px;
+    // left: 50%;
+    margin-top: -17px;
+    margin-left: 4px;
+    margin-bottom: -3px;
+    // margin-bottom: -18px;
     z-index: 2;
 }
 
