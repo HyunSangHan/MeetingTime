@@ -46,7 +46,7 @@ class Waiting extends Component {
         }
 
         return (
-            <div className="frame bg-init-color" style={{minHeight : "635px"}}>
+            <div className="frame bg-init-color">
                 <div className="container-shadow mh-auto">
                     <div className="waiting-header flex-center">
                         <img src={require("./../images/callCall.png")} width="100px" alt="logo" />
