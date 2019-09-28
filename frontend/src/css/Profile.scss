@@ -153,8 +153,9 @@
     justify-content: center;
 
     .SubmitButton {
-        width: 90%;
+        width: 100%;
         max-width: 800px;
+        margin-bottom: 20px;
         height: 52px;
         border: 0;
         border-radius: 12px;
@@ -166,14 +167,13 @@
         letter-spacing: -0.3px;
         text-align: center;
         color: #ffffff;
-        position: fixed;
         bottom: 20px;
         align-items: center;
     }
 }
 
 .team-intro {
-    margin-bottom: 100px;
+    margin-bottom: 20px;
 }
 
 .team-popup {
@@ -418,6 +418,7 @@ select:focus {
 
         .SubmitButton {
             margin-top : -75px;
+            margin-bottom: 20px;
             width: 100%;
             max-width: 800px;
             height: 52px;
@@ -468,6 +469,7 @@ select:focus {
         justify-content: center;
         .SubmitButton {
             margin-top : -75px;
+            margin-bottom: 20px;
             width: 100%;
             max-width: 800px;
             height: 52px;
@@ -511,8 +513,9 @@ select:focus {
         display: flex !important;
         justify-content: center;
         .SubmitButton {
-            width: 90%;
+            width: 100%;
             max-width: 800px;
+            margin-bottom: 20px;
             height: 52px;
             border: 0;
             border-radius: 12px;
@@ -524,7 +527,6 @@ select:focus {
             letter-spacing: -0.3px;
             text-align: center;
             color: #ffffff;
-            position: fixed;
             bottom: 20px;
             align-items: center;
         }

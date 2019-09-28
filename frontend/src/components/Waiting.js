@@ -46,7 +46,7 @@ class Waiting extends Component {
         }
 
         return (
-            <div className="frame bg-init-color">
+            <div className="frame bg-init-color" style={{minHeight : "635px"}}>
                 <div className="container-shadow mh-auto">
                     <div className="waiting-header flex-center">
                         <img src={require("./../images/callCall.png")} width="100px" alt="logo" />
@@ -58,7 +58,7 @@ class Waiting extends Component {
                         current_meeting = { current_meeting }
                     />
                 </div>
-                <div className="fix-bottom w100percent mb-36">
+                <div className="fix-bottom-waiting w100percent mb-36 mt-2">
                     <JoinButton 
                         is_login_already = {is_login_already} />
                 </div>
