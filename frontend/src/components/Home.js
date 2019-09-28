@@ -7,7 +7,7 @@ class Home extends Component {
 
     render() {
         return (
-            <Fragment>
+            <div style={{width: "90%", margin: "auto"}}>
                 <h1><strong>테스트페이지입니다.</strong></h1>
                 <p>프론트 테스트용페이지로, 서버와의 연결을 잠시 끊어둔 페이지입니다. 라우팅은 가능합니다. 아래 케이스별 링크를 클릭해서 페이지 확인이 가능합니다.</p>
                 <hr/>
@@ -65,7 +65,7 @@ class Home extends Component {
                         그룹정보생성/수정
                     </Link>
                 </p>
-            </Fragment>
+            </div>
         );
     }
 }

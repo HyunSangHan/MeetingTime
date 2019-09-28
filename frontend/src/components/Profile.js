@@ -150,9 +150,9 @@ class Profile extends Component {
                     <div className="FixedButton">
                         {(this.props.validated) ?
                         (
-                            <button className="SubmitButton WorkingButton">적용하기</button>
+                            <button className="SubmitButton WorkingButton mt-3">적용하기</button>
                         ) : (
-                            <button type="button" className="SubmitButton NotWorkingButton" onClick={() => alert("입력을 완료해주세요.")}>적용하기</button>
+                            <button type="button" className="SubmitButton NotWorkingButton mt-3" onClick={() => alert("입력을 완료해주세요.")}>적용하기</button>
                         )
                         }
                     </div>

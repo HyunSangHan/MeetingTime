@@ -10,7 +10,7 @@ class ControlTool extends Component {
         const { my_profile } = this.props;  
 
         return (
-            <div className="control-container">
+            <div className="control-container fix-bottom-controltool">
                 <div className="control-tool">
                     <div className="timer font-notosan font-13">
                         <CountDown />

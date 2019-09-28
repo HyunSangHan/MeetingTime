@@ -57,7 +57,7 @@ class JoinButton extends Component {
                                         time={closeTime}
                                     />
                                 </div>
-                                    <Link to="/waiting" style={{ textDecoration: 'none' }}>
+                                    <Link to="/waiting0" style={{ textDecoration: 'none' }}>
                                     <div className="join-button-wrap bg-color-join mh-auto flex-center">
                                         <div className="font-notosan">
                                             번호표 뽑기
@@ -73,13 +73,11 @@ class JoinButton extends Component {
                                         time={closeTime}
                                     />
                                 </div>                
-                                <Link to="/waiting" style={{ textDecoration: 'none' }}>
-                                    <div className="join-button-wrap bg-color-waiting mh-auto flex-center">
-                                        <div className="font-notosan">
-                                            입장대기중
-                                        </div>
+                                <div className="join-button-wrap bg-color-waiting mh-auto flex-center">
+                                    <div className="font-notosan">
+                                        입장대기중
                                     </div>
-                                </Link>
+                                </div>
                             </div>;
                         }
                     } else {
@@ -91,7 +89,7 @@ class JoinButton extends Component {
                                         time={closeTime}
                                     />
                                 </div>
-                                <Link to="/waiting" style={{ textDecoration: 'none' }}>
+                                <Link to="/waiting0" style={{ textDecoration: 'none' }}>
                                     <div className="join-button-wrap bg-color-join mh-auto flex-center">                                    <div className="font-notosan">
                                             번호표 뽑기
                                         </div>

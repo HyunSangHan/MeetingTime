@@ -24,3 +24,11 @@
 @media(min-width: 768px){ /*PC*/
     //PC(너비 768px이상)에만 해당되는 CSS들어갈 곳
 }
+
+
+@media(min-height:635px) {
+    .fix-bottom-waiting {
+        position: fixed;
+        bottom: 0;
+    }
+}
