@@ -127,7 +127,7 @@ class TeamProfileBody extends Component {
                         <div className="ButtonWrap">
                             {((preview && preview_two && preview_three) || (image_value && image_two_value && image_three_value)) ? 
                             (
-                                <button className="MainSubmitButton WorkingButton" onClick={this.handleTeamPopup}>그룹 만들기</button>
+                                <button className="SubmitButton WorkingButton" onClick={() => alert("테스트 페이지라 서버와의 연결을 차단해두었습니다.")}>그룹 만들기</button>
                             ) : (
                                 <button type="button" className="SubmitButton NotWorkingButton" onClick={() => alert("입력을 완료해주세요.")}>그룹 만들기</button>
                             )

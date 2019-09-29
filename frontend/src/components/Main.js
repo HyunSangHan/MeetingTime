@@ -4,8 +4,6 @@ import '../css/Main.scss';
 import '../App.css';
 import MaterialIcon from 'material-icons-react';
 import { Link, Redirect } from 'react-router-dom';
-import Footer from "./../outdated/Footer";
-import Player from "../outdated/Player";
 import Header from "./details/Header";
 import CounterPlayer from "./details/CounterPlayer";
 import ControlTool from "./details/ControlTool";
