@@ -171,7 +171,7 @@ class Initpage extends Component {
                         current_meeting = { current_meeting }
                     />
                 </div>
-                <div className="fix-bottom w100percent mb-36">
+                <div className="fix-bottom-init w100percent mb-36 mt-5">
                     <div onClick={this.blockJoin(isMadeTeam)}>
                         <JoinButton 
                             is_login_already = {is_login_already}

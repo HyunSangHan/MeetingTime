@@ -19,11 +19,6 @@ class ControlTool extends Component {
             is_greenlight_male_on: this.props.current_matching.is_greenlight_male,
             is_greenlight_female_on: this.props.current_matching.is_greenlight_female,
         };  
-
-    }
-
-    componentDidMount() {
-
     }
 
     handleGreenLight = () => {
@@ -46,9 +41,7 @@ class ControlTool extends Component {
             PlayerActions.handleGreenLightOff({ female: false });
             this.setState({ is_greenlight_female_on: false });
         }
-
     };
-
 
     handleGift = () => {
         const { PlayerActions, current_matching, counter_profile, CurrentMatchingActions } = this.props;
@@ -84,7 +77,7 @@ class ControlTool extends Component {
         }
 
         return (
-            <div className="control-container">
+            <div className="control-container fix-bottom-controltool">
                 <div className="control-tool">
                     <div className="gift-pop">
                         {is_gift_popup

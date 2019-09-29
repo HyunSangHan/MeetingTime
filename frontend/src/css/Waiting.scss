@@ -17,10 +17,19 @@
     z-index: 2;
 
 }
+
+
 @media(max-width: 767px){ /*Mobile*/
     //모바일(너비 767px이하)에만 해당되는 CSS들어갈 곳
 }
     
 @media(min-width: 768px){ /*PC*/
     //PC(너비 768px이상)에만 해당되는 CSS들어갈 곳
+}
+
+@media(min-height:635px) {
+    .fix-bottom-waiting {
+        position: fixed;
+        bottom: 0;
+    }
 }

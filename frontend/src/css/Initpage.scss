@@ -157,3 +157,10 @@
         }    
     }
 }
+
+@media(min-height:545px) {
+    .fix-bottom-init {
+        position: fixed;
+        bottom: 0;
+    }
+}

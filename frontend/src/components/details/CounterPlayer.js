@@ -45,5 +45,4 @@ class CounterPlayer extends Component {
     };
 };
 
-
 export default CounterPlayer;
