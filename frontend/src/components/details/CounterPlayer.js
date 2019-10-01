@@ -8,8 +8,8 @@ class CounterPlayer extends Component {
         const { counter_profile } = this.props;  
         return (
             <div className="total-container top-m">
-                <ToolTipDown content={ "테스트" }/>
                 <div className="counter-container">
+                    <ToolTipDown content={ "안주는 저희가 쏩니다!" }/>
                     <div className="team-info">
                         <div className="team-name font-notosan">
                             {counter_profile.team_name}

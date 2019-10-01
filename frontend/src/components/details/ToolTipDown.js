@@ -6,14 +6,14 @@ class ToolTipDown extends Component {
     render() {
         const content = this.props.content || "";
         return (
-            <div className="tool-tip-up font-14 font-jua font-purple">
+            <div className="tool-tip-down font-14 font-jua font-purple">
                 <div className="up-text-area">
                     { content }
                 </div>
                 <div className="flex-center">
                     <div>
-                        <div className="down-white-triangle-part"/>
                         <div className="down-triangle-part"/>
+                        <div className="down-white-triangle-part"/>
                     </div>
                 </div>
             </div>
