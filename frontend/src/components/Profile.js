@@ -167,7 +167,7 @@ class Profile extends Component {
                             )
                         }
                     </form>
-                    <div className="FixedButton">
+                    <div className="FixedButton mt-4">
                         {(this.props.validated) ?
                         (
                             <button className="SubmitButton WorkingButton">적용하기</button>

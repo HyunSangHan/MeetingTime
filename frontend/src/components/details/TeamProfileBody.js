@@ -201,9 +201,9 @@ class TeamProfileBody extends Component {
                         <div className="ButtonWrap">
                             {((preview && preview_two && preview_three) || (image_value && image_two_value && image_three_value)) ? 
                             (
-                                <button className="SubmitButton WorkingButton" onClick={this.handleTeamPopup}>그룹만들기</button>
+                                <button className="SubmitButton WorkingButton mt-1" onClick={this.handleTeamPopup}>그룹만들기</button>
                             ) : (
-                                <button type="button" className="SubmitButton NotWorkingButton" onClick={() => alert("입력을 완료해주세요.")}>그룹만들기</button>
+                                <button type="button" className="SubmitButton NotWorkingButton mt-1" onClick={() => alert("입력을 완료해주세요.")}>그룹만들기</button>
                             )
                             }
                         </div>

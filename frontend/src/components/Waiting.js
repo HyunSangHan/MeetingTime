@@ -58,7 +58,7 @@ class Waiting extends Component {
                         current_meeting = { current_meeting }
                     />
                 </div>
-                <div className="fix-bottom w100percent mb-36">
+                <div className="fix-bottom-waiting w100percent mb-36 mt-2">
                     <JoinButton 
                         is_login_already = {is_login_already} />
                 </div>

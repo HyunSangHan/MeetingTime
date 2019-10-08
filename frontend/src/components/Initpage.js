@@ -8,7 +8,6 @@ import MeetingInfo from './details/MeetingInfo';
 import MakeTeamButton from './details/MakeTeamButton';
 import JoinButton from './details/JoinButton';
 import JoinedPopup from './details/JoinedPopup';
-import ToolTipUp from './details/ToolTipUp';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as joinActions from './../modules/join';
@@ -172,7 +171,7 @@ class Initpage extends Component {
                         current_meeting = { current_meeting }
                     />
                 </div>
-                <div className="fix-bottom w100percent mb-36">
+                <div className="fix-bottom-init w100percent mb-36 mt-5">
                     <div onClick={this.blockJoin(isMadeTeam)}>
                         <JoinButton 
                             is_login_already = {is_login_already}

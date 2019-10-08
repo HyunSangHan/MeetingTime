@@ -169,7 +169,6 @@
 
 //control component
 .control-container {
-    position : absolute;
     bottom : 20px;
     width: 100%;
 }
@@ -177,7 +176,7 @@
 .control-tool {
     width: 90%;
     max-width: 880px;
-    margin-top: 70px;
+    margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -315,7 +314,7 @@
         display: flex !important;
         justify-content: center;
 
-        .SubmitButton {
+        .MainSubmitButton {
             margin-top : -75px;
             width: 100%;
             max-width: 800px;
@@ -361,7 +360,7 @@
         display: flex !important;
         justify-content: center;
 
-        .SubmitButton {
+        .MainSubmitButton {
             margin-top : -75px;
             width: 100%;
             max-width: 800px;
@@ -400,7 +399,7 @@
         display: flex !important;
         justify-content: center;
 
-        .SubmitButton {
+        .MainSubmitButton {
             width: 90%;
             max-width: 800px;
             height: 52px;
@@ -448,5 +447,12 @@
                 margin-left: 11% !important;
             }
         }
+    }
+}
+
+@media(min-height:635px) {
+    .fix-bottom-controltool {
+        position: fixed;
+        bottom: 20px;
     }
 }

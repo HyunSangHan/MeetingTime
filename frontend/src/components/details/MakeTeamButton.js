@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import '../../css/Initpage.scss'; //부모컴포넌트의CSS(SCSS)
 import '../../App.css'; //공통CSS
-import { Link } from 'react-router-dom'; //다른 페이지로 링크 걸 때 필요
+import { Link } from 'react-router-dom';
+import ToolTipUp from './ToolTipUp';
 
 class MakeTeamButton extends Component {
 
@@ -18,13 +19,17 @@ class MakeTeamButton extends Component {
             </div>;
         } else {
             makeTeamButton =
-                <div className="make-team-button mt-4 mh-auto flex-center">
-                    <div className="font-notosan font-white font-16">
-                        함께 미팅할 그룹만들기
+                <Fragment>
+                    <div className="make-team-button mt-4 mh-auto flex-center">
+                        <div className="font-notosan font-white font-16">
+                            함께 미팅할 그룹만들기
+                        </div>
                     </div>
-                </div>;
+                    <div className="flex-center w100percent">
+                        <ToolTipUp content = { "미리 등록해두시면 선착순에 유리해요!" } />
+                    </div>
+                </Fragment>
         }
-
 
         return (
             <div className="pb-36">
