@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import '../../css/Reuse.scss'; //도구성컴포넌트의CSS(SCSS)
-import '../../App.css'; //공통CSS
+import React, { Component } from "react"
+import "../../css/Reuse.scss" //도구성컴포넌트의CSS(SCSS)
+import "../../App.css" //공통CSS
 
 class ToolTipDown extends Component {
     render() {
@@ -21,4 +21,4 @@ class ToolTipDown extends Component {
     }
 }
 
-export default ToolTipDown;
+export default ToolTipDown
