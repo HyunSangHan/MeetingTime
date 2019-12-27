@@ -177,7 +177,22 @@ MEDIA_URL = "/media/"
 #
 REST_SESSION_LOGIN = False
 
-# REST_FRAMEWORK = {
+REST_FRAMEWORK = {
+
+    'DEFAULT_RENDERER_CLASSES': (
+        'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
+        'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
+        # Any other renders
+    ),
+
+    'DEFAULT_PARSER_CLASSES': (
+        # If you use MultiPartFormParser or FormParser, we also have a camel case version
+        'djangorestframework_camel_case.parser.CamelCaseFormParser',
+        'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
+        'djangorestframework_camel_case.parser.CamelCaseJSONParser',
+        # Any other parsers
+    ),
+    
 #     'DEFAULT_AUTHENTICATION_CLASSES': (
 #         'rest_framework.authentication.SessionAuthentication',
 #         'rest_framework.authentication.BasicAuthentication'
@@ -185,7 +200,9 @@ REST_SESSION_LOGIN = False
 #     'DEFAULT_PERMISSION_CLASSES': (
 #         'rest_framework.permissions.AllowAny',
 #     ),
-# }
+
+}
+
 # SOCIALACCOUNT_PROVIDERS = {
 #     'kakao': {
 #         'SCOPE': ['email'],
