@@ -10,12 +10,12 @@ class TeamProfileBody extends Component {
     super(props)
 
     this.state = {
-      imageValue: this.props.myProfile.image,
-      imageTwoValue: this.props.myProfile.imageTwo,
-      imageThreeValue: this.props.myProfile.imageThree,
-      preview: null,
-      previewTwo: null,
-      previewThree: null,
+      imageFirstValue: this.props.myProfile.image,
+      imageSecondValue: this.props.myProfile.imageTwo,
+      imageThirdValue: this.props.myProfile.imageThree,
+      previewFirst: null,
+      previewSecond: null,
+      previewThird: null,
       hasThreeImages: false,
       teamNameValue: this.props.myProfile.teamName,
       teamIntroValue: this.props.myProfile.teamIntroduce
@@ -37,7 +37,7 @@ class TeamProfileBody extends Component {
   handleImageChangeFirst = event => {
     console.log(event.target.files[0])
     this.setState({
-      imageValue: event.target.files[0],
+      FirstimageValue: event.target.files[0],
       preview: URL.createObjectURL(event.target.files[0])
     })
   }
@@ -46,8 +46,8 @@ class TeamProfileBody extends Component {
   handleImageChangeSecond = event => {
     console.log(event.target.files[0])
     this.setState({
-      imageTwoValue: event.target.files[0],
-      previewTwo: URL.createObjectURL(event.target.files[0])
+      imageSecondValue: event.target.files[0],
+      previewSecond: URL.createObjectURL(event.target.files[0])
     })
   }
 
@@ -55,24 +55,24 @@ class TeamProfileBody extends Component {
   handleImageChangeThird = event => {
     console.log(event.target.files[0])
     this.setState({
-      imageThreeValue: event.target.files[0],
-      previewThree: URL.createObjectURL(event.target.files[0])
+      imageThirdValue: event.target.files[0],
+      previewThird: URL.createObjectURL(event.target.files[0])
     })
   }
   //이미지 제출 함수
   handleImageSubmitFirst = () => {
     const formData = new FormData()
-    const { imageValue } = this.state
+    const { FirstimageValue } = this.state
 
-    formData.append("image", imageValue, imageValue.name)
+    formData.append("image", FirstimageValue, FirstimageValue.name)
     axios.patch("http://localhost:3000/profile/", formData).then(response => {
       console.log(response)
     })
   }
   handleImageSubmitSecond = () => {
     const formData = new FormData()
-    const { imageTwoValue } = this.state
-    formData.append("imageTwo", imageTwoValue, imageTwoValue.name)
+    const { imageSecondValue } = this.state
+    formData.append("imageTwo", imageSecondValue, imageSecondValue.name)
     console.log(formData)
     axios.patch("http://localhost:3000/profile/", formData).then(response => {
       console.log(response)
@@ -81,9 +81,9 @@ class TeamProfileBody extends Component {
 
   handleImageSubmitThird = () => {
     const formData = new FormData()
-    const { imageThreeValue } = this.state
+    const { imageThirdValue } = this.state
     console.log(formData)
-    formData.append("imageThree", imageThreeValue, imageThreeValue.name)
+    formData.append("imageThree", imageThirdValue, imageThirdValue.name)
     axios.patch("http://localhost:3000/profile/", formData).then(response => {
       console.log(response)
     })
@@ -102,8 +102,8 @@ class TeamProfileBody extends Component {
       teamNameValue,
       teamIntroValue,
       preview,
-      previewTwo,
-      previewThree
+      previewSecond,
+      previewThird
     } = this.state
     // event.preventDefault();
     // console.log(this.state);
@@ -116,10 +116,10 @@ class TeamProfileBody extends Component {
     if (preview) {
       this.handleImageSubmitFirst()
     }
-    if (previewTwo) {
+    if (previewSecond) {
       this.handleImageSubmitSecond()
     }
-    if (previewThree) {
+    if (previewThird) {
       this.handleImageSubmitThird()
     }
 
@@ -131,12 +131,12 @@ class TeamProfileBody extends Component {
     const {
       teamNameValue,
       teamIntroValue,
-      preview,
-      previewTwo,
-      previewThree,
-      imageValue,
-      imageTwoValue,
-      imageThreeValue,
+      previewFirst,
+      previewSecond,
+      previewThird,
+      FirstimageValue,
+      imageSecondValue,
+      imageThirdValue,
       hasThreeImages
     } = this.state
 
@@ -165,7 +165,7 @@ class TeamProfileBody extends Component {
               type="file"
               onChange={this.handleImageChangeFirst}
               ref={fileInputFirst => (this.fileInputFirst = fileInputFirst)}
-              name="imageValue"
+              name="FirstimageValue"
               className="image-uploader"
               accept="image/*"
             />
@@ -174,7 +174,7 @@ class TeamProfileBody extends Component {
               type="file"
               onChange={this.handleImageChangeSecond}
               ref={fileInputSecond => (this.fileInputSecond = fileInputSecond)}
-              name="imageTwoValue"
+              name="imageSecondValue"
               className="image-uploader"
               accept="image/*"
             />
@@ -183,7 +183,7 @@ class TeamProfileBody extends Component {
               type="file"
               onChange={this.handleImageChangeThird}
               ref={fileInputThird => (this.fileInputThird = fileInputThird)}
-              name="imageThreeValue"
+              name="imageThirdValue"
               className="image-uploader"
               accept="image/*"
             />
@@ -211,8 +211,8 @@ class TeamProfileBody extends Component {
             </div>
 
             <div className="ButtonWrap">
-              {(preview && previewTwo && previewThree) ||
-              (imageValue && imageTwoValue && imageThreeValue) ? (
+              {(previewFirst && previewSecond && previewThird) ||
+              (FirstimageValue && imageSecondValue && imageThirdValue) ? (
                 <button
                   className="SubmitButton WorkingButton mt-1"
                   onClick={this.handleTeamPopup}
@@ -240,18 +240,23 @@ class TeamProfileBody extends Component {
 
         <div className="imgs-wrap">
           <div className="imgs">
-            {!preview ? (
+            {!previewFirst ? (
               <div
                 className="each-img flex-center"
                 onClick={() => this.fileInputFirst.click()}
               >
-                {imageValue ? (
-                  <img className="user-img" src={imageValue} />
+                {FirstimageValue ? (
+                  <img
+                    className="user-img"
+                    src={FirstimageValue}
+                    alt="first_user_image"
+                  />
                 ) : (
                   <div className="App">
                     <img
                       className="smile"
                       src={require("../../images/smile.png")}
+                      alt="empty_image"
                     />
                     <div className="mt-2 font-16 font-bold">
                       멤버1(본인) 사진
@@ -262,22 +267,28 @@ class TeamProfileBody extends Component {
             ) : (
               <img
                 className="each-img"
-                src={preview}
+                src={previewFirst}
+                alt="first_user_image"
                 onClick={() => this.fileInputFirst.click()}
               />
             )}
-            {!previewTwo ? (
+            {!previewSecond ? (
               <div
                 className="each-img flex-center"
                 onClick={() => this.fileInputSecond.click()}
               >
-                {imageTwoValue ? (
-                  <img className="user-img" src={imageTwoValue} />
+                {imageSecondValue ? (
+                  <img
+                    className="user-img"
+                    src={imageSecondValue}
+                    alt="second_user_image"
+                  />
                 ) : (
                   <div className="App">
                     <img
                       className="smile"
                       src={require("../../images/smile.png")}
+                      alt="empty_image"
                     />
                     <div className="mt-2 font-16 font-bold">멤버2 사진</div>
                   </div>
@@ -286,22 +297,28 @@ class TeamProfileBody extends Component {
             ) : (
               <img
                 className="each-img"
-                src={previewTwo}
+                src={previewSecond}
+                alt="second_user_image"
                 onClick={() => this.fileInputSecond.click()}
               />
             )}
-            {!previewThree ? (
+            {!previewThird ? (
               <div
                 className="each-img flex-center"
                 onClick={() => this.fileInputThird.click()}
               >
-                {imageThreeValue ? (
-                  <img className="user-img" src={imageThreeValue} />
+                {imageThirdValue ? (
+                  <img
+                    className="user-img"
+                    src={imageThirdValue}
+                    alt="third_user_image"
+                  />
                 ) : (
                   <div className="App">
                     <img
                       className="smile"
                       src={require("../../images/smile.png")}
+                      alt="empty_image"
                     />
                     <div className="mt-2 font-16 font-bold">멤버3 사진</div>
                   </div>
@@ -310,7 +327,8 @@ class TeamProfileBody extends Component {
             ) : (
               <img
                 className="each-img"
-                src={previewThree}
+                src={previewThird}
+                alt="third_user_image"
                 onClick={() => this.fileInputThird.click()}
               />
             )}

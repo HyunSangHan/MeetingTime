@@ -5,20 +5,12 @@ import MeetingInfo from "./details/MeetingInfo"
 import MyNumber from "./details/MyNumber"
 import ResultNumber from "./details/ResultNumber"
 import JoinButton from "./details/JoinButton"
-import JoinedPopup from "./details/JoinedPopup"
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
-import Textarea from "react-textarea-autosize"
-import { post } from "axios"
-import { Link, Redirect } from "react-router-dom"
 import * as currentMeetingActions from "./../modules/current_meeting"
 import * as joinActions from "./../modules/join"
 
 class Waiting extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     const { JoinActions, CurrentMeetingActions } = this.props
     JoinActions.getJoinedUser()

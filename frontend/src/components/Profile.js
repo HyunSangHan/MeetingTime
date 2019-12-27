@@ -66,6 +66,9 @@ class Profile extends Component {
       case "테슬라":
         emailCompany = "@tesla.com"
         break
+      default:
+        emailCompany = "[등록되지 않은 회사입니다!]"
+        break
     }
     EmailActions.sendEmail({
       email: emailFront + emailCompany

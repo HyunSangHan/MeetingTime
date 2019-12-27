@@ -38,6 +38,7 @@ class CounterPlayer extends Component {
                 src={
                   counterProfile.image || require("./../../images/noPhoto.jpg")
                 }
+                alt="first_user_image"
               />
             </div>
             <div className="each-image flex-center">
@@ -47,6 +48,7 @@ class CounterPlayer extends Component {
                   counterProfile.imageTwo ||
                   require("./../../images/noPhoto.jpg")
                 }
+                alt="second_user_image"
               />
             </div>
             <div className="each-image flex-center">
@@ -56,6 +58,7 @@ class CounterPlayer extends Component {
                   counterProfile.imageThree ||
                   require("./../../images/noPhoto.jpg")
                 }
+                alt="third_user_image"
               />
             </div>
             <div className="last-child-gap" />

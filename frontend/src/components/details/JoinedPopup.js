@@ -7,10 +7,6 @@ import * as joinActions from "../../modules/join"
 import MaterialIcon from "material-icons-react"
 
 class JoinedPopup extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const { isJoinedAlready } = this.props
     let popup = null

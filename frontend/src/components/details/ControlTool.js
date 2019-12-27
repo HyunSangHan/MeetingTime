@@ -4,12 +4,10 @@ import "../../App.css" //공통CSS
 import { Link } from "react-router-dom" //다른 페이지로 링크 걸 때 필요
 import CountDown from "./CountDown"
 import GiftPopup from "./GiftPopup"
-import MaterialIcon from "material-icons-react"
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
 import * as currentMatchingActions from "../../modules/current_matching"
 import * as playerActions from "../../modules/player"
-import current_meeting from "../../modules/current_meeting"
 
 class ControlTool extends Component {
   constructor(props) {
@@ -111,6 +109,7 @@ class ControlTool extends Component {
                 <img
                   className="my-team"
                   src={myProfile.image || require("../../images/noPhoto.jpg")}
+                  alt="my_image"
                 />
               </Link>
             </div>

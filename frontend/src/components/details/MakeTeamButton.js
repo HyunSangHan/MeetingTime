@@ -15,14 +15,17 @@ class MakeTeamButton extends Component {
           <img
             className="team-profile-img-small first-img"
             src={myProfile.image || require("./../../images/noPhoto.jpg")}
+            alt="first_user_image"
           />
           <img
             className="team-profile-img-small second-img"
             src={myProfile.imageTwo || require("./../../images/noPhoto.jpg")}
+            alt="second_user_image"
           />
           <img
             className="team-profile-img-small third-img"
             src={myProfile.imageThree || require("./../../images/noPhoto.jpg")}
+            alt="third_user_image"
           />
         </div>
       )

@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import "../../css/Reuse.scss" //도구성컴포넌트의CSS(SCSS)
 import "../../App.css" //공통CSS
-import { Link, withRouter } from "react-router-dom" //다른 페이지로 링크 걸 때 필요
+import { withRouter } from "react-router-dom" //다른 페이지로 링크 걸 때 필요
 import MaterialIcon from "material-icons-react" //뒤로가기 아이콘을 위해 필요
 
 class Header extends Component {

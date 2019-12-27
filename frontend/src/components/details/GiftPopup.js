@@ -3,15 +3,11 @@ import "../../App.css"
 import "../../css/Main.scss"
 
 class GiftPopup extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const {
       PlayerActions,
       handleGift,
-      isGiftPopup,
+      // isGiftPopup,
       counterProfile,
       currentMatching
     } = this.props

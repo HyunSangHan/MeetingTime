@@ -5,14 +5,10 @@ import "../../App.css" //공통CSS
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 import * as joinActions from "../../modules/join"
-import { Link, Redirect } from "react-router-dom"
+import { Link } from "react-router-dom"
 import CountDown from "./CountDown"
 
 class JoinButton extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     const { JoinActions } = this.props
     JoinActions.getJoinedUser()
@@ -25,7 +21,7 @@ class JoinButton extends Component {
 
   render() {
     const {
-      JoinActions,
+      // JoinActions,
       isJoinedAlready,
       isLoginAlready,
       joinedUser,
@@ -34,7 +30,7 @@ class JoinButton extends Component {
     } = this.props
     const openTime = Date.parse(currentMeeting.openTime)
     const closeTime = Date.parse(currentMeeting.closeTime)
-    const meetingTime = Date.parse(currentMeeting.meetingTime)
+    // const meetingTime = Date.parse(currentMeeting.meetingTime)
     const nowTime = new Date().getTime()
 
     let button = null

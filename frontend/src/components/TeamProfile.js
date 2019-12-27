@@ -59,7 +59,6 @@ class TeamProfile extends Component {
           <TeamProfileBody
             MyProfileActions={MyProfileActions}
             myProfile={myProfile}
-            MyProfileActions={MyProfileActions}
             isEditedProfile={isEditedProfile}
           />
         )}
