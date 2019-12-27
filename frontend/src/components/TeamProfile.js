@@ -13,20 +13,20 @@ class TeamProfile extends Component {
     console.log(props)
     super(props)
     this.state = {
-      empty_profile: {
-        age_range: null,
+      emptyProfile: {
+        ageRange: null,
         company: {
           name: null
         },
-        created_at: null,
+        createdAt: null,
         id: null,
         image: null,
-        image_two: null,
-        image_three: null,
-        is_male: false,
-        last_intro_modified_at: null,
-        last_login_at: null,
-        team_introduce: null,
+        imageTwo: null,
+        imageThree: null,
+        isMale: false,
+        lastIntroModifiedAt: null,
+        lastLoginAt: null,
+        teamIntroduce: null,
         user: {
           username: null
         },
@@ -38,29 +38,29 @@ class TeamProfile extends Component {
   render() {
     const {
       MyProfileActions,
-      my_profile,
-      is_edited_profile,
-      clicked_tab
+      myProfile,
+      isEditedProfile,
+      clickedTab
     } = this.props
-    const action = this.props.clicked_tab
+    const action = this.props.clickedTab
     return (
       <div className="frame-scrollable bg-init-color">
         <Header content={"미팅 그룹 생성"} />
-        <TwoTab MyProfileActions={MyProfileActions} clicked_tab={clicked_tab} />
+        <TwoTab MyProfileActions={MyProfileActions} clickedTab={clickedTab} />
 
         {action === "new" && (
           <TeamProfileBody
             MyProfileActions={MyProfileActions}
-            my_profile={this.state.empty_profile}
-            is_edited_profile={is_edited_profile}
+            myProfile={this.state.emptyProfile}
+            isEditedProfile={isEditedProfile}
           />
         )}
         {action === "prev" && (
           <TeamProfileBody
             MyProfileActions={MyProfileActions}
-            my_profile={my_profile}
+            myProfile={myProfile}
             MyProfileActions={MyProfileActions}
-            is_edited_profile={is_edited_profile}
+            isEditedProfile={isEditedProfile}
           />
         )}
       </div>
@@ -74,10 +74,10 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  is_login_already: state.my_profile.get("is_login_already"),
-  is_edited_profile: state.my_profile.get("is_edited_profile"),
-  my_profile: state.my_profile.get("my_profile"),
-  clicked_tab: state.my_profile.get("clicked_tab")
+  isLoginAlready: state.my_profile.get("isLoginAlready"),
+  isEditedProfile: state.my_profile.get("isEditedProfile"),
+  myProfile: state.my_profile.get("myProfile"),
+  clickedTab: state.my_profile.get("clickedTab")
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeamProfile)

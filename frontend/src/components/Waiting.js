@@ -26,19 +26,16 @@ class Waiting extends Component {
   }
 
   render() {
-    const { joined_user, current_meeting, is_login_already } = this.props
-    const closeTime = Date.parse(current_meeting.close_time)
+    const { joinedUser, currentMeeting, isLoginAlready } = this.props
+    const closeTime = Date.parse(currentMeeting.closeTime)
     const nowTime = new Date().getTime()
 
     let numberInfo = null
     if (nowTime < closeTime) {
-      numberInfo = <MyNumber rank={joined_user.rank} />
+      numberInfo = <MyNumber rank={joinedUser.rank} />
     } else {
       numberInfo = (
-        <ResultNumber
-          cutline={current_meeting.cutline}
-          rank={joined_user.rank}
-        />
+        <ResultNumber cutline={currentMeeting.cutline} rank={joinedUser.rank} />
       )
     }
 
@@ -56,11 +53,11 @@ class Waiting extends Component {
           <MeetingInfo
             makeTeamButton={null}
             isMadeTeam={true}
-            current_meeting={current_meeting}
+            currentMeeting={currentMeeting}
           />
         </div>
         <div className="fix-bottom-waiting w100percent mb-36 mt-2">
-          <JoinButton is_login_already={is_login_already} />
+          <JoinButton isLoginAlready={isLoginAlready} />
         </div>
       </div>
     )
@@ -74,9 +71,9 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  joined_user: state.join.get("joined_user"),
-  current_meeting: state.current_meeting.get("current_meeting"),
-  is_login_already: state.my_profile.get("is_login_already")
+  joinedUser: state.join.get("joinedUser"),
+  currentMeeting: state.current_meeting.get("currentMeeting"),
+  isLoginAlready: state.my_profile.get("isLoginAlready")
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Waiting)

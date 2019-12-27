@@ -52,8 +52,8 @@ class MeetingInfo extends Component {
   }
 
   render() {
-    const { current_meeting } = this.props
-    const meetingTime = new Date(current_meeting.meeting_time)
+    const { currentMeeting } = this.props
+    const meetingTime = new Date(currentMeeting.meetingTime)
 
     return (
       <div className={"meeting-info-container mh-auto"}>
@@ -72,7 +72,7 @@ class MeetingInfo extends Component {
           </div>
           <div className="font-jua font-30 mb-1">
             {/* 디스크립션 */}
-            {current_meeting.description} in {current_meeting.location}
+            {currentMeeting.description} in {currentMeeting.location}
           </div>
           <div className="font-notosan font-grey font-15 mb-1">
             {/* 일시 */}
@@ -86,7 +86,7 @@ class MeetingInfo extends Component {
               {/* 장소 */}
               <strong>장소 </strong>
               {"\u00A0"}
-              {current_meeting.location} 근처 어딘가
+              {currentMeeting.location} 근처 어딘가
             </div>
           </div>
         </div>

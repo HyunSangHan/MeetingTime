@@ -105,8 +105,8 @@ class Initpage extends Component {
   }
 
   blockJoin = bool => () => {
-    const { history, is_login_already } = this.props
-    if (is_login_already) {
+    const { history, isLoginAlready } = this.props
+    if (isLoginAlready) {
       if (!bool) {
         if (
           window.confirm(
@@ -122,13 +122,13 @@ class Initpage extends Component {
   }
 
   render() {
-    const { my_profile, current_meeting, is_login_already } = this.props
+    const { myProfile, currentMeeting, isLoginAlready } = this.props
 
     const nowTime = new Date()
-    const meetingTime = new Date(current_meeting.meeting_time)
-    const meetingDay = this.getInputDayLabel(current_meeting.meeting_time)
+    const meetingTime = new Date(currentMeeting.meetingTime)
+    const meetingDay = this.getInputDayLabel(currentMeeting.meetingTime)
     const isExpired =
-      new Date().getTime() - Date.parse(current_meeting.close_time) > 0
+      new Date().getTime() - Date.parse(currentMeeting.closeTime) > 0
 
     let meetingWeek = null
     if (
@@ -166,7 +166,7 @@ class Initpage extends Component {
     }
 
     let authButton = null
-    if (is_login_already) {
+    if (isLoginAlready) {
       authButton = (
         <div className="mt-18">
           {/* <div className="App font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div> */}
@@ -197,10 +197,8 @@ class Initpage extends Component {
       )
     }
 
-    const lastShuffledAt = new Date(
-      current_meeting.prev_meeting_last_shuffle_time
-    ) //나중에 하위 필드 추가되면 수정필요
-    const lastTeamModifiedAt = new Date(my_profile.last_intro_modified_at)
+    const lastShuffledAt = new Date(currentMeeting.prevMeetingLastShuffleTime) //나중에 하위 필드 추가되면 수정필요
+    const lastTeamModifiedAt = new Date(myProfile.lastIntroModifiedAt)
 
     console.log(lastShuffledAt, lastTeamModifiedAt)
     let isMadeTeam = null
@@ -210,9 +208,9 @@ class Initpage extends Component {
       isMadeTeam = false
     }
     let makeTeamButton = null
-    if (is_login_already && !isExpired) {
+    if (isLoginAlready && !isExpired) {
       makeTeamButton = (
-        <MakeTeamButton isMadeTeam={isMadeTeam} my_profile={my_profile} />
+        <MakeTeamButton isMadeTeam={isMadeTeam} myProfile={myProfile} />
       )
     }
 
@@ -221,13 +219,13 @@ class Initpage extends Component {
         <div className="container-shadow mh-auto">
           <MeetingInfo
             makeTeamButton={makeTeamButton}
-            current_meeting={current_meeting}
+            currentMeeting={currentMeeting}
           />
         </div>
         <div className="fix-bottom-init w100percent mb-36 mt-5">
           <div onClick={this.blockJoin(isMadeTeam)}>
             <JoinButton
-              is_login_already={is_login_already}
+              isLoginAlready={isLoginAlready}
               isMadeTeam={isMadeTeam}
             />
           </div>
@@ -245,10 +243,10 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  is_joined_popup_on: state.join.get("is_joined_popup_on"),
-  joined_user: state.join.get("joined_user"),
-  is_login_already: state.my_profile.get("is_login_already"),
-  current_meeting: state.current_meeting.get("current_meeting")
+  isJoinedPopupOn: state.join.get("isJoinedPopupOn"),
+  joinedUser: state.join.get("joinedUser"),
+  isLoginAlready: state.my_profile.get("isLoginAlready"),
+  currentMeeting: state.current_meeting.get("currentMeeting")
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Initpage)

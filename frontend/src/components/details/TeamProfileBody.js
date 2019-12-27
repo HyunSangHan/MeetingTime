@@ -10,15 +10,15 @@ class TeamProfileBody extends Component {
     super(props)
 
     this.state = {
-      image_value: this.props.my_profile.image,
-      image_two_value: this.props.my_profile.image_two,
-      image_three_value: this.props.my_profile.image_three,
+      imageValue: this.props.myProfile.image,
+      imageTwoValue: this.props.myProfile.imageTwo,
+      imageThreeValue: this.props.myProfile.imageThree,
       preview: null,
-      preview_two: null,
-      preview_three: null,
-      has_three_images: false,
-      team_name_value: this.props.my_profile.team_name,
-      team_intro_value: this.props.my_profile.team_introduce
+      previewTwo: null,
+      previewThree: null,
+      hasThreeImages: false,
+      teamNameValue: this.props.myProfile.teamName,
+      teamIntroValue: this.props.myProfile.teamIntroduce
     }
   }
 
@@ -34,56 +34,56 @@ class TeamProfileBody extends Component {
   }
 
   //첫번째 이미지 관련 함수
-  handleImageChange = event => {
+  handleImageChangeFirst = event => {
     console.log(event.target.files[0])
     this.setState({
-      image_value: event.target.files[0],
+      imageValue: event.target.files[0],
       preview: URL.createObjectURL(event.target.files[0])
     })
   }
 
   //두번째 이미지 관련 함수
-  handleImageChange_two = event => {
+  handleImageChangeSecond = event => {
     console.log(event.target.files[0])
     this.setState({
-      image_two_value: event.target.files[0],
-      preview_two: URL.createObjectURL(event.target.files[0])
+      imageTwoValue: event.target.files[0],
+      previewTwo: URL.createObjectURL(event.target.files[0])
     })
   }
 
   //세번째 이미지 관련 함수
-  handleImageChange_three = event => {
+  handleImageChangeThird = event => {
     console.log(event.target.files[0])
     this.setState({
-      image_three_value: event.target.files[0],
-      preview_three: URL.createObjectURL(event.target.files[0])
+      imageThreeValue: event.target.files[0],
+      previewThree: URL.createObjectURL(event.target.files[0])
     })
   }
   //이미지 제출 함수
-  handleImageSubmit = () => {
+  handleImageSubmitFirst = () => {
     const formData = new FormData()
-    const { image_value } = this.state
+    const { imageValue } = this.state
 
-    formData.append("image", image_value, image_value.name)
+    formData.append("image", imageValue, imageValue.name)
     axios.patch("http://localhost:3000/profile/", formData).then(response => {
       console.log(response)
     })
   }
-  handleImageSubmit_two = () => {
+  handleImageSubmitSecond = () => {
     const formData = new FormData()
-    const { image_two_value } = this.state
-    formData.append("image_two", image_two_value, image_two_value.name)
+    const { imageTwoValue } = this.state
+    formData.append("imageTwo", imageTwoValue, imageTwoValue.name)
     console.log(formData)
     axios.patch("http://localhost:3000/profile/", formData).then(response => {
       console.log(response)
     })
   }
 
-  handleImageSubmit_three = () => {
+  handleImageSubmitThird = () => {
     const formData = new FormData()
-    const { image_three_value } = this.state
+    const { imageThreeValue } = this.state
     console.log(formData)
-    formData.append("image_three", image_three_value, image_three_value.name)
+    formData.append("imageThree", imageThreeValue, imageThreeValue.name)
     axios.patch("http://localhost:3000/profile/", formData).then(response => {
       console.log(response)
     })
@@ -99,45 +99,45 @@ class TeamProfileBody extends Component {
   handleSubmit = event => {
     const { MyProfileActions } = this.props
     const {
-      team_name_value,
-      team_intro_value,
+      teamNameValue,
+      teamIntroValue,
       preview,
-      preview_two,
-      preview_three
+      previewTwo,
+      previewThree
     } = this.state
     // event.preventDefault();
     // console.log(this.state);
 
     MyProfileActions.teamUpdate({
-      team_name_value: team_name_value,
-      team_intro_value: team_intro_value
+      teamNameValue: teamNameValue,
+      teamIntroValue: teamIntroValue
     })
 
     if (preview) {
-      this.handleImageSubmit()
+      this.handleImageSubmitFirst()
     }
-    if (preview_two) {
-      this.handleImageSubmit_two()
+    if (previewTwo) {
+      this.handleImageSubmitSecond()
     }
-    if (preview_three) {
-      this.handleImageSubmit_three()
+    if (previewThree) {
+      this.handleImageSubmitThird()
     }
 
     MyProfileActions.getMyProfile()
   }
 
   render() {
-    const { MyProfileActions, is_edited_profile } = this.props
+    const { MyProfileActions, isEditedProfile } = this.props
     const {
-      team_name_value,
-      team_intro_value,
+      teamNameValue,
+      teamIntroValue,
       preview,
-      preview_two,
-      preview_three,
-      image_value,
-      image_two_value,
-      image_three_value,
-      has_three_images
+      previewTwo,
+      previewThree,
+      imageValue,
+      imageTwoValue,
+      imageThreeValue,
+      hasThreeImages
     } = this.state
 
     return (
@@ -146,7 +146,7 @@ class TeamProfileBody extends Component {
           <div className="team-container title-imgs">
             <div className="title font-notosan">
               팀 사진
-              {!this.props.my_profile.created_at && (
+              {!this.props.myProfile.createdAt && (
                 <span className="title-noti font-notosan ml-2">
                   * 멤버수는 본인을 포함, 3명을 기본으로 합니다.
                 </span>
@@ -163,27 +163,27 @@ class TeamProfileBody extends Component {
             <input
               style={{ display: "none" }}
               type="file"
-              onChange={this.handleImageChange}
-              ref={fileInput => (this.fileInput = fileInput)}
-              name="image_value"
+              onChange={this.handleImageChangeFirst}
+              ref={fileInputFirst => (this.fileInputFirst = fileInputFirst)}
+              name="imageValue"
               className="image-uploader"
               accept="image/*"
             />
             <input
               style={{ display: "none" }}
               type="file"
-              onChange={this.handleImageChange_two}
-              ref={fileInput_two => (this.fileInput_two = fileInput_two)}
-              name="image_two_value"
+              onChange={this.handleImageChangeSecond}
+              ref={fileInputSecond => (this.fileInputSecond = fileInputSecond)}
+              name="imageTwoValue"
               className="image-uploader"
               accept="image/*"
             />
             <input
               style={{ display: "none" }}
               type="file"
-              onChange={this.handleImageChange_three}
-              ref={fileInput_three => (this.fileInput_three = fileInput_three)}
-              name="image_three_value"
+              onChange={this.handleImageChangeThird}
+              ref={fileInputThird => (this.fileInputThird = fileInputThird)}
+              name="imageThreeValue"
               className="image-uploader"
               accept="image/*"
             />
@@ -191,10 +191,10 @@ class TeamProfileBody extends Component {
             <div className="title font-notosan">팀 이름</div>
             <input
               type="text"
-              value={team_name_value}
+              value={teamNameValue}
               onChange={this.handleInputChange}
               className="text-input font-notosan"
-              name="team_name_value"
+              name="teamNameValue"
               placeholder="10자 이내로 작성해주세요"
             />
 
@@ -202,17 +202,17 @@ class TeamProfileBody extends Component {
             <div className="team-intro">
               <Textarea
                 type="text"
-                value={team_intro_value}
+                value={teamIntroValue}
                 onChange={this.handleInputChange}
                 className="text-input font-notosan"
-                name="team_intro_value"
+                name="teamIntroValue"
                 placeholder="30자 이내로 작성해주세요"
               />
             </div>
 
             <div className="ButtonWrap">
-              {(preview && preview_two && preview_three) ||
-              (image_value && image_two_value && image_three_value) ? (
+              {(preview && previewTwo && previewThree) ||
+              (imageValue && imageTwoValue && imageThreeValue) ? (
                 <button
                   className="SubmitButton WorkingButton mt-1"
                   onClick={this.handleTeamPopup}
@@ -232,7 +232,7 @@ class TeamProfileBody extends Component {
           </form>
         </div>
 
-        {is_edited_profile && (
+        {isEditedProfile && (
           <div className="team-pop">
             <TeamPopup MyProfileActions={MyProfileActions} />
           </div>
@@ -243,10 +243,10 @@ class TeamProfileBody extends Component {
             {!preview ? (
               <div
                 className="each-img flex-center"
-                onClick={() => this.fileInput.click()}
+                onClick={() => this.fileInputFirst.click()}
               >
-                {image_value ? (
-                  <img className="user-img" src={image_value} />
+                {imageValue ? (
+                  <img className="user-img" src={imageValue} />
                 ) : (
                   <div className="App">
                     <img
@@ -263,16 +263,16 @@ class TeamProfileBody extends Component {
               <img
                 className="each-img"
                 src={preview}
-                onClick={() => this.fileInput.click()}
+                onClick={() => this.fileInputFirst.click()}
               />
             )}
-            {!preview_two ? (
+            {!previewTwo ? (
               <div
                 className="each-img flex-center"
-                onClick={() => this.fileInput_two.click()}
+                onClick={() => this.fileInputSecond.click()}
               >
-                {image_two_value ? (
-                  <img className="user-img" src={image_two_value} />
+                {imageTwoValue ? (
+                  <img className="user-img" src={imageTwoValue} />
                 ) : (
                   <div className="App">
                     <img
@@ -286,17 +286,17 @@ class TeamProfileBody extends Component {
             ) : (
               <img
                 className="each-img"
-                src={preview_two}
-                onClick={() => this.fileInput_two.click()}
+                src={previewTwo}
+                onClick={() => this.fileInputSecond.click()}
               />
             )}
-            {!preview_three ? (
+            {!previewThree ? (
               <div
                 className="each-img flex-center"
-                onClick={() => this.fileInput_three.click()}
+                onClick={() => this.fileInputThird.click()}
               >
-                {image_three_value ? (
-                  <img className="user-img" src={image_three_value} />
+                {imageThreeValue ? (
+                  <img className="user-img" src={imageThreeValue} />
                 ) : (
                   <div className="App">
                     <img
@@ -310,8 +310,8 @@ class TeamProfileBody extends Component {
             ) : (
               <img
                 className="each-img"
-                src={preview_three}
-                onClick={() => this.fileInput_three.click()}
+                src={previewThree}
+                onClick={() => this.fileInputThird.click()}
               />
             )}
             <div className="last-child-gap" />

@@ -15,41 +15,41 @@ class ControlTool extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      is_greenlight_male_on: this.props.current_matching.is_greenlight_male,
-      is_greenlight_female_on: this.props.current_matching.is_greenlight_female
+      isGreenlightMaleOn: this.props.currentMatching.isGreenlightMale,
+      isGreenlightFemaleOn: this.props.currentMatching.isGreenlightFemale
     }
   }
 
   handleGreenLight = () => {
-    const { PlayerActions, counter_profile } = this.props
-    const { is_greenlight_male_on, is_greenlight_female_on } = this.state
+    const { PlayerActions, counterProfile } = this.props
+    const { isGreenlightMaleOn, isGreenlightFemaleOn } = this.state
 
-    if (!is_greenlight_male_on && !counter_profile.is_male) {
+    if (!isGreenlightMaleOn && !counterProfile.isMale) {
       PlayerActions.handleGreenLightOn({ male: true })
-      this.setState({ is_greenlight_male_on: true })
-    } else if (!is_greenlight_female_on && counter_profile.is_male) {
+      this.setState({ isGreenlightMaleOn: true })
+    } else if (!isGreenlightFemaleOn && counterProfile.isMale) {
       PlayerActions.handleGreenLightOn({ female: true })
-      this.setState({ is_greenlight_female_on: true })
-    } else if (is_greenlight_male_on && !counter_profile.is_male) {
+      this.setState({ isGreenlightFemaleOn: true })
+    } else if (isGreenlightMaleOn && !counterProfile.isMale) {
       PlayerActions.handleGreenLightOff({ male: false })
-      this.setState({ is_greenlight_male_on: false })
-    } else if (is_greenlight_female_on && counter_profile.is_male) {
+      this.setState({ isGreenlightMaleOn: false })
+    } else if (isGreenlightFemaleOn && counterProfile.isMale) {
       PlayerActions.handleGreenLightOff({ female: false })
-      this.setState({ is_greenlight_female_on: false })
+      this.setState({ isGreenlightFemaleOn: false })
     }
   }
 
   handleGift = () => {
     const {
       PlayerActions,
-      current_matching,
-      counter_profile,
+      currentMatching,
+      counterProfile,
       CurrentMatchingActions
     } = this.props
 
-    if (!current_matching.is_gift_male && !counter_profile.is_male) {
+    if (!currentMatching.isGiftMale && !counterProfile.isMale) {
       PlayerActions.handleGiftOn({ male: true })
-    } else if (!current_matching.is_gift_female && counter_profile.is_male) {
+    } else if (!currentMatching.isGiftFemale && counterProfile.isMale) {
       PlayerActions.handleGiftOn({ female: true })
 
       PlayerActions.deletePopup()
@@ -65,43 +65,37 @@ class ControlTool extends Component {
   render() {
     const {
       PlayerActions,
-      is_gift_popup,
-      my_profile,
-      counter_profile,
-      current_matching,
-      current_meeting
+      isGiftPopup,
+      myProfile,
+      counterProfile,
+      currentMatching,
+      currentMeeting
     } = this.props
-    const { is_greenlight_male_on, is_greenlight_female_on } = this.state
+    const { isGreenlightMaleOn, isGreenlightFemaleOn } = this.state
 
     let countDown = null
-    if (current_matching.trial_time === 1) {
+    if (currentMatching.trialTime === 1) {
+      countDown = <CountDown time={new Date(currentMeeting.firstShuffleTime)} />
+    } else if (currentMatching.trialTime === 2) {
       countDown = (
-        <CountDown time={new Date(current_meeting.first_shuffle_time)} />
+        <CountDown time={new Date(currentMeeting.secondShuffleTime)} />
       )
-    } else if (current_matching.trial_time === 2) {
-      countDown = (
-        <CountDown time={new Date(current_meeting.second_shuffle_time)} />
-      )
-    } else if (current_matching.trial_time === 3) {
-      countDown = (
-        <CountDown time={new Date(current_meeting.third_shuffle_time)} />
-      )
-    } else if (current_matching.trial_time === 4) {
-      countDown = (
-        <CountDown time={new Date(current_meeting.third_shuffle_time)} />
-      ) //수정필요
+    } else if (currentMatching.trialTime === 3) {
+      countDown = <CountDown time={new Date(currentMeeting.thirdShuffleTime)} />
+    } else if (currentMatching.trialTime === 4) {
+      countDown = <CountDown time={new Date(currentMeeting.thirdShuffleTime)} /> //수정필요
     }
 
     return (
       <div className="control-container fix-bottom-controltool">
         <div className="control-tool">
           <div className="gift-pop">
-            {is_gift_popup && (
+            {isGiftPopup && (
               <GiftPopup
                 PlayerActions={PlayerActions}
-                is_gift_popup={is_gift_popup}
-                counter_profile={counter_profile}
-                current_matching={current_matching}
+                isGiftPopup={isGiftPopup}
+                counterProfile={counterProfile}
+                currentMatching={currentMatching}
                 handleGift={this.handleGift}
               />
             )}
@@ -116,22 +110,22 @@ class ControlTool extends Component {
                 {/* 대표사진 */}
                 <img
                   className="my-team"
-                  src={my_profile.image || require("../../images/noPhoto.jpg")}
+                  src={myProfile.image || require("../../images/noPhoto.jpg")}
                 />
               </Link>
             </div>
 
             <div className="column">
-              {my_profile.is_male ? (
+              {myProfile.isMale ? (
                 <div className="greenlight-back">
                   <div
                     className="greenlight move-1"
                     onClick={this.handleGreenLight}
                   >
-                    {is_greenlight_male_on && (
+                    {isGreenlightMaleOn && (
                       <div className="call-button font-jua">콜!!</div>
                     )}
-                    {!is_greenlight_male_on && (
+                    {!isGreenlightMaleOn && (
                       <div className="call-button font-jua">콜?</div>
                     )}
                   </div>
@@ -142,10 +136,10 @@ class ControlTool extends Component {
                     className="greenlight move-1"
                     onClick={this.handleGreenLight}
                   >
-                    {is_greenlight_female_on && (
+                    {isGreenlightFemaleOn && (
                       <div className="call-button font-jua">콜!!</div>
                     )}
-                    {!is_greenlight_female_on && (
+                    {!isGreenlightFemaleOn && (
                       <div className="call-button font-jua">콜?</div>
                     )}
                   </div>
@@ -154,21 +148,21 @@ class ControlTool extends Component {
             </div>
 
             <div className="column">
-              {my_profile.is_male ? (
+              {myProfile.isMale ? (
                 <div className="gift" onClick={this.handleGiftPopup}>
-                  {current_matching.is_gift_male && (
+                  {currentMatching.isGiftMale && (
                     <div className="gift-on font-jua">안주쏘기</div>
                   )}
-                  {!current_matching.is_gift_male && (
+                  {!currentMatching.isGiftMale && (
                     <div className="gift-off font-jua">안주쏘기</div>
                   )}
                 </div>
               ) : (
                 <div className="gift" onClick={this.handleGiftPopup}>
-                  {current_matching.is_gift_female && (
+                  {currentMatching.isGiftFemale && (
                     <div className="gift-on font-jua">안주쏘기</div>
                   )}
-                  {!current_matching.is_gift_female && (
+                  {!currentMatching.isGiftFemale && (
                     <div className="gift-off font-jua">안주쏘기</div>
                   )}
                 </div>
@@ -188,10 +182,10 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  counter_profile: state.player.get("counter_profile"),
-  is_gift_popup: state.player.get("is_gift_popup"),
-  current_matching: state.current_matching.get("current_matching"),
-  is_current_matching: state.current_matching.get("is_current_matching")
+  counterProfile: state.player.get("counterProfile"),
+  isGiftPopup: state.player.get("isGiftPopup"),
+  currentMatching: state.current_matching.get("currentMatching"),
+  isCurrentMatching: state.current_matching.get("isCurrentMatching")
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ControlTool)

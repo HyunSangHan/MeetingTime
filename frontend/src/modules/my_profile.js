@@ -11,28 +11,28 @@ const NEW_TAB_ON = `NEW_TAB_ON`
 const PREV_TAB_ON = `PREV_TAB_ON`
 
 const initialState = Map({
-  is_login_already: false,
-  my_profile: {
-    age_range: null,
+  isLoginAlready: false,
+  myProfile: {
+    ageRange: null,
     company: {
       name: null
     },
-    created_at: null,
+    createdAt: null,
     id: null,
     image: null,
-    image_two: null,
-    image_three: null,
-    is_male: false,
-    last_intro_modified_at: null,
-    last_login_at: null,
-    team_introduce: null,
+    imageTwo: null,
+    imageThree: null,
+    isMale: false,
+    lastIntroModifiedAt: null,
+    lastLoginAt: null,
+    teamIntroduce: null,
     user: {
       username: null
     },
     validated: false
   },
-  is_edited_profile: false,
-  clicked_tab: "new"
+  isEditedProfile: false,
+  clickedTab: "new"
 })
 
 export default handleActions(
@@ -40,35 +40,33 @@ export default handleActions(
     ...pender({
       type: GET_PROFILE,
       onSuccess: (state, action) =>
-        state
-          .set("my_profile", action.payload.data)
-          .set("is_login_already", true),
-      onFailure: (state, action) => state.set("is_login_already", false)
+        state.set("myProfile", action.payload.data).set("isLoginAlready", true),
+      onFailure: (state, action) => state.set("isLoginAlready", false)
     }),
 
     [CREATE_POPUP]: state => {
-      return state.set("is_edited_profile", true)
+      return state.set("isEditedProfile", true)
     },
 
     [DELETE_POPUP]: state => {
-      return state.set("is_edited_profile", false)
+      return state.set("isEditedProfile", false)
     },
 
     ...pender({
       type: UPDATE_PROFILE,
       onSuccess: (state, action) =>
         state
-          .set("my_profile.user.username", action.payload.data)
-          .set("is_login_already", true),
-      onFailure: (state, action) => state.set("is_login_already", false)
+          .set("myProfile.user.username", action.payload.data)
+          .set("isLoginAlready", true),
+      onFailure: (state, action) => state.set("isLoginAlready", false)
     }),
 
     [NEW_TAB_ON]: state => {
-      return state.set("clicked_tab", "new")
+      return state.set("clickedTab", "new")
     },
 
     [PREV_TAB_ON]: state => {
-      return state.set("clicked_tab", "prev")
+      return state.set("clickedTab", "prev")
     }
   },
   initialState
@@ -87,7 +85,7 @@ export const getMyProfile = createAction(GET_PROFILE, () =>
       return response
     })
     .catch(err => {
-      console.log("not working (get_profile) - " + err)
+      console.log("not working (getProfile) - " + err)
     })
 )
 
@@ -96,7 +94,7 @@ export const profileUpdate = createAction(UPDATE_PROFILE, payload =>
     method: "patch",
     url: "/profile/",
     data: {
-      age_range: payload.age_value
+      ageRange: payload.ageValue
     }
   })
     .then(response => {
@@ -104,7 +102,7 @@ export const profileUpdate = createAction(UPDATE_PROFILE, payload =>
       return response
     })
     .catch(err => {
-      console.log("not working (update_profile) - " + err)
+      console.log("not working (updateProfile) - " + err)
     })
 )
 
@@ -113,7 +111,7 @@ export const companyUpdate = createAction(UPDATE_PROFILE, payload =>
     method: "patch",
     url: "/company/",
     data: {
-      name: payload.company_value
+      name: payload.companyValue
     }
   })
     .then(response => {
@@ -121,7 +119,7 @@ export const companyUpdate = createAction(UPDATE_PROFILE, payload =>
       return response
     })
     .catch(err => {
-      console.log("not working (update_profile) - " + err)
+      console.log("not working (updateProfile) - " + err)
     })
 )
 
@@ -130,11 +128,11 @@ export const teamUpdate = createAction(UPDATE_PROFILE, payload =>
     method: "patch",
     url: "/profile/",
     data: {
-      image: payload.image_value,
-      image_two: payload.image_two_value,
-      image_three: payload.image_three_value,
-      team_name: payload.team_name_value,
-      team_introduce: payload.team_intro_value
+      image: payload.imageValue,
+      imageTwo: payload.imageTwoBalue,
+      imageThree: payload.imageThreeValue,
+      teamName: payload.teamNameValue,
+      teamIntroduce: payload.teamIntroValue
     }
   })
     .then(response => {
@@ -142,7 +140,7 @@ export const teamUpdate = createAction(UPDATE_PROFILE, payload =>
       return response
     })
     .catch(err => {
-      console.log("not working (update_profile) - " + err)
+      console.log("not working (updateProfile) - " + err)
     })
 )
 

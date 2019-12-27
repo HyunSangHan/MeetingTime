@@ -6,8 +6,8 @@ import { pender } from "redux-pender"
 const CURRENT_MATCHING = "CURRENT_MATCHING"
 
 const initialState = Map({
-  is_current_matching: false,
-  current_matching: {}
+  isCurrentMatching: false,
+  currentMatching: {}
 })
 
 export default handleActions(
@@ -16,9 +16,9 @@ export default handleActions(
       type: CURRENT_MATCHING,
       onSuccess: (state, action) =>
         state
-          .set("current_matching", action.payload.data)
-          .set("is_current_matching", true),
-      onFailure: (state, action) => state.set("is_current_matching", false)
+          .set("currentMatching", action.payload.data)
+          .set("isCurrentMatching", true),
+      onFailure: (state, action) => state.set("isCurrentMatching", false)
     })
   },
   initialState
@@ -34,6 +34,6 @@ export const getCurrentMatching = createAction(CURRENT_MATCHING, payload =>
       return response
     })
     .catch(err => {
-      console.log(err + "not working (current_matching)")
+      console.log(err + "not working (currentMatching)")
     })
 )

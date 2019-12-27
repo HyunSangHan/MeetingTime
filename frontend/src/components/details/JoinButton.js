@@ -26,19 +26,19 @@ class JoinButton extends Component {
   render() {
     const {
       JoinActions,
-      is_joined_already,
-      is_login_already,
-      joined_user,
-      current_meeting,
+      isJoinedAlready,
+      isLoginAlready,
+      joinedUser,
+      currentMeeting,
       isMadeTeam
     } = this.props
-    const openTime = Date.parse(current_meeting.open_time)
-    const closeTime = Date.parse(current_meeting.close_time)
-    const meetingTime = Date.parse(current_meeting.meeting_time)
+    const openTime = Date.parse(currentMeeting.openTime)
+    const closeTime = Date.parse(currentMeeting.closeTime)
+    const meetingTime = Date.parse(currentMeeting.meetingTime)
     const nowTime = new Date().getTime()
 
     let button = null
-    if (is_login_already) {
+    if (isLoginAlready) {
       if (nowTime < openTime) {
         button = (
           <div>
@@ -51,7 +51,7 @@ class JoinButton extends Component {
           </div>
         )
       } else if (openTime <= nowTime && nowTime <= closeTime) {
-        if (is_joined_already) {
+        if (isJoinedAlready) {
           button = (
             <div>
               <div className="mb-2 font-15 font-grey font-notosan">
@@ -92,9 +92,9 @@ class JoinButton extends Component {
         }
       } else {
         if (
-          is_joined_already &&
-          joined_user.rank <= current_meeting.cutline &&
-          joined_user.rank != null &&
+          isJoinedAlready &&
+          joinedUser.rank <= currentMeeting.cutline &&
+          joinedUser.rank != null &&
           nowTime > closeTime
         ) {
           //for winner
@@ -111,9 +111,9 @@ class JoinButton extends Component {
             </div>
           )
         } else if (
-          is_joined_already &&
-          joined_user.rank > current_meeting.cutline &&
-          joined_user.rank != null &&
+          isJoinedAlready &&
+          joinedUser.rank > currentMeeting.cutline &&
+          joinedUser.rank != null &&
           nowTime > closeTime
         ) {
           // 간중에는 다음 미팅 알림받기로 변경
@@ -158,9 +158,9 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  is_joined_already: state.join.get("is_joined_already"),
-  joined_user: state.join.get("joined_user"),
-  current_meeting: state.current_meeting.get("current_meeting")
+  isJoinedAlready: state.join.get("isJoinedAlready"),
+  joinedUser: state.join.get("joinedUser"),
+  currentMeeting: state.current_meeting.get("currentMeeting")
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(JoinButton)

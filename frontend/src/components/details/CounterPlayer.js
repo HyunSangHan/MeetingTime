@@ -5,7 +5,7 @@ import ToolTipDown from './ToolTipDown';
 
 class CounterPlayer extends Component {
   render() {
-    const { counter_profile, isGift } = this.props;
+    const { counterProfile, isGift } = this.props;
     let gift = null;
     if (isGift) {
         gift = <ToolTipDown content={ "안주는 저희가 쏩니다!" }/>;
@@ -16,17 +16,17 @@ class CounterPlayer extends Component {
         { gift }
           <div className="team-info">
             <div className="team-name font-notosan">
-              {counter_profile.team_name}
+              {counterProfile.teamName}
             </div>
             <div className="age-range font-notosan">
-              {counter_profile.age_range}대 ·
+              {counterProfile.ageRange}대 ·
             </div>
             <div className="company font-notosan">
-              {counter_profile.company.name}
+              {counterProfile.company.name}
             </div>
           </div>
           <div className="team-intro font-notosan">
-            {counter_profile.team_introduce}
+            {counterProfile.teamIntroduce}
           </div>
           <div className="margin-wrap" />
         </div>
@@ -36,7 +36,7 @@ class CounterPlayer extends Component {
               <img
                 className="user-image"
                 src={
-                  counter_profile.image || require("./../../images/noPhoto.jpg")
+                  counterProfile.image || require("./../../images/noPhoto.jpg")
                 }
               />
             </div>
@@ -44,7 +44,7 @@ class CounterPlayer extends Component {
               <img
                 className="user-image"
                 src={
-                  counter_profile.image_two ||
+                  counterProfile.imageTwo ||
                   require("./../../images/noPhoto.jpg")
                 }
               />
@@ -53,7 +53,7 @@ class CounterPlayer extends Component {
               <img
                 className="user-image"
                 src={
-                  counter_profile.image_three ||
+                  counterProfile.imageThree ||
                   require("./../../images/noPhoto.jpg")
                 }
               />

@@ -33,13 +33,13 @@ class Main extends Component {
       CurrentMatchingActions,
       PlayerActions,
       JoinActions,
-      is_joined_already,
-      is_login_already
+      isJoinedAlready,
+      isLoginAlready
     } = this.props
     CurrentMeetingActions.getCurrentMeeting()
     CurrentMatchingActions.getCurrentMatching()
     PlayerActions.getCounterProfile()
-    if (!is_joined_already) {
+    if (!isJoinedAlready) {
       JoinActions.getJoinedUser()
     } else {
       this.setState({
@@ -47,12 +47,12 @@ class Main extends Component {
       })
     }
     {
-      !is_login_already && <Redirect to="/" />
+      !isLoginAlready && <Redirect to="/" />
     }
   }
 
   componentWillReceiveProps = nextProps => {
-    if (nextProps.is_joined_already) {
+    if (nextProps.isJoinedAlready) {
       this.setState({
         loading: false
       })
@@ -76,25 +76,25 @@ class Main extends Component {
 
   render() {
     const {
-      is_gift_popup,
-      my_profile,
+      isGiftPopup,
+      myProfile,
       JoinActions,
-      is_joined_popup_on,
-      is_joined_already,
-      is_login_already,
-      joined_user,
-      current_meeting,
-      is_current_matching,
-      current_matching,
+      isJoinedPopupOn,
+      isJoinedAlready,
+      isLoginAlready,
+      joinedUser,
+      currentMeeting,
+      isCurrentMatching,
+      currentMatching,
       PlayerActions,
       CurrentMatchingActions,
-      counter_profile,
-      is_counter_profile
+      counterProfile,
+      isCounterProfile
     } = this.props
 
     const nowTime = new Date()
-    const meetingTime = new Date(current_meeting.meeting_time)
-    const meetingDay = this.getInputDayLabel(current_meeting.meeting_time)
+    const meetingTime = new Date(currentMeeting.meetingTime)
+    const meetingDay = this.getInputDayLabel(currentMeeting.meetingTime)
 
     let meetingWeek = null
     if (
@@ -133,9 +133,9 @@ class Main extends Component {
 
     const content = (
       <div className="inline-flex">
-        {meetingWeek} {meetingDay} {current_meeting.location} 미팅
+        {meetingWeek} {meetingDay} {currentMeeting.location} 미팅
         <div className="ml-1 font-lightgrey font-13">
-          남은 셔플 {4 - current_matching.trial_time}회
+          남은 셔플 {4 - currentMatching.trialTime}회
         </div>
       </div>
     )
@@ -156,24 +156,24 @@ class Main extends Component {
             <Loading />
           ) : (
             <CounterPlayer
-              my_profile={my_profile}
+              myProfile={myProfile}
               PlayerActions={PlayerActions}
-              counter_profile={counter_profile}
-              is_counter_profile={is_counter_profile}
+              counterProfile={counterProfile}
+              isCounterProfile={isCounterProfile}
               isGift={isGift}
             />
           )}
         </div>
         <ControlTool
           time={this.state.time}
-          my_profile={my_profile}
+          myProfile={myProfile}
           PlayerActions={PlayerActions}
           CurrentMatchingActions={CurrentMatchingActions}
-          counter_profile={counter_profile}
-          is_counter_profile={is_counter_profile}
-          is_gift_popup={is_gift_popup}
-          current_matching={current_matching}
-          current_meeting={current_meeting}
+          counterProfile={counterProfile}
+          isCounterProfile={isCounterProfile}
+          isGiftPopup={isGiftPopup}
+          currentMatching={currentMatching}
+          currentMeeting={currentMeeting}
         />
         <br />
       </div>
@@ -191,16 +191,16 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  is_joined_popup_on: state.join.get("is_joined_popup_on"),
-  is_joined_already: state.join.get("is_joined_already"),
-  is_login_already: state.my_profile.get("is_login_already"),
-  joined_user: state.join.get("joined_user"),
-  current_meeting: state.current_meeting.get("current_meeting"),
-  current_matching: state.current_matching.get("current_matching"),
-  counter_profile: state.player.get("counter_profile"),
-  is_counter_profile: state.player.get("is_counter_profile"),
-  is_gift_popup: state.player.get("is_gift_popup"),
-  is_current_matching: state.current_matching.get("is_current_matching")
+  isJoinedPopupOn: state.join.get("isJoinedPopupOn"),
+  isJoinedAlready: state.join.get("isJoinedAlready"),
+  isLoginAlready: state.my_profile.get("isLoginAlready"),
+  joinedUser: state.join.get("joinedUser"),
+  currentMeeting: state.current_meeting.get("currentMeeting"),
+  currentMatching: state.current_matching.get("currentMatching"),
+  counterProfile: state.player.get("counterProfile"),
+  isCounterProfile: state.player.get("isCounterProfile"),
+  isGiftPopup: state.player.get("isGiftPopup"),
+  isCurrentMatching: state.current_matching.get("isCurrentMatching")
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)

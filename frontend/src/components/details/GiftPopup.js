@@ -11,33 +11,33 @@ class GiftPopup extends Component {
     const {
       PlayerActions,
       handleGift,
-      is_gift_popup,
-      counter_profile,
-      current_matching
+      isGiftPopup,
+      counterProfile,
+      currentMatching
     } = this.props
 
     return (
       <div className="popup-container">
-        {counter_profile.is_male ? (
+        {counterProfile.isMale ? (
           <div className="gift-popup">
-            {current_matching.is_gift_female ? (
-              <div className="message-box font_jua">
+            {currentMatching.isGiftFemale ? (
+              <div className="message-box font-jua">
                 <p>이미 안주를 쏘셨습니다.</p>
                 <button
-                  className="pop-button font_jua"
+                  className="pop-button font-jua"
                   onClick={PlayerActions.deletePopup}
                 >
                   확인
                 </button>
               </div>
             ) : (
-              <div className="message-box font_jua">
+              <div className="message-box font-jua">
                 <p>안주쏘기입니다. 이후 되돌릴 수 없습니다.</p>
-                <button className="pop-button font_jua" onClick={handleGift}>
+                <button className="pop-button font-jua" onClick={handleGift}>
                   확인
                 </button>
                 <button
-                  className="pop-button font_jua"
+                  className="pop-button font-jua"
                   onClick={PlayerActions.deletePopup}
                 >
                   취소
@@ -47,24 +47,24 @@ class GiftPopup extends Component {
           </div>
         ) : (
           <div className="gift-popup">
-            {current_matching.is_gift_male ? (
-              <div className="message-box font_jua">
+            {currentMatching.isGiftMale ? (
+              <div className="message-box font-jua">
                 <p>이미 안주를 쏘셨습니다.</p>
                 <button
-                  className="pop-button font_jua"
+                  className="pop-button font-jua"
                   onClick={PlayerActions.deletePopup}
                 >
                   확인
                 </button>
               </div>
             ) : (
-              <div className="message-box font_jua">
+              <div className="message-box font-jua">
                 <p>안주쏘기입니다. 이후 되돌릴 수 없습니다.</p>
-                <button className="pop-button font_jua" onClick={handleGift}>
+                <button className="pop-button font-jua" onClick={handleGift}>
                   확인
                 </button>
                 <button
-                  className="pop-button font_jua"
+                  className="pop-button font-jua"
                   onClick={PlayerActions.deletePopup}
                 >
                   취소

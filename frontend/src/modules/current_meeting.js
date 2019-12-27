@@ -6,7 +6,7 @@ import { pender } from "redux-pender"
 const GET_CURRENT_MEETING = `GET_CURRENT_MEETING`
 
 const initialState = Map({
-  current_meeting: Map({})
+  currentMeeting: Map({})
 })
 
 export default handleActions(
@@ -14,7 +14,7 @@ export default handleActions(
     ...pender({
       type: GET_CURRENT_MEETING,
       onSuccess: (state, action) =>
-        state.set("current_meeting", action.payload.data)
+        state.set("currentMeeting", action.payload.data)
     })
   },
   initialState

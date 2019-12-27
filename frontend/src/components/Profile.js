@@ -11,8 +11,8 @@ class Profile extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      age_value: this.props.my_profile_from_app.age_range,
-      company_value: this.props.my_profile_from_app.company.name,
+      ageValue: this.props.myProfileFromApp.ageRange,
+      companyValue: this.props.myProfileFromApp.company.name,
       emailFront: "",
       code: ""
     }
@@ -22,8 +22,8 @@ class Profile extends Component {
     const { MyProfileActions } = this.props
     MyProfileActions.getMyProfile().then(() => {
       this.setState({
-        age_value: this.props.my_profile.age_range,
-        company_value: this.props.my_profile.company.name
+        ageValue: this.props.myProfile.ageRange,
+        companyValue: this.props.myProfile.company.name
       })
     })
   }
@@ -46,10 +46,10 @@ class Profile extends Component {
 
   onSend() {
     const { EmailActions } = this.props
-    const { emailFront, company_value } = this.state
+    const { emailFront, companyValue } = this.state
     let emailCompany
     switch (
-      company_value //테스트용임
+      companyValue //테스트용임
     ) {
       case "네이버":
         emailCompany = "@navercorp.com"
@@ -82,14 +82,14 @@ class Profile extends Component {
 
   handleSubmit = event => {
     const { MyProfileActions, history } = this.props
-    const { age_value, company_value } = this.state
+    const { ageValue, companyValue } = this.state
     console.log(this.state)
     event.preventDefault()
     MyProfileActions.ProfileUpdate({
-      age_value: age_value
+      ageValue: ageValue
     })
     MyProfileActions.CompanyUpdate({
-      company_value: company_value
+      companyValue: companyValue
     })
     MyProfileActions.getMyProfile().then(() => {
       history.push("/")
@@ -97,8 +97,8 @@ class Profile extends Component {
   }
 
   render() {
-    const { my_profile } = this.props
-    const { age_value, company_value } = this.state
+    const { myProfile } = this.props
+    const { ageValue, companyValue } = this.state
     return (
       <div className="frame bg-init-color">
         <Header content={"프로필 수정"} />
@@ -111,17 +111,16 @@ class Profile extends Component {
           >
             <div className="title">성별</div>
             <div className="not-change Gender">
-              <p>{my_profile.is_male ? "남자" : "여자"}</p>
+              <p>{myProfile.isMale ? "남자" : "여자"}</p>
             </div>
             <div className="title">연령대</div>
             <select
               name="age_value"
-              value={age_value + "대"}
+              value={ageValue + "대"}
               onChange={this.handleInputChange}
             >
               <option disabled selected value>
-                {" "}
-                - 선택 -{" "}
+                &nbsp; - 선택 -&nbsp;
               </option>
               <option>10대</option>
               <option>20대</option>
@@ -132,7 +131,7 @@ class Profile extends Component {
             <div className="title">회사명</div>
             <select
               name="company_value"
-              value={company_value}
+              value={companyValue}
               onChange={this.handleInputChange}
             >
               <option disabled selected value>
@@ -157,7 +156,7 @@ class Profile extends Component {
               <select
                 name="company_value"
                 className="ml-2"
-                value={company_value}
+                value={companyValue}
                 onChange={this.handleInputChange}
               >
                 <option value> - </option>
@@ -233,8 +232,8 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  is_login_already: state.my_profile.get("is_login_already"),
-  my_profile: state.my_profile.get("my_profile"),
+  isLoginAlready: state.my_profile.get("isLoginAlready"),
+  myProfile: state.my_profile.get("myProfile"),
   sent: state.email.get("sent"),
   validated: state.email.get("validated")
 })

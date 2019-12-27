@@ -14,24 +14,24 @@ const DELETE_POPUP = "DELETE_POPUP"
 //counter_profile 받아오기 + 그린라이트 액션
 
 const initialState = Map({
-  is_counter_profile: false,
-  is_gift_popup: false,
-  is_gift_already: false,
+  isCounterProfile: false,
+  isGiftPopup: false,
+  isGiftAlready: false,
 
-  counter_profile: {
-    age_range: null,
+  counterProfile: {
+    ageRange: null,
     company: {
       name: null
     },
-    created_at: null,
+    createdAt: null,
     id: 21,
     image: null,
-    image_two: null,
-    image_three: null,
-    is_male: false,
-    last_intro_modified_at: null,
-    last_login_at: null,
-    team_introduce: null,
+    imageTwo: null,
+    imageThree: null,
+    isMale: false,
+    lastIntroModifiedAt: null,
+    lastLoginAt: null,
+    teamIntroduce: null,
     user: {
       username: null
     }
@@ -41,12 +41,12 @@ const initialState = Map({
 export default handleActions(
   {
     [CREATE_POPUP]: state => {
-      return state.set("is_gift_popup", true)
+      return state.set("isGiftPopup", true)
     },
 
     [DELETE_POPUP]: state => {
       console.log("팝업삭제눌림")
-      return state.set("is_gift_popup", false)
+      return state.set("isGiftPopup", false)
     },
 
     ...pender({
@@ -59,17 +59,17 @@ export default handleActions(
 
     ...pender({
       type: GIFT_ON,
-      onSuccess: (state, action) => state.set("is_gift_already", true),
-      onFailure: (state, action) => state.set("is_gift_already", false)
+      onSuccess: (state, action) => state.set("isGiftAlready", true),
+      onFailure: (state, action) => state.set("isGiftAlready", false)
     }),
 
     ...pender({
       type: COUNTER_PROFILE,
       onSuccess: (state, action) =>
         state
-          .set("counter_profile", action.payload.data)
-          .set("is_counter_profile", true),
-      onFailure: (state, action) => state.set("is_counter_profile", false)
+          .set("counterProfile", action.payload.data)
+          .set("isCounterProfile", true),
+      onFailure: (state, action) => state.set("isCounterProfile", false)
     })
   },
   initialState
@@ -90,7 +90,7 @@ export const getCounterProfile = createAction(COUNTER_PROFILE, payload =>
       return response
     })
     .catch(err => {
-      console.log("not working (counter_profile) - " + err)
+      console.log("not working (counterProfile) - " + err)
     })
 )
 
@@ -100,8 +100,8 @@ export const handleGreenLightOn = createAction(GREEN_LIGHT_ON, payload =>
     method: "patch",
     url: "/current_matching/",
     data: {
-      is_greenlight_male: payload.male,
-      is_greenlight_female: payload.female
+      isGreenlightMale: payload.male,
+      isGreenlightFemale: payload.female
     }
   })
     .then(response => {
@@ -118,8 +118,8 @@ export const handleGreenLightOff = createAction(GREEN_LIGHT_OFF, payload =>
     method: "patch",
     url: "/current_matching/",
     data: {
-      is_greenlight_male: payload.male,
-      is_greenlight_female: payload.female
+      isGreenlightMale: payload.male,
+      isGreenlightFemale: payload.female
     }
   })
     .then(response => {
@@ -137,8 +137,8 @@ export const handleGiftOn = createAction(GIFT_ON, payload =>
     method: "patch",
     url: "/current_matching/",
     data: {
-      is_gift_male: payload.male,
-      is_gift_female: payload.female
+      isGiftMale: payload.male,
+      isGiftFemale: payload.female
     }
   })
     .then(response => {

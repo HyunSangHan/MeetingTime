@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Component } from "react"
 import "./App.css"
 import Main from "./components/Main"
@@ -26,18 +25,18 @@ class App extends Component {
 
   render() {
     const {
-      is_login_already,
-      is_joined_already,
-      current_meeting,
-      my_profile
+      isLoginAlready,
+      isJoinedAlready,
+      currentMeeting,
+      myProfile
     } = this.props
-    const openTime = Date.parse(current_meeting.open_time)
+    const openTime = Date.parse(currentMeeting.openTime)
     const nowTime = new Date().getTime()
 
     return (
       <BrowserRouter>
         <div className="App">
-          {nowTime > openTime && is_joined_already ? (
+          {nowTime > openTime && isJoinedAlready ? (
             <Route exact path="/" component={Waiting} />
           ) : (
             <Route
@@ -46,8 +45,8 @@ class App extends Component {
               render={props => (
                 <Initpage
                   {...props}
-                  is_login_already={is_login_already}
-                  my_profile={my_profile}
+                  isLoginAlready={isLoginAlready}
+                  myProfile={myProfile}
                 />
               )}
             />
@@ -58,8 +57,8 @@ class App extends Component {
             render={props => (
               <Main
                 {...props}
-                my_profile={my_profile}
-                is_validated={my_profile.validated}
+                myProfile={myProfile}
+                isValidated={myProfile.validated}
               />
             )}
           />
@@ -67,21 +66,21 @@ class App extends Component {
           <Route
             path="/profile"
             render={props => (
-              <Profile {...props} my_profile_from_app={my_profile} />
+              <Profile {...props} myProfileFromApp={myProfile} />
             )}
           />
 
           <Route
             path="/team_profile"
             render={props => (
-              <TeamProfile {...props} is_validated={my_profile.validated} />
+              <TeamProfile {...props} isValidated={myProfile.validated} />
             )}
           />
 
           <Route
             path="/matching_result"
             render={props => (
-              <CounterPlayer {...props} is_validated={my_profile.validated} />
+              <CounterPlayer {...props} isValidated={myProfile.validated} />
             )}
           />
         </div>
@@ -97,10 +96,10 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  is_login_already: state.my_profile.get("is_login_already"),
-  is_joined_already: state.join.get("is_joined_already"),
-  my_profile: state.my_profile.get("my_profile"),
-  current_meeting: state.current_meeting.get("current_meeting")
+  isLoginAlready: state.my_profile.get("isLoginAlready"),
+  isJoinedAlready: state.join.get("isJoinedAlready"),
+  myProfile: state.my_profile.get("myProfile"),
+  currentMeeting: state.current_meeting.get("currentMeeting")
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

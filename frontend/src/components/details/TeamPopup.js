@@ -13,10 +13,10 @@ class TeamPopup extends Component {
 
     return (
       <div className="team-popup">
-        <div className="message-box font_jua">
+        <div className="message-box font-jua">
           <p>그룹이 생성되었습니다.</p>
           <button
-            className="pop-button font_jua"
+            className="pop-button font-jua"
             onClick={MyProfileActions.deletePopup}
           >
             확인

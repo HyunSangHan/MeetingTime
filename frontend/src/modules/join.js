@@ -7,17 +7,17 @@ const CREATE_JOINED_USER = `CREATE_JOINED_USER`
 const GET_JOINED_USER = `GET_JOINED_USER`
 
 const initialState = Map({
-  is_joined_already: false,
-  joined_user: {
+  isJoinedAlready: false,
+  joinedUser: {
     profile: {
       id: null,
       image: null,
-      is_male: null,
-      age_range: null,
-      created_at: null,
-      last_login_at: null,
-      team_introduce: "",
-      last_intro_modified_at: null,
+      isMale: null,
+      ageRange: null,
+      createdAt: null,
+      lastLoginAt: null,
+      teamIntroduce: "",
+      lastIntroModifiedAt: null,
       user: {
         username: ""
       },
@@ -26,7 +26,7 @@ const initialState = Map({
       }
     },
     rank: null,
-    is_matched: null,
+    isMatched: null,
     meeting: null
   }
 })
@@ -35,16 +35,15 @@ export default handleActions(
   {
     ...pender({
       type: CREATE_JOINED_USER,
-      onSuccess: (state, action) =>
-        state.set("joined_user", action.payload.data)
+      onSuccess: (state, action) => state.set("joinedUser", action.payload.data)
     }),
     ...pender({
       type: GET_JOINED_USER,
       onSuccess: (state, action) =>
         state
-          .set("joined_user", action.payload.data)
-          .set("is_joined_already", true),
-      onFailure: state => state.set("is_joined_already", false)
+          .set("joinedUser", action.payload.data)
+          .set("isJoinedAlready", true),
+      onFailure: state => state.set("isJoinedAlready", false)
     })
   },
   initialState

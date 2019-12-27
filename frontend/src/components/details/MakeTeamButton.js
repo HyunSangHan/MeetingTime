@@ -6,7 +6,7 @@ import ToolTipUp from "./ToolTipUp"
 
 class MakeTeamButton extends Component {
   render() {
-    const { isMadeTeam, my_profile } = this.props
+    const { isMadeTeam, myProfile } = this.props
     let makeTeamButton = null
 
     if (isMadeTeam) {
@@ -14,17 +14,15 @@ class MakeTeamButton extends Component {
         <div className="mt-4 mh-auto team-profile-img-warp">
           <img
             className="team-profile-img-small first-img"
-            src={my_profile.image || require("./../../images/noPhoto.jpg")}
+            src={myProfile.image || require("./../../images/noPhoto.jpg")}
           />
           <img
             className="team-profile-img-small second-img"
-            src={my_profile.image_two || require("./../../images/noPhoto.jpg")}
+            src={myProfile.imageTwo || require("./../../images/noPhoto.jpg")}
           />
           <img
             className="team-profile-img-small third-img"
-            src={
-              my_profile.image_three || require("./../../images/noPhoto.jpg")
-            }
+            src={myProfile.imageThree || require("./../../images/noPhoto.jpg")}
           />
         </div>
       )

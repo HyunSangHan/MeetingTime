@@ -12,9 +12,9 @@ class JoinedPopup extends Component {
   }
 
   render() {
-    const { is_joined_already } = this.props
+    const { isJoinedAlready } = this.props
     let popup = null
-    if (is_joined_already) {
+    if (isJoinedAlready) {
       popup = (
         <div className={"copy-pop flex-center font-1"}>
           이미 번호표를 뽑으셨어요! 결과발표 전까지 조금만 기다려주세요.
@@ -45,8 +45,8 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  is_joined_popup_on: state.join.get("is_joined_popup_on"),
-  is_joined_already: state.join.get("is_joined_already")
+  isJoinedPopupOn: state.join.get("isJoinedPopupOn"),
+  isJoinedAlready: state.join.get("isJoinedAlready")
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(JoinedPopup)
