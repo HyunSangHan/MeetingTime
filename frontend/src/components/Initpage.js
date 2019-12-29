@@ -54,19 +54,16 @@ class Initpage extends Component {
             code: process.env.REACT_APP_KAKAO_REST_API_KEY
           })
           .then(response => {
-            axios
-              .get("/profile")
-              .then(response => {
-                console.log(
-                  "[로그인성공] " +
-                    response.data.user.username +
-                    "(회사:" +
-                    response.data.company.name +
-                    ")"
-                )
-                window.location.reload()
-              })
-              .catch(err => console.log(err))
+            axios.get("/profile").then(response => {
+              console.log(
+                "[로그인성공] " +
+                  response.data.user.username +
+                  "(회사:" +
+                  response.data.company.name +
+                  ")"
+              )
+              window.location.reload()
+            })
           })
           .catch(err => {
             console.log(err)
