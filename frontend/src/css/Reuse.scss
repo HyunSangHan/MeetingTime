@@ -78,7 +78,7 @@
 
 .container {
   text-align: center;
-  .spinner {
+  &.spinner {
     max-width: 100%;
     animation: spinner 1.2s steps(12) infinite;
   }
