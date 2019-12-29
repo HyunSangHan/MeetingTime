@@ -10,20 +10,23 @@ const initialState = Map({
   isJoinedAlready: null,
   joinedUser: {
     profile: {
+      ageRange: null,
+      company: {
+        name: null
+      },
+      createdAt: null,
       id: null,
       image: null,
-      isMale: null,
-      ageRange: null,
-      createdAt: null,
-      lastLoginAt: null,
-      teamIntroduce: "",
+      imageTwo: null,
+      imageThree: null,
+      isMale: false,
       lastIntroModifiedAt: null,
+      lastLoginAt: null,
+      teamIntroduce: null,
       user: {
-        username: ""
+        username: null
       },
-      company: {
-        name: ""
-      }
+      validated: false
     },
     rank: null,
     isMatched: null,

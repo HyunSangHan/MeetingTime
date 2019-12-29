@@ -14,6 +14,7 @@ import { bindActionCreators } from "redux"
 import * as joinActions from "./../modules/join"
 import * as currentMeetingActions from "./../modules/current_meeting"
 import * as myProfileActions from "./../modules/my_profile"
+import Loading from "./details/Loading"
 
 class Initpage extends Component {
   constructor(props) {
@@ -224,21 +225,20 @@ class Initpage extends Component {
     }
 
     const isStoreLoaded =
-      !isNaN(openTime) &&
-      !isNaN(closeTime) &&
-      isLoginAlready !== null &&
-      isJoinedAlready !== null
+      !isNaN(openTime) && !isNaN(closeTime) && isJoinedAlready !== null
     const isWaitingMeeting = nowTime > openTime && isJoinedAlready
-
-    console.log(isStoreLoaded, isWaitingMeeting)
 
     return (
       <div className="frame bg-init-color">
         <div className="container-shadow mh-auto">
-          <MeetingInfo
-            makeTeamButton={makeTeamButton}
-            currentMeeting={currentMeeting}
-          />
+          {!isStoreLoaded ? (
+            <Loading />
+          ) : (
+            <MeetingInfo
+              makeTeamButton={makeTeamButton}
+              currentMeeting={currentMeeting}
+            />
+          )}
         </div>
         {isStoreLoaded && isWaitingMeeting && <Redirect to="/" />}
         <div className="fix-bottom-init w100percent mb-36 mt-5">
@@ -248,7 +248,7 @@ class Initpage extends Component {
               isMadeTeam={isMadeTeam}
             />
           </div>
-          {authButton}
+          {!isLoginAlready && authButton}
         </div>
       </div>
     )

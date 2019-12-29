@@ -11,6 +11,7 @@ import { connect } from "react-redux"
 import * as currentMeetingActions from "./../modules/current_meeting"
 import * as joinActions from "./../modules/join"
 import * as myProfileActions from "../modules/my_profile"
+import Loading from "./details/Loading"
 
 class Waiting extends Component {
   componentDidMount() {
@@ -58,12 +59,18 @@ class Waiting extends Component {
             />
           </div>
           {isStoreLoaded && !isWaitingMeeting && <Redirect to="/init" />}
-          {numberInfo}
-          <MeetingInfo
-            makeTeamButton={null}
-            isMadeTeam={true}
-            currentMeeting={currentMeeting}
-          />
+          {!isStoreLoaded ? (
+            <Loading />
+          ) : (
+            <>
+              {numberInfo}
+              <MeetingInfo
+                makeTeamButton={null}
+                isMadeTeam={true}
+                currentMeeting={currentMeeting}
+              />
+            </>
+          )}
         </div>
         <div className="fix-bottom-waiting w100percent mb-36 mt-2">
           <JoinButton isLoginAlready={isLoginAlready} />
