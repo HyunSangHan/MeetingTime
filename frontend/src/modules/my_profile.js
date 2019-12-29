@@ -9,6 +9,8 @@ const CREATE_POPUP = `CREATE_POPUP`
 const DELETE_POPUP = `DELETE_POPUP`
 const NEW_TAB_ON = `NEW_TAB_ON`
 const PREV_TAB_ON = `PREV_TAB_ON`
+const LOGIN_SUCCESS = `LOGIN_SUCCESS`
+const LOGOUT_SUCCESS = `LOGOUT_SUCCESS`
 
 const initialState = Map({
   isLoginAlready: null,
@@ -67,6 +69,14 @@ export default handleActions(
 
     [PREV_TAB_ON]: state => {
       return state.set("clickedTab", "prev")
+    },
+
+    [LOGIN_SUCCESS]: state => {
+      return state.set("isLoginAlready", true)
+    },
+
+    [LOGOUT_SUCCESS]: state => {
+      return state.set("isLoginAlready", false)
     }
   },
   initialState
@@ -147,3 +157,5 @@ export const teamUpdate = createAction(UPDATE_PROFILE, payload =>
 //TwoTab.js용
 export const newTabOn = createAction(NEW_TAB_ON)
 export const prevTabOn = createAction(PREV_TAB_ON)
+export const loginSuccess = createAction(LOGIN_SUCCESS)
+export const logoutSuccess = createAction(LOGOUT_SUCCESS)

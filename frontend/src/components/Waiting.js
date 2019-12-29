@@ -58,7 +58,8 @@ class Waiting extends Component {
               alt="logo"
             />
           </div>
-          {isStoreLoaded && !isWaitingMeeting && <Redirect to="/init" />}
+          {(isLoginAlready === false ||
+            (isStoreLoaded && !isWaitingMeeting)) && <Redirect to="/init" />}
           {!isStoreLoaded ? (
             <Loading />
           ) : (
