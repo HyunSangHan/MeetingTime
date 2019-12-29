@@ -7,7 +7,7 @@ const CREATE_JOINED_USER = `CREATE_JOINED_USER`
 const GET_JOINED_USER = `GET_JOINED_USER`
 
 const initialState = Map({
-  isJoinedAlready: false,
+  isJoinedAlready: null,
   joinedUser: {
     profile: {
       id: null,
@@ -55,7 +55,7 @@ export const createJoinedUser = createAction(CREATE_JOINED_USER, payload =>
     url: "/join/"
   })
     .then(response => {
-      console.log(response)
+      console.log(response.data)
       return response
     })
     .catch(err => {
@@ -68,7 +68,7 @@ export const getJoinedUser = createAction(GET_JOINED_USER, payload =>
     url: "/join"
   })
     .then(response => {
-      console.log(response)
+      console.log(response.data)
       return response
     })
     .catch(err => {

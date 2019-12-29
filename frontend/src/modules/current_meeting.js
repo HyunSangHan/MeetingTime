@@ -27,7 +27,7 @@ export const getCurrentMeeting = createAction(GET_CURRENT_MEETING, payload =>
   })
     .then(response => {
       console.log("this is working OOOOO")
-      console.log(response)
+      console.log(response.data)
       return response
     })
     .catch(err => {

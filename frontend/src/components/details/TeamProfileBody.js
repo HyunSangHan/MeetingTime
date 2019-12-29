@@ -10,16 +10,33 @@ class TeamProfileBody extends Component {
     super(props)
 
     this.state = {
-      imageFirstValue: this.props.myProfile.image,
-      imageSecondValue: this.props.myProfile.imageTwo,
-      imageThirdValue: this.props.myProfile.imageThree,
+      imageFirstValue: null,
+      imageSecondValue: null,
+      imageThirdValue: null,
       previewFirst: null,
       previewSecond: null,
       previewThird: null,
       hasThreeImages: false,
-      teamNameValue: this.props.myProfile.teamName,
-      teamIntroValue: this.props.myProfile.teamIntroduce
+      teamNameValue: null,
+      teamIntroValue: null
     }
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const {
+      image,
+      imageTwo,
+      imageThree,
+      teamName,
+      teamIntroduce
+    } = nextProps.myProfile
+    this.setState({
+      imageFirstValue: image || null,
+      imageSecondValue: imageTwo || null,
+      imageThirdValue: imageThree || null,
+      teamNameValue: teamName || null,
+      teamIntroValue: teamIntroduce || null
+    })
   }
 
   //수정 관련 함수들
@@ -66,7 +83,7 @@ class TeamProfileBody extends Component {
 
     formData.append("image", FirstimageValue, FirstimageValue.name)
     axios.patch("http://localhost:3000/profile/", formData).then(response => {
-      console.log(response)
+      console.log(response.data)
     })
   }
   handleImageSubmitSecond = () => {
@@ -75,7 +92,7 @@ class TeamProfileBody extends Component {
     formData.append("imageTwo", imageSecondValue, imageSecondValue.name)
     console.log(formData)
     axios.patch("http://localhost:3000/profile/", formData).then(response => {
-      console.log(response)
+      console.log(response.data)
     })
   }
 
@@ -85,7 +102,7 @@ class TeamProfileBody extends Component {
     console.log(formData)
     formData.append("imageThree", imageThirdValue, imageThirdValue.name)
     axios.patch("http://localhost:3000/profile/", formData).then(response => {
-      console.log(response)
+      console.log(response.data)
     })
   }
 
@@ -191,7 +208,7 @@ class TeamProfileBody extends Component {
             <div className="title font-notosan">팀 이름</div>
             <input
               type="text"
-              value={teamNameValue}
+              value={teamNameValue === null ? "" : teamNameValue}
               onChange={this.handleInputChange}
               className="text-input font-notosan"
               name="teamNameValue"
@@ -202,7 +219,7 @@ class TeamProfileBody extends Component {
             <div className="team-intro">
               <Textarea
                 type="text"
-                value={teamIntroValue}
+                value={teamIntroValue === null ? "" : teamIntroValue}
                 onChange={this.handleInputChange}
                 className="text-input font-notosan"
                 name="teamIntroValue"

@@ -11,21 +11,16 @@ class Profile extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      ageValue: this.props.myProfileFromApp.ageRange,
-      companyValue: this.props.myProfileFromApp.company.name,
-      emailFront: "",
-      code: ""
+      ageValue: null,
+      companyValue: null,
+      emailFront: null,
+      code: null
     }
   }
 
   componentDidMount() {
     const { MyProfileActions } = this.props
-    MyProfileActions.getMyProfile().then(() => {
-      this.setState({
-        ageValue: this.props.myProfile.ageRange,
-        companyValue: this.props.myProfile.company.name
-      })
-    })
+    MyProfileActions.getMyProfile()
   }
 
   handleInputChange = event => {
@@ -99,130 +94,146 @@ class Profile extends Component {
     })
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { myProfile } = nextProps
+    this.setState({
+      ageValue: myProfile.ageRange,
+      companyValue: myProfile.company.name
+    })
+  }
+
   render() {
-    const { myProfile } = this.props
+    const { myProfile, isLoginAlready } = this.props
     const { ageValue, companyValue } = this.state
+
+    const isStoreLoaded =
+      !isNaN(myProfile.ageRange) &&
+      myProfile !== null &&
+      isLoginAlready !== null
+
     return (
       <div className="frame bg-init-color">
         <Header content={"프로필 수정"} />
-        <div className="profile-form">
-          <form
-            className="form"
-            onSubmit={this.handleSubmit}
-            method="patch"
-            encType="multipart/form-data"
-          >
-            <div className="title">성별</div>
-            <div className="not-change Gender">
-              <p>{myProfile.isMale ? "남자" : "여자"}</p>
-            </div>
-            <div className="title">연령대</div>
-            <select
-              name="age_value"
-              value={ageValue + "대"}
-              onChange={this.handleInputChange}
+        {isStoreLoaded && (
+          <div className="profile-form">
+            <form
+              className="form"
+              onSubmit={this.handleSubmit}
+              method="patch"
+              encType="multipart/form-data"
             >
-              <option disabled selected value>
-                &nbsp; - 선택 -&nbsp;
-              </option>
-              <option>10대</option>
-              <option>20대</option>
-              <option>30대</option>
-              <option>40대</option>
-              {/* <option>기타</option> */}
-            </select>
-            <div className="title">회사명</div>
-            <select
-              name="company_value"
-              value={companyValue}
-              onChange={this.handleInputChange}
-            >
-              <option disabled selected value>
-                {" "}
-                - 선택 -{" "}
-              </option>
-              <option>네이버</option>
-              <option>삼성</option>
-              <option>멋쟁이사자처럼</option>
-              <option>구글</option>
-              <option>테슬라</option>
-            </select>
-            <div className="title">이메일</div>
-            <div className="EmailSelect">
-              <input
-                onChange={e => {
-                  this.setState({ emailFront: e.target.value })
-                }}
-                placeholder="입력"
-              ></input>
-              {/* <span id="EmailAt">@</span> */}
+              <div className="title">성별</div>
+              <div className="not-change Gender">
+                <p>{myProfile.isMale ? "남자" : "여자"}</p>
+              </div>
+              <div className="title">연령대</div>
               <select
-                name="company_value"
-                className="ml-2"
+                name="ageValue"
+                value={ageValue + "대"}
+                onChange={this.handleInputChange}
+              >
+                <option disabled selected value>
+                  &nbsp; - 선택 -&nbsp;
+                </option>
+                <option>10대</option>
+                <option>20대</option>
+                <option>30대</option>
+                <option>40대</option>
+                {/* <option>기타</option> */}
+              </select>
+              <div className="title">회사명</div>
+              <select
+                name="companyValue"
                 value={companyValue}
                 onChange={this.handleInputChange}
               >
-                <option value> - </option>
-                <option value="네이버">@navercorp.com</option>
-                <option value="삼성">@samsung.com</option>
-                <option value="멋쟁이사자처럼">@likelion.org</option>
-                <option value="구글">@google.com</option>
-                <option value="테슬라">@tesla.com</option>
+                <option disabled selected value>
+                  {" "}
+                  - 선택 -{" "}
+                </option>
+                <option>네이버</option>
+                <option>삼성</option>
+                <option>멋쟁이사자처럼</option>
+                <option>구글</option>
+                <option>테슬라</option>
               </select>
-            </div>
-            {!this.props.sent ? (
-              <Fragment>
-                <button
-                  className="SendButton Send"
-                  type="button"
-                  onClick={e => this.onSend(e)}
+              <div className="title">이메일</div>
+              <div className="EmailSelect">
+                <input
+                  onChange={e => {
+                    this.setState({ emailFront: e.target.value })
+                  }}
+                  placeholder="입력"
+                ></input>
+                {/* <span id="EmailAt">@</span> */}
+                <select
+                  name="companyValue"
+                  className="ml-2"
+                  value={companyValue}
+                  onChange={this.handleInputChange}
                 >
-                  인증하기
-                </button>
-              </Fragment>
-            ) : (
-              <Fragment>
-                <div className="EmailValidation">
-                  <input
-                    onChange={e => {
-                      this.setState({ code: e.target.value })
-                    }}
-                    placeholder="인증번호 입력"
-                  ></input>
+                  <option value> - </option>
+                  <option value="네이버">@navercorp.com</option>
+                  <option value="삼성">@samsung.com</option>
+                  <option value="멋쟁이사자처럼">@likelion.org</option>
+                  <option value="구글">@google.com</option>
+                  <option value="테슬라">@tesla.com</option>
+                </select>
+              </div>
+              {!this.props.sent ? (
+                <Fragment>
                   <button
-                    className="SendButton"
+                    className="SendButton Send"
                     type="button"
-                    onClick={e => this.onValidate(e)}
+                    onClick={e => this.onSend(e)}
                   >
-                    인증
+                    인증하기
                   </button>
-                </div>
-                {this.props.validated ? (
-                  <div className="ErrorMessage" style={{ color: "blue" }}>
-                    인증되었습니다
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <div className="EmailValidation">
+                    <input
+                      onChange={e => {
+                        this.setState({ code: e.target.value })
+                      }}
+                      placeholder="인증번호 입력"
+                    ></input>
+                    <button
+                      className="SendButton"
+                      type="button"
+                      onClick={e => this.onValidate(e)}
+                    >
+                      인증
+                    </button>
                   </div>
-                ) : (
-                  <div className="ErrorMessage" style={{ color: "red" }}>
-                    인증되지 않았습니다
-                  </div>
-                )}
-              </Fragment>
-            )}
-          </form>
-          <div className="FixedButton mt-4">
-            {this.props.validated ? (
-              <button className="SubmitButton WorkingButton">적용하기</button>
-            ) : (
-              <button
-                type="button"
-                className="SubmitButton NotWorkingButton"
-                onClick={() => alert("입력을 완료해주세요.")}
-              >
-                적용하기
-              </button>
-            )}
+                  {this.props.validated ? (
+                    <div className="ErrorMessage" style={{ color: "blue" }}>
+                      인증되었습니다
+                    </div>
+                  ) : (
+                    <div className="ErrorMessage" style={{ color: "red" }}>
+                      인증되지 않았습니다
+                    </div>
+                  )}
+                </Fragment>
+              )}
+            </form>
+            <div className="FixedButton mt-4">
+              {this.props.validated ? (
+                <button className="SubmitButton WorkingButton">적용하기</button>
+              ) : (
+                <button
+                  type="button"
+                  className="SubmitButton NotWorkingButton"
+                  onClick={() => alert("입력을 완료해주세요.")}
+                >
+                  적용하기
+                </button>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     )
   }

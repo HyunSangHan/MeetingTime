@@ -35,6 +35,10 @@ class TeamProfile extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.MyProfileActions.getMyProfile()
+  }
+
   render() {
     const {
       MyProfileActions,
@@ -42,26 +46,17 @@ class TeamProfile extends Component {
       isEditedProfile,
       clickedTab
     } = this.props
+    const { emptyProfile } = this.state
     const action = this.props.clickedTab
     return (
       <div className="frame-scrollable bg-init-color">
         <Header content={"미팅 그룹 생성"} />
         <TwoTab MyProfileActions={MyProfileActions} clickedTab={clickedTab} />
-
-        {action === "new" && (
-          <TeamProfileBody
-            MyProfileActions={MyProfileActions}
-            myProfile={this.state.emptyProfile}
-            isEditedProfile={isEditedProfile}
-          />
-        )}
-        {action === "prev" && (
-          <TeamProfileBody
-            MyProfileActions={MyProfileActions}
-            myProfile={myProfile}
-            isEditedProfile={isEditedProfile}
-          />
-        )}
+        <TeamProfileBody
+          MyProfileActions={MyProfileActions}
+          myProfile={action === "prev" ? myProfile : emptyProfile}
+          isEditedProfile={isEditedProfile}
+        />
       </div>
     )
   }

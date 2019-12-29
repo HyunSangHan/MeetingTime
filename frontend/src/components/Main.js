@@ -23,7 +23,26 @@ class Main extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true
+      loading: true,
+      emptyProfile: {
+        ageRange: null,
+        company: {
+          name: null
+        },
+        createdAt: null,
+        id: null,
+        image: null,
+        imageTwo: null,
+        imageThree: null,
+        isMale: false,
+        lastIntroModifiedAt: null,
+        lastLoginAt: null,
+        teamIntroduce: null,
+        user: {
+          username: null
+        },
+        validated: false
+      }
     }
   }
 
@@ -31,6 +50,7 @@ class Main extends Component {
     const {
       CurrentMeetingActions,
       CurrentMatchingActions,
+      MyProfileActions,
       PlayerActions,
       JoinActions,
       isJoinedAlready,
@@ -38,6 +58,7 @@ class Main extends Component {
     } = this.props
     CurrentMeetingActions.getCurrentMeeting()
     CurrentMatchingActions.getCurrentMatching()
+    MyProfileActions.getMyProfile()
     PlayerActions.getCounterProfile()
     if (!isJoinedAlready) {
       JoinActions.getJoinedUser()
@@ -91,6 +112,7 @@ class Main extends Component {
       counterProfile,
       isCounterProfile
     } = this.props
+    const emptyProfile = this.state
 
     const nowTime = new Date()
     const meetingTime = new Date(currentMeeting.meetingTime)
@@ -156,7 +178,7 @@ class Main extends Component {
             <Loading />
           ) : (
             <CounterPlayer
-              myProfile={myProfile}
+              myProfile={myProfile || emptyProfile}
               PlayerActions={PlayerActions}
               counterProfile={counterProfile}
               isCounterProfile={isCounterProfile}
@@ -166,7 +188,7 @@ class Main extends Component {
         </div>
         <ControlTool
           time={this.state.time}
-          myProfile={myProfile}
+          myProfile={myProfile || emptyProfile}
           PlayerActions={PlayerActions}
           CurrentMatchingActions={CurrentMatchingActions}
           counterProfile={counterProfile}

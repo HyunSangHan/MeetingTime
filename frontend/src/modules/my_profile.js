@@ -11,7 +11,7 @@ const NEW_TAB_ON = `NEW_TAB_ON`
 const PREV_TAB_ON = `PREV_TAB_ON`
 
 const initialState = Map({
-  isLoginAlready: false,
+  isLoginAlready: null,
   myProfile: {
     ageRange: null,
     company: {
@@ -22,16 +22,16 @@ const initialState = Map({
     image: null,
     imageTwo: null,
     imageThree: null,
-    isMale: false,
+    isMale: null,
     lastIntroModifiedAt: null,
     lastLoginAt: null,
     teamIntroduce: null,
     user: {
       username: null
     },
-    validated: false
+    validated: null
   },
-  isEditedProfile: false,
+  isEditedProfile: null,
   clickedTab: "new"
 })
 
@@ -98,7 +98,7 @@ export const profileUpdate = createAction(UPDATE_PROFILE, payload =>
     }
   })
     .then(response => {
-      console.log(response)
+      console.log(response.data)
       return response
     })
     .catch(err => {
@@ -115,7 +115,7 @@ export const companyUpdate = createAction(UPDATE_PROFILE, payload =>
     }
   })
     .then(response => {
-      console.log(response)
+      console.log(response.data)
       return response
     })
     .catch(err => {
@@ -136,7 +136,7 @@ export const teamUpdate = createAction(UPDATE_PROFILE, payload =>
     }
   })
     .then(response => {
-      console.log(response)
+      console.log(response.data)
       return response
     })
     .catch(err => {

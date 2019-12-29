@@ -24,11 +24,11 @@ const initialState = Map({
       name: null
     },
     createdAt: null,
-    id: 21,
+    id: null,
     image: null,
     imageTwo: null,
     imageThree: null,
-    isMale: false,
+    isMale: null,
     lastIntroModifiedAt: null,
     lastLoginAt: null,
     teamIntroduce: null,
@@ -86,7 +86,7 @@ export const getCounterProfile = createAction(COUNTER_PROFILE, payload =>
     url: "/counter_profile"
   })
     .then(response => {
-      console.log(response)
+      console.log(response.data)
       return response
     })
     .catch(err => {
@@ -105,7 +105,7 @@ export const handleGreenLightOn = createAction(GREEN_LIGHT_ON, payload =>
     }
   })
     .then(response => {
-      console.log(response)
+      console.log(response.data)
       return response
     })
     .catch(err => {
@@ -123,7 +123,7 @@ export const handleGreenLightOff = createAction(GREEN_LIGHT_OFF, payload =>
     }
   })
     .then(response => {
-      console.log(response)
+      console.log(response.data)
       return response
     })
     .catch(err => {
@@ -142,7 +142,7 @@ export const handleGiftOn = createAction(GIFT_ON, payload =>
     }
   })
     .then(response => {
-      console.log(response)
+      console.log(response.data)
       return response
     })
     .catch(err => {

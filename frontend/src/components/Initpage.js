@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { Component } from "react"
+import { Redirect } from "react-router-dom"
 import "../css/Initpage.scss"
 import "../App.css"
 import { Link } from "react-router-dom"
@@ -11,6 +12,7 @@ import JoinedPopup from "./details/JoinedPopup"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 import * as joinActions from "./../modules/join"
+import * as currentMeetingActions from "./../modules/current_meeting"
 import * as myProfileActions from "./../modules/my_profile"
 
 class Initpage extends Component {
@@ -35,8 +37,9 @@ class Initpage extends Component {
     } catch (error) {
       console.log(error)
     }
-    const { MyProfileActions } = this.props
+    const { MyProfileActions, CurrentMeetingActions } = this.props
     MyProfileActions.getMyProfile()
+    CurrentMeetingActions.getCurrentMeeting()
   }
 
   kakaoLogin = () => () => {
@@ -122,13 +125,19 @@ class Initpage extends Component {
   }
 
   render() {
-    const { myProfile, currentMeeting, isLoginAlready } = this.props
+    const {
+      myProfile,
+      currentMeeting,
+      isLoginAlready,
+      isJoinedAlready
+    } = this.props
 
     const nowTime = new Date()
+    const closeTime = Date.parse(currentMeeting.closeTime)
+    const openTime = Date.parse(currentMeeting.openTime)
     const meetingTime = new Date(currentMeeting.meetingTime)
     const meetingDay = this.getInputDayLabel(currentMeeting.meetingTime)
-    const isExpired =
-      new Date().getTime() - Date.parse(currentMeeting.closeTime) > 0
+    const isExpired = new Date().getTime() - closeTime > 0
 
     let meetingWeek = null
     if (
@@ -214,6 +223,15 @@ class Initpage extends Component {
       )
     }
 
+    const isStoreLoaded =
+      !isNaN(openTime) &&
+      !isNaN(closeTime) &&
+      isLoginAlready !== null &&
+      isJoinedAlready !== null
+    const isWaitingMeeting = nowTime > openTime && isJoinedAlready
+
+    console.log(isStoreLoaded, isWaitingMeeting)
+
     return (
       <div className="frame bg-init-color">
         <div className="container-shadow mh-auto">
@@ -222,6 +240,7 @@ class Initpage extends Component {
             currentMeeting={currentMeeting}
           />
         </div>
+        {isStoreLoaded && isWaitingMeeting && <Redirect to="/" />}
         <div className="fix-bottom-init w100percent mb-36 mt-5">
           <div onClick={this.blockJoin(isMadeTeam)}>
             <JoinButton
@@ -239,13 +258,16 @@ class Initpage extends Component {
 const mapDispatchToProps = dispatch => ({
   dispatch,
   JoinActions: bindActionCreators(joinActions, dispatch),
+  CurrentMeetingActions: bindActionCreators(currentMeetingActions, dispatch),
   MyProfileActions: bindActionCreators(myProfileActions, dispatch)
 })
 
 const mapStateToProps = state => ({
   isJoinedPopupOn: state.join.get("isJoinedPopupOn"),
   joinedUser: state.join.get("joinedUser"),
+  isJoinedAlready: state.join.get("isJoinedAlready"),
   isLoginAlready: state.my_profile.get("isLoginAlready"),
+  myProfile: state.my_profile.get("myProfile"),
   currentMeeting: state.current_meeting.get("currentMeeting")
 })
 

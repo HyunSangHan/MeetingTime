@@ -30,7 +30,7 @@ export const getCurrentMatching = createAction(CURRENT_MATCHING, payload =>
     url: "/current_matching"
   })
     .then(response => {
-      console.log(response)
+      console.log(response.data)
       return response
     })
     .catch(err => {
