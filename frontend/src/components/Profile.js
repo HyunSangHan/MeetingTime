@@ -83,12 +83,8 @@ class Profile extends Component {
     const { ageValue, companyValue } = this.state
     console.log(this.state)
     event.preventDefault()
-    MyProfileActions.ProfileUpdate({
-      ageValue: ageValue
-    })
-    MyProfileActions.CompanyUpdate({
-      companyValue: companyValue
-    })
+    MyProfileActions.ProfileUpdate({ ageValue })
+    MyProfileActions.CompanyUpdate({ companyValue })
     MyProfileActions.getMyProfile().then(() => {
       history.push("/")
     })

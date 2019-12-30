@@ -125,9 +125,9 @@ class TeamProfileBody extends Component {
     // event.preventDefault();
     // console.log(this.state);
 
-    MyProfileActions.teamUpdate({
-      teamNameValue: teamNameValue,
-      teamIntroValue: teamIntroValue
+    MyProfileActions.updateTeam({
+      teamNameValue,
+      teamIntroValue
     })
 
     if (preview) {
