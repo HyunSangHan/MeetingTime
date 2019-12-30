@@ -99,7 +99,7 @@ export const getMyProfile = createAction(GET_PROFILE, () =>
     })
 )
 
-export const profileUpdate = createAction(UPDATE_PROFILE, payload =>
+export const updateProfile = createAction(UPDATE_PROFILE, payload =>
   axios({
     method: "patch",
     url: "/profile/",
@@ -116,7 +116,7 @@ export const profileUpdate = createAction(UPDATE_PROFILE, payload =>
     })
 )
 
-export const companyUpdate = createAction(UPDATE_PROFILE, payload =>
+export const updateCompany = createAction(UPDATE_PROFILE, payload =>
   axios({
     method: "patch",
     url: "/company/",
@@ -133,7 +133,7 @@ export const companyUpdate = createAction(UPDATE_PROFILE, payload =>
     })
 )
 
-export const teamUpdate = createAction(UPDATE_PROFILE, payload =>
+export const updateTeam = createAction(UPDATE_PROFILE, payload =>
   axios({
     method: "patch",
     url: "/profile/",
