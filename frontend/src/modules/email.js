@@ -32,9 +32,11 @@ export const sendEmail = createAction(SEND_EMAIL, payload =>
     data: {
       email: payload.email
     }
-  }).then(response => {
-    return response
   })
+    .then(response => {
+      return response
+    })
+    .catch(err => console.log(err))
 )
 
 export const validateEmail = createAction(VALIDATE_EMAIL, payload =>
@@ -48,5 +50,5 @@ export const validateEmail = createAction(VALIDATE_EMAIL, payload =>
     .then(response => {
       return response
     })
-    .catch(console.log("not working"))
+    .catch(err => console.log(err))
 )

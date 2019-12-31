@@ -82,18 +82,24 @@ class TeamProfileBody extends Component {
     const { FirstimageValue } = this.state
 
     formData.append("image", FirstimageValue, FirstimageValue.name)
-    axios.patch("http://localhost:3000/profile/", formData).then(response => {
-      console.log(response.data)
-    })
+    axios
+      .patch("http://localhost:3000/profile/", formData)
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(err => console.log(err))
   }
   handleImageSubmitSecond = () => {
     const formData = new FormData()
     const { imageSecondValue } = this.state
     formData.append("imageTwo", imageSecondValue, imageSecondValue.name)
     console.log(formData)
-    axios.patch("http://localhost:3000/profile/", formData).then(response => {
-      console.log(response.data)
-    })
+    axios
+      .patch("http://localhost:3000/profile/", formData)
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(err => console.log(err))
   }
 
   handleImageSubmitThird = () => {
@@ -101,9 +107,12 @@ class TeamProfileBody extends Component {
     const { imageThirdValue } = this.state
     console.log(formData)
     formData.append("imageThree", imageThirdValue, imageThirdValue.name)
-    axios.patch("http://localhost:3000/profile/", formData).then(response => {
-      console.log(response.data)
-    })
+    axios
+      .patch("http://localhost:3000/profile/", formData)
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(err => console.log(err))
   }
 
   handleTeamPopup = event => {
