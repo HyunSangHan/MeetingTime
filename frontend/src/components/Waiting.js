@@ -6,21 +6,10 @@ import MeetingInfo from "./details/MeetingInfo"
 import MyNumber from "./details/MyNumber"
 import ResultNumber from "./details/ResultNumber"
 import JoinButton from "./details/JoinButton"
-import { bindActionCreators } from "redux"
-import { connect } from "react-redux"
-import * as currentMeetingActions from "./../modules/current_meeting"
-import * as joinActions from "./../modules/join"
-import * as myProfileActions from "../modules/my_profile"
 import Loading from "./details/Loading"
+import withHomeInfo from "../modules/withHomeInfo"
 
 class Waiting extends Component {
-  componentDidMount() {
-    const { JoinActions, CurrentMeetingActions, MyProfileActions } = this.props
-    JoinActions.getJoinedUser()
-    CurrentMeetingActions.getCurrentMeeting()
-    MyProfileActions.getMyProfile()
-  }
-
   render() {
     const {
       joinedUser,
@@ -81,18 +70,4 @@ class Waiting extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  JoinActions: bindActionCreators(joinActions, dispatch),
-  CurrentMeetingActions: bindActionCreators(currentMeetingActions, dispatch),
-  MyProfileActions: bindActionCreators(myProfileActions, dispatch)
-})
-
-const mapStateToProps = state => ({
-  joinedUser: state.join.get("joinedUser"),
-  isJoinedAlready: state.join.get("isJoinedAlready"),
-  currentMeeting: state.current_meeting.get("currentMeeting"),
-  isLoginAlready: state.my_profile.get("isLoginAlready")
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Waiting)
+export default withHomeInfo(Waiting)

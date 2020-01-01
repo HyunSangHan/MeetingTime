@@ -8,19 +8,10 @@ import axios from "axios"
 import MeetingInfo from "./details/MeetingInfo"
 import MakeTeamButton from "./details/MakeTeamButton"
 import JoinButton from "./details/JoinButton"
-import JoinedPopup from "./details/JoinedPopup"
-import { connect } from "react-redux"
-import { bindActionCreators } from "redux"
-import * as joinActions from "./../modules/join"
-import * as currentMeetingActions from "./../modules/current_meeting"
-import * as myProfileActions from "./../modules/my_profile"
 import Loading from "./details/Loading"
+import withHomeInfo from "../modules/withHomeInfo"
 
 class Initpage extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     try {
       window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY)
@@ -38,9 +29,6 @@ class Initpage extends Component {
     } catch (error) {
       console.log(error)
     }
-    const { MyProfileActions, CurrentMeetingActions } = this.props
-    MyProfileActions.getMyProfile()
-    CurrentMeetingActions.getCurrentMeeting()
   }
 
   kakaoLogin = () => () => {
@@ -245,27 +233,11 @@ class Initpage extends Component {
               isMadeTeam={isMadeTeam}
             />
           </div>
-          {!isLoginAlready && authButton}
+          {authButton}
         </div>
       </div>
     )
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  JoinActions: bindActionCreators(joinActions, dispatch),
-  CurrentMeetingActions: bindActionCreators(currentMeetingActions, dispatch),
-  MyProfileActions: bindActionCreators(myProfileActions, dispatch)
-})
-
-const mapStateToProps = state => ({
-  isJoinedPopupOn: state.join.get("isJoinedPopupOn"),
-  joinedUser: state.join.get("joinedUser"),
-  isJoinedAlready: state.join.get("isJoinedAlready"),
-  isLoginAlready: state.my_profile.get("isLoginAlready"),
-  myProfile: state.my_profile.get("myProfile"),
-  currentMeeting: state.current_meeting.get("currentMeeting")
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Initpage)
+export default withHomeInfo(Initpage)
