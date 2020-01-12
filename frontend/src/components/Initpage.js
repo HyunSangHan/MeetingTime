@@ -113,9 +113,11 @@ class Initpage extends Component {
   render() {
     const {
       myProfile,
+      JoinActions,
       currentMeeting,
       isLoginAlready,
-      isJoinedAlready
+      isJoinedAlready,
+      joinedUser
     } = this.props
 
     const nowTime = new Date()
@@ -229,8 +231,12 @@ class Initpage extends Component {
         <div className="fix-bottom-init w100percent mb-36 mt-5">
           <div onClick={this.blockJoin(isMadeTeam)}>
             <JoinButton
-              isLoginAlready={isLoginAlready}
+              JoinActions={JoinActions}
               isMadeTeam={isMadeTeam}
+              isLoginAlready={isLoginAlready}
+              isJoinedAlready={isJoinedAlready}
+              joinedUser={joinedUser}
+              currentMeeting={currentMeeting}
             />
           </div>
           {authButton}

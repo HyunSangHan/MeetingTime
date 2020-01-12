@@ -2,9 +2,6 @@ import React, { Component, Fragment } from "react"
 import "../../css/Initpage.scss" //부모컴포넌트의CSS(SCSS)
 import "../../css/Waiting.scss" //부모컴포넌트의CSS(SCSS)
 import "../../App.css" //공통CSS
-import { connect } from "react-redux"
-import { bindActionCreators } from "redux"
-import * as joinActions from "../../modules/join"
 import { Link } from "react-router-dom"
 import CountDown from "./CountDown"
 
@@ -14,14 +11,14 @@ class JoinButton extends Component {
     JoinActions.getJoinedUser()
   }
 
-  join = joinActions => () => {
-    joinActions.createJoinedUser()
+  handleJoin = () => {
+    const { JoinActions } = this.props
+    JoinActions.createJoinedUser()
     window.location.reload()
   }
 
   render() {
     const {
-      // JoinActions,
       isJoinedAlready,
       isLoginAlready,
       joinedUser,
@@ -67,7 +64,7 @@ class JoinButton extends Component {
                 </div>
                 <div
                   className="join-button-wrap bg-color-join mh-auto flex-center"
-                  onClick={this.join(joinActions)}
+                  onClick={this.handleJoin()}
                 >
                   <div className="font-notosan">번호표 뽑기</div>
                 </div>
@@ -112,7 +109,7 @@ class JoinButton extends Component {
           joinedUser.rank != null &&
           nowTime > closeTime
         ) {
-          // 간중에는 다음 미팅 알림받기로 변경
+          // 나중에는 다음 미팅 알림받기로 변경
           button = (
             <div>
               <div className="mb-2 font-15 font-grey font-notosan">
@@ -148,15 +145,4 @@ class JoinButton extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  JoinActions: bindActionCreators(joinActions, dispatch)
-})
-
-const mapStateToProps = state => ({
-  isJoinedAlready: state.join.get("isJoinedAlready"),
-  joinedUser: state.join.get("joinedUser"),
-  currentMeeting: state.current_meeting.get("currentMeeting")
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(JoinButton)
+export default JoinButton

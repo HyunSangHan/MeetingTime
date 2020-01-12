@@ -12,11 +12,14 @@ import withHomeInfo from "../modules/withHomeInfo"
 class Waiting extends Component {
   render() {
     const {
+      JoinActions,
+      isMadeTeam,
       joinedUser,
       currentMeeting,
       isLoginAlready,
       isJoinedAlready
     } = this.props
+
     const closeTime = Date.parse(currentMeeting.closeTime)
     const openTime = Date.parse(currentMeeting.openTime)
     const nowTime = new Date().getTime()
@@ -63,7 +66,14 @@ class Waiting extends Component {
           )}
         </div>
         <div className="fix-bottom-waiting w100percent mb-36 mt-2">
-          <JoinButton isLoginAlready={isLoginAlready} />
+          <JoinButton
+            JoinActions={JoinActions}
+            isMadeTeam={isMadeTeam}
+            isLoginAlready={isLoginAlready}
+            isJoinedAlready={isJoinedAlready}
+            joinedUser={joinedUser}
+            currentMeeting={currentMeeting}
+          />
         </div>
       </div>
     )
