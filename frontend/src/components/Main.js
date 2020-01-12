@@ -193,6 +193,7 @@ class Main extends Component {
           CurrentMatchingActions={CurrentMatchingActions}
           counterProfile={counterProfile}
           isCounterProfile={isCounterProfile}
+          isCurrentMatching={isCurrentMatching}
           isGiftPopup={isGiftPopup}
           currentMatching={currentMatching}
           currentMeeting={currentMeeting}

@@ -4,10 +4,6 @@ import "../../App.css" //공통CSS
 import { Link } from "react-router-dom" //다른 페이지로 링크 걸 때 필요
 import CountDown from "./CountDown"
 import GiftPopup from "./GiftPopup"
-import { bindActionCreators } from "redux"
-import { connect } from "react-redux"
-import * as currentMatchingActions from "../../modules/current_matching"
-import * as playerActions from "../../modules/player"
 
 class ControlTool extends Component {
   constructor(props) {
@@ -174,17 +170,4 @@ class ControlTool extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  PlayerActions: bindActionCreators(playerActions, dispatch),
-  CurrentMatchingActions: bindActionCreators(currentMatchingActions, dispatch)
-})
-
-const mapStateToProps = state => ({
-  counterProfile: state.player.get("counterProfile"),
-  isGiftPopup: state.player.get("isGiftPopup"),
-  currentMatching: state.current_matching.get("currentMatching"),
-  isCurrentMatching: state.current_matching.get("isCurrentMatching")
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(ControlTool)
+export default ControlTool
