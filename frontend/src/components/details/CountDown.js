@@ -34,9 +34,14 @@ class CountDown extends Component {
       const { gapSecondTotal } = this.state
       if (gapSecondTotal <= 0) {
         window.location.reload() //리프레시
-        clearInterval(this.timer, this.ifTimer)
+        this.timer && clearInterval(this.timer)
+        this.ifTimer && clearInterval(this.ifTimer)
       }
     }, 1000)
+  }
+  componentWillUnmount() {
+    this.timer && clearInterval(this.timer)
+    this.ifTimer && clearInterval(this.ifTimer)
   }
 
   timeNotification = seconds => {
