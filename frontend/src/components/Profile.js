@@ -86,6 +86,7 @@ class Profile extends Component {
     MyProfileActions.updateProfile({ ageValue })
     MyProfileActions.updateCompany({ companyValue })
     MyProfileActions.getMyProfile().then(() => {
+      //promise반환이 맞는지 추후 확인 필요
       history.push("/")
     })
   }

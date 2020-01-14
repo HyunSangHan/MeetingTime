@@ -41,17 +41,16 @@ class Initpage extends Component {
             access_token: authObj.access_token,
             code: process.env.REACT_APP_KAKAO_REST_API_KEY
           })
+          .then(() => axios.get("/profile"))
           .then(response => {
-            axios.get("/profile").then(response => {
-              console.log(
-                "[로그인성공] " +
-                  response.data.user.username +
-                  "(회사:" +
-                  response.data.company.name +
-                  ")"
-              )
-              window.location.reload()
-            })
+            console.log(
+              "[로그인성공] " +
+                response.data.user.username +
+                "(회사:" +
+                response.data.company.name +
+                ")"
+            )
+            window.location.reload()
           })
           .catch(err => {
             console.log(err)
