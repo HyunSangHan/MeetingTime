@@ -42,13 +42,7 @@ This is a web application for helping workers to make meeting chance.
 
 
 ### Model
-- Meeting
-- Company
-- Profile(User)
-- JoinedUser
-- KakaoChatting
-- Matching
-- Validation
+<img src="https://user-images.githubusercontent.com/44132406/73130398-05a26b80-403b-11ea-9bb4-2bb35b171475.png" alt="ERD">
 
 ### Controller(APIs, Serializers)
 - CurrentMatching
