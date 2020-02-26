@@ -26,7 +26,7 @@ class MakeTeamButton extends Component {
                         </div>
                     </div>
                     <div className="flex-center w100percent">
-                        <ToolTipUp content = { "미리 등록해두시면 선착순에 유리해요!" } />
+                        <ToolTipUp content = { "미리 그룹을 만들어두면 선착순에 유리해요!" } />
                     </div>
                 </Fragment>
         }

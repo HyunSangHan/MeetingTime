@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import '../../css/Main.scss'; //부모컴포넌트의CSS(SCSS)
 import '../../App.css'; //공통CSS
+import ToolTipDown from './ToolTipDown';
 
 class CounterPlayer extends Component {
     render() {
-        const { counter_profile } = this.props;  
+        const { counter_profile, isGift } = this.props;
+        let gift = null;
+        if (isGift) {
+            gift = <ToolTipDown content={ "안주는 저희가 쏩니다!" }/>;
+        }
         return (
             <div className="total-container top-m">
                 <div className="counter-container">
+                    { gift }
                     <div className="team-info">
                         <div className="team-name font-notosan">
                             {counter_profile.team_name}

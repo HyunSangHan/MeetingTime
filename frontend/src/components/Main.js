@@ -60,7 +60,7 @@ class Main extends Component {
     }
 
     render() {
-        const {user, is_gift_popup, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting, is_current_matching, current_matching, PlayerActions, CurrentMatchingActions, counter_profile, is_counter_profile,  } = this.props;
+        const {is_gift_popup, my_profile, JoinActions, is_joined_popup_on, is_joined_already, is_login_already, joined_user, current_meeting, is_current_matching, current_matching, PlayerActions, CurrentMatchingActions, counter_profile, is_counter_profile,  } = this.props;
 
         const nowTime = new Date();
         const meetingTime = new Date(current_meeting.meeting_time);
@@ -88,6 +88,14 @@ class Main extends Component {
                 {meetingWeek} {meetingDay} {current_meeting.location} 미팅
                 <div className="ml-1 font-lightgrey font-13">남은 셔플 {4 - current_matching.trial_time}회</div>
             </div>;
+        
+        let isGift = null;
+
+        if (my_profile.is_male) {
+            isGift = current_matching.is_gift_female
+        } else {
+            isGift = current_matching.is_gift_male
+        }
 
         return (
                 <div className="main-container">
@@ -104,6 +112,7 @@ class Main extends Component {
                             PlayerActions={PlayerActions}
                             counter_profile={counter_profile}
                             is_counter_profile={is_counter_profile}
+                            isGift={isGift}
                         />  
                         }  
                     </div>

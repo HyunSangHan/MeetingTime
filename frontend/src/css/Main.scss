@@ -26,6 +26,7 @@
         background-color: #ffffff;
         padding-bottom: 32px;
         border-radius: 12px;
+        position: relative;
 
         .team-info {
             display: -webkit-flex !important;
@@ -281,7 +282,7 @@
 
 @media(max-width: 479px){ /*Mobile*/
     .top-m {
-        margin-top: 5vw;
+        margin-top: 10vw;
     }
 
     .margin-wrap{
