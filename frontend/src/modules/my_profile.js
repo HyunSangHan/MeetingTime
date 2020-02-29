@@ -43,7 +43,9 @@ export default handleActions(
       type: GET_PROFILE,
       onSuccess: (state, action) =>
         state.set("myProfile", action.payload.data).set("isLoginAlready", true),
-      onFailure: (state, action) => state.set("isLoginAlready", false)
+      onFailure: (state, action) => {
+        return state.set("isLoginAlready", false)
+      }
     }),
 
     [CREATE_POPUP]: state => {
@@ -86,17 +88,19 @@ export default handleActions(
 export const createPopup = createAction(CREATE_POPUP)
 export const deletePopup = createAction(DELETE_POPUP)
 
-export const getMyProfile = createAction(GET_PROFILE, () =>
-  axios({
-    method: "get",
-    url: "/profile"
-  })
-    .then(response => {
-      return response
+export const getMyProfile = createAction(
+  GET_PROFILE,
+  () =>
+    axios({
+      method: "get",
+      url: "/profile"
     })
-    .catch(err => {
-      console.log("not working (getProfile) - " + err)
-    })
+  // .then(response => {
+  //   return response
+  // })
+  // .catch(err => {
+  //   console.log("not working (getProfile) - " + err)
+  // })
 )
 
 export const updateProfile = createAction(UPDATE_PROFILE, payload =>

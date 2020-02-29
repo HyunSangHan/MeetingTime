@@ -14,9 +14,17 @@ export default ComposedComponent => {
         MyProfileActions,
         myProfile
       } = this.props
-      CurrentMeetingActions.getCurrentMeeting()
+      CurrentMeetingActions.getCurrentMeeting().then(() =>
+        console.log(this.props.isLoginAlready)
+      )
       !myProfile.user.username && MyProfileActions.getMyProfile()
-      myProfile.user.username && JoinActions.getJoinedUser()
+      // myProfile.user.username && JoinActions.getJoinedUser()
+    }
+
+    componentWillReceiveProps(nextProps) {
+      if (this.props.myProfile !== nextProps.myProfile) {
+        this.props.JoinActions.getJoinedUser()
+      }
     }
 
     render() {

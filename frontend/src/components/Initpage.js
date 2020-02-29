@@ -12,6 +12,13 @@ import Loading from "./details/Loading"
 import withHomeInfo from "../modules/withHomeInfo"
 
 class Initpage extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isLoading: true
+    }
+  }
+
   componentDidMount() {
     try {
       window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY)
@@ -60,6 +67,12 @@ class Initpage extends Component {
         alert(JSON.stringify(err))
       }
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props !== nextProps) {
+      this.setState({ isLoading: false })
+    }
   }
 
   kakaoLogout = () => () => {
@@ -210,14 +223,12 @@ class Initpage extends Component {
       )
     }
 
-    const isStoreLoaded =
-      !isNaN(openTime) && !isNaN(closeTime) && isJoinedAlready !== null
     const isWaitingMeeting = nowTime > openTime && isJoinedAlready
 
     return (
       <div className="frame bg-init-color">
         <div className="container-shadow mh-auto">
-          {!isStoreLoaded ? (
+          {this.state.isLoading ? (
             <Loading />
           ) : (
             <MeetingInfo
@@ -226,7 +237,7 @@ class Initpage extends Component {
             />
           )}
         </div>
-        {isStoreLoaded && isWaitingMeeting && <Redirect to="/" />}
+        {isWaitingMeeting && <Redirect to="/" />}
         <div className="fix-bottom-init w100percent mb-36 mt-5">
           <div onClick={this.blockJoin(isMadeTeam)}>
             <JoinButton
