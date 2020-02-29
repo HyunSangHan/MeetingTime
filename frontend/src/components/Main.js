@@ -223,7 +223,8 @@ const mapStateToProps = state => ({
   counterProfile: state.player.get("counterProfile"),
   isCounterProfile: state.player.get("isCounterProfile"),
   isGiftPopup: state.player.get("isGiftPopup"),
-  isCurrentMatching: state.current_matching.get("isCurrentMatching")
+  isCurrentMatching: state.current_matching.get("isCurrentMatching"),
+  myProfile: state.my_profile.get("myProfile")
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)

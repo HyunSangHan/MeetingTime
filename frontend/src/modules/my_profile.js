@@ -41,8 +41,11 @@ export default handleActions(
   {
     ...pender({
       type: GET_PROFILE,
-      onSuccess: (state, action) =>
-        state.set("myProfile", action.payload.data).set("isLoginAlready", true),
+      onSuccess: (state, action) => {
+        return state
+          .set("myProfile", action.payload.data)
+          .set("isLoginAlready", true)
+      },
       onFailure: (state, action) => {
         return state.set("isLoginAlready", false)
       }
@@ -88,19 +91,18 @@ export default handleActions(
 export const createPopup = createAction(CREATE_POPUP)
 export const deletePopup = createAction(DELETE_POPUP)
 
-export const getMyProfile = createAction(
-  GET_PROFILE,
-  () =>
-    axios({
-      method: "get",
-      url: "/profile"
+export const getMyProfile = createAction(GET_PROFILE, () =>
+  axios({
+    method: "get",
+    url: "/profile"
+  })
+    .then(response => {
+      console.log(response)
+      return response
     })
-  // .then(response => {
-  //   return response
-  // })
-  // .catch(err => {
-  //   console.log("not working (getProfile) - " + err)
-  // })
+    .catch(err => {
+      console.log("not working (getProfile) - " + err)
+    })
 )
 
 export const updateProfile = createAction(UPDATE_PROFILE, payload =>
