@@ -1,24 +1,24 @@
 .font-jua {
   letter-spacing: -0.3px;
-  font-family: 'Jua', sans-serif !important;
+  font-family: "Jua", sans-serif !important;
 }
 
 .font-notosan {
   letter-spacing: -0.3px;
-  font-family: 'Noto Sans KR', sans-serif !important;
+  font-family: "Noto Sans KR", sans-serif !important;
 }
 
 .App {
   text-align: center;
   letter-spacing: -0.3px;
-  font-family: 'Noto Sans KR', sans-serif !important;
+  font-family: "Noto Sans KR", sans-serif !important;
 }
 
 .margin-auto {
   margin: auto;
 }
 
-.mh-auto{
+.mh-auto {
   margin-left: auto;
   margin-right: auto;
 }
@@ -505,13 +505,15 @@ h4 {
   background-color: #f6f6f6;
 }
 
-@media(max-width: 767px){ /*Mobile*/
+@media (max-width: 767px) {
+  /*Mobile*/
   .mobile-none {
     display: none !important;
   }
 }
 
-@media(min-width: 768px){ /*PC*/
+@media (min-width: 768px) {
+  /*PC*/
   .pc-none {
     display: none !important;
   }
