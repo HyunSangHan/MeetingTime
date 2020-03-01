@@ -8,40 +8,67 @@ class ControlTool extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isGreenlightMaleOn: this.props.currentMatching.isGreenlightMale,
-      isGreenlightFemaleOn: this.props.currentMatching.isGreenlightFemale,
-      isGiftMaleOn: this.props.currentMatching.isGiftMale,
-      isGiftFemaleOn: this.props.currentMatching.isGiftFemale
+      isGreenlightMale: this.props.currentMatching.isGreenlightMale,
+      isGreenlightFemale: this.props.currentMatching.isGreenlightFemale,
+      isGiftMale: this.props.currentMatching.isGiftMale,
+      isGiftFemale: this.props.currentMatching.isGiftFemale
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      isGreenlightMale,
+      isGreenlightFemale,
+      isGiftMale,
+      isGiftFemale
+    } = this.props.currentMatching
+    const isUpdated =
+      isGreenlightMale !== nextProps.currentMatching.isGreenlightMale ||
+      isGreenlightFemale !== nextProps.currentMatching.isGreenlightFemale ||
+      isGiftMale !== nextProps.currentMatching.isGiftMale ||
+      isGiftFemale !== nextProps.currentMatching.isGiftFemale
+    if (isUpdated) {
+      this.setState({
+        isGreenlightMale: nextProps.currentMatching.isGreenlightMale,
+        isGreenlightFemale: nextProps.currentMatching.isGreenlightFemale,
+        isGiftMale: nextProps.currentMatching.isGiftMale,
+        isGiftFemale: nextProps.currentMatching.isGiftFemale
+      })
     }
   }
 
   handleGreenLight = () => {
     const { PlayerActions, counterProfile } = this.props
-    const { isGreenlightMaleOn, isGreenlightFemaleOn } = this.state
+    const { isGreenlightMale, isGreenlightFemale } = this.state
 
-    if (!isGreenlightMaleOn && !counterProfile.isMale) {
-      PlayerActions.handleGreenLightOn({ male: true })
-      this.setState({ isGreenlightMaleOn: true })
-    } else if (!isGreenlightFemaleOn && counterProfile.isMale) {
-      PlayerActions.handleGreenLightOn({ female: true })
-      this.setState({ isGreenlightFemaleOn: true })
-    } else if (isGreenlightMaleOn && !counterProfile.isMale) {
-      PlayerActions.handleGreenLightOff({ male: false })
-      this.setState({ isGreenlightMaleOn: false })
-    } else if (isGreenlightFemaleOn && counterProfile.isMale) {
-      PlayerActions.handleGreenLightOff({ female: false })
-      this.setState({ isGreenlightFemaleOn: false })
+    if (!isGreenlightMale && !counterProfile.isMale) {
+      PlayerActions.handleGreenLightOn({ male: true }).then(
+        this.setState({ isGreenlightMale: true })
+      )
+    } else if (!isGreenlightFemale && counterProfile.isMale) {
+      PlayerActions.handleGreenLightOn({ female: true }).then(
+        this.setState({ isGreenlightFemale: true })
+      )
+    } else if (isGreenlightMale && !counterProfile.isMale) {
+      PlayerActions.handleGreenLightOff({ male: false }).then(
+        this.setState({ isGreenlightMale: false })
+      )
+    } else if (isGreenlightFemale && counterProfile.isMale) {
+      PlayerActions.handleGreenLightOff({ female: false }).then(
+        this.setState({ isGreenlightFemale: false })
+      )
     }
   }
 
   handleGift = () => {
-    const { PlayerActions, currentMatching, counterProfile } = this.props
+    const { PlayerActions, counterProfile } = this.props
+    const { isGiftMale, isGiftFemale } = this.state
 
-    if (!currentMatching.isGiftMale && !counterProfile.isMale) {
+    if (!isGiftMale && !counterProfile.isMale) {
       window.confirm(
         "안주를 한 번 쏘고 나면 되돌릴 수 없습니다. 정말 쏘시겠습니까?"
       ) && PlayerActions.handleGiftOn({ male: true })
-    } else if (!currentMatching.isGiftFemale && counterProfile.isMale) {
+    } else if (!isGiftFemale && counterProfile.isMale) {
       window.confirm(
         "안주를 한 번 쏘고 나면 되돌릴 수 없습니다. 정말 쏘시겠습니까?"
       ) && PlayerActions.handleGiftOn({ female: true })
@@ -58,7 +85,12 @@ class ControlTool extends Component {
       currentMatching,
       currentMeeting
     } = this.props
-    const { isGreenlightMaleOn, isGreenlightFemaleOn } = this.state
+    const {
+      isGreenlightMale,
+      isGreenlightFemale,
+      isGiftMale,
+      isGiftFemale
+    } = this.state
 
     let countDown = null
     if (currentMatching.trialTime === 1) {
@@ -98,10 +130,10 @@ class ControlTool extends Component {
                     className="greenlight move-1"
                     onClick={this.handleGreenLight}
                   >
-                    {isGreenlightMaleOn && (
+                    {isGreenlightMale && (
                       <div className="call-button font-jua">콜!!</div>
                     )}
-                    {!isGreenlightMaleOn && (
+                    {!isGreenlightMale && (
                       <div className="call-button font-jua">콜?</div>
                     )}
                   </div>
@@ -112,10 +144,10 @@ class ControlTool extends Component {
                     className="greenlight move-1"
                     onClick={this.handleGreenLight}
                   >
-                    {isGreenlightFemaleOn && (
+                    {isGreenlightFemale && (
                       <div className="call-button font-jua">콜!!</div>
                     )}
-                    {!isGreenlightFemaleOn && (
+                    {!isGreenlightFemale && (
                       <div className="call-button font-jua">콜?</div>
                     )}
                   </div>
@@ -126,19 +158,19 @@ class ControlTool extends Component {
             <div className="column">
               {myProfile.isMale ? (
                 <div className="gift" onClick={this.handleGift}>
-                  {currentMatching.isGiftMale && (
+                  {isGiftMale && (
                     <div className="gift-on font-jua">안주쏘기</div>
                   )}
-                  {!currentMatching.isGiftMale && (
+                  {!isGiftMale && (
                     <div className="gift-off font-jua">안주쏘기</div>
                   )}
                 </div>
               ) : (
                 <div className="gift" onClick={this.handleGift}>
-                  {currentMatching.isGiftFemale && (
+                  {isGiftFemale && (
                     <div className="gift-on font-jua">안주쏘기</div>
                   )}
-                  {!currentMatching.isGiftFemale && (
+                  {!isGiftFemale && (
                     <div className="gift-off font-jua">안주쏘기</div>
                   )}
                 </div>
