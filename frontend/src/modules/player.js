@@ -8,14 +8,11 @@ const GREEN_LIGHT_ON = "GREEN_LIGHT_ON"
 const GREEN_LIGHT_OFF = "GREEN_LIGHT_OFF"
 const GIFT_ON = "GIFT_ON"
 // const GIFT_OFF = "GIFT_OFF"
-const CREATE_POPUP = "CREATE_POPUP"
-const DELETE_POPUP = "DELETE_POPUP"
 
 //counter_profile 받아오기 + 그린라이트 액션
 
 const initialState = Map({
   isCounterProfile: false,
-  isGiftPopup: false,
   isGiftAlready: false,
 
   counterProfile: {
@@ -40,15 +37,6 @@ const initialState = Map({
 
 export default handleActions(
   {
-    [CREATE_POPUP]: state => {
-      return state.set("isGiftPopup", true)
-    },
-
-    [DELETE_POPUP]: state => {
-      console.log("팝업삭제눌림")
-      return state.set("isGiftPopup", false)
-    },
-
     ...pender({
       type: GREEN_LIGHT_ON
     }),
@@ -74,10 +62,6 @@ export default handleActions(
   },
   initialState
 )
-
-//GIFT CONFIRM POPUP
-export const createPopup = createAction(CREATE_POPUP)
-export const deletePopup = createAction(DELETE_POPUP)
 
 //'''Get Counter_profile'''
 export const getCounterProfile = createAction(COUNTER_PROFILE, payload =>

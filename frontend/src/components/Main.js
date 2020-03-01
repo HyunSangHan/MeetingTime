@@ -97,7 +97,6 @@ class Main extends Component {
 
   render() {
     const {
-      isGiftPopup,
       myProfile,
       JoinActions,
       isJoinedPopupOn,
@@ -162,12 +161,12 @@ class Main extends Component {
       </div>
     )
 
-    let isGift = null;
+    let isGift = null
 
-    if (my_profile.is_male) {
-      isGift = current_matching.is_gift_female
+    if (myProfile.isMale) {
+      isGift = currentMatching.isGiftFemale
     } else {
-      isGift = current_matching.is_gift_male
+      isGift = currentMatching.isGiftMale
     }
 
     return (
@@ -194,7 +193,6 @@ class Main extends Component {
           counterProfile={counterProfile}
           isCounterProfile={isCounterProfile}
           isCurrentMatching={isCurrentMatching}
-          isGiftPopup={isGiftPopup}
           currentMatching={currentMatching}
           currentMeeting={currentMeeting}
         />
@@ -222,7 +220,6 @@ const mapStateToProps = state => ({
   currentMatching: state.current_matching.get("currentMatching"),
   counterProfile: state.player.get("counterProfile"),
   isCounterProfile: state.player.get("isCounterProfile"),
-  isGiftPopup: state.player.get("isGiftPopup"),
   isCurrentMatching: state.current_matching.get("isCurrentMatching"),
   myProfile: state.my_profile.get("myProfile")
 })

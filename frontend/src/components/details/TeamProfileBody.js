@@ -3,7 +3,6 @@ import "../../css/Profile.scss" //부모컴포넌트의CSS(SCSS)
 import "../../App.css" //공통CSS
 import Textarea from "react-textarea-autosize"
 import axios from "axios"
-import TeamPopup from "./TeamPopup"
 
 class TeamProfileBody extends Component {
   constructor(props) {
@@ -258,11 +257,7 @@ class TeamProfileBody extends Component {
           </form>
         </div>
 
-        {isEditedProfile && (
-          <div className="team-pop">
-            <TeamPopup MyProfileActions={MyProfileActions} />
-          </div>
-        )}
+        {isEditedProfile && alert("그룹이 생성되었습니다.")}
 
         <div className="imgs-wrap">
           <div className="imgs">

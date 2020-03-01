@@ -3,14 +3,15 @@ import "../../css/Main.scss" //부모컴포넌트의CSS(SCSS)
 import "../../App.css" //공통CSS
 import { Link } from "react-router-dom" //다른 페이지로 링크 걸 때 필요
 import CountDown from "./CountDown"
-import GiftPopup from "./GiftPopup"
 
 class ControlTool extends Component {
   constructor(props) {
     super(props)
     this.state = {
       isGreenlightMaleOn: this.props.currentMatching.isGreenlightMale,
-      isGreenlightFemaleOn: this.props.currentMatching.isGreenlightFemale
+      isGreenlightFemaleOn: this.props.currentMatching.isGreenlightFemale,
+      isGiftMaleOn: this.props.currentMatching.isGiftMale,
+      isGiftFemaleOn: this.props.currentMatching.isGiftFemale
     }
   }
 
@@ -34,32 +35,24 @@ class ControlTool extends Component {
   }
 
   handleGift = () => {
-    const {
-      PlayerActions,
-      currentMatching,
-      counterProfile,
-      CurrentMatchingActions
-    } = this.props
+    const { PlayerActions, currentMatching, counterProfile } = this.props
 
     if (!currentMatching.isGiftMale && !counterProfile.isMale) {
-      PlayerActions.handleGiftOn({ male: true })
+      window.confirm(
+        "안주를 한 번 쏘고 나면 되돌릴 수 없습니다. 정말 쏘시겠습니까?"
+      ) && PlayerActions.handleGiftOn({ male: true })
     } else if (!currentMatching.isGiftFemale && counterProfile.isMale) {
-      PlayerActions.handleGiftOn({ female: true })
-
-      PlayerActions.deletePopup()
-      CurrentMatchingActions.getCurrentMatching()
+      window.confirm(
+        "안주를 한 번 쏘고 나면 되돌릴 수 없습니다. 정말 쏘시겠습니까?"
+      ) && PlayerActions.handleGiftOn({ female: true })
+    } else {
+      window.alert("이미 안주를 쏘셨습니다.")
     }
-  }
-
-  handleGiftPopup = () => {
-    const { PlayerActions } = this.props
-    PlayerActions.createPopup()
   }
 
   render() {
     const {
       PlayerActions,
-      isGiftPopup,
       myProfile,
       counterProfile,
       currentMatching,
@@ -83,18 +76,6 @@ class ControlTool extends Component {
     return (
       <div className="control-container fix-bottom-controltool">
         <div className="control-tool">
-          <div className="gift-pop">
-            {isGiftPopup && (
-              <GiftPopup
-                PlayerActions={PlayerActions}
-                isGiftPopup={isGiftPopup}
-                counterProfile={counterProfile}
-                currentMatching={currentMatching}
-                handleGift={this.handleGift}
-              />
-            )}
-          </div>
-
           {/* 임시적으로 1분 미만의 시간 카운트  */}
           <div className="timer font-notosan font-13">{countDown}</div>
 
@@ -144,7 +125,7 @@ class ControlTool extends Component {
 
             <div className="column">
               {myProfile.isMale ? (
-                <div className="gift" onClick={this.handleGiftPopup}>
+                <div className="gift" onClick={this.handleGift}>
                   {currentMatching.isGiftMale && (
                     <div className="gift-on font-jua">안주쏘기</div>
                   )}
@@ -153,7 +134,7 @@ class ControlTool extends Component {
                   )}
                 </div>
               ) : (
-                <div className="gift" onClick={this.handleGiftPopup}>
+                <div className="gift" onClick={this.handleGift}>
                   {currentMatching.isGiftFemale && (
                     <div className="gift-on font-jua">안주쏘기</div>
                   )}
