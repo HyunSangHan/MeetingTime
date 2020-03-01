@@ -1,207 +1,409 @@
 //모바일&PC 공통 CSS들어갈 곳
-
-.main-container{
-    background-color: #f6f6f6;
+.main-container {
+  background-color: #f6f6f6;
+  width: 100%;
+  // min-width: 375px;
+  height: 100vh;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 //counter-profile component
-.counter-container{
+.total-container {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+
+  .counter-container {
     width: 90%;
-    min-width: 375px;
-    max-width: 800px;
+    max-width: 880px;
     margin-left: auto;
     margin-right: auto;
     background-color: #ffffff;
-    padding-right: 28px;
-    padding-left: 28px;
-    padding-bottom: 36px;
+    padding-bottom: 32px;
     border-radius: 12px;
-    .team-info{
-        display: flex;
-        margin-bottom: 10px;
-        align-items: center;
-        .team-name{
-            font-weight: bold;
-            font-size: 22px;
-            color: #000000;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: normal;
-            letter-spacing: -0.44px;
-            margin-right: 10px;
-        }
-        .age-range{
-            font-size: 13px;
-            font-weight: 500;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: 1.62;
-            letter-spacing: -0.3px;
-            color: #888888;
-            margin-right: 10px;
-        }
-        .company{
-            font-size: 13px;
-            font-weight: 500;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: 1.62;
-            letter-spacing: -0.3px;
-            color: #888888;
-        }
+
+    .team-info {
+      display: -webkit-flex !important;
+      display: -ms-flexbox !important;
+      display: flex !important;
+      margin-bottom: 7px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 87%;
+      align-items: center;
+      padding-top: 24px;
+
+      .team-name {
+        font-weight: bold;
+        font-size: 22px;
+        color: #000000;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: -0.44px;
+        margin-right: 10px;
+      }
+
+      .age-range {
+        font-size: 13px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.62;
+        letter-spacing: -0.3px;
+        color: #888888;
+      }
+
+      .company {
+        font-size: 13px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.62;
+        letter-spacing: -0.3px;
+        color: #888888;
+      }
     }
-    .team-intro{
-        text-align: justify;
+
+    .team-intro {
+      text-align: justify;
+      margin-bottom: 0px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 87%;
+      font-size: 14px;
     }
-    .images{
-        display: flex;
-        flex : 1;
-        justify-content: space-between;
-        overflow: auto;
-        border: none;
-        img{
-            border-radius: 12px;
-            width : 231px;
-            height: 231px;
-            background-color: #ffffff;
-            opacity: 0.9;
-            margin-left: 3px;
-            margin-right: 8px;
-            cursor: pointer;
-        }
+
+    .margin-wrap {
+      position: relative;
+      height: 270px;
+      display: flex;
+      justify-content: center;
     }
+  }
 }
 
+.images-wrapper {
+  position: absolute;
+  width: 100%;
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  justify-content: center;
+  z-index: 1;
+  bottom: 32px;
+}
 
+.images {
+  overflow: auto;
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  width: 100%;
+  .each-image {
+    margin-right: 14px;
+  }
 
+  .last-child-gap {
+    margin-left: -14px !important;
+    width: 11% !important;
+    min-width: 11% !important;
+  }
+}
 
 //control component
-.control-container{
-    width: 90%;
-    min-width: 375px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    .timer{
-        justify-content: center;
-        margin-bottom: 10px;
-    }
-    .action-container{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        .column{
-            .my-team{
-                width: 58px;
-                height: 58px;
-                border: 1.5px solid white;
-                border-radius: 12px;
-            }
-            .greenlight-back{
-                //그리라이트 백
-                width : 75px;
-                height: 75px;
-                background-color: #979797;
-                border-radius: 50%;
-                display:flex;
-                align-items: center;
-                justify-content: center;
-                .greenlight{
-                    width : 75px;
-                    height: 75px;
-                    background-color: #50e3c2;
-                    border-radius: 50%;
-                    display:flex;
-                    align-items: center;
-                    justify-content: center;
-                    cursor: pointer;
-                    .call-button{
-                        width : 60px;
-                        height: 60px;
-                        background-color: #ffffff;
-                        border-radius: 50%;
-                        font-size: 23px;
-                        display:flex;
-                        align-items: center;
-                        justify-content: center;
-                        color: #50e3c2;
-                    }
-                }
-            }
-            .gift{
-                cursor: pointer;
-                .gift-on{
-                    width: 58px;
-                    height: 58px;
-                    padding: 17px;
-                    border-radius: 50%;
-                    background-color: #9b9b9b;
-                    display:flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: #ffffff;
-                    font-size: 14px;
-
-                }
-                .gift-off{
-                    width: 58px;
-                    height: 58px;
-                    padding: 17px;
-                    border-radius: 50%;
-                    background-color: #9013fe;
-                    display:flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: #ffffff;
-                    font-size: 14px;
-                }
-            }
-        }
-    }
+.control-container {
+  bottom: 20px;
+  width: 100%;
 }
 
-//gift popup css
-.popup-container{
-    .gift-popup{
-        .box{
-            width: 50%;
-            min-width: 300px;
-            max-width: 700px;
-            height: 100px;
-            border: 2px solid #9013fe;
-            border-radius: 12px;
-            background-color : #50e3c2;
-            color: white;
-            font-size: 10px;
-            font-weight: 800;
-            padding: 30px;
-            display:flex;
+.control-tool {
+  width: 90%;
+  max-width: 880px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+
+  .timer {
+    justify-content: center;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  .action-container {
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    .column {
+      .my-team {
+        object-fit: cover;
+        width: 58px;
+        height: 58px;
+        border: 1.5px solid white;
+        border-radius: 12px;
+      }
+
+      .greenlight-back {
+        //그리라이트 백
+        width: 75px;
+        height: 75px;
+        background-color: #979797;
+        border-radius: 50%;
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        .greenlight {
+          width: 75px;
+          height: 75px;
+          background-color: #50e3c2;
+          border-radius: 50%;
+          display: -webkit-flex !important;
+          display: -ms-flexbox !important;
+          display: flex !important;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          .call-button {
+            width: 60px;
+            height: 60px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            font-size: 23px;
+            display: -webkit-flex !important;
+            display: -ms-flexbox !important;
+            display: flex !important;
             align-items: center;
             justify-content: center;
-            
-            .pop-button{
-                width: 100px;
-                height: 50px;
-                background-color : #9013fe;
-                color: white;
-                font-size: 20px;
-                border: none;
-                border-radius: 12px;
-            }
+            color: #50e3c2;
+          }
         }
+      }
+
+      .gift {
+        cursor: pointer;
+        .gift-on {
+          width: 58px;
+          height: 58px;
+          padding: 17px;
+          border-radius: 50%;
+          background-color: #9b9b9b;
+          display: -webkit-flex !important;
+          display: -ms-flexbox !important;
+          display: flex !important;
+          align-items: center;
+          justify-content: center;
+          color: #ffffff;
+          font-size: 14px;
+          line-height: 15px;
+        }
+
+        .gift-off {
+          width: 58px;
+          height: 58px;
+          padding: 17px;
+          border-radius: 50%;
+          background-color: #9013fe;
+          display: -webkit-flex !important;
+          display: -ms-flexbox !important;
+          display: flex !important;
+          align-items: center;
+          justify-content: center;
+          color: #ffffff;
+          font-size: 14px;
+          line-height: 15px;
+        }
+      }
     }
+  }
 }
 
+@media (max-width: 479px) {
+  /*Mobile*/
+  .top-m {
+    margin-top: 5vw;
+  }
 
-@media(max-width: 767px){ /*Mobile*/
-    //모바일(너비 767px이하)에만 해당되는 CSS들어갈 곳
-}
-    
-@media(min-width: 768px){ /*PC*/
-    //PC(너비 768px이상)에만 해당되는 CSS들어갈 곳
-    .container {
-        width: 1200px;
-        height: 667px;
-        background-color: dartkgrey;
+  .margin-wrap {
+    max-height: 250px;
+  }
+
+  .title-images {
+    margin-bottom: 274px;
+  }
+
+  .each-image {
+    margin-right: 14px;
+  }
+
+  .user-image {
+    width: 231px;
+    height: 231px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .each-image:first-child {
+    margin-left: 11% !important;
+  }
+
+  .ButtonWrap {
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    justify-content: center;
+
+    .MainSubmitButton {
+      margin-top: -75px;
+      width: 100%;
+      max-width: 800px;
+      height: 52px;
+      border: 0;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: -0.3px;
+      text-align: center;
+      color: #ffffff;
+      align-items: center;
     }
+  }
+}
+
+@media (min-width: 480px) {
+  /*Tablet*/
+
+  .top-m {
+    margin-top: 35px;
+  }
+  .each-image {
+    margin-right: 14px;
+  }
+
+  .user-image {
+    width: 246px;
+    height: 246px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .each-image:first-child {
+    margin-left: 11% !important;
+  }
+
+  .ButtonWrap {
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    justify-content: center;
+
+    .MainSubmitButton {
+      margin-top: -75px;
+      width: 100%;
+      max-width: 800px;
+      height: 52px;
+      border: 0;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: -0.3px;
+      text-align: center;
+      color: #ffffff;
+      align-items: center;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  /*PC1*/
+  .top-m {
+    margin-top: 45px;
+  }
+
+  .each-image {
+    margin-right: 14px;
+  }
+
+  .each-image:first-child {
+    margin-left: 11% !important;
+  }
+
+  .ButtonWrap {
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    justify-content: center;
+
+    .MainSubmitButton {
+      width: 90%;
+      max-width: 800px;
+      height: 52px;
+      border: 0;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: -0.3px;
+      text-align: center;
+      color: #ffffff;
+      position: fixed;
+      bottom: 20px;
+      align-items: center;
+    }
+  }
+}
+
+@media (min-width: 980px) {
+  /*PC2(for swipe)*/
+  .images-wrapper {
+    position: absolute;
+    width: 100%;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    justify-content: center;
+    z-index: 1;
+    bottom: 32px;
+
+    .images {
+      overflow: auto;
+      display: -webkit-flex !important;
+      display: -ms-flexbox !important;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+
+      .each-image {
+        margin-right: 14px;
+      }
+
+      .each-image:first-child {
+        margin-left: 11% !important;
+      }
+    }
+  }
+}
+
+@media (min-height: 635px) {
+  .fix-bottom-controltool {
+    position: fixed;
+    bottom: 20px;
+  }
 }

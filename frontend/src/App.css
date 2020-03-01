@@ -1,24 +1,24 @@
 .font-jua {
   letter-spacing: -0.3px;
-  font-family: 'Jua', sans-serif !important;
-  letter-spacing: -0.3px;
+  font-family: "Jua", sans-serif !important;
 }
 
 .font-notosan {
   letter-spacing: -0.3px;
-  font-family: 'Noto Sans KR', sans-serif !important;
-  letter-spacing: -0.3px;
+  font-family: "Noto Sans KR", sans-serif !important;
 }
 
 .App {
   text-align: center;
+  letter-spacing: -0.3px;
+  font-family: "Noto Sans KR", sans-serif !important;
 }
 
 .margin-auto {
   margin: auto;
 }
 
-.mh-auto{
+.mh-auto {
   margin-left: auto;
   margin-right: auto;
 }
@@ -87,7 +87,12 @@ h4 {
 
 .frame {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+}
+
+.frame-scrollable {
+  width: 100vw;
+  min-height: 100vh;
 }
 
 .frame-dark {
@@ -118,7 +123,8 @@ h4 {
 .flex {
   display: -webkit-flex !important;
   display: -ms-flexbox !important;
-  display: flex !important;}
+  display: flex !important;
+}
 
 .flex-center {
   display: -webkit-flex !important;
@@ -443,6 +449,10 @@ h4 {
   font-size: 15px;
 }
 
+.font-13 {
+  font-size: 13px;
+}
+
 .font-64 {
   font-size: 64px;
 }
@@ -457,6 +467,10 @@ h4 {
 
 .font-grey {
   color: grey;
+}
+
+.font-lightgrey {
+  color: #888;
 }
 
 .font-black {
@@ -491,54 +505,16 @@ h4 {
   background-color: #f6f6f6;
 }
 
-@media(max-width: 767px){ /*Mobile*/
+@media (max-width: 767px) {
+  /*Mobile*/
   .mobile-none {
     display: none !important;
   }
-
-  .pc-max-width {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .frame-half {
-    width: 100vw;
-    height: 100vh;
-    z-index: 0;
-  }
 }
 
-@media(min-width: 768px){ /*PC*/
+@media (min-width: 768px) {
+  /*PC*/
   .pc-none {
     display: none !important;
   }
-
-  .pc-max-width {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .frame-half {
-    width: 50vw;
-    height: 100vh;
-    z-index: 0;
-  }
-
-  .font-3 {
-    font-family: "Apple SD Gothic Neo";
-    font-size: 1.45rem !important;
-  }
-
-  .font-1 {
-    font-family: "Apple SD Gothic Neo";
-    font-size: 1.1rem !important;
-  }
-
-  .font-05 {
-    font-family: "Apple SD Gothic Neo";
-    font-size: 1.0rem !important;
-  }
-
 }

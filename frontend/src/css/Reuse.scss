@@ -1,148 +1,133 @@
-
 //모바일&PC 공통 CSS들어갈 곳
 .up-text-area {
-    box-sizing: border-box;
-    width: 100%;
-    position: relative;
-    margin-top: -2px;
-    height: 70%;
-    padding: 1px;
-    border: 0.5px solid #9013fe;
-    z-index: 1;
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  margin-top: -2px;
+  padding: 4px 7px;
+  border: 1.5px solid #9013fe;
+  background-color: white;
+  z-index: 1;
+  border-radius: 4px;
+  letter-spacing: 0 !important;
 }
 
 .up-triangle-part {
-
-    width: 0;
-    height: 0;
-    border: solid 10px;
-    border-color: transparent transparent #9013fe transparent;
-    box-sizing: border-box;
-    position: relative;
-    left:50%;
-    margin-left:-5px;
-    margin-top:-10px;
+  width: 0;
+  height: 0;
+  border: solid 10px;
+  border-color: transparent transparent #9013fe transparent;
+  box-sizing: border-box;
+  position: relative;
+  margin-top: -10px;
 }
 
 .up-white-triangle-part {
-    width: 0;
-    height: 0;
-    border: solid 10px;
-    border-color: transparent transparent white transparent;
-    position: relative;
-    left: 50%;
-    margin-left:-5px;
-    margin-top:-18px;
-    z-index: 2;
+  width: 0;
+  height: 0;
+  border: solid 10px;
+  border-color: transparent transparent white transparent;
+  position: relative;
+  margin-top: -18px;
+  z-index: 2;
 }
 
 .down-text-area {
-    box-sizing: border-box;
-    width: 100%;
-    position: relative;
-    margin-bottom: -2px;
-    height: 70%;
-    padding: 1px;
-    border: 0.5px solid #9013fe;
-    z-index: 1;
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  margin-bottom: -2px;
+  height: 70%;
+  padding: 1px;
+  border: 0.5px solid #9013fe;
+  z-index: 1;
 }
 
 .down-triangle-part {
-    width: 0;
-    height: 0;
-    border: solid 10px;
-    border-color: #9013fe transparent transparent transparent;
-    box-sizing: border-box;
-    position: relative;
-    left:50%;
-    margin-left:-5px;
-    margin-bottom:-10px;
+  width: 0;
+  height: 0;
+  border: solid 10px;
+  border-color: #9013fe transparent transparent transparent;
+  box-sizing: border-box;
+  position: relative;
+  left: 50%;
+  margin-bottom: -10px;
 }
 
 .down-white-triangle-part {
-    width: 0;
-    height: 0;
-    border: solid 10px;
-    border-color: white transparent transparent transparent;
-    position: relative;
-    left: 50%;
-    margin-left:-5px;
-    margin-bottom:-18px;
-    z-index: 2;
+  width: 0;
+  height: 0;
+  border: solid 10px;
+  border-color: white transparent transparent transparent;
+  position: relative;
+  left: 50%;
+  margin-bottom: -18px;
+  z-index: 2;
 }
 
 .tool-tip-up {
-    text-align: center;
-    width: 150px;
-    height: 30px;
-    font-size: 10px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.62;
-    letter-spacing: -0.4px;
-    color: #9013fe;
-
+  position: absolute;
+  top: 313px;
 }
 
-
+.tool-tip-down {
+  position: absolute;
+  top: -13px;
+  right: 7%;
+}
 
 .container {
-    text-align:center;
-    .spinner {
-        
-        max-width: 100%;
-        animation: spinner 1.2s steps(12) infinite;
-    }
+  text-align: center;
+  &.spinner {
+    max-width: 100%;
+    animation: spinner 1.2s steps(12) infinite;
+  }
 }
 
 .Rectangle {
-    width: 100%;
-    height: 54px;
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.05);
-    background-color: #ffffff;
-    display: flex;
-    .ArrowBack {
-        position: absolute;
-        margin-left: 22.5px;
-        margin-top: 19px;
-    }
-    .HeaderMessage {
-        padding-top: 20px;
-        padding-bottom: 15px;
-        height : 100%;
-        font-family: AppleSDGothicNeo;
-        font-size: 16px;
-        font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: -0.3px;
-        text-align: center;
-        color: #000000;
-    }
+  width: 100%;
+  height: 54px;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.05);
+  background-color: #ffffff;
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  .ArrowBack {
+    position: absolute;
+    margin-left: 22.5px;
+    margin-top: 19px;
+    cursor: pointer;
+  }
+  .HeaderMessage {
+    padding-top: 20px;
+    padding-bottom: 15px;
+    height: 100%;
+    font-family: AppleSDGothicNeo;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: -0.3px;
+    text-align: center;
+    color: #000000;
+  }
 }
 
 .MessageWrapper {
-    // position: absolute;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  // position: absolute;
+  width: 100%;
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  justify-content: center;
 }
 
 @keyframes spinner {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@media(max-width: 767px){ /*Mobile*/
-//모바일(너비 767px이하)에만 해당되는 CSS들어갈 곳
-}
-
-@media(min-width: 768px){ /*PC*/
-//PC(너비 768px이상)에만 해당되는 CSS들어갈 곳
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

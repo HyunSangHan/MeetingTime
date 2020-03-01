@@ -1,32 +1,24 @@
-import React, { Component } from 'react';
-import '../../css/Reuse.scss'; //도구성컴포넌트의CSS(SCSS)
-import '../../App.css'; //공통CSS
+import React, { Component } from "react"
+import "../../css/Reuse.scss" //도구성컴포넌트의CSS(SCSS)
+import "../../App.css" //공통CSS
 
 class ToolTipDown extends Component {
-
-    // constructor(props){
-    //     super(props);
-    // }
-
-    // componentDidMount(){
-    // }
-
     render() {
-        // const { } = this.props;
-        // 문서객체에 대한 필요한 분기는 여기서 미리 처리하기
-
+        const content = this.props.content || "";
         return (
-            <div className={"App"}>
-                <div className="tool-tip-up">
-                    <div className="down-text-area">
-                        여기가 툴팁DOWN!
+            <div className="tool-tip-down font-14 font-jua font-purple">
+                <div className="up-text-area">
+                    { content }
+                </div>
+                <div className="flex-center">
+                    <div>
+                        <div className="down-triangle-part"/>
+                        <div className="down-white-triangle-part"/>
                     </div>
-                    <div className="down-white-triangle-part"></div>
-                    <div className="down-triangle-part"></div>
                 </div>
             </div>
         );
     }
 }
 
-export default ToolTipDown;
+export default ToolTipDown
