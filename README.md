@@ -1,5 +1,7 @@
 This is a web application for helping workers to make meeting chance.  
-직장인끼리의 미팅을 도와주는 웹 애플리케이션입니다.
+직장인끼리의 미팅을 도와주는 웹 애플리케이션입니다.  
+
+![mockup](https://github.com/HyunSangHan/MeetingTime/blob/master/docs/mockup.png)
 
 ---
 
