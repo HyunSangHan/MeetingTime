@@ -96,11 +96,15 @@ class JoinButton extends Component {
               <div className="mb-2 font-15 font-purple font-notosan">
                 축하합니다! 커트라인을 넘었습니다!
               </div>
-              <Link to="/matching" style={{ textDecoration: "none" }}>
-                <div className="join-button-wrap bg-color-join mh-auto flex-center">
+              <div className="join-button-wrap bg-color-join mh-auto flex-center">
+                <Link
+                  to="/matching"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  className="flex-center w-100 h-100"
+                >
                   <div className="font-notosan">입장하기</div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             </div>
           )
         } else if (
