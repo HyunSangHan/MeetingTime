@@ -1,16 +1,5 @@
-import { createAction, handleActions } from "redux-actions"
 import { Map } from "immutable"
 import axios from "axios"
-import { pender } from "redux-pender"
-
-const GET_PROFILE = `GET_PROFILE`
-const UPDATE_PROFILE = `UPDATE_PROFILE`
-const CREATE_POPUP = `CREATE_POPUP`
-const DELETE_POPUP = `DELETE_POPUP`
-const NEW_TAB_ON = `NEW_TAB_ON`
-const PREV_TAB_ON = `PREV_TAB_ON`
-const LOGIN_SUCCESS = `LOGIN_SUCCESS`
-const LOGOUT_SUCCESS = `LOGOUT_SUCCESS`
 
 const initialState = Map({
   isLoginAlready: null,
@@ -37,131 +26,131 @@ const initialState = Map({
   clickedTab: "new"
 })
 
-export default handleActions(
-  {
-    ...pender({
-      type: GET_PROFILE,
-      onSuccess: (state, action) => {
-        return state
-          .set("myProfile", action.payload.data)
-          .set("isLoginAlready", true)
-      },
-      onFailure: (state, action) => {
-        return state.set("isLoginAlready", false)
-      }
-    }),
-
-    [CREATE_POPUP]: state => {
-      return state.set("isEditedProfile", true)
-    },
-
-    [DELETE_POPUP]: state => {
-      return state.set("isEditedProfile", false)
-    },
-
-    ...pender({
-      type: UPDATE_PROFILE,
-      onSuccess: (state, action) =>
-        state
-          .set("myProfile.user.username", action.payload.data)
-          .set("isLoginAlready", true),
-      onFailure: (state, action) => state.set("isLoginAlready", false)
-    }),
-
-    [NEW_TAB_ON]: state => {
-      return state.set("clickedTab", "new")
-    },
-
-    [PREV_TAB_ON]: state => {
-      return state.set("clickedTab", "prev")
-    },
-
-    [LOGIN_SUCCESS]: state => {
-      return state.set("isLoginAlready", true)
-    },
-
-    [LOGOUT_SUCCESS]: state => {
-      return state.set("isLoginAlready", false)
+const createAction = (actionType, data) => {
+  if (!data) {
+    return {
+      type: actionType
     }
-  },
-  initialState
-)
+  } else {
+    return {
+      type: actionType,
+      data: data
+    }
+  }
+}
 
-//팝업용 액션
+const CREATE_POPUP = `CREATE_POPUP`
+const DELETE_POPUP = `DELETE_POPUP`
+const NEW_TAB_ON = `NEW_TAB_ON`
+const PREV_TAB_ON = `PREV_TAB_ON`
+const LOGIN_SUCCESS = `LOGIN_SUCCESS`
+const LOGIN_FAILURE = `LOGIN_FAILURE`
+const LOGOUT_SUCCESS = `LOGOUT_SUCCESS`
+const GET_PROFILE = `GET_PROFILE`
+const UPDATE_PROFILE = `UPDATE_PROFILE`
+
 export const createPopup = createAction(CREATE_POPUP)
 export const deletePopup = createAction(DELETE_POPUP)
+export const newTabOn = createAction(NEW_TAB_ON)
+export const prevTabOn = createAction(PREV_TAB_ON)
+export const loginSuccess = createAction(LOGIN_SUCCESS)
+export const loginFailure = createAction(LOGIN_FAILURE)
+export const logoutSuccess = createAction(LOGOUT_SUCCESS)
 
-export const getMyProfile = createAction(GET_PROFILE, () =>
+export const getMyProfile = () => (dispatch, getState) => {
   axios({
     method: "get",
     url: "/profile"
   })
     .then(response => {
       console.log(response)
-      return response
+      dispatch(createAction(GET_PROFILE, response))
+      dispatch(createAction(LOGIN_SUCCESS))
     })
     .catch(err => {
-      console.log("not working (getProfile) - " + err)
+      dispatch(createAction(LOGIN_FAILURE))
+      console.log("not working (getMyProfile) - " + err)
     })
-)
+}
 
-export const updateProfile = createAction(UPDATE_PROFILE, payload =>
+export const updateMyProfile = payload => (dispatch, getState) => {
+  //TODO: 나중에 사용자 key name도 파라미터로 받아야한다.
   axios({
     method: "patch",
     url: "/profile/",
     data: {
-      ageRange: payload.ageValue
+      ...payload
+      // ageRange: ageRangepayload.ageValue,
+      // name: payload.companyValue,
+      // image: payload.imageValue,
+      // imageTwo: payload.imageTwoBalue,
+      // imageThree: payload.imageThreeValue,
+      // teamName: payload.teamNameValue,
+      // teamIntroduce: payload.teamIntroValue
     }
   })
     .then(response => {
-      console.log(response.data)
-      return response
+      console.log(response)
+      dispatch(createAction(UPDATE_PROFILE, response))
     })
     .catch(err => {
-      console.log("not working (updateProfile) - " + err)
+      console.log("not working (updateMyProfile) - " + err)
     })
-)
+}
 
-export const updateCompany = createAction(UPDATE_PROFILE, payload =>
-  axios({
-    method: "patch",
-    url: "/company/",
-    data: {
-      name: payload.companyValue
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case CREATE_POPUP: {
+      return {
+        ...state,
+        isEditedProfile: true
+      }
     }
-  })
-    .then(response => {
-      console.log(response.data)
-      return response
-    })
-    .catch(err => {
-      console.log("not working (updateProfile) - " + err)
-    })
-)
-
-export const updateTeam = createAction(UPDATE_PROFILE, payload =>
-  axios({
-    method: "patch",
-    url: "/profile/",
-    data: {
-      image: payload.imageValue,
-      imageTwo: payload.imageTwoBalue,
-      imageThree: payload.imageThreeValue,
-      teamName: payload.teamNameValue,
-      teamIntroduce: payload.teamIntroValue
+    case DELETE_POPUP: {
+      return {
+        ...state,
+        isEditedProfile: false
+      }
     }
-  })
-    .then(response => {
-      console.log(response.data)
-      return response
-    })
-    .catch(err => {
-      console.log("not working (updateProfile) - " + err)
-    })
-)
+    // TODO: NEW_TAB_ON과 PREV_TAB_ON은 나중에 하나로 합쳐도 되겠음 파라미터만 다르게 하고
+    case NEW_TAB_ON: {
+      return {
+        ...state,
+        clickedTab: "new"
+      }
+    }
+    case PREV_TAB_ON: {
+      return {
+        ...state,
+        clickedTab: "prev"
+      }
+    }
+    case LOGIN_SUCCESS: {
+      return {
+        ...state,
+        isLoginAlready: true
+      }
+    }
+    case LOGIN_FAILURE:
+    case LOGOUT_SUCCESS: {
+      return {
+        ...state,
+        isLoginAlready: false
+      }
+    }
+    case GET_PROFILE:
+    case UPDATE_PROFILE: {
+      return {
+        ...state,
+        myProfile: action.data
+      }
+    }
+    default: {
+      return {
+        ...state
+      }
+    }
+  }
+}
 
-//TwoTab.js용
-export const newTabOn = createAction(NEW_TAB_ON)
-export const prevTabOn = createAction(PREV_TAB_ON)
-export const loginSuccess = createAction(LOGIN_SUCCESS)
-export const logoutSuccess = createAction(LOGOUT_SUCCESS)
+export default reducer
