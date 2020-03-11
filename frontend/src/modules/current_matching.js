@@ -1,5 +1,6 @@
 import { Map } from "immutable"
 import axios from "axios"
+import { createAction } from "./utils"
 
 const GET_CURRENT_MATCHING = `GET_CURRENT_MATCHING`
 const GET_CURRENT_MATCHING_SUCCESS = `GET_CURRENT_MATCHING_SUCCESS`
@@ -18,12 +19,12 @@ export const getCurrentMatching = () => {
     })
       .then(response => {
         console.log(response.data)
-        dispatch({ type: GET_CURRENT_MATCHING, data: response.data })
-        dispatch({ type: GET_CURRENT_MATCHING_SUCCESS })
+        dispatch(createAction(GET_CURRENT_MATCHING, response.data))
+        dispatch(createAction(GET_CURRENT_MATCHING_SUCCESS))
       })
       .catch(err => {
         console.log(err + "not working (currentMatching)")
-        dispatch({ type: GET_CURRENT_MATCHING_FAILURE })
+        dispatch(createAction(GET_CURRENT_MATCHING_FAILURE))
       })
   }
 }

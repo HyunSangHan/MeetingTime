@@ -1,5 +1,6 @@
 import { Map } from "immutable"
 import axios from "axios"
+import { createAction } from "./utils"
 
 const GET_CURRENT_MEETING = `GET_CURRENT_MEETING`
 
@@ -16,7 +17,7 @@ export const getCurrentMeeting = () => {
       .then(response => {
         console.log("this is working OOOOO")
         console.log(response.data)
-        dispatch({ type: GET_CURRENT_MEETING, data: response.data })
+        dispatch(createAction(GET_CURRENT_MEETING, response.data))
       })
       .catch(err => {
         console.log("not working - " + err)

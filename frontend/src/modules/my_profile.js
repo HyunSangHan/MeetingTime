@@ -1,5 +1,6 @@
 import { Map } from "immutable"
 import axios from "axios"
+import { createAction } from "./utils"
 
 const initialState = Map({
   isLoginAlready: null,
@@ -25,19 +26,6 @@ const initialState = Map({
   isEditedProfile: null,
   clickedTab: "new"
 })
-
-const createAction = (actionType, data) => {
-  if (!data) {
-    return {
-      type: actionType
-    }
-  } else {
-    return {
-      type: actionType,
-      data: data
-    }
-  }
-}
 
 const CREATE_POPUP = `CREATE_POPUP`
 const DELETE_POPUP = `DELETE_POPUP`
