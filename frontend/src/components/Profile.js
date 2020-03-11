@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react"
-import * as myProfileActions from "../modules/my_profile"
+import { getMyProfile, updateMyProfile } from "../modules/my_profile"
 import * as emailActions from "../modules/email"
 import "../css/Profile.scss"
 import "../App.css"
@@ -19,8 +19,7 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    const { MyProfileActions } = this.props
-    MyProfileActions.getMyProfile()
+    getMyProfile()
   }
 
   handleInputChange = event => {
@@ -79,14 +78,13 @@ class Profile extends Component {
   }
 
   handleSubmit = event => {
-    const { MyProfileActions, history } = this.props
+    const { history } = this.props
     const { ageValue, companyValue } = this.state
     console.log(this.state)
     event.preventDefault()
-    MyProfileActions.updateProfile({ ageValue })
-    MyProfileActions.updateCompany({ companyValue })
-    MyProfileActions.getMyProfile().then(() => {
-      //promise반환이 맞는지 추후 확인 필요
+    updateMyProfile({ ageRange: ageValue, company: companyValue })
+    getMyProfile().then(() => {
+      //promise반환이 맞는지 추후 확인 필요 TODO: 추후 프로미스 반환하게 해두자 then을 쓰기 위해
       history.push("/")
     })
   }
@@ -238,13 +236,12 @@ class Profile extends Component {
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
-  MyProfileActions: bindActionCreators(myProfileActions, dispatch),
   EmailActions: bindActionCreators(emailActions, dispatch)
 })
 
 const mapStateToProps = state => ({
-  isLoginAlready: state.my_profile.get("isLoginAlready"),
-  myProfile: state.my_profile.get("myProfile"),
+  isLoginAlready: state.isLoginAlready,
+  myProfile: state.myProfile,
   sent: state.email.get("sent"),
   validated: state.email.get("validated")
 })

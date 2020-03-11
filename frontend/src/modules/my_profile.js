@@ -47,7 +47,6 @@ const LOGIN_SUCCESS = `LOGIN_SUCCESS`
 const LOGIN_FAILURE = `LOGIN_FAILURE`
 const LOGOUT_SUCCESS = `LOGOUT_SUCCESS`
 const GET_PROFILE = `GET_PROFILE`
-const UPDATE_PROFILE = `UPDATE_PROFILE`
 
 export const createPopup = createAction(CREATE_POPUP)
 export const deletePopup = createAction(DELETE_POPUP)
@@ -57,45 +56,39 @@ export const loginSuccess = createAction(LOGIN_SUCCESS)
 export const loginFailure = createAction(LOGIN_FAILURE)
 export const logoutSuccess = createAction(LOGOUT_SUCCESS)
 
-export const getMyProfile = () => (dispatch, getState) => {
-  axios({
-    method: "get",
-    url: "/profile"
-  })
-    .then(response => {
-      console.log(response)
-      dispatch(createAction(GET_PROFILE, response))
-      dispatch(createAction(LOGIN_SUCCESS))
+export const getMyProfile = () => {
+  return dispatch => {
+    axios({
+      method: "get",
+      url: "/profile"
     })
-    .catch(err => {
-      dispatch(createAction(LOGIN_FAILURE))
-      console.log("not working (getMyProfile) - " + err)
-    })
+      .then(response => {
+        console.log(response)
+        dispatch(createAction(GET_PROFILE, response))
+        dispatch(createAction(LOGIN_SUCCESS))
+      })
+      .catch(err => {
+        dispatch(createAction(LOGIN_FAILURE))
+        console.log("not working (getMyProfile) - " + err)
+      })
+  }
 }
 
-export const updateMyProfile = payload => (dispatch, getState) => {
-  //TODO: 나중에 사용자 key name도 파라미터로 받아야한다.
-  axios({
-    method: "patch",
-    url: "/profile/",
-    data: {
-      ...payload
-      // ageRange: ageRangepayload.ageValue,
-      // name: payload.companyValue,
-      // image: payload.imageValue,
-      // imageTwo: payload.imageTwoBalue,
-      // imageThree: payload.imageThreeValue,
-      // teamName: payload.teamNameValue,
-      // teamIntroduce: payload.teamIntroValue
-    }
-  })
-    .then(response => {
-      console.log(response)
-      dispatch(createAction(UPDATE_PROFILE, response))
+export const updateMyProfile = payload => {
+  return dispatch => {
+    axios({
+      method: "patch",
+      url: "/profile/",
+      data: payload
     })
-    .catch(err => {
-      console.log("not working (updateMyProfile) - " + err)
-    })
+      .then(response => {
+        console.log(response)
+        dispatch(createAction(GET_PROFILE, response.data))
+      })
+      .catch(err => {
+        console.log("not working (updateMyProfile) - " + err)
+      })
+  }
 }
 
 const reducer = (state = initialState, action) => {
@@ -138,18 +131,14 @@ const reducer = (state = initialState, action) => {
         isLoginAlready: false
       }
     }
-    case GET_PROFILE:
-    case UPDATE_PROFILE: {
+    case GET_PROFILE: {
       return {
         ...state,
         myProfile: action.data
       }
     }
-    default: {
-      return {
-        ...state
-      }
-    }
+    default:
+      return state
   }
 }
 
