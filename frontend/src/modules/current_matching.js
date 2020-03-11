@@ -1,39 +1,56 @@
-import { createAction, handleActions } from "redux-actions"
 import { Map } from "immutable"
 import axios from "axios"
-import { pender } from "redux-pender"
 
-const CURRENT_MATCHING = "CURRENT_MATCHING"
+const GET_CURRENT_MATCHING = `GET_CURRENT_MATCHING`
+const GET_CURRENT_MATCHING_SUCCESS = `GET_CURRENT_MATCHING_SUCCESS`
+const GET_CURRENT_MATCHING_FAILURE = `GET_CURRENT_MATCHING_FAILURE`
 
 const initialState = Map({
   isCurrentMatching: false,
   currentMatching: {}
 })
 
-export default handleActions(
-  {
-    ...pender({
-      type: CURRENT_MATCHING,
-      onSuccess: (state, action) =>
-        state
-          .set("currentMatching", action.payload.data)
-          .set("isCurrentMatching", true),
-      onFailure: (state, action) => state.set("isCurrentMatching", false)
+export const getCurrentMatching = () => {
+  return dispatch => {
+    axios({
+      method: "get",
+      url: "/current_matching"
     })
-  },
-  initialState
-)
+      .then(response => {
+        console.log(response.data)
+        dispatch({ type: GET_CURRENT_MATCHING, data: response.data })
+        dispatch({ type: GET_CURRENT_MATCHING_SUCCESS })
+      })
+      .catch(err => {
+        console.log(err + "not working (currentMatching)")
+        dispatch({ type: GET_CURRENT_MATCHING_FAILURE })
+      })
+  }
+}
 
-export const getCurrentMatching = createAction(CURRENT_MATCHING, payload =>
-  axios({
-    method: "get",
-    url: "/current_matching"
-  })
-    .then(response => {
-      console.log(response.data)
-      return response
-    })
-    .catch(err => {
-      console.log(err + "not working (currentMatching)")
-    })
-)
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_CURRENT_MATCHING: {
+      return {
+        ...state,
+        currentMatching: action.data
+      }
+    }
+    case GET_CURRENT_MATCHING_SUCCESS: {
+      return {
+        ...state,
+        isCurrentMatching: true
+      }
+    }
+    case GET_CURRENT_MATCHING_FAILURE: {
+      return {
+        ...state,
+        isCurrentMatching: false
+      }
+    }
+    default:
+      return state
+  }
+}
+
+export default reducer
