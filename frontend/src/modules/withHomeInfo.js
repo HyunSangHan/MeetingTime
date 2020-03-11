@@ -4,14 +4,13 @@ import { bindActionCreators } from "redux"
 import * as joinActions from "./join"
 import * as currentMeetingActions from "./current_meeting"
 import { getMyProfile } from "../modules/my_profile"
+import { getCurrentMeeting } from "../modules/current_meeting"
 
 export default ComposedComponent => {
   class withHomeInfo extends React.Component {
     componentDidMount() {
-      const { JoinActions, CurrentMeetingActions, myProfile } = this.props
-      CurrentMeetingActions.getCurrentMeeting().then(() =>
-        console.log(this.props.isLoginAlready)
-      )
+      const { JoinActions, myProfile } = this.props
+      getCurrentMeeting().then(() => console.log(this.props.isLoginAlready))
       myProfile && !myProfile.user.username && getMyProfile()
       // myProfile.user.username && JoinActions.getJoinedUser()
     }
@@ -29,8 +28,7 @@ export default ComposedComponent => {
 
   const mapDispatchToProps = dispatch => ({
     dispatch,
-    JoinActions: bindActionCreators(joinActions, dispatch),
-    CurrentMeetingActions: bindActionCreators(currentMeetingActions, dispatch)
+    JoinActions: bindActionCreators(joinActions, dispatch)
   })
 
   const mapStateToProps = state => ({
@@ -39,7 +37,7 @@ export default ComposedComponent => {
     isJoinedAlready: state.join.get("isJoinedAlready"),
     isLoginAlready: state.isLoginAlready,
     myProfile: state.myProfile,
-    currentMeeting: state.current_meeting.get("currentMeeting")
+    currentMeeting: state.currentMeeting
   })
 
   return connect(mapStateToProps, mapDispatchToProps)(withHomeInfo)

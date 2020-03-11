@@ -20,6 +20,8 @@ class Waiting extends Component {
       isJoinedAlready
     } = this.props
 
+    console.log(this.props)
+
     const closeTime = Date.parse(currentMeeting.closeTime)
     const openTime = Date.parse(currentMeeting.openTime)
     const nowTime = new Date().getTime()
