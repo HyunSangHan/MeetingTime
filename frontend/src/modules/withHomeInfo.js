@@ -1,15 +1,14 @@
 import React from "react"
 import { connect } from "react-redux"
-import { bindActionCreators } from "redux"
-import * as joinActions from "./join"
-import * as currentMeetingActions from "./current_meeting"
+// import { bindActionCreators } from "redux"
 import { getMyProfile } from "../modules/my_profile"
 import { getCurrentMeeting } from "../modules/current_meeting"
+import { getJoinedUser } from "../modules/join"
 
 export default ComposedComponent => {
   class withHomeInfo extends React.Component {
     componentDidMount() {
-      const { JoinActions, myProfile } = this.props
+      const { myProfile } = this.props
       getCurrentMeeting().then(() => console.log(this.props.isLoginAlready))
       myProfile && !myProfile.user.username && getMyProfile()
       // myProfile.user.username && JoinActions.getJoinedUser()
@@ -17,7 +16,7 @@ export default ComposedComponent => {
 
     componentWillReceiveProps(nextProps) {
       if (this.props.myProfile !== nextProps.myProfile) {
-        this.props.JoinActions.getJoinedUser()
+        getJoinedUser()
       }
     }
 
@@ -26,19 +25,13 @@ export default ComposedComponent => {
     }
   }
 
-  const mapDispatchToProps = dispatch => ({
-    dispatch,
-    JoinActions: bindActionCreators(joinActions, dispatch)
-  })
-
   const mapStateToProps = state => ({
-    isJoinedPopupOn: state.join.get("isJoinedPopupOn"),
-    joinedUser: state.join.get("joinedUser"),
-    isJoinedAlready: state.join.get("isJoinedAlready"),
+    joinedUser: state.joinedUser,
+    isJoinedAlready: state.isJoinedAlready,
     isLoginAlready: state.isLoginAlready,
     myProfile: state.myProfile,
     currentMeeting: state.currentMeeting
   })
 
-  return connect(mapStateToProps, mapDispatchToProps)(withHomeInfo)
+  return connect(mapStateToProps)(withHomeInfo)
 }
