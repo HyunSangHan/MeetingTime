@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react"
 import { getMyProfile, updateMyProfile } from "../modules/my_profile"
-import * as emailActions from "../modules/email"
+import { sendEmail, validateEmail } from "../modules/email"
 import "../css/Profile.scss"
 import "../App.css"
 import Header from "./details/Header"
@@ -39,7 +39,6 @@ class Profile extends Component {
   }
 
   onSend() {
-    const { EmailActions } = this.props
     const { emailFront, companyValue } = this.state
     let emailCompany
     switch (
@@ -64,15 +63,14 @@ class Profile extends Component {
         emailCompany = "[등록되지 않은 회사입니다!]"
         break
     }
-    EmailActions.sendEmail({
+    sendEmail({
       email: emailFront + emailCompany
     })
   }
 
   onValidate() {
-    const { EmailActions } = this.props
     const { code } = this.state
-    EmailActions.validateEmail({
+    validateEmail({
       code: code
     })
   }
@@ -234,16 +232,11 @@ class Profile extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  EmailActions: bindActionCreators(emailActions, dispatch)
-})
-
 const mapStateToProps = state => ({
   isLoginAlready: state.isLoginAlready,
   myProfile: state.myProfile,
-  sent: state.email.get("sent"),
-  validated: state.email.get("validated")
+  sent: state.email.sent,
+  validated: state.email.validated
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)
+export default connect(mapStateToProps)(Profile)
