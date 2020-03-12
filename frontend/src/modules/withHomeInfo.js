@@ -26,11 +26,11 @@ export default ComposedComponent => {
   }
 
   const mapStateToProps = state => ({
-    joinedUser: state.joinedUser,
-    isJoinedAlready: state.isJoinedAlready,
-    isLoginAlready: state.isLoginAlready,
-    myProfile: state.myProfile,
-    currentMeeting: state.currentMeeting
+    joinedUser: state.join.joinedUser,
+    isJoinedAlready: state.my_profile.isJoinedAlready,
+    isLoginAlready: state.my_profile.isLoginAlready,
+    myProfile: state.my_profile.myProfile,
+    currentMeeting: state.current_meeting.currentMeeting
   })
 
   return connect(mapStateToProps)(withHomeInfo)

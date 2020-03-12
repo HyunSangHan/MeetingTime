@@ -38,40 +38,40 @@ class ControlTool extends Component {
   }
 
   handleGreenLight = () => {
-    const { PlayerActions, counterProfile } = this.props
+    const { handleGreenLight, counterProfile } = this.props
     const { isGreenlightMale, isGreenlightFemale } = this.state
 
     if (!isGreenlightMale && !counterProfile.isMale) {
-      PlayerActions.handleGreenLightOn({ male: true }).then(
+      handleGreenLight({ male: true }).then(
         this.setState({ isGreenlightMale: true })
       )
     } else if (!isGreenlightFemale && counterProfile.isMale) {
-      PlayerActions.handleGreenLightOn({ female: true }).then(
+      handleGreenLight({ female: true }).then(
         this.setState({ isGreenlightFemale: true })
       )
     } else if (isGreenlightMale && !counterProfile.isMale) {
-      PlayerActions.handleGreenLightOff({ male: false }).then(
+      handleGreenLight({ male: false }).then(
         this.setState({ isGreenlightMale: false })
       )
     } else if (isGreenlightFemale && counterProfile.isMale) {
-      PlayerActions.handleGreenLightOff({ female: false }).then(
+      handleGreenLight({ female: false }).then(
         this.setState({ isGreenlightFemale: false })
       )
     }
   }
 
   handleGift = () => {
-    const { PlayerActions, counterProfile } = this.props
+    const { handleGift, counterProfile } = this.props
     const { isGiftMale, isGiftFemale } = this.state
 
     if (!isGiftMale && !counterProfile.isMale) {
       window.confirm(
         "안주를 한 번 쏘고 나면 되돌릴 수 없습니다. 정말 쏘시겠습니까?"
-      ) && PlayerActions.handleGiftOn({ male: true })
+      ) && handleGift({ male: true })
     } else if (!isGiftFemale && counterProfile.isMale) {
       window.confirm(
         "안주를 한 번 쏘고 나면 되돌릴 수 없습니다. 정말 쏘시겠습니까?"
-      ) && PlayerActions.handleGiftOn({ female: true })
+      ) && handleGift({ female: true })
     } else {
       window.alert("이미 안주를 쏘셨습니다.")
     }
@@ -79,7 +79,6 @@ class ControlTool extends Component {
 
   render() {
     const {
-      PlayerActions,
       myProfile,
       counterProfile,
       currentMatching,

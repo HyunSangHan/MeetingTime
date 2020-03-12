@@ -11,12 +11,15 @@ import ControlTool from "./details/ControlTool"
 import ToolTipDown from "./details/ToolTipDown"
 import Loading from "./details/Loading"
 import { connect } from "react-redux"
-import { bindActionCreators } from "redux"
-import * as joinActions from "../modules/join"
-import * as currentMeetingActions from "../modules/current_meeting"
-import * as currentMatchingActions from "../modules/current_matching"
-import * as playerActions from "../modules/player"
-import * as myProfileActions from "../modules/my_profile"
+import { getJoinedUser } from "../modules/join"
+import { getCurrentMeeting } from "../modules/current_meeting"
+import { getCurrentMatching } from "../modules/current_matching"
+import {
+  getCounterProfile,
+  handleGreenLight,
+  handleGift
+} from "../modules/player"
+import { getMyProfile } from "../modules/my_profile"
 import axios from "axios"
 
 class Main extends Component {
@@ -47,21 +50,13 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    const {
-      CurrentMeetingActions,
-      CurrentMatchingActions,
-      MyProfileActions,
-      PlayerActions,
-      JoinActions,
-      isJoinedAlready,
-      isLoginAlready
-    } = this.props
-    CurrentMeetingActions.getCurrentMeeting()
-    CurrentMatchingActions.getCurrentMatching()
-    MyProfileActions.getMyProfile()
-    PlayerActions.getCounterProfile()
+    const { isJoinedAlready, isLoginAlready } = this.props
+    getCurrentMeeting()
+    getCurrentMatching()
+    getMyProfile()
+    getCounterProfile()
     if (!isJoinedAlready) {
-      JoinActions.getJoinedUser()
+      getJoinedUser()
     } else {
       this.setState({
         loading: false
@@ -98,7 +93,6 @@ class Main extends Component {
   render() {
     const {
       myProfile,
-      JoinActions,
       isJoinedPopupOn,
       isJoinedAlready,
       isLoginAlready,
@@ -106,10 +100,8 @@ class Main extends Component {
       currentMeeting,
       isCurrentMatching,
       currentMatching,
-      PlayerActions,
-      CurrentMatchingActions,
       counterProfile,
-      isCounterProfile
+      hasCounterProfile
     } = this.props
     const emptyProfile = this.state
 
@@ -178,9 +170,11 @@ class Main extends Component {
           ) : (
             <CounterPlayer
               myProfile={myProfile || emptyProfile}
-              PlayerActions={PlayerActions}
+              getCounterProfile={getCounterProfile}
+              handleGreenLight={handleGreenLight}
+              handleGift={handleGift}
               counterProfile={counterProfile}
-              isCounterProfile={isCounterProfile}
+              hasCounterProfile={hasCounterProfile}
               isGift={isGift}
             />
           )}
@@ -188,10 +182,10 @@ class Main extends Component {
         <ControlTool
           time={this.state.time}
           myProfile={myProfile || emptyProfile}
-          PlayerActions={PlayerActions}
-          CurrentMatchingActions={CurrentMatchingActions}
+          getJoinedUser={getCounterProfile}
+          getCurrentMatching={getCurrentMatching}
           counterProfile={counterProfile}
-          isCounterProfile={isCounterProfile}
+          hasCounterProfile={hasCounterProfile}
           isCurrentMatching={isCurrentMatching}
           currentMatching={currentMatching}
           currentMeeting={currentMeeting}
@@ -202,26 +196,17 @@ class Main extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  JoinActions: bindActionCreators(joinActions, dispatch),
-  CurrentMeetingActions: bindActionCreators(currentMeetingActions, dispatch),
-  CurrentMatchingActions: bindActionCreators(currentMatchingActions, dispatch),
-  PlayerActions: bindActionCreators(playerActions, dispatch),
-  MyProfileActions: bindActionCreators(myProfileActions, dispatch)
-})
-
 const mapStateToProps = state => ({
-  isJoinedPopupOn: state.join.get("isJoinedPopupOn"),
-  isJoinedAlready: state.join.get("isJoinedAlready"),
-  isLoginAlready: state.my_profile.get("isLoginAlready"),
-  joinedUser: state.join.get("joinedUser"),
-  currentMeeting: state.current_meeting.get("currentMeeting"),
-  currentMatching: state.current_matching.get("currentMatching"),
-  counterProfile: state.player.get("counterProfile"),
-  isCounterProfile: state.player.get("isCounterProfile"),
-  isCurrentMatching: state.current_matching.get("isCurrentMatching"),
-  myProfile: state.my_profile.get("myProfile")
+  isJoinedPopupOn: state.join.isJoinedPopupOn,
+  isJoinedAlready: state.join.isJoinedAlready,
+  isLoginAlready: state.my_profile.isLoginAlready,
+  joinedUser: state.join.joinedUser,
+  currentMeeting: state.current_meeting.currentMeeting,
+  currentMatching: state.current_matching.currentMatching,
+  counterProfile: state.player.counterProfile,
+  hasCounterProfile: state.player.hasCounterProfile,
+  isCurrentMatching: state.current_matching.isCurrentMatching,
+  myProfile: state.my_profile.myProfile
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main)
+export default connect(mapStateToProps)(Main)
