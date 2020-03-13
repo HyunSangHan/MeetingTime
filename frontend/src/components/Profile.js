@@ -233,8 +233,8 @@ class Profile extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLoginAlready: state.isLoginAlready,
-  myProfile: state.myProfile,
+  isLoginAlready: state.my_profile.isLoginAlready,
+  myProfile: state.my_profile.myProfile,
   sent: state.email.sent,
   validated: state.email.validated
 })

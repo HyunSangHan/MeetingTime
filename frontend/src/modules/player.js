@@ -134,6 +134,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         isGiftOn: true
       }
+    default:
+      return state
   }
 }
 

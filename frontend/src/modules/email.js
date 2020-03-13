@@ -59,6 +59,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         validated: false
       }
+    default:
+      return state
   }
 }
 
