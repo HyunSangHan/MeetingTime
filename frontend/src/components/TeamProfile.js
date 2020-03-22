@@ -3,9 +3,7 @@ import {
   getMyProfile,
   updateMyProfile,
   newTabOn,
-  prevTabOn,
-  createPopup,
-  deletePopup
+  prevTabOn
 } from "../modules/my_profile"
 import "../css/Profile.scss"
 import "../App.css"
@@ -69,8 +67,6 @@ class TeamProfile extends Component {
         <TeamProfileBody
           getMyProfile={getMyProfile}
           updateMyProfile={updateMyProfile}
-          createPopup={createPopup}
-          deletePopup={deletePopup}
           myProfile={action === "prev" ? myProfile : emptyProfile}
           isEditedProfile={isEditedProfile}
         />

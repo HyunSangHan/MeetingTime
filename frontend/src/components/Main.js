@@ -5,6 +5,7 @@ import "../App.css"
 import { Container, Row, Col } from "reactstrap"
 import MaterialIcon from "material-icons-react"
 import { Link, Redirect } from "react-router-dom"
+import { bindActionCreators } from "redux"
 import Header from "./details/Header"
 import CounterPlayer from "./details/CounterPlayer"
 import ControlTool from "./details/ControlTool"
@@ -50,7 +51,15 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    const { isJoinedAlready, isLoginAlready } = this.props
+    const {
+      isJoinedAlready,
+      isLoginAlready,
+      getCurrentMeeting,
+      getCurrentMatching,
+      getMyProfile,
+      getCounterProfile,
+      getJoinedUser
+    } = this.props
     getCurrentMeeting()
     getCurrentMatching()
     getMyProfile()
@@ -101,7 +110,12 @@ class Main extends Component {
       isCurrentMatching,
       currentMatching,
       counterProfile,
-      hasCounterProfile
+      hasCounterProfile,
+      getJoinedUser,
+      getCounterProfile,
+      getCurrentMatching,
+      handleGift,
+      handleGreenLight
     } = this.props
     const emptyProfile = this.state
 
@@ -180,10 +194,12 @@ class Main extends Component {
           )}
         </div>
         <ControlTool
+          getJoinedUser={getJoinedUser}
+          getCurrentMatching={getCurrentMatching}
+          handleGift={handleGift}
+          handleGreenLight={handleGreenLight}
           time={this.state.time}
           myProfile={myProfile || emptyProfile}
-          getJoinedUser={getCounterProfile}
-          getCurrentMatching={getCurrentMatching}
           counterProfile={counterProfile}
           hasCounterProfile={hasCounterProfile}
           isCurrentMatching={isCurrentMatching}
@@ -193,6 +209,19 @@ class Main extends Component {
         <br />
       </div>
     )
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch,
+    handleGift: bindActionCreators(handleGift, dispatch),
+    handleGreenLight: bindActionCreators(handleGreenLight, dispatch),
+    getMyProfile: bindActionCreators(getMyProfile, dispatch),
+    getCurrentMeeting: bindActionCreators(getCurrentMeeting, dispatch),
+    getCurrentMatching: bindActionCreators(getCurrentMatching, dispatch),
+    getJoinedUser: bindActionCreators(getJoinedUser, dispatch),
+    getCounterProfile: bindActionCreators(getCounterProfile, dispatch)
   }
 }
 
@@ -209,4 +238,4 @@ const mapStateToProps = state => ({
   myProfile: state.my_profile.myProfile
 })
 
-export default connect(mapStateToProps)(Main)
+export default connect(mapStateToProps, mapDispatchToProps)(Main)

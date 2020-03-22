@@ -14,7 +14,6 @@ const initialState = {
   hasCounterProfile: false,
   isGreenlightOn: false,
   isGiftOn: false,
-
   counterProfile: {
     ageRange: null,
     company: {
@@ -43,8 +42,8 @@ export const getCounterProfile = () => {
     })
       .then(response => {
         console.log(response.data)
-        dispatch(GET_COUNTER_PROFILE, response.data)
-        dispatch(GET_COUNTER_PROFILE_SUCCESS)
+        dispatch(createAction(GET_COUNTER_PROFILE, response.data))
+        dispatch(createAction(GET_COUNTER_PROFILE_SUCCESS))
       })
       .catch(err => {
         console.log("not working (counterProfile) - " + err)
@@ -71,6 +70,8 @@ export const handleGreenLight = payload => {
         } else {
           dispatch(createAction(GREEN_LIGHT_OFF))
         }
+
+        /// TODO: 프로미스 리턴 넣어줘야함
       })
       .catch(err => {
         console.log("not working (greenlight api) - " + err)

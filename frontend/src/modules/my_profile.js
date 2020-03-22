@@ -31,8 +31,6 @@ const LOGIN_FAILURE = `LOGIN_FAILURE`
 const LOGOUT_SUCCESS = `LOGOUT_SUCCESS`
 const GET_PROFILE = `GET_PROFILE`
 
-export const createPopup = () => createAction(CREATE_POPUP)
-export const deletePopup = () => createAction(DELETE_POPUP)
 export const newTabOn = () => createAction(NEW_TAB_ON)
 export const prevTabOn = () => createAction(PREV_TAB_ON)
 

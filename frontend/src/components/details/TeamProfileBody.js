@@ -115,9 +115,9 @@ class TeamProfileBody extends Component {
   }
 
   handleTeamPopup = event => {
-    this.props.createPopup()
     event.preventDefault()
     this.handleSubmit()
+    alert("그룹이 생성되었습니다.")
   }
 
   handleSubmit = event => {
@@ -255,9 +255,6 @@ class TeamProfileBody extends Component {
             </div>
           </form>
         </div>
-
-        {isEditedProfile && alert("그룹이 생성되었습니다.")}
-
         <div className="imgs-wrap">
           <div className="imgs">
             {!previewFirst ? (

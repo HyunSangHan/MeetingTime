@@ -7,7 +7,63 @@ const GET_CURRENT_MATCHING_FAILURE = `GET_CURRENT_MATCHING_FAILURE`
 
 const initialState = {
   isCurrentMatching: false,
-  currentMatching: {}
+  currentMatching: {
+    id: null,
+    trialTime: null,
+    isGreenlightMale: false,
+    isGreenlightFemale: false,
+    isGiftMale: false,
+    isGiftFemale: false,
+    joinedMale: {
+      profile: {
+        image: null,
+        imageTwo: null,
+        imageThree: null,
+        isMale: null,
+        ageRange: null,
+        createdAt: null,
+        lastLoginAt: null,
+        teamName: null,
+        teamIntroduce: "",
+        lastIntroModifiedAt: null,
+        validated: null,
+        user: {
+          username: null
+        },
+        company: {
+          name: null
+        }
+      },
+      rank: null,
+      isMatched: false,
+      meeting: null
+    },
+    joinedFemale: {
+      profile: {
+        image: null,
+        imageTwo: null,
+        imageThree: null,
+        isMale: null,
+        ageRange: null,
+        createdAt: null,
+        lastLoginAt: null,
+        teamName: null,
+        teamIntroduce: "",
+        lastIntroModifiedAt: null,
+        validated: null,
+        user: {
+          username: null
+        },
+        company: {
+          name: null
+        }
+      },
+      rank: null,
+      isMatched: false,
+      meeting: null
+    },
+    kakaoChattingroom: null
+  }
 }
 
 export const getCurrentMatching = () => {

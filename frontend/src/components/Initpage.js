@@ -57,7 +57,7 @@ class Initpage extends Component {
                 response.data.company.name +
                 ")"
             )
-            window.location.reload()
+            // window.location.reload()
           })
           .catch(err => {
             console.log(err)
