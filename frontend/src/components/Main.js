@@ -21,7 +21,7 @@ import {
   handleGift
 } from "../modules/player"
 import { getMyProfile } from "../modules/my_profile"
-import axios from "axios"
+import { getInputWeekLabel, getInputDayLabel } from "../modules/utils"
 
 class Main extends Component {
   constructor(props) {
@@ -84,21 +84,6 @@ class Main extends Component {
     }
   }
 
-  getInputDayLabel = time => {
-    const week = [
-      "일요일",
-      "월요일",
-      "화요일",
-      "수요일",
-      "목요일",
-      "금요일",
-      "토요일"
-    ]
-    const today = new Date(time).getDay()
-    const todayLabel = week[today]
-    return todayLabel
-  }
-
   render() {
     const {
       myProfile,
@@ -117,46 +102,10 @@ class Main extends Component {
       handleGift,
       handleGreenLight
     } = this.props
+
     const emptyProfile = this.state
-
-    const nowTime = new Date()
-    const meetingTime = new Date(currentMeeting.meetingTime)
-    const meetingDay = this.getInputDayLabel(currentMeeting.meetingTime)
-
-    let meetingWeek = null
-    if (
-      nowTime.getDay() < meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() <= 561600000
-    ) {
-      meetingWeek = "이번주"
-    } else if (
-      nowTime.getDay() < meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() > 561600000
-    ) {
-      meetingWeek = "다음주"
-    } else if (
-      nowTime.getDay() > meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() <= 561600000
-    ) {
-      meetingWeek = "다음주"
-    } else if (
-      nowTime.getDay() > meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() > 561600000
-    ) {
-      meetingWeek = "다다음주"
-    } else if (
-      nowTime.getDay() === meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() <= 561600000
-    ) {
-      meetingWeek = "이번주"
-    } else if (
-      nowTime.getDay() === meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() > 561600000
-    ) {
-      meetingWeek = "다음주"
-    } else {
-      meetingWeek = ""
-    }
+    const meetingWeek = getInputWeekLabel(currentMeeting.meetingTime)
+    const meetingDay = getInputDayLabel(currentMeeting.meetingTime)
 
     const content = (
       <div className="inline-flex">

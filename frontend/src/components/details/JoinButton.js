@@ -29,7 +29,9 @@ class JoinButton extends Component {
     const closeTime = Date.parse(currentMeeting.closeTime)
     // const meetingTime = Date.parse(currentMeeting.meetingTime)
     const nowTime = new Date().getTime()
-
+    {
+      console.log(this.props)
+    }
     let button = null
     if (isLoginAlready) {
       if (nowTime < openTime) {
@@ -64,7 +66,7 @@ class JoinButton extends Component {
                 </div>
                 <div
                   className="join-button-wrap bg-color-join mh-auto flex-center"
-                  onClick={this.handleJoin()}
+                  onClick={this.handleJoin}
                 >
                   <div className="font-notosan">번호표 뽑기</div>
                 </div>

@@ -14,9 +14,14 @@ export default ComposedComponent => {
     // }
 
     render() {
-      const { myProfile, getCurrentMeeting, getMyProfile } = this.props
-      getMyProfile()
-      getCurrentMeeting()
+      const {
+        currentMeeting,
+        myProfile,
+        getCurrentMeeting,
+        getMyProfile
+      } = this.props
+      !myProfile.user.username && getMyProfile()
+      !currentMeeting.openTime && getCurrentMeeting()
       return <ComposedComponent {...this.props} />
     }
   }
@@ -34,7 +39,7 @@ export default ComposedComponent => {
   const mapStateToProps = state => {
     return {
       joinedUser: state.join.joinedUser,
-      isJoinedAlready: state.my_profile.isJoinedAlready,
+      isJoinedAlready: state.join.isJoinedAlready,
       isLoginAlready: state.my_profile.isLoginAlready,
       myProfile: state.my_profile.myProfile,
       currentMeeting: state.current_meeting.currentMeeting
