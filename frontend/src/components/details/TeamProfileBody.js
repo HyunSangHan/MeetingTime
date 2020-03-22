@@ -53,8 +53,8 @@ class TeamProfileBody extends Component {
   handleImageChangeFirst = event => {
     console.log(event.target.files[0])
     this.setState({
-      FirstimageValue: event.target.files[0],
-      preview: URL.createObjectURL(event.target.files[0])
+      imageFirstValue: event.target.files[0],
+      previewFirst: URL.createObjectURL(event.target.files[0])
     })
   }
 
@@ -78,9 +78,9 @@ class TeamProfileBody extends Component {
   //이미지 제출 함수
   handleImageSubmitFirst = () => {
     const formData = new FormData()
-    const { FirstimageValue } = this.state
+    const { imageFirstValue } = this.state
 
-    formData.append("image", FirstimageValue, FirstimageValue.name)
+    formData.append("image", imageFirstValue, imageFirstValue.name)
     axios
       .patch("http://localhost:3000/profile/", formData)
       .then(response => {
@@ -158,7 +158,7 @@ class TeamProfileBody extends Component {
       previewFirst,
       previewSecond,
       previewThird,
-      FirstimageValue,
+      imageFirstValue,
       imageSecondValue,
       imageThirdValue,
       hasThreeImages
@@ -189,7 +189,7 @@ class TeamProfileBody extends Component {
               type="file"
               onChange={this.handleImageChangeFirst}
               ref={fileInputFirst => (this.fileInputFirst = fileInputFirst)}
-              name="FirstimageValue"
+              name="imageFirstValue"
               className="image-uploader"
               accept="image/*"
             />
@@ -236,7 +236,7 @@ class TeamProfileBody extends Component {
 
             <div className="ButtonWrap">
               {(previewFirst && previewSecond && previewThird) ||
-              (FirstimageValue && imageSecondValue && imageThirdValue) ? (
+              (imageFirstValue && imageSecondValue && imageThirdValue) ? (
                 <button
                   className="SubmitButton WorkingButton mt-1"
                   onClick={this.handleTeamPopup}
@@ -265,10 +265,10 @@ class TeamProfileBody extends Component {
                 className="each-img flex-center"
                 onClick={() => this.fileInputFirst.click()}
               >
-                {FirstimageValue ? (
+                {imageFirstValue ? (
                   <img
                     className="user-img"
-                    src={FirstimageValue}
+                    src={imageFirstValue}
                     alt="first_user_image"
                   />
                 ) : (
