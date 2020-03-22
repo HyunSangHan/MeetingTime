@@ -1,4 +1,3 @@
-import { Map } from "immutable"
 import axios from "axios"
 import { createAction } from "./utils"
 
@@ -6,10 +5,10 @@ const SEND_EMAIL = `SEND_EMAIL`
 const VALIDATE_SUCCESS = `VALIDATE_SUCCESS`
 const VALIDATE_FAILURE = `VALIDATE_FAILURE`
 
-const initialState = Map({
+const initialState = {
   sent: false,
   validated: false
-})
+}
 
 export const sendEmail = payload => {
   return dispatch => {

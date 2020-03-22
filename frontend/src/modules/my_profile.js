@@ -1,31 +1,26 @@
-import { Map } from "immutable"
 import axios from "axios"
 import { createAction } from "./utils"
 
-const initialState = Map({
+const initialState = {
   isLoginAlready: null,
   myProfile: {
-    ageRange: null,
-    company: {
-      name: null
-    },
-    createdAt: null,
-    id: null,
     image: null,
     imageTwo: null,
     imageThree: null,
     isMale: null,
-    lastIntroModifiedAt: null,
+    ageRange: null,
+    createdAt: null,
     lastLoginAt: null,
-    teamIntroduce: null,
-    user: {
-      username: null
-    },
-    validated: null
+    teamName: null,
+    teamIntroduce: "",
+    lastIntroModifiedAt: null,
+    validated: false,
+    user: { username: null },
+    company: { name: null }
   },
   isEditedProfile: null,
   clickedTab: "new"
-})
+}
 
 const CREATE_POPUP = `CREATE_POPUP`
 const DELETE_POPUP = `DELETE_POPUP`
@@ -36,13 +31,10 @@ const LOGIN_FAILURE = `LOGIN_FAILURE`
 const LOGOUT_SUCCESS = `LOGOUT_SUCCESS`
 const GET_PROFILE = `GET_PROFILE`
 
-export const createPopup = createAction(CREATE_POPUP)
-export const deletePopup = createAction(DELETE_POPUP)
-export const newTabOn = createAction(NEW_TAB_ON)
-export const prevTabOn = createAction(PREV_TAB_ON)
-export const loginSuccess = createAction(LOGIN_SUCCESS)
-export const loginFailure = createAction(LOGIN_FAILURE)
-export const logoutSuccess = createAction(LOGOUT_SUCCESS)
+export const createPopup = () => createAction(CREATE_POPUP)
+export const deletePopup = () => createAction(DELETE_POPUP)
+export const newTabOn = () => createAction(NEW_TAB_ON)
+export const prevTabOn = () => createAction(PREV_TAB_ON)
 
 export const getMyProfile = () => {
   return dispatch => {
@@ -51,8 +43,8 @@ export const getMyProfile = () => {
       url: "/profile"
     })
       .then(response => {
-        console.log(response)
-        dispatch(createAction(GET_PROFILE, response))
+        console.log(response.data)
+        dispatch(createAction(GET_PROFILE, response.data))
         dispatch(createAction(LOGIN_SUCCESS))
       })
       .catch(err => {
@@ -70,7 +62,7 @@ export const updateMyProfile = payload => {
       data: payload
     })
       .then(response => {
-        console.log(response)
+        console.log(response.data)
         dispatch(createAction(GET_PROFILE, response.data))
       })
       .catch(err => {

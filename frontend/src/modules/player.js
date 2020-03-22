@@ -1,4 +1,3 @@
-import { Map } from "immutable"
 import axios from "axios"
 import { createAction } from "./utils"
 
@@ -11,7 +10,7 @@ const GIFT_ON = `GIFT_ON` // 추후 컴포넌트 state로 해결가능하게 될
 
 //counter_profile 받아오기 + 그린라이트 액션
 
-const initialState = Map({
+const initialState = {
   hasCounterProfile: false,
   isGreenlightOn: false,
   isGiftOn: false,
@@ -34,7 +33,7 @@ const initialState = Map({
       username: null
     }
   }
-})
+}
 
 export const getCounterProfile = () => {
   return dispatch => {

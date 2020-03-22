@@ -7,13 +7,13 @@ import CountDown from "./CountDown"
 
 class JoinButton extends Component {
   componentDidMount() {
-    const { JoinActions } = this.props
-    JoinActions.getJoinedUser()
+    const { getJoinedUser } = this.props
+    getJoinedUser()
   }
 
   handleJoin = () => {
-    const { JoinActions } = this.props
-    JoinActions.createJoinedUser()
+    const { createJoinedUser } = this.props
+    createJoinedUser()
     window.location.reload()
   }
 

@@ -6,7 +6,7 @@ import player from "./player"
 import current_matching from "./current_matching"
 import email from "./email"
 
-export default combineReducers({
+const reducers = combineReducers({
   join,
   current_meeting,
   my_profile,
@@ -14,3 +14,5 @@ export default combineReducers({
   current_matching,
   email
 })
+
+export default reducers

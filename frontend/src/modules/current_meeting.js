@@ -1,12 +1,23 @@
-import { Map } from "immutable"
 import axios from "axios"
 import { createAction } from "./utils"
 
-const GET_CURRENT_MEETING = `GET_CURRENT_MEETING`
+const initialState = {
+  currentMeeting: {
+    id: null,
+    openTime: null,
+    prevMeetingLastShuffleTime: null,
+    closeTime: null,
+    firstShuffleTime: null,
+    secondShuffleTime: null,
+    thirdShuffleTime: null,
+    meetingTime: null,
+    location: null,
+    cutline: null,
+    description: null
+  }
+}
 
-const initialState = Map({
-  currentMeeting: Map({})
-})
+const GET_CURRENT_MEETING = `GET_CURRENT_MEETING`
 
 export const getCurrentMeeting = () => {
   return dispatch => {
@@ -26,12 +37,16 @@ export const getCurrentMeeting = () => {
 }
 
 const reducer = (state = initialState, action) => {
-  if ((action.type = GET_CURRENT_MEETING)) {
-    return {
-      ...state,
-      currentMeeting: action.data
+  switch (action.type) {
+    case GET_CURRENT_MEETING: {
+      return {
+        ...state,
+        currentMeeting: action.data
+      }
     }
-  } else return state
+    default:
+      return state
+  }
 }
 
 export default reducer

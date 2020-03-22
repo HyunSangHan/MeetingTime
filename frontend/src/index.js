@@ -19,6 +19,7 @@ const store = compose(applyMiddleware(...middlewares))(createStore)(
 
 ReactDOM.render(
   <Provider store={store}>
+    {console.log(store.getState())}
     <App />
   </Provider>,
   document.getElementById("root")

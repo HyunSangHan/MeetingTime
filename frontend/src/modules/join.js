@@ -1,4 +1,3 @@
-import { Map } from "immutable"
 import axios from "axios"
 import { createAction } from "./utils"
 
@@ -6,7 +5,7 @@ const GET_JOINED_USER_SUCCESS = `GET_JOINED_USER_SUCCESS`
 const GET_JOINED_USER_FAILURE = `GET_JOINED_USER_FAILURE`
 const GET_JOINED_USER = `GET_JOINED_USER`
 
-const initialState = Map({
+const initialState = {
   isJoinedAlready: null,
   joinedUser: {
     profile: {
@@ -32,7 +31,7 @@ const initialState = Map({
     isMatched: null,
     meeting: null
   }
-})
+}
 
 export const getJoinedUser = () => {
   return dispatch => {
@@ -83,8 +82,8 @@ const reducer = (state = initialState, action) => {
       }
     case GET_JOINED_USER:
       return {
-        joinedUser: action.data,
-        ...state
+        ...state,
+        joinedUser: action.data
       }
     default:
       return state

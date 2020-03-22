@@ -125,7 +125,8 @@ class Initpage extends Component {
   render() {
     const {
       myProfile,
-      JoinActions,
+      getJoinedUser,
+      createJoinedUser,
       currentMeeting,
       isLoginAlready,
       isJoinedAlready,
@@ -241,7 +242,8 @@ class Initpage extends Component {
         <div className="fix-bottom-init w100percent mb-36 mt-5">
           <div onClick={this.blockJoin(isMadeTeam)}>
             <JoinButton
-              JoinActions={JoinActions}
+              getJoinedUser={getJoinedUser}
+              createJoinedUser={createJoinedUser}
               isMadeTeam={isMadeTeam}
               isLoginAlready={isLoginAlready}
               isJoinedAlready={isJoinedAlready}

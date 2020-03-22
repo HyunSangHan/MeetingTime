@@ -1,4 +1,3 @@
-import { Map } from "immutable"
 import axios from "axios"
 import { createAction } from "./utils"
 
@@ -6,10 +5,10 @@ const GET_CURRENT_MATCHING = `GET_CURRENT_MATCHING`
 const GET_CURRENT_MATCHING_SUCCESS = `GET_CURRENT_MATCHING_SUCCESS`
 const GET_CURRENT_MATCHING_FAILURE = `GET_CURRENT_MATCHING_FAILURE`
 
-const initialState = Map({
+const initialState = {
   isCurrentMatching: false,
   currentMatching: {}
-})
+}
 
 export const getCurrentMatching = () => {
   return dispatch => {

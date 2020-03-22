@@ -115,14 +115,13 @@ class TeamProfileBody extends Component {
   }
 
   handleTeamPopup = event => {
-    const { MyProfileActions } = this.props
-    MyProfileActions.createPopup()
+    this.props.createPopup()
     event.preventDefault()
     this.handleSubmit()
   }
 
   handleSubmit = event => {
-    const { MyProfileActions } = this.props
+    const { getMyProfile, updateMyProfile } = this.props
     const {
       teamNameValue,
       teamIntroValue,
@@ -133,9 +132,9 @@ class TeamProfileBody extends Component {
     // event.preventDefault();
     // console.log(this.state);
 
-    MyProfileActions.updateTeam({
-      teamNameValue,
-      teamIntroValue
+    updateMyProfile({
+      teamName: teamNameValue,
+      teamIntroduce: teamIntroValue
     })
 
     if (preview) {
@@ -148,11 +147,11 @@ class TeamProfileBody extends Component {
       this.handleImageSubmitThird()
     }
 
-    MyProfileActions.getMyProfile()
+    getMyProfile()
   }
 
   render() {
-    const { MyProfileActions, isEditedProfile } = this.props
+    const { isEditedProfile } = this.props
     const {
       teamNameValue,
       teamIntroValue,
