@@ -47,7 +47,7 @@ export const getCounterProfile = () => {
       })
       .catch(err => {
         console.log("not working (counterProfile) - " + err)
-        dispatch(GET_COUNTER_PROFILE_FAILURE)
+        dispatch(createAction(GET_COUNTER_PROFILE_FAILURE))
       })
   }
 }
@@ -89,7 +89,7 @@ export const handleGift = payload => {
     })
       .then(response => {
         console.log(response.data)
-        const isMale = getState().myProfile.isMale
+        const isMale = getState().my_profile.myProfile.isMale
         if (isMale && response.data.isGiftMale) {
           dispatch(createAction(GIFT_ON))
         } else if (!isMale && response.data.isGiftFemale) {

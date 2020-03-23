@@ -61,17 +61,19 @@ class ControlTool extends Component {
   }
 
   handleGift = () => {
-    const { handleGift, counterProfile } = this.props
+    const { handleGift, counterProfile, isGiftOn } = this.props
     const { isGiftMale, isGiftFemale } = this.state
 
-    if (!isGiftMale && !counterProfile.isMale) {
+    if (isGiftOn) {
+      window.alert("이미 안주를 쏘셨습니다.")
+    } else if (!isGiftMale && !counterProfile.isMale) {
       window.confirm(
         "안주를 한 번 쏘고 나면 되돌릴 수 없습니다. 정말 쏘시겠습니까?"
-      ) && handleGift({ male: true })
+      ) && handleGift({ isGiftMale: true })
     } else if (!isGiftFemale && counterProfile.isMale) {
       window.confirm(
         "안주를 한 번 쏘고 나면 되돌릴 수 없습니다. 정말 쏘시겠습니까?"
-      ) && handleGift({ female: true })
+      ) && handleGift({ isGiftFemale: false })
     } else {
       window.alert("이미 안주를 쏘셨습니다.")
     }
@@ -82,7 +84,8 @@ class ControlTool extends Component {
       myProfile,
       counterProfile,
       currentMatching,
-      currentMeeting
+      currentMeeting,
+      isGiftOn
     } = this.props
     const {
       isGreenlightMale,
@@ -90,6 +93,11 @@ class ControlTool extends Component {
       isGiftMale,
       isGiftFemale
     } = this.state
+
+    const giftOn =
+      isGiftOn ||
+      (myProfile.isMale && isGiftMale) ||
+      (!myProfile.isMale && isGiftFemale)
 
     let countDown = null
     if (currentMatching.trialTime === 1) {
@@ -155,25 +163,13 @@ class ControlTool extends Component {
             </div>
 
             <div className="column">
-              {myProfile.isMale ? (
-                <div className="gift" onClick={this.handleGift}>
-                  {isGiftMale && (
-                    <div className="gift-on font-jua">안주쏘기</div>
-                  )}
-                  {!isGiftMale && (
-                    <div className="gift-off font-jua">안주쏘기</div>
-                  )}
+              <div className="gift" onClick={this.handleGift}>
+                <div
+                  className={giftOn ? "gift-on font-jua" : "gift-off font-jua"}
+                >
+                  안주쏘기
                 </div>
-              ) : (
-                <div className="gift" onClick={this.handleGift}>
-                  {isGiftFemale && (
-                    <div className="gift-on font-jua">안주쏘기</div>
-                  )}
-                  {!isGiftFemale && (
-                    <div className="gift-off font-jua">안주쏘기</div>
-                  )}
-                </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
