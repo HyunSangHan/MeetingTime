@@ -11,15 +11,15 @@ class Profile extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      ageValue: null,
-      companyValue: null,
+      ageValue: "default",
+      companyValue: "default",
       emailFront: null,
       code: null
     }
   }
 
   componentDidMount() {
-    getMyProfile()
+    this.props.getMyProfile()
   }
 
   handleInputChange = event => {
@@ -56,9 +56,6 @@ class Profile extends Component {
       case "구글":
         emailCompany = "@google.com"
         break
-      case "테슬라":
-        emailCompany = "@tesla.com"
-        break
       default:
         emailCompany = "[등록되지 않은 회사입니다!]"
         break
@@ -76,7 +73,7 @@ class Profile extends Component {
   }
 
   handleSubmit = event => {
-    const { history } = this.props
+    const { history, getMyProfile, updateMyProfile } = this.props
     const { ageValue, companyValue } = this.state
     console.log(this.state)
     event.preventDefault()
@@ -122,16 +119,14 @@ class Profile extends Component {
               <div className="title">연령대</div>
               <select
                 name="ageValue"
-                value={ageValue + "대"}
+                value={ageValue}
                 onChange={this.handleInputChange}
               >
-                <option disabled selected value>
-                  &nbsp; - 선택 -&nbsp;
-                </option>
-                <option>10대</option>
-                <option>20대</option>
-                <option>30대</option>
-                <option>40대</option>
+                <option value="default">&nbsp; - 선택 -&nbsp;</option>
+                <option value={10}>10대</option>
+                <option value={20}>20대</option>
+                <option value={30}>30대</option>
+                <option value={40}>40대</option>
                 {/* <option>기타</option> */}
               </select>
               <div className="title">회사명</div>
@@ -140,18 +135,14 @@ class Profile extends Component {
                 value={companyValue}
                 onChange={this.handleInputChange}
               >
-                <option disabled selected value>
-                  {" "}
-                  - 선택 -{" "}
-                </option>
-                <option>네이버</option>
-                <option>삼성</option>
-                <option>멋쟁이사자처럼</option>
-                <option>구글</option>
-                <option>테슬라</option>
+                <option value="default"> - 선택 - </option>
+                <option value="네이버">네이버</option>
+                <option value="삼성">삼성</option>
+                <option value="멋쟁이사자처럼">멋쟁이사자처럼</option>
+                <option value="구글">구글</option>
               </select>
               <div className="title">이메일</div>
-              <div className="EmailSelect">
+              <div className="email-select">
                 <input
                   onChange={e => {
                     this.setState({ emailFront: e.target.value })
@@ -165,12 +156,11 @@ class Profile extends Component {
                   value={companyValue}
                   onChange={this.handleInputChange}
                 >
-                  <option value> - </option>
+                  <option value="default"> - </option>
                   <option value="네이버">@navercorp.com</option>
                   <option value="삼성">@samsung.com</option>
                   <option value="멋쟁이사자처럼">@likelion.org</option>
                   <option value="구글">@google.com</option>
-                  <option value="테슬라">@tesla.com</option>
                 </select>
               </div>
               {!this.props.sent ? (
@@ -232,6 +222,14 @@ class Profile extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch,
+    getMyProfile: bindActionCreators(getMyProfile, dispatch),
+    updateMyProfile: bindActionCreators(updateMyProfile, dispatch)
+  }
+}
+
 const mapStateToProps = state => ({
   isLoginAlready: state.my_profile.isLoginAlready,
   myProfile: state.my_profile.myProfile,
@@ -239,4 +237,4 @@ const mapStateToProps = state => ({
   validated: state.email.validated
 })
 
-export default connect(mapStateToProps)(Profile)
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)
