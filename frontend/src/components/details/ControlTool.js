@@ -17,20 +17,16 @@ class ControlTool extends Component {
 
   handleGift = () => {
     const { handleGift, myProfile, isGiftOn } = this.props
-    const { isGiftMale, isGiftFemale } = this.props.currentMatching
-
     if (isGiftOn) {
       window.alert("이미 안주를 쏘셨습니다.")
-    } else if (!isGiftMale && myProfile.isMale) {
+    } else if (myProfile.isMale) {
       window.confirm(
         "안주를 한 번 쏘고 나면 되돌릴 수 없습니다. 정말 쏘시겠습니까?"
       ) && handleGift({ isGiftMale: true })
-    } else if (!isGiftFemale && myProfile.isMale) {
+    } else {
       window.confirm(
         "안주를 한 번 쏘고 나면 되돌릴 수 없습니다. 정말 쏘시겠습니까?"
-      ) && handleGift({ isGiftFemale: false })
-    } else {
-      window.alert("이미 안주를 쏘셨습니다.")
+      ) && handleGift({ isGiftFemale: true })
     }
   }
 

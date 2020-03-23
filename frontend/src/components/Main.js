@@ -14,12 +14,12 @@ import Loading from "./details/Loading"
 import { connect } from "react-redux"
 import { getJoinedUser } from "../modules/join"
 import { getCurrentMeeting } from "../modules/current_meeting"
-import { getCurrentMatching } from "../modules/current_matching"
 import {
+  getCurrentMatching,
   getCounterProfile,
   handleGreenLight,
   handleGift
-} from "../modules/player"
+} from "../modules/current_matching"
 import { getMyProfile } from "../modules/my_profile"
 import { getInputWeekLabel, getInputDayLabel } from "../modules/utils"
 
@@ -185,10 +185,10 @@ const mapStateToProps = state => ({
   joinedUser: state.join.joinedUser,
   currentMeeting: state.current_meeting.currentMeeting,
   currentMatching: state.current_matching.currentMatching,
-  counterProfile: state.player.counterProfile,
-  hasCounterProfile: state.player.hasCounterProfile,
-  isGiftOn: state.player.isGiftOn,
-  isGreenlightOn: state.player.isGreenlightOn,
+  counterProfile: state.current_matching.counterProfile,
+  hasCounterProfile: state.current_matching.hasCounterProfile,
+  isGiftOn: state.current_matching.isGiftOn,
+  isGreenlightOn: state.current_matching.isGreenlightOn,
   isCurrentMatching: state.current_matching.isCurrentMatching,
   myProfile: state.my_profile.myProfile
 })
