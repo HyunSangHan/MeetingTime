@@ -62,7 +62,7 @@ export const handleGreenLight = payload => {
     })
       .then(response => {
         console.log(response.data)
-        const isMale = getState().myProfile.isMale
+        const isMale = getState().my_profile.myProfile.isMale
         if (isMale && response.data.isGreenlightMale) {
           dispatch(createAction(GREEN_LIGHT_ON))
         } else if (!isMale && response.data.isGreenlightFemale) {

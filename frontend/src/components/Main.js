@@ -101,7 +101,8 @@ class Main extends Component {
       getCurrentMatching,
       handleGift,
       handleGreenLight,
-      isGiftOn
+      isGiftOn,
+      isGreenlightOn
     } = this.props
 
     const emptyProfile = this.state
@@ -156,6 +157,7 @@ class Main extends Component {
           currentMatching={currentMatching}
           currentMeeting={currentMeeting}
           isGiftOn={isGiftOn}
+          isGreenlightOn={isGreenlightOn}
         />
         <br />
       </div>
@@ -186,6 +188,7 @@ const mapStateToProps = state => ({
   counterProfile: state.player.counterProfile,
   hasCounterProfile: state.player.hasCounterProfile,
   isGiftOn: state.player.isGiftOn,
+  isGreenlightOn: state.player.isGreenlightOn,
   isCurrentMatching: state.current_matching.isCurrentMatching,
   myProfile: state.my_profile.myProfile
 })
