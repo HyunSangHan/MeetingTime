@@ -20,7 +20,6 @@ class Waiting extends Component {
       isLoginAlready,
       isJoinedAlready
     } = this.props
-    getJoinedUser()
     console.log(this.props)
 
     const closeTime = Date.parse(currentMeeting.closeTime)
