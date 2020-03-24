@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react"
-import * as myProfileActions from "../modules/my_profile"
-import * as emailActions from "../modules/email"
+import { getMyProfile, updateMyProfile } from "../modules/my_profile"
+import { sendEmail, validateEmail } from "../modules/email"
 import "../css/Profile.scss"
 import "../App.css"
 import Header from "./details/Header"
@@ -11,16 +11,15 @@ class Profile extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      ageValue: null,
-      companyValue: null,
+      ageValue: "default",
+      companyValue: "default",
       emailFront: null,
       code: null
     }
   }
 
   componentDidMount() {
-    const { MyProfileActions } = this.props
-    MyProfileActions.getMyProfile()
+    this.props.getMyProfile()
   }
 
   handleInputChange = event => {
@@ -40,7 +39,6 @@ class Profile extends Component {
   }
 
   onSend() {
-    const { EmailActions } = this.props
     const { emailFront, companyValue } = this.state
     let emailCompany
     switch (
@@ -58,37 +56,30 @@ class Profile extends Component {
       case "구글":
         emailCompany = "@google.com"
         break
-      case "테슬라":
-        emailCompany = "@tesla.com"
-        break
       default:
         emailCompany = "[등록되지 않은 회사입니다!]"
         break
     }
-    EmailActions.sendEmail({
+    this.props.sendEmail({
       email: emailFront + emailCompany
     })
+    console.log(emailFront + emailCompany + "로 인증메일을 보냅니다.")
   }
 
   onValidate() {
-    const { EmailActions } = this.props
     const { code } = this.state
-    EmailActions.validateEmail({
+    this.props.validateEmail({
       code: code
     })
   }
 
   handleSubmit = event => {
-    const { MyProfileActions, history } = this.props
+    const { history, updateMyProfile } = this.props
     const { ageValue, companyValue } = this.state
-    console.log(this.state)
     event.preventDefault()
-    MyProfileActions.updateProfile({ ageValue })
-    MyProfileActions.updateCompany({ companyValue })
-    MyProfileActions.getMyProfile().then(() => {
-      //promise반환이 맞는지 추후 확인 필요
-      history.push("/")
-    })
+    updateMyProfile({ ageRange: ageValue, company: companyValue })
+    window.alert("프로필 수정이 완료되었습니다.")
+    history.push("/")
   }
 
   componentWillReceiveProps(nextProps) {
@@ -126,16 +117,14 @@ class Profile extends Component {
               <div className="title">연령대</div>
               <select
                 name="ageValue"
-                value={ageValue + "대"}
+                value={ageValue}
                 onChange={this.handleInputChange}
               >
-                <option disabled selected value>
-                  &nbsp; - 선택 -&nbsp;
-                </option>
-                <option>10대</option>
-                <option>20대</option>
-                <option>30대</option>
-                <option>40대</option>
+                <option value="default">&nbsp; - 선택 -&nbsp;</option>
+                <option value={10}>10대</option>
+                <option value={20}>20대</option>
+                <option value={30}>30대</option>
+                <option value={40}>40대</option>
                 {/* <option>기타</option> */}
               </select>
               <div className="title">회사명</div>
@@ -144,18 +133,14 @@ class Profile extends Component {
                 value={companyValue}
                 onChange={this.handleInputChange}
               >
-                <option disabled selected value>
-                  {" "}
-                  - 선택 -{" "}
-                </option>
-                <option>네이버</option>
-                <option>삼성</option>
-                <option>멋쟁이사자처럼</option>
-                <option>구글</option>
-                <option>테슬라</option>
+                <option value="default"> - 선택 - </option>
+                <option value="네이버">네이버</option>
+                <option value="삼성">삼성</option>
+                <option value="멋쟁이사자처럼">멋쟁이사자처럼</option>
+                <option value="구글">구글</option>
               </select>
               <div className="title">이메일</div>
-              <div className="EmailSelect">
+              <div className="email-select">
                 <input
                   onChange={e => {
                     this.setState({ emailFront: e.target.value })
@@ -169,12 +154,11 @@ class Profile extends Component {
                   value={companyValue}
                   onChange={this.handleInputChange}
                 >
-                  <option value> - </option>
+                  <option value="default"> - </option>
                   <option value="네이버">@navercorp.com</option>
                   <option value="삼성">@samsung.com</option>
                   <option value="멋쟁이사자처럼">@likelion.org</option>
                   <option value="구글">@google.com</option>
-                  <option value="테슬라">@tesla.com</option>
                 </select>
               </div>
               {!this.props.sent ? (
@@ -218,7 +202,12 @@ class Profile extends Component {
             </form>
             <div className="FixedButton mt-4">
               {this.props.validated ? (
-                <button className="SubmitButton WorkingButton">적용하기</button>
+                <button
+                  className="SubmitButton WorkingButton"
+                  onClick={this.handleSubmit}
+                >
+                  적용하기
+                </button>
               ) : (
                 <button
                   type="button"
@@ -236,17 +225,21 @@ class Profile extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  MyProfileActions: bindActionCreators(myProfileActions, dispatch),
-  EmailActions: bindActionCreators(emailActions, dispatch)
-})
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch,
+    getMyProfile: bindActionCreators(getMyProfile, dispatch),
+    updateMyProfile: bindActionCreators(updateMyProfile, dispatch),
+    sendEmail: bindActionCreators(sendEmail, dispatch),
+    validateEmail: bindActionCreators(validateEmail, dispatch)
+  }
+}
 
 const mapStateToProps = state => ({
-  isLoginAlready: state.my_profile.get("isLoginAlready"),
-  myProfile: state.my_profile.get("myProfile"),
-  sent: state.email.get("sent"),
-  validated: state.email.get("validated")
+  isLoginAlready: state.my_profile.isLoginAlready,
+  myProfile: state.my_profile.myProfile,
+  sent: state.email.sent,
+  validated: state.email.validated
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

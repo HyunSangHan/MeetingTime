@@ -3,7 +3,6 @@ import "../../css/Initpage.scss" //부모컴포넌트의CSS(SCSS)
 import "../../App.css" //공통CSS
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
-import * as joinActions from "../../modules/join"
 import MaterialIcon from "material-icons-react"
 
 class JoinedPopup extends Component {
@@ -26,7 +25,7 @@ class JoinedPopup extends Component {
 
     return (
       <div className={"App flex-center"}>
-        <div className={"abs hover"} onClick={this.props.deletePopup}>
+        <div className={"abs hover"}>
           <MaterialIcon icon="clear" size="25px" color="lightgrey" />
         </div>
         {popup}
@@ -35,14 +34,9 @@ class JoinedPopup extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  JoinActions: bindActionCreators(joinActions, dispatch)
-})
-
 const mapStateToProps = state => ({
-  isJoinedPopupOn: state.join.get("isJoinedPopupOn"),
-  isJoinedAlready: state.join.get("isJoinedAlready")
+  isJoinedPopupOn: state.join.isJoinedPopupOn,
+  isJoinedAlready: state.join.isJoinedAlready
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(JoinedPopup)
+export default connect(mapStateToProps)(JoinedPopup)

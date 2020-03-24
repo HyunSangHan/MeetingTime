@@ -2,22 +2,24 @@
 import React, { Component } from "react"
 import "../css/Main.scss"
 import "../App.css"
-import { Container, Row, Col } from "reactstrap"
-import MaterialIcon from "material-icons-react"
 import { Link, Redirect } from "react-router-dom"
+import { bindActionCreators } from "redux"
 import Header from "./details/Header"
 import CounterPlayer from "./details/CounterPlayer"
 import ControlTool from "./details/ControlTool"
 import ToolTipDown from "./details/ToolTipDown"
 import Loading from "./details/Loading"
 import { connect } from "react-redux"
-import { bindActionCreators } from "redux"
-import * as joinActions from "../modules/join"
-import * as currentMeetingActions from "../modules/current_meeting"
-import * as currentMatchingActions from "../modules/current_matching"
-import * as playerActions from "../modules/player"
-import * as myProfileActions from "../modules/my_profile"
-import axios from "axios"
+import { getJoinedUser } from "../modules/join"
+import { getCurrentMeeting } from "../modules/current_meeting"
+import {
+  getCurrentMatching,
+  getCounterProfile,
+  handleGreenLight,
+  handleGift
+} from "../modules/current_matching"
+import { getMyProfile } from "../modules/my_profile"
+import { getInputWeekLabel, getInputDayLabel } from "../modules/utils"
 
 class Main extends Component {
   constructor(props) {
@@ -48,20 +50,20 @@ class Main extends Component {
 
   componentDidMount() {
     const {
-      CurrentMeetingActions,
-      CurrentMatchingActions,
-      MyProfileActions,
-      PlayerActions,
-      JoinActions,
       isJoinedAlready,
-      isLoginAlready
+      isLoginAlready,
+      getCurrentMeeting,
+      getCurrentMatching,
+      getMyProfile,
+      getCounterProfile,
+      getJoinedUser
     } = this.props
-    CurrentMeetingActions.getCurrentMeeting()
-    CurrentMatchingActions.getCurrentMatching()
-    MyProfileActions.getMyProfile()
-    PlayerActions.getCounterProfile()
+    getCurrentMeeting()
+    getCurrentMatching()
+    getMyProfile()
+    getCounterProfile()
     if (!isJoinedAlready) {
-      JoinActions.getJoinedUser()
+      getJoinedUser()
     } else {
       this.setState({
         loading: false
@@ -80,25 +82,9 @@ class Main extends Component {
     }
   }
 
-  getInputDayLabel = time => {
-    const week = [
-      "일요일",
-      "월요일",
-      "화요일",
-      "수요일",
-      "목요일",
-      "금요일",
-      "토요일"
-    ]
-    const today = new Date(time).getDay()
-    const todayLabel = week[today]
-    return todayLabel
-  }
-
   render() {
     const {
       myProfile,
-      JoinActions,
       isJoinedPopupOn,
       isJoinedAlready,
       isLoginAlready,
@@ -106,51 +92,20 @@ class Main extends Component {
       currentMeeting,
       isCurrentMatching,
       currentMatching,
-      PlayerActions,
-      CurrentMatchingActions,
       counterProfile,
-      isCounterProfile
+      hasCounterProfile,
+      getJoinedUser,
+      getCounterProfile,
+      getCurrentMatching,
+      handleGift,
+      handleGreenLight,
+      isGiftOn,
+      isGreenlightOn
     } = this.props
+
     const emptyProfile = this.state
-
-    const nowTime = new Date()
-    const meetingTime = new Date(currentMeeting.meetingTime)
-    const meetingDay = this.getInputDayLabel(currentMeeting.meetingTime)
-
-    let meetingWeek = null
-    if (
-      nowTime.getDay() < meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() <= 561600000
-    ) {
-      meetingWeek = "이번주"
-    } else if (
-      nowTime.getDay() < meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() > 561600000
-    ) {
-      meetingWeek = "다음주"
-    } else if (
-      nowTime.getDay() > meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() <= 561600000
-    ) {
-      meetingWeek = "다음주"
-    } else if (
-      nowTime.getDay() > meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() > 561600000
-    ) {
-      meetingWeek = "다다음주"
-    } else if (
-      nowTime.getDay() === meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() <= 561600000
-    ) {
-      meetingWeek = "이번주"
-    } else if (
-      nowTime.getDay() === meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() > 561600000
-    ) {
-      meetingWeek = "다음주"
-    } else {
-      meetingWeek = ""
-    }
+    const meetingWeek = getInputWeekLabel(currentMeeting.meetingTime)
+    const meetingDay = getInputDayLabel(currentMeeting.meetingTime)
 
     const content = (
       <div className="inline-flex">
@@ -178,23 +133,29 @@ class Main extends Component {
           ) : (
             <CounterPlayer
               myProfile={myProfile || emptyProfile}
-              PlayerActions={PlayerActions}
+              getCounterProfile={getCounterProfile}
+              handleGreenLight={handleGreenLight}
+              handleGift={handleGift}
               counterProfile={counterProfile}
-              isCounterProfile={isCounterProfile}
+              hasCounterProfile={hasCounterProfile}
               isGift={isGift}
             />
           )}
         </div>
         <ControlTool
+          getJoinedUser={getJoinedUser}
+          getCurrentMatching={getCurrentMatching}
+          handleGift={handleGift}
+          handleGreenLight={handleGreenLight}
           time={this.state.time}
           myProfile={myProfile || emptyProfile}
-          PlayerActions={PlayerActions}
-          CurrentMatchingActions={CurrentMatchingActions}
           counterProfile={counterProfile}
-          isCounterProfile={isCounterProfile}
+          hasCounterProfile={hasCounterProfile}
           isCurrentMatching={isCurrentMatching}
           currentMatching={currentMatching}
           currentMeeting={currentMeeting}
+          isGiftOn={isGiftOn}
+          isGreenlightOn={isGreenlightOn}
         />
         <br />
       </div>
@@ -202,26 +163,32 @@ class Main extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  JoinActions: bindActionCreators(joinActions, dispatch),
-  CurrentMeetingActions: bindActionCreators(currentMeetingActions, dispatch),
-  CurrentMatchingActions: bindActionCreators(currentMatchingActions, dispatch),
-  PlayerActions: bindActionCreators(playerActions, dispatch),
-  MyProfileActions: bindActionCreators(myProfileActions, dispatch)
-})
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch,
+    handleGift: bindActionCreators(handleGift, dispatch),
+    handleGreenLight: bindActionCreators(handleGreenLight, dispatch),
+    getMyProfile: bindActionCreators(getMyProfile, dispatch),
+    getCurrentMeeting: bindActionCreators(getCurrentMeeting, dispatch),
+    getCurrentMatching: bindActionCreators(getCurrentMatching, dispatch),
+    getJoinedUser: bindActionCreators(getJoinedUser, dispatch),
+    getCounterProfile: bindActionCreators(getCounterProfile, dispatch)
+  }
+}
 
 const mapStateToProps = state => ({
-  isJoinedPopupOn: state.join.get("isJoinedPopupOn"),
-  isJoinedAlready: state.join.get("isJoinedAlready"),
-  isLoginAlready: state.my_profile.get("isLoginAlready"),
-  joinedUser: state.join.get("joinedUser"),
-  currentMeeting: state.current_meeting.get("currentMeeting"),
-  currentMatching: state.current_matching.get("currentMatching"),
-  counterProfile: state.player.get("counterProfile"),
-  isCounterProfile: state.player.get("isCounterProfile"),
-  isCurrentMatching: state.current_matching.get("isCurrentMatching"),
-  myProfile: state.my_profile.get("myProfile")
+  isJoinedPopupOn: state.join.isJoinedPopupOn,
+  isJoinedAlready: state.join.isJoinedAlready,
+  isLoginAlready: state.my_profile.isLoginAlready,
+  joinedUser: state.join.joinedUser,
+  currentMeeting: state.current_meeting.currentMeeting,
+  currentMatching: state.current_matching.currentMatching,
+  counterProfile: state.current_matching.counterProfile,
+  hasCounterProfile: state.current_matching.hasCounterProfile,
+  isGiftOn: state.current_matching.isGiftOn,
+  isGreenlightOn: state.current_matching.isGreenlightOn,
+  isCurrentMatching: state.current_matching.isCurrentMatching,
+  myProfile: state.my_profile.myProfile
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)

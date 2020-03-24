@@ -1,6 +1,5 @@
 /* eslint-disable */
 import React, { Component } from "react"
-import { Redirect } from "react-router-dom"
 import "../css/Initpage.scss"
 import "../App.css"
 import { Link } from "react-router-dom"
@@ -10,6 +9,7 @@ import MakeTeamButton from "./details/MakeTeamButton"
 import JoinButton from "./details/JoinButton"
 import Loading from "./details/Loading"
 import withHomeInfo from "../modules/withHomeInfo"
+import { getInputDayLabel, getInputNextLabel } from "../modules/utils"
 
 class Initpage extends Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class Initpage extends Component {
     }
   }
 
-  kakaoLogin = () => () => {
+  kakaoLogin = () => {
     // 로그인 창을 띄웁니다.
     Kakao.Auth.login({
       success: function(authObj) {
@@ -90,21 +90,6 @@ class Initpage extends Component {
       .catch(err => console.log(err))
   }
 
-  getInputDayLabel = time => {
-    const week = [
-      "일요일",
-      "월요일",
-      "화요일",
-      "수요일",
-      "목요일",
-      "금요일",
-      "토요일"
-    ]
-    const today = new Date(time).getDay()
-    const todayLabel = week[today]
-    return todayLabel
-  }
-
   blockJoin = bool => () => {
     const { history, isLoginAlready } = this.props
     if (isLoginAlready) {
@@ -125,54 +110,22 @@ class Initpage extends Component {
   render() {
     const {
       myProfile,
-      JoinActions,
+      getJoinedUser,
+      createJoinedUser,
       currentMeeting,
       isLoginAlready,
       isJoinedAlready,
-      joinedUser
+      joinedUser,
+      isMadeTeam
     } = this.props
 
     const nowTime = new Date()
     const closeTime = Date.parse(currentMeeting.closeTime)
     const openTime = Date.parse(currentMeeting.openTime)
     const meetingTime = new Date(currentMeeting.meetingTime)
-    const meetingDay = this.getInputDayLabel(currentMeeting.meetingTime)
+    const meetingDay = getInputDayLabel(currentMeeting.meetingTime)
+    const meetingWeek = getInputNextLabel(currentMeeting.meetingTime)
     const isExpired = new Date().getTime() - closeTime > 0
-
-    let meetingWeek = null
-    if (
-      nowTime.getDay() < meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() <= 561600000
-    ) {
-      meetingWeek = "이번"
-    } else if (
-      nowTime.getDay() < meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() > 561600000
-    ) {
-      meetingWeek = "다음"
-    } else if (
-      nowTime.getDay() > meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() <= 561600000
-    ) {
-      meetingWeek = "다음"
-    } else if (
-      nowTime.getDay() > meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() > 561600000
-    ) {
-      meetingWeek = "다다음"
-    } else if (
-      nowTime.getDay() === meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() <= 561600000
-    ) {
-      meetingWeek = "이번"
-    } else if (
-      nowTime.getDay() === meetingTime.getDay() &&
-      meetingTime.getTime() - nowTime.getTime() > 561600000
-    ) {
-      meetingWeek = "다음"
-    } else {
-      meetingWeek = ""
-    }
 
     let authButton = null
     if (isLoginAlready) {
@@ -193,7 +146,7 @@ class Initpage extends Component {
       authButton = (
         <div
           className="join-button-wrap bg-color-kakao mh-auto flex-center mt-2"
-          onClick={this.kakaoLogin()}
+          onClick={this.kakaoLogin}
         >
           <div className="font-notosan" style={{ color: "#3b1c1c" }}>
             <img
@@ -206,16 +159,6 @@ class Initpage extends Component {
       )
     }
 
-    const lastShuffledAt = new Date(currentMeeting.prevMeetingLastShuffleTime) //나중에 하위 필드 추가되면 수정필요
-    const lastTeamModifiedAt = new Date(myProfile.lastIntroModifiedAt)
-
-    console.log(lastShuffledAt, lastTeamModifiedAt)
-    let isMadeTeam = null
-    if (lastShuffledAt < lastTeamModifiedAt) {
-      isMadeTeam = true
-    } else {
-      isMadeTeam = false
-    }
     let makeTeamButton = null
     if (isLoginAlready && !isExpired) {
       makeTeamButton = (
@@ -224,6 +167,7 @@ class Initpage extends Component {
     }
 
     const isWaitingMeeting = nowTime > openTime && isJoinedAlready
+    isWaitingMeeting && this.props.history.push("/")
 
     return (
       <div className="frame bg-init-color">
@@ -237,11 +181,11 @@ class Initpage extends Component {
             />
           )}
         </div>
-        {isWaitingMeeting && <Redirect to="/" />}
         <div className="fix-bottom-init w100percent mb-36 mt-5">
           <div onClick={this.blockJoin(isMadeTeam)}>
             <JoinButton
-              JoinActions={JoinActions}
+              getJoinedUser={getJoinedUser}
+              createJoinedUser={createJoinedUser}
               isMadeTeam={isMadeTeam}
               isLoginAlready={isLoginAlready}
               isJoinedAlready={isJoinedAlready}

@@ -1,5 +1,10 @@
 import React, { Component } from "react"
-import * as myProfileActions from "../modules/my_profile"
+import {
+  getMyProfile,
+  updateMyProfile,
+  newTabOn,
+  prevTabOn
+} from "../modules/my_profile"
 import "../css/Profile.scss"
 import "../App.css"
 import Header from "./details/Header"
@@ -36,24 +41,32 @@ class TeamProfile extends Component {
   }
 
   componentDidMount() {
-    this.props.MyProfileActions.getMyProfile()
+    this.props.getMyProfile()
   }
 
   render() {
     const {
-      MyProfileActions,
+      getMyProfile,
+      updateMyProfile,
       myProfile,
       isEditedProfile,
-      clickedTab
+      clickedTab,
+      newTabOn,
+      prevTabOn
     } = this.props
     const { emptyProfile } = this.state
     const action = this.props.clickedTab
     return (
       <div className="frame-scrollable bg-init-color">
         <Header content={"미팅 그룹 생성"} />
-        <TwoTab MyProfileActions={MyProfileActions} clickedTab={clickedTab} />
+        <TwoTab
+          newTabOn={newTabOn}
+          prevTabOn={prevTabOn}
+          clickedTab={clickedTab}
+        />
         <TeamProfileBody
-          MyProfileActions={MyProfileActions}
+          getMyProfile={getMyProfile}
+          updateMyProfile={updateMyProfile}
           myProfile={action === "prev" ? myProfile : emptyProfile}
           isEditedProfile={isEditedProfile}
         />
@@ -62,16 +75,21 @@ class TeamProfile extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  MyProfileActions: bindActionCreators(myProfileActions, dispatch)
-})
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch,
+    getMyProfile: bindActionCreators(getMyProfile, dispatch),
+    updateMyProfile: bindActionCreators(updateMyProfile, dispatch),
+    newTabOn: bindActionCreators(newTabOn, dispatch),
+    prevTabOn: bindActionCreators(prevTabOn, dispatch)
+  }
+}
 
 const mapStateToProps = state => ({
-  isLoginAlready: state.my_profile.get("isLoginAlready"),
-  isEditedProfile: state.my_profile.get("isEditedProfile"),
-  myProfile: state.my_profile.get("myProfile"),
-  clickedTab: state.my_profile.get("clickedTab")
+  isLoginAlready: state.my_profile.isLoginAlready,
+  isEditedProfile: state.my_profile.isEditedProfile,
+  myProfile: state.my_profile.myProfile,
+  clickedTab: state.my_profile.clickedTab
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeamProfile)

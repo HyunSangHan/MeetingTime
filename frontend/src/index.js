@@ -9,8 +9,7 @@ import { createStore, compose, applyMiddleware } from "redux"
 import reducers from "./modules"
 import { Provider } from "react-redux"
 import ReduxThunk from "redux-thunk"
-import penderMiddleware from "redux-pender"
-const middlewares = [ReduxThunk, penderMiddleware()]
+const middlewares = [ReduxThunk]
 
 const store = compose(applyMiddleware(...middlewares))(createStore)(
   reducers,
@@ -19,6 +18,7 @@ const store = compose(applyMiddleware(...middlewares))(createStore)(
 
 ReactDOM.render(
   <Provider store={store}>
+    {console.log(store.getState())}
     <App />
   </Provider>,
   document.getElementById("root")

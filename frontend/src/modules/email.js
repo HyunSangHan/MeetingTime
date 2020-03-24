@@ -1,54 +1,67 @@
-import { createAction, handleActions } from "redux-actions"
-import { Map } from "immutable"
 import axios from "axios"
-import { pender } from "redux-pender"
+import { createAction } from "./utils"
 
-const SEND_EMAIL = "SEND_EMAIL"
-const VALIDATE_EMAIL = "VALIDATE_EMAIL"
+const SEND_EMAIL = `SEND_EMAIL`
+const VALIDATE_SUCCESS = `VALIDATE_SUCCESS`
+const VALIDATE_FAILURE = `VALIDATE_FAILURE`
 
-const initialState = Map({
+const initialState = {
   sent: false,
   validated: false
-})
+}
 
-export default handleActions(
-  {
-    ...pender({
-      type: SEND_EMAIL,
-      onSuccess: state => state.set("sent", true)
-    }),
-    ...pender({
-      type: VALIDATE_EMAIL,
-      onSuccess: state => state.set("validated", true)
+export const sendEmail = payload => {
+  return dispatch => {
+    axios({
+      method: "post",
+      url: "/email/",
+      data: payload
     })
-  },
-  initialState
-)
+      .then(response => {
+        console.log(response.data)
+        dispatch(createAction(SEND_EMAIL))
+      })
+      .catch(err => console.log(err))
+  }
+}
 
-export const sendEmail = createAction(SEND_EMAIL, payload =>
-  axios({
-    method: "post",
-    url: "/email/",
-    data: {
-      email: payload.email
-    }
-  })
-    .then(response => {
-      return response
+export const validateEmail = payload => {
+  return dispatch => {
+    axios({
+      method: "post",
+      url: "/validate/",
+      data: payload
     })
-    .catch(err => console.log(err))
-)
+      .then(() => {
+        dispatch(createAction(VALIDATE_SUCCESS))
+      })
+      .catch(err => {
+        console.log(err)
+        dispatch(createAction(VALIDATE_FAILURE))
+      })
+  }
+}
 
-export const validateEmail = createAction(VALIDATE_EMAIL, payload =>
-  axios({
-    method: "post",
-    url: "/validate/",
-    data: {
-      code: payload.code
-    }
-  })
-    .then(response => {
-      return response
-    })
-    .catch(err => console.log(err))
-)
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SEND_EMAIL:
+      return {
+        ...state,
+        sent: true
+      }
+    case VALIDATE_SUCCESS:
+      return {
+        ...state,
+        validated: true
+      }
+    case VALIDATE_FAILURE:
+      return {
+        ...state,
+        validated: false
+      }
+    default:
+      return state
+  }
+}
+
+export default reducer

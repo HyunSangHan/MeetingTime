@@ -26,10 +26,11 @@
     padding-top: 95px;
 
     .d-day {
-      width: 52px;
+      min-width: 52px;
       height: 30px;
       border-radius: 17px;
       background-color: #4a4a4a;
+      padding: 0 10px;
     }
   }
 }

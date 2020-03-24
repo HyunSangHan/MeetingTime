@@ -1,12 +1,11 @@
-import { createAction, handleActions } from "redux-actions"
-import { Map } from "immutable"
 import axios from "axios"
-import { pender } from "redux-pender"
+import { createAction } from "./utils"
 
-const CREATE_JOINED_USER = `CREATE_JOINED_USER`
+const GET_JOINED_USER_SUCCESS = `GET_JOINED_USER_SUCCESS`
+const GET_JOINED_USER_FAILURE = `GET_JOINED_USER_FAILURE`
 const GET_JOINED_USER = `GET_JOINED_USER`
 
-const initialState = Map({
+const initialState = {
   isJoinedAlready: null,
   joinedUser: {
     profile: {
@@ -32,49 +31,63 @@ const initialState = Map({
     isMatched: null,
     meeting: null
   }
-})
+}
 
-export default handleActions(
-  {
-    ...pender({
-      type: CREATE_JOINED_USER,
-      onSuccess: (state, action) => state.set("joinedUser", action.payload.data)
-    }),
-    ...pender({
-      type: GET_JOINED_USER,
-      onSuccess: (state, action) =>
-        state
-          .set("joinedUser", action.payload.data)
-          .set("isJoinedAlready", true),
-      onFailure: state => state.set("isJoinedAlready", false)
+export const getJoinedUser = () => {
+  return dispatch => {
+    axios({
+      method: "get",
+      url: "/join"
     })
-  },
-  initialState
-)
+      .then(response => {
+        console.log(response.data)
+        dispatch(createAction(GET_JOINED_USER_SUCCESS))
+        dispatch(createAction(GET_JOINED_USER, response.data))
+      })
+      .catch(err => {
+        console.log("not working - " + err)
+        dispatch(createAction(GET_JOINED_USER_FAILURE))
+      })
+  }
+}
 
-export const createJoinedUser = createAction(CREATE_JOINED_USER, payload =>
-  axios({
-    method: "post",
-    url: "/join/"
-  })
-    .then(response => {
-      console.log(response.data)
-      return response
+export const createJoinedUser = () => {
+  return dispatch => {
+    axios({
+      method: "post",
+      url: "/join/"
     })
-    .catch(err => {
-      console.log("not working - " + err)
-    })
-)
-export const getJoinedUser = createAction(GET_JOINED_USER, payload =>
-  axios({
-    method: "get",
-    url: "/join"
-  })
-    .then(response => {
-      console.log(response.data)
-      return response
-    })
-    .catch(err => {
-      console.log("not working - " + err)
-    })
-)
+      .then(response => {
+        console.log(response.data)
+        dispatch(createAction(GET_JOINED_USER_SUCCESS))
+        dispatch(createAction(GET_JOINED_USER, response.data))
+      })
+      .catch(err => {
+        console.log("not working - " + err)
+      })
+  }
+}
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_JOINED_USER_SUCCESS:
+      return {
+        ...state,
+        isJoinedAlready: true
+      }
+    case GET_JOINED_USER_FAILURE:
+      return {
+        ...state,
+        isJoinedAlready: false
+      }
+    case GET_JOINED_USER:
+      return {
+        ...state,
+        joinedUser: action.data
+      }
+    default:
+      return state
+  }
+}
+
+export default reducer

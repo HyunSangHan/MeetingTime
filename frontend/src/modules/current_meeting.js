@@ -1,36 +1,52 @@
-import { createAction, handleActions } from "redux-actions"
-import { Map } from "immutable"
 import axios from "axios"
-import { pender } from "redux-pender"
+import { createAction } from "./utils"
+
+const initialState = {
+  currentMeeting: {
+    id: null,
+    openTime: null,
+    prevMeetingLastShuffleTime: null,
+    closeTime: null,
+    firstShuffleTime: null,
+    secondShuffleTime: null,
+    thirdShuffleTime: null,
+    meetingTime: null,
+    location: null,
+    cutline: null,
+    description: null
+  }
+}
 
 const GET_CURRENT_MEETING = `GET_CURRENT_MEETING`
 
-const initialState = Map({
-  currentMeeting: Map({})
-})
+export const getCurrentMeeting = () => {
+  return dispatch => {
+    axios({
+      method: "get",
+      url: "/current_meeting"
+    })
+      .then(response => {
+        console.log("this is working OOOOO")
+        console.log(response.data)
+        dispatch(createAction(GET_CURRENT_MEETING, response.data))
+      })
+      .catch(err => {
+        console.log("not working - " + err)
+      })
+  }
+}
 
-export default handleActions(
-  {
-    ...pender({
-      type: GET_CURRENT_MEETING,
-      onSuccess: (state, action) =>
-        state.set("currentMeeting", action.payload.data)
-    })
-  },
-  initialState
-)
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_CURRENT_MEETING: {
+      return {
+        ...state,
+        currentMeeting: action.data
+      }
+    }
+    default:
+      return state
+  }
+}
 
-export const getCurrentMeeting = createAction(GET_CURRENT_MEETING, payload =>
-  axios({
-    method: "get",
-    url: "/current_meeting"
-  })
-    .then(response => {
-      console.log("this is working OOOOO")
-      console.log(response.data)
-      return response
-    })
-    .catch(err => {
-      console.log("not working - " + err)
-    })
-)
+export default reducer

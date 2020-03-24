@@ -5,92 +5,54 @@ import { Link } from "react-router-dom" //다른 페이지로 링크 걸 때 필
 import CountDown from "./CountDown"
 
 class ControlTool extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isGreenlightMale: this.props.currentMatching.isGreenlightMale,
-      isGreenlightFemale: this.props.currentMatching.isGreenlightFemale,
-      isGiftMale: this.props.currentMatching.isGiftMale,
-      isGiftFemale: this.props.currentMatching.isGiftFemale
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {
-      isGreenlightMale,
-      isGreenlightFemale,
-      isGiftMale,
-      isGiftFemale
-    } = this.props.currentMatching
-    const isUpdated =
-      isGreenlightMale !== nextProps.currentMatching.isGreenlightMale ||
-      isGreenlightFemale !== nextProps.currentMatching.isGreenlightFemale ||
-      isGiftMale !== nextProps.currentMatching.isGiftMale ||
-      isGiftFemale !== nextProps.currentMatching.isGiftFemale
-    if (isUpdated) {
-      this.setState({
-        isGreenlightMale: nextProps.currentMatching.isGreenlightMale,
-        isGreenlightFemale: nextProps.currentMatching.isGreenlightFemale,
-        isGiftMale: nextProps.currentMatching.isGiftMale,
-        isGiftFemale: nextProps.currentMatching.isGiftFemale
-      })
-    }
-  }
-
   handleGreenLight = () => {
-    const { PlayerActions, counterProfile } = this.props
-    const { isGreenlightMale, isGreenlightFemale } = this.state
+    const { handleGreenLight, myProfile, isGreenlightOn } = this.props
 
-    if (!isGreenlightMale && !counterProfile.isMale) {
-      PlayerActions.handleGreenLightOn({ male: true }).then(
-        this.setState({ isGreenlightMale: true })
-      )
-    } else if (!isGreenlightFemale && counterProfile.isMale) {
-      PlayerActions.handleGreenLightOn({ female: true }).then(
-        this.setState({ isGreenlightFemale: true })
-      )
-    } else if (isGreenlightMale && !counterProfile.isMale) {
-      PlayerActions.handleGreenLightOff({ male: false }).then(
-        this.setState({ isGreenlightMale: false })
-      )
-    } else if (isGreenlightFemale && counterProfile.isMale) {
-      PlayerActions.handleGreenLightOff({ female: false }).then(
-        this.setState({ isGreenlightFemale: false })
-      )
+    if (myProfile.isMale) {
+      handleGreenLight({ isGreenlightMale: !isGreenlightOn })
+    } else {
+      handleGreenLight({ isGreenlightFemale: !isGreenlightOn })
     }
   }
 
   handleGift = () => {
-    const { PlayerActions, counterProfile } = this.props
-    const { isGiftMale, isGiftFemale } = this.state
-
-    if (!isGiftMale && !counterProfile.isMale) {
-      window.confirm(
-        "안주를 한 번 쏘고 나면 되돌릴 수 없습니다. 정말 쏘시겠습니까?"
-      ) && PlayerActions.handleGiftOn({ male: true })
-    } else if (!isGiftFemale && counterProfile.isMale) {
-      window.confirm(
-        "안주를 한 번 쏘고 나면 되돌릴 수 없습니다. 정말 쏘시겠습니까?"
-      ) && PlayerActions.handleGiftOn({ female: true })
-    } else {
+    const { handleGift, myProfile, isGiftOn } = this.props
+    if (isGiftOn) {
       window.alert("이미 안주를 쏘셨습니다.")
+    } else if (myProfile.isMale) {
+      window.confirm(
+        "안주를 한 번 쏘고 나면 되돌릴 수 없습니다. 정말 쏘시겠습니까?"
+      ) && handleGift({ isGiftMale: true })
+    } else {
+      window.confirm(
+        "안주를 한 번 쏘고 나면 되돌릴 수 없습니다. 정말 쏘시겠습니까?"
+      ) && handleGift({ isGiftFemale: true })
     }
   }
 
   render() {
     const {
-      PlayerActions,
       myProfile,
-      counterProfile,
       currentMatching,
-      currentMeeting
+      currentMeeting,
+      isGiftOn,
+      isGreenlightOn
     } = this.props
     const {
       isGreenlightMale,
       isGreenlightFemale,
       isGiftMale,
       isGiftFemale
-    } = this.state
+    } = this.props.currentMatching
+
+    const giftOn =
+      isGiftOn ||
+      (myProfile.isMale && isGiftMale) ||
+      (!myProfile.isMale && isGiftFemale)
+    const greenlightOn =
+      isGreenlightOn ||
+      (myProfile.isMale && isGreenlightMale) ||
+      (!myProfile.isMale && isGreenlightFemale)
 
     let countDown = null
     if (currentMatching.trialTime === 1) {
@@ -102,7 +64,7 @@ class ControlTool extends Component {
     } else if (currentMatching.trialTime === 3) {
       countDown = <CountDown time={new Date(currentMeeting.thirdShuffleTime)} />
     } else if (currentMatching.trialTime === 4) {
-      countDown = <CountDown time={new Date(currentMeeting.thirdShuffleTime)} /> //수정필요
+      countDown = <CountDown time={new Date(currentMeeting.thirdShuffleTime)} /> // TODO: fourth 추가해서 수정필요
     }
 
     return (
@@ -124,57 +86,26 @@ class ControlTool extends Component {
             </div>
 
             <div className="column">
-              {myProfile.isMale ? (
-                <div className="greenlight-back">
-                  <div
-                    className="greenlight move-1"
-                    onClick={this.handleGreenLight}
-                  >
-                    {isGreenlightMale && (
-                      <div className="call-button font-jua">콜!!</div>
-                    )}
-                    {!isGreenlightMale && (
-                      <div className="call-button font-jua">콜?</div>
-                    )}
+              <div className="greenlight-back">
+                <div
+                  className="greenlight move-1"
+                  onClick={this.handleGreenLight}
+                >
+                  <div className="call-button font-jua">
+                    {greenlightOn ? "콜!!" : "콜?"}
                   </div>
                 </div>
-              ) : (
-                <div className="greenlight-back">
-                  <div
-                    className="greenlight move-1"
-                    onClick={this.handleGreenLight}
-                  >
-                    {isGreenlightFemale && (
-                      <div className="call-button font-jua">콜!!</div>
-                    )}
-                    {!isGreenlightFemale && (
-                      <div className="call-button font-jua">콜?</div>
-                    )}
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
 
             <div className="column">
-              {myProfile.isMale ? (
-                <div className="gift" onClick={this.handleGift}>
-                  {isGiftMale && (
-                    <div className="gift-on font-jua">안주쏘기</div>
-                  )}
-                  {!isGiftMale && (
-                    <div className="gift-off font-jua">안주쏘기</div>
-                  )}
+              <div className="gift" onClick={this.handleGift}>
+                <div
+                  className={giftOn ? "gift-on font-jua" : "gift-off font-jua"}
+                >
+                  안주쏘기
                 </div>
-              ) : (
-                <div className="gift" onClick={this.handleGift}>
-                  {isGiftFemale && (
-                    <div className="gift-on font-jua">안주쏘기</div>
-                  )}
-                  {!isGiftFemale && (
-                    <div className="gift-off font-jua">안주쏘기</div>
-                  )}
-                </div>
-              )}
+              </div>
             </div>
           </div>
         </div>

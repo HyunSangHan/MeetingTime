@@ -1,52 +1,61 @@
 import React from "react"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
-import * as joinActions from "./join"
-import * as currentMeetingActions from "./current_meeting"
-import * as myProfileActions from "./my_profile"
+import { getMyProfile } from "../modules/my_profile"
+import { getCurrentMeeting } from "../modules/current_meeting"
+import { getJoinedUser, createJoinedUser } from "../modules/join"
 
 export default ComposedComponent => {
   class withHomeInfo extends React.Component {
-    componentDidMount() {
-      const {
-        JoinActions,
-        CurrentMeetingActions,
-        MyProfileActions,
-        myProfile
-      } = this.props
-      CurrentMeetingActions.getCurrentMeeting().then(() =>
-        console.log(this.props.isLoginAlready)
-      )
-      !myProfile.user.username && MyProfileActions.getMyProfile()
-      // myProfile.user.username && JoinActions.getJoinedUser()
-    }
-
-    componentWillReceiveProps(nextProps) {
-      if (this.props.myProfile !== nextProps.myProfile) {
-        this.props.JoinActions.getJoinedUser()
-      }
-    }
+    // componentWillReceiveProps(nextProps) {
+    // if (this.props.myProfile !== nextProps.myProfile) {
+    //   this.props.getJoinedUser()
+    // }
+    // }
 
     render() {
-      return <ComposedComponent {...this.props} />
+      const {
+        currentMeeting,
+        myProfile,
+        getCurrentMeeting,
+        getMyProfile
+      } = this.props
+
+      const lastShuffledAt = new Date(currentMeeting.prevMeetingLastShuffleTime) //나중에 하위 필드 추가되면 수정필요
+      const lastTeamModifiedAt = new Date(myProfile.lastIntroModifiedAt)
+
+      let isMadeTeam = null
+      if (lastShuffledAt < lastTeamModifiedAt) {
+        isMadeTeam = true
+      } else {
+        isMadeTeam = false
+      }
+
+      !myProfile.user.username && getMyProfile()
+      !currentMeeting.openTime && getCurrentMeeting()
+      return <ComposedComponent {...this.props} isMadeTeam={isMadeTeam} />
     }
   }
 
-  const mapDispatchToProps = dispatch => ({
-    dispatch,
-    JoinActions: bindActionCreators(joinActions, dispatch),
-    CurrentMeetingActions: bindActionCreators(currentMeetingActions, dispatch),
-    MyProfileActions: bindActionCreators(myProfileActions, dispatch)
-  })
+  const mapDispatchToProps = dispatch => {
+    return {
+      dispatch,
+      getMyProfile: bindActionCreators(getMyProfile, dispatch),
+      getCurrentMeeting: bindActionCreators(getCurrentMeeting, dispatch),
+      getJoinedUser: bindActionCreators(getJoinedUser, dispatch),
+      createJoinedUser: bindActionCreators(createJoinedUser, dispatch)
+    }
+  }
 
-  const mapStateToProps = state => ({
-    isJoinedPopupOn: state.join.get("isJoinedPopupOn"),
-    joinedUser: state.join.get("joinedUser"),
-    isJoinedAlready: state.join.get("isJoinedAlready"),
-    isLoginAlready: state.my_profile.get("isLoginAlready"),
-    myProfile: state.my_profile.get("myProfile"),
-    currentMeeting: state.current_meeting.get("currentMeeting")
-  })
+  const mapStateToProps = state => {
+    return {
+      joinedUser: state.join.joinedUser,
+      isJoinedAlready: state.join.isJoinedAlready,
+      isLoginAlready: state.my_profile.isLoginAlready,
+      myProfile: state.my_profile.myProfile,
+      currentMeeting: state.current_meeting.currentMeeting
+    }
+  }
 
   return connect(mapStateToProps, mapDispatchToProps)(withHomeInfo)
 }
