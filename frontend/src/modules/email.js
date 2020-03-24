@@ -17,7 +17,8 @@ export const sendEmail = payload => {
       url: "/email/",
       data: payload
     })
-      .then(() => {
+      .then(response => {
+        console.log(response.data)
         dispatch(createAction(SEND_EMAIL))
       })
       .catch(err => console.log(err))

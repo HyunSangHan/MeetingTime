@@ -135,7 +135,7 @@ class Email(APIView):
         send_mail(
             '이메일 인증',
             str(code),
-            'maeng9584@likelion.org',
+            'gustkd3@gmail.com',
             # 발송자 이메일에는 일단 제 이메일을 넣어두었습니다.
             [request.data["email"]],
             fail_silently=False,
@@ -147,14 +147,17 @@ class Email(APIView):
 
 class SentValidation(APIView):
     def post(self, request, format=None):
-        if request.user.validation.code == int(request.data['code']):
-            user = request.user
-            user.profile.validated = True
-            user.profile.save()
-            Validation.objects.get(user=user).delete()
-            return Response(status=status.HTTP_202_ACCEPTED)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        try:
+            if request.user.validation.code == int(request.data['code']):
+                user = request.user
+                user.profile.validated = True
+                user.profile.save()
+                Validation.objects.get(user=user).delete()
+                return Response(status=status.HTTP_202_ACCEPTED)
+            else:
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 def success_matching():
@@ -376,7 +379,7 @@ class Join(APIView):
             serializer = JoinSerializer(queryset)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
 
     def post(self, request, format=None):
@@ -472,10 +475,11 @@ class CurrentProfile(APIView):
     def patch(self, request, format=None):
         queryset = request.user.profile
 
-        if request.data['team_name'] is not None:
+        if request.data.get('team_name'):
             queryset.last_intro_modified_at = timezone.now()
 
         serializer = ProfileSerializer(queryset, data=request.data, partial=True)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)

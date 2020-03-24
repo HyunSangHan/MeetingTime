@@ -60,14 +60,15 @@ class Profile extends Component {
         emailCompany = "[등록되지 않은 회사입니다!]"
         break
     }
-    sendEmail({
+    this.props.sendEmail({
       email: emailFront + emailCompany
     })
+    console.log(emailFront + emailCompany + "로 인증메일을 보냅니다.")
   }
 
   onValidate() {
     const { code } = this.state
-    validateEmail({
+    this.props.validateEmail({
       code: code
     })
   }
@@ -78,10 +79,11 @@ class Profile extends Component {
     console.log(this.state)
     event.preventDefault()
     updateMyProfile({ ageRange: ageValue, company: companyValue })
-    getMyProfile().then(() => {
-      //promise반환이 맞는지 추후 확인 필요 TODO: 추후 프로미스 반환하게 해두자 then을 쓰기 위해
-      history.push("/")
-    })
+    getMyProfile()
+    // .then(() => {
+    //   //promise반환이 맞는지 추후 확인 필요 TODO: 추후 프로미스 반환하게 해두자 then을 쓰기 위해
+    //   history.push("/")
+    // })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -204,7 +206,12 @@ class Profile extends Component {
             </form>
             <div className="FixedButton mt-4">
               {this.props.validated ? (
-                <button className="SubmitButton WorkingButton">적용하기</button>
+                <button
+                  className="SubmitButton WorkingButton"
+                  onClick={this.handleSubmit}
+                >
+                  적용하기
+                </button>
               ) : (
                 <button
                   type="button"
@@ -226,7 +233,9 @@ const mapDispatchToProps = dispatch => {
   return {
     dispatch,
     getMyProfile: bindActionCreators(getMyProfile, dispatch),
-    updateMyProfile: bindActionCreators(updateMyProfile, dispatch)
+    updateMyProfile: bindActionCreators(updateMyProfile, dispatch),
+    sendEmail: bindActionCreators(sendEmail, dispatch),
+    validateEmail: bindActionCreators(validateEmail, dispatch)
   }
 }
 
