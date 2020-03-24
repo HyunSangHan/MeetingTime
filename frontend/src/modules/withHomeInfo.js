@@ -20,9 +20,20 @@ export default ComposedComponent => {
         getCurrentMeeting,
         getMyProfile
       } = this.props
+
+      const lastShuffledAt = new Date(currentMeeting.prevMeetingLastShuffleTime) //나중에 하위 필드 추가되면 수정필요
+      const lastTeamModifiedAt = new Date(myProfile.lastIntroModifiedAt)
+
+      let isMadeTeam = null
+      if (lastShuffledAt < lastTeamModifiedAt) {
+        isMadeTeam = true
+      } else {
+        isMadeTeam = false
+      }
+
       !myProfile.user.username && getMyProfile()
       !currentMeeting.openTime && getCurrentMeeting()
-      return <ComposedComponent {...this.props} />
+      return <ComposedComponent {...this.props} isMadeTeam={isMadeTeam} />
     }
   }
 

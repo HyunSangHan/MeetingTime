@@ -1,6 +1,5 @@
 /* eslint-disable */
 import React, { Component } from "react"
-import { Redirect } from "react-router-dom"
 import "../css/Initpage.scss"
 import "../App.css"
 import { Link } from "react-router-dom"
@@ -58,7 +57,7 @@ class Initpage extends Component {
                 response.data.company.name +
                 ")"
             )
-            // window.location.reload()
+            window.location.reload()
           })
           .catch(err => {
             console.log(err)
@@ -116,7 +115,8 @@ class Initpage extends Component {
       currentMeeting,
       isLoginAlready,
       isJoinedAlready,
-      joinedUser
+      joinedUser,
+      isMadeTeam
     } = this.props
 
     const nowTime = new Date()
@@ -159,15 +159,6 @@ class Initpage extends Component {
       )
     }
 
-    const lastShuffledAt = new Date(currentMeeting.prevMeetingLastShuffleTime) //나중에 하위 필드 추가되면 수정필요
-    const lastTeamModifiedAt = new Date(myProfile.lastIntroModifiedAt)
-
-    let isMadeTeam = null
-    if (lastShuffledAt < lastTeamModifiedAt) {
-      isMadeTeam = true
-    } else {
-      isMadeTeam = false
-    }
     let makeTeamButton = null
     if (isLoginAlready && !isExpired) {
       makeTeamButton = (
@@ -175,7 +166,8 @@ class Initpage extends Component {
       )
     }
 
-    // const isWaitingMeeting = nowTime > openTime && isJoinedAlready
+    const isWaitingMeeting = nowTime > openTime && isJoinedAlready
+    isWaitingMeeting && this.props.history.push("/")
 
     return (
       <div className="frame bg-init-color">
@@ -189,7 +181,6 @@ class Initpage extends Component {
             />
           )}
         </div>
-        {/* {isWaitingMeeting && <Redirect to="/" />} */}
         <div className="fix-bottom-init w100percent mb-36 mt-5">
           <div onClick={this.blockJoin(isMadeTeam)}>
             <JoinButton

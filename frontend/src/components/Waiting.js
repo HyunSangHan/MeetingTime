@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import { Redirect } from "react-router-dom"
 import "../css/Waiting.scss"
 import "../App.css"
 import MeetingInfo from "./details/MeetingInfo"
@@ -42,6 +41,12 @@ class Waiting extends Component {
       isJoinedAlready !== null
     const isWaitingMeeting = nowTime > openTime && isJoinedAlready
 
+    if (!isLoginAlready) {
+      this.props.history.push("/init")
+    } else if (isStoreLoaded && !isWaitingMeeting) {
+      this.props.history.push("/init")
+    }
+
     return (
       <div className="frame bg-init-color">
         <div className="container-shadow mh-auto">
@@ -52,8 +57,6 @@ class Waiting extends Component {
               alt="logo"
             />
           </div>
-          {(isLoginAlready === false ||
-            (isStoreLoaded && !isWaitingMeeting)) && <Redirect to="/init" />}
           {!isStoreLoaded ? (
             <Loading />
           ) : (
