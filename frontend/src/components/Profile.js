@@ -74,16 +74,12 @@ class Profile extends Component {
   }
 
   handleSubmit = event => {
-    const { history, getMyProfile, updateMyProfile } = this.props
+    const { history, updateMyProfile } = this.props
     const { ageValue, companyValue } = this.state
-    console.log(this.state)
     event.preventDefault()
     updateMyProfile({ ageRange: ageValue, company: companyValue })
-    getMyProfile()
-    // .then(() => {
-    //   //promise반환이 맞는지 추후 확인 필요 TODO: 추후 프로미스 반환하게 해두자 then을 쓰기 위해
-    //   history.push("/")
-    // })
+    window.alert("프로필 수정이 완료되었습니다.")
+    history.push("/")
   }
 
   componentWillReceiveProps(nextProps) {

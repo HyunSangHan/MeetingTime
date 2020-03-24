@@ -44,7 +44,6 @@ export const getMyProfile = () => {
         console.log(response.data)
         dispatch(createAction(GET_PROFILE, response.data))
         dispatch(createAction(LOGIN_SUCCESS))
-        // return Promise.resolve("프로필 가져오기 성공")
       })
       .catch(err => {
         dispatch(createAction(LOGIN_FAILURE))
