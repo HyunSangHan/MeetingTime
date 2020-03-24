@@ -2,8 +2,6 @@
 import React, { Component } from "react"
 import "../css/Main.scss"
 import "../App.css"
-import { Container, Row, Col } from "reactstrap"
-import MaterialIcon from "material-icons-react"
 import { Link, Redirect } from "react-router-dom"
 import { bindActionCreators } from "redux"
 import Header from "./details/Header"

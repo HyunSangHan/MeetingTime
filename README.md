@@ -25,7 +25,7 @@ This is a web application for helping workers to make meeting chance.
 ---
 
 ### 기술스택
-- Frontend : React.js, Redux, React-Router, immutable.js, SASS 등  
+- Frontend : React.js, Redux, React-thunk, Scss 등  
 - Backend : Django(DRF), OAuth, sqlite 등
 
 ### 디렉토리 구조
