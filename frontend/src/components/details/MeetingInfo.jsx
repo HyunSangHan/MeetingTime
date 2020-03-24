@@ -18,9 +18,9 @@ class MeetingInfo extends Component {
           <div className="hr-container">
             <hr />
           </div>
-          <div className="d-day mh-auto flex-center mb-3">
+          <div className="mh-auto flex-center mb-3">
             {/* 디데이 */}
-            <div className="font-jua font-white font-18 mt-1">
+            <div className="d-day flex-center font-jua font-white font-18 mt-1">
               {/* 디데이 */}D{getDateGap(meetingTime)}
             </div>
           </div>
