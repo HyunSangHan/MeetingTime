@@ -11,6 +11,7 @@
     "material-icons-react": "^1.0.4",
     "node-sass": "^4.12.0",
     "react": "^16.8.4",
+    "react-circular-progressbar": "^2.0.3",
     "react-dom": "^16.8.3",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
