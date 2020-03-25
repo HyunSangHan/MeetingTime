@@ -140,3 +140,43 @@ export const getDateGap = time => {
     return "+" + gap
   }
 }
+
+export const getTimeNotification = seconds => {
+  let gapDatePart = parseInt(seconds / (60 * 60 * 24))
+  let gapHourPart = parseInt((seconds - gapDatePart * 60 * 60 * 24) / (60 * 60))
+  let gapMinutePart = parseInt(
+    (seconds - gapDatePart * 60 * 60 * 24 - gapHourPart * 60 * 60) / 60
+  )
+  let gapSecondPart =
+    seconds -
+    gapDatePart * 60 * 60 * 24 -
+    gapHourPart * 60 * 60 -
+    gapMinutePart * 60
+
+  if (gapHourPart < 10 && gapDatePart !== 0) {
+    gapHourPart = "0" + gapHourPart
+  }
+
+  if (gapMinutePart < 10) {
+    gapMinutePart = "0" + gapMinutePart
+  }
+
+  if (gapSecondPart < 10) {
+    gapSecondPart = "0" + gapSecondPart
+  }
+
+  if (gapDatePart < 1) {
+    return "남은시간 " + gapHourPart + ":" + gapMinutePart + ":" + gapSecondPart
+  } else {
+    return (
+      "남은시간 " +
+      gapDatePart +
+      "일 " +
+      gapHourPart +
+      ":" +
+      gapMinutePart +
+      ":" +
+      gapSecondPart
+    )
+  }
+}
