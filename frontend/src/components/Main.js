@@ -70,7 +70,7 @@ class Main extends Component {
       })
     }
     {
-      !isLoginAlready && <Redirect to="/" />
+      !isLoginAlready && this.props.history.push("/")
     }
   }
 
@@ -85,10 +85,6 @@ class Main extends Component {
   render() {
     const {
       myProfile,
-      isJoinedPopupOn,
-      isJoinedAlready,
-      isLoginAlready,
-      joinedUser,
       currentMeeting,
       isCurrentMatching,
       currentMatching,

@@ -225,6 +225,14 @@
       }
     }
   }
+
+  /* circular progressbar customizing*/
+  .CircularProgressbar {
+    width: 75px !important;
+    .CircularProgressbar-path {
+      stroke: #50e3c2 !important;
+    }
+  }
 }
 
 @media (max-width: 479px) {
