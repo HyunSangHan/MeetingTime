@@ -41,7 +41,6 @@ export const getMyProfile = () => {
       url: "/profile"
     })
       .then(response => {
-        console.log(response.data)
         dispatch(createAction(GET_PROFILE, response.data))
         dispatch(createAction(LOGIN_SUCCESS))
       })
@@ -60,7 +59,6 @@ export const updateMyProfile = payload => {
       data: payload
     })
       .then(response => {
-        console.log(response.data)
         dispatch(createAction(GET_PROFILE, response.data))
       })
       .catch(err => {

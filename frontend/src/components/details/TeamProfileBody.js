@@ -46,12 +46,10 @@ class TeamProfileBody extends Component {
     this.setState({
       [name]: value
     })
-    console.log(name, value)
   }
 
   //첫번째 이미지 관련 함수
   handleImageChangeFirst = event => {
-    console.log(event.target.files[0])
     this.setState({
       imageFirstValue: event.target.files[0],
       previewFirst: URL.createObjectURL(event.target.files[0])
@@ -60,7 +58,6 @@ class TeamProfileBody extends Component {
 
   //두번째 이미지 관련 함수
   handleImageChangeSecond = event => {
-    console.log(event.target.files[0])
     this.setState({
       imageSecondValue: event.target.files[0],
       previewSecond: URL.createObjectURL(event.target.files[0])
@@ -69,7 +66,6 @@ class TeamProfileBody extends Component {
 
   //세번째 이미지 관련 함수
   handleImageChangeThird = event => {
-    console.log(event.target.files[0])
     this.setState({
       imageThirdValue: event.target.files[0],
       previewThird: URL.createObjectURL(event.target.files[0])

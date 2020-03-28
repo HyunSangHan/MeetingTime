@@ -7,12 +7,6 @@ import { getJoinedUser, createJoinedUser } from "../modules/join"
 
 export default ComposedComponent => {
   class withHomeInfo extends React.Component {
-    // componentWillReceiveProps(nextProps) {
-    // if (this.props.myProfile !== nextProps.myProfile) {
-    //   this.props.getJoinedUser()
-    // }
-    // }
-
     render() {
       const {
         currentMeeting,

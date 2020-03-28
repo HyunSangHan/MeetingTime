@@ -29,9 +29,6 @@ class JoinButton extends Component {
     const closeTime = Date.parse(currentMeeting.closeTime)
     // const meetingTime = Date.parse(currentMeeting.meetingTime)
     const nowTime = new Date().getTime()
-    {
-      console.log(this.props)
-    }
     let button = null
     if (isLoginAlready) {
       if (nowTime < openTime) {

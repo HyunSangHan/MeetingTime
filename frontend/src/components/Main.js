@@ -2,7 +2,6 @@
 import React, { Component } from "react"
 import "../css/Main.scss"
 import "../App.css"
-import { Link, Redirect } from "react-router-dom"
 import { bindActionCreators } from "redux"
 import Header from "./details/Header"
 import CounterPlayer from "./details/CounterPlayer"

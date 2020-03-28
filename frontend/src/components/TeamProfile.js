@@ -15,7 +15,6 @@ import { connect } from "react-redux"
 
 class TeamProfile extends Component {
   constructor(props) {
-    console.log(props)
     super(props)
     this.state = {
       emptyProfile: {

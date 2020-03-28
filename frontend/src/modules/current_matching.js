@@ -104,7 +104,6 @@ export const getCurrentMatching = () => {
         const giftOn =
           (isMale && response.data.isGiftMale) ||
           (!isMale && response.data.isGiftFemale)
-        console.log(response.data)
         dispatch(createAction(GET_CURRENT_MATCHING, response.data))
         dispatch(createAction(GET_CURRENT_MATCHING_SUCCESS))
         if (giftOn) dispatch(createAction(GIFT_ON))
@@ -123,7 +122,6 @@ export const getCounterProfile = () => {
       url: "/counter_profile"
     })
       .then(response => {
-        console.log(response.data)
         dispatch(createAction(GET_COUNTER_PROFILE, response.data))
         dispatch(createAction(GET_COUNTER_PROFILE_SUCCESS))
       })
@@ -143,7 +141,6 @@ export const handleGreenLight = payload => {
       data: payload
     })
       .then(response => {
-        console.log(response.data)
         const isMale = getState().my_profile.myProfile.isMale
         if (isMale && response.data.isGreenlightMale) {
           dispatch(createAction(GREEN_LIGHT_ON))
@@ -170,7 +167,6 @@ export const handleGift = payload => {
       data: payload
     })
       .then(response => {
-        console.log(response.data)
         const isMale = getState().my_profile.myProfile.isMale
         if (isMale && response.data.isGiftMale) {
           dispatch(createAction(GIFT_ON))

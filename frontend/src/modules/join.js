@@ -40,7 +40,6 @@ export const getJoinedUser = () => {
       url: "/join"
     })
       .then(response => {
-        console.log(response.data)
         dispatch(createAction(GET_JOINED_USER_SUCCESS))
         dispatch(createAction(GET_JOINED_USER, response.data))
       })
@@ -58,7 +57,6 @@ export const createJoinedUser = () => {
       url: "/join/"
     })
       .then(response => {
-        console.log(response.data)
         dispatch(createAction(GET_JOINED_USER_SUCCESS))
         dispatch(createAction(GET_JOINED_USER, response.data))
       })
