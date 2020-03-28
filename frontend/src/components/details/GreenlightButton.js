@@ -10,32 +10,46 @@ export default function GreenlightButton(props) {
   const [gapSecondPassed, setGapSecondPassed] = useState(0)
 
   const {
+    myProfile,
     prevTargetTime,
     targetTime,
+    handleGreenLight,
+    isGreenlightOn,
     isGreenlightMale,
     isGreenlightFemale
   } = props
+
   const gapSecondTotal = Math.floor(targetTime - prevTargetTime) || 100
+  const greenlightOn =
+    isGreenlightOn ||
+    (myProfile.isMale && isGreenlightMale) ||
+    (!myProfile.isMale && isGreenlightFemale)
 
   useEffect(() => {
-    if (gapSecondPassed < gapSecondTotal) {
-      const timer = setTimeout(() => {
-        const nowTime = new Date().getTime()
-        const isTimerNecessary = nowTime > prevTargetTime
-        const gapSecondPassedNew = Math.floor(nowTime - prevTargetTime) || 0
-        isTimerNecessary && setGapSecondPassed(gapSecondPassedNew)
-      }, CALL_BUTTON_FILL_TERM)
-      return () => {
-        clearTimeout(timer)
+    const greenlightOn =
+      isGreenlightOn ||
+      (myProfile.isMale && isGreenlightMale) ||
+      (!myProfile.isMale && isGreenlightFemale)
+    if (greenlightOn) {
+      setGapSecondPassed(gapSecondTotal)
+    } else {
+      if (gapSecondPassed < gapSecondTotal) {
+        const timer = setTimeout(() => {
+          const nowTime = new Date().getTime()
+          const isTimerNecessary = nowTime > prevTargetTime
+          const gapSecondPassedNew = Math.floor(nowTime - prevTargetTime) || 0
+          isTimerNecessary && setGapSecondPassed(gapSecondPassedNew)
+        }, CALL_BUTTON_FILL_TERM)
+        return () => {
+          clearTimeout(timer)
+        }
       }
     }
-  }, [gapSecondPassed])
+  }, [greenlightOn, gapSecondPassed])
 
-  const getRestTimeRatio = (rest, total) => {
-    return Math.floor((rest / total) * 100)
+  const getPassedTimeRatio = (passed, total) => {
+    return Math.floor((passed / total) * 100)
   }
-
-  const { handleGreenLight, myProfile, isGreenlightOn } = props
 
   const toggleGreenLight = () => {
     if (myProfile.isMale) {
@@ -45,18 +59,13 @@ export default function GreenlightButton(props) {
     }
   }
 
-  const greenlightOn =
-    isGreenlightOn ||
-    (myProfile.isMale && isGreenlightMale) ||
-    (!myProfile.isMale && isGreenlightFemale)
-
   return (
     <div className="greenlight-back">
       <div className="greenlight move-1" onClick={toggleGreenLight}>
         {console.log(gapSecondPassed)}
         {console.log(gapSecondTotal)}
         <CircularProgressbarWithChildren
-          value={getRestTimeRatio(gapSecondPassed, gapSecondTotal)}
+          value={getPassedTimeRatio(gapSecondPassed, gapSecondTotal)}
           strokeWidth={50}
           styles={buildStyles({
             strokeLinecap: "butt"
