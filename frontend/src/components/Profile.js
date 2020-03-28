@@ -6,6 +6,7 @@ import "../App.css"
 import Header from "./details/Header"
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
+import { isEmpty } from "../modules/utils"
 
 class Profile extends Component {
   constructor(props) {
@@ -95,9 +96,9 @@ class Profile extends Component {
     const { ageValue, companyValue } = this.state
 
     const isStoreLoaded =
+      !isEmpty(myProfile) &&
       !isNaN(myProfile.ageRange) &&
-      myProfile !== null &&
-      isLoginAlready !== null
+      !isEmpty(isLoginAlready)
 
     return (
       <div className="frame bg-init-color">

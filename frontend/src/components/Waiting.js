@@ -7,6 +7,7 @@ import ResultNumber from "./details/ResultNumber"
 import JoinButton from "./details/JoinButton"
 import Loading from "./details/Loading"
 import withHomeInfo from "../modules/withHomeInfo"
+import { isEmpty } from "../modules/utils"
 
 class Waiting extends Component {
   render() {
@@ -36,8 +37,8 @@ class Waiting extends Component {
     const isStoreLoaded =
       !isNaN(openTime) &&
       !isNaN(closeTime) &&
-      isLoginAlready !== null &&
-      isJoinedAlready !== null
+      !isEmpty(isLoginAlready) &&
+      !isEmpty(isJoinedAlready)
     const isWaitingMeeting = nowTime > openTime && isJoinedAlready
 
     if (!isLoginAlready) {
