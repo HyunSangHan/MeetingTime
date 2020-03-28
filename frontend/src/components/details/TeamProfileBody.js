@@ -75,39 +75,24 @@ class TeamProfileBody extends Component {
   handleImageSubmitFirst = () => {
     const formData = new FormData()
     const { imageFirstValue } = this.state
-
+    const { updateMyProfile } = this.props
     formData.append("image", imageFirstValue, imageFirstValue.name)
-    axios
-      .patch("http://localhost:3000/profile/", formData)
-      .then(response => {
-        console.log(response.data)
-      })
-      .catch(err => console.log(err))
+    updateMyProfile(formData)
   }
   handleImageSubmitSecond = () => {
     const formData = new FormData()
     const { imageSecondValue } = this.state
+    const { updateMyProfile } = this.props
     formData.append("imageTwo", imageSecondValue, imageSecondValue.name)
-    console.log(formData)
-    axios
-      .patch("http://localhost:3000/profile/", formData)
-      .then(response => {
-        console.log(response.data)
-      })
-      .catch(err => console.log(err))
+    updateMyProfile(formData)
   }
 
   handleImageSubmitThird = () => {
     const formData = new FormData()
     const { imageThirdValue } = this.state
-    console.log(formData)
+    const { updateMyProfile } = this.props
     formData.append("imageThree", imageThirdValue, imageThirdValue.name)
-    axios
-      .patch("http://localhost:3000/profile/", formData)
-      .then(response => {
-        console.log(response.data)
-      })
-      .catch(err => console.log(err))
+    updateMyProfile(formData)
   }
 
   handleTeamPopup = event => {
@@ -121,7 +106,7 @@ class TeamProfileBody extends Component {
     const {
       teamNameValue,
       teamIntroValue,
-      preview,
+      previewFirst,
       previewSecond,
       previewThird
     } = this.state
@@ -133,7 +118,7 @@ class TeamProfileBody extends Component {
       teamIntroduce: teamIntroValue
     })
 
-    if (preview) {
+    if (previewFirst) {
       this.handleImageSubmitFirst()
     }
     if (previewSecond) {
