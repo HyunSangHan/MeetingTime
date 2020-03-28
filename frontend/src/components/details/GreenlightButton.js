@@ -14,26 +14,27 @@ export default function GreenlightButton(props) {
     prevTargetTime,
     targetTime,
     handleGreenLight,
-    isGreenlightOn,
-    isGreenlightMale,
-    isGreenlightFemale
+    isGreenlightOn
   } = props
 
   const gapSecondTotal = Math.floor(targetTime - prevTargetTime) || 100
-  const greenlightOn =
-    isGreenlightOn ||
-    (myProfile.isMale && isGreenlightMale) ||
-    (!myProfile.isMale && isGreenlightFemale)
 
   useEffect(() => {
-    const greenlightOn =
-      isGreenlightOn ||
-      (myProfile.isMale && isGreenlightMale) ||
-      (!myProfile.isMale && isGreenlightFemale)
-    if (greenlightOn) {
+    if (isGreenlightOn) {
       setGapSecondPassed(gapSecondTotal)
     } else {
-      if (gapSecondPassed < gapSecondTotal) {
+      if (gapSecondPassed <= gapSecondTotal) {
+        const nowTime = new Date().getTime()
+        const isTimerNecessary = nowTime > prevTargetTime
+        const gapSecondPassedNew = Math.floor(nowTime - prevTargetTime) || 0
+        isTimerNecessary && setGapSecondPassed(gapSecondPassedNew)
+      }
+    }
+  }, [isGreenlightOn])
+
+  useEffect(() => {
+    if (!isGreenlightOn) {
+      if (gapSecondPassed <= gapSecondTotal) {
         const timer = setTimeout(() => {
           const nowTime = new Date().getTime()
           const isTimerNecessary = nowTime > prevTargetTime
@@ -45,7 +46,7 @@ export default function GreenlightButton(props) {
         }
       }
     }
-  }, [greenlightOn, gapSecondPassed])
+  }, [isGreenlightOn, gapSecondPassed])
 
   const getPassedTimeRatio = (passed, total) => {
     return Math.floor((passed / total) * 100)
@@ -62,17 +63,15 @@ export default function GreenlightButton(props) {
   return (
     <div className="greenlight-back">
       <div className="greenlight move-1" onClick={toggleGreenLight}>
-        {console.log(gapSecondPassed)}
-        {console.log(gapSecondTotal)}
         <CircularProgressbarWithChildren
           value={getPassedTimeRatio(gapSecondPassed, gapSecondTotal)}
-          strokeWidth={50}
+          strokeWidth={isGreenlightOn ? 0 : 50}
           styles={buildStyles({
             strokeLinecap: "butt"
           })}
         >
           <div className="call-button font-jua">
-            {greenlightOn ? "콜!!" : "콜?"}
+            {isGreenlightOn ? "콜!!" : "콜?"}
           </div>
         </CircularProgressbarWithChildren>
       </div>

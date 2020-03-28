@@ -30,13 +30,7 @@ class ControlTool extends Component {
       handleGreenLight,
       isGreenlightOn
     } = this.props
-    const {
-      trialTime,
-      isGiftMale,
-      isGiftFemale,
-      isGreenlightMale,
-      isGreenlightFemale
-    } = currentMatching
+    const { trialTime, isGiftMale, isGiftFemale } = currentMatching
 
     const {
       closeTime,
@@ -95,8 +89,6 @@ class ControlTool extends Component {
                 handleGreenLight={handleGreenLight}
                 myProfile={myProfile}
                 isGreenlightOn={isGreenlightOn}
-                isGreenlightMale={isGreenlightMale}
-                isGreenlightFemale={isGreenlightFemale}
               />
             </div>
             <div className="column">

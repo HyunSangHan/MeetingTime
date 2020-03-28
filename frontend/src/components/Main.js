@@ -69,9 +69,7 @@ class Main extends Component {
         loading: false
       })
     }
-    {
-      !isLoginAlready && this.props.history.push("/")
-    }
+    !isLoginAlready && this.props.history.push("/")
   }
 
   componentWillReceiveProps = nextProps => {
