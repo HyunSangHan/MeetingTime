@@ -24,6 +24,7 @@ class Initpage extends Component {
       window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY)
     } catch (error) {
       console.log(error)
+      window.location.reload()
     }
   }
 

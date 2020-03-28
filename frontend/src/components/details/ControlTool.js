@@ -30,7 +30,7 @@ class ControlTool extends Component {
       handleGreenLight,
       isGreenlightOn
     } = this.props
-    const { trialTime, isGiftMale, isGiftFemale } = currentMatching
+    const { trialTime } = currentMatching
 
     const {
       closeTime,
@@ -58,11 +58,6 @@ class ControlTool extends Component {
         targetTime = new Date(thirdShuffleTime).getTime() // TODO: fourth 추가해서 수정필요
         break
     }
-
-    const giftOn =
-      isGiftOn ||
-      (myProfile.isMale && isGiftMale) ||
-      (!myProfile.isMale && isGiftFemale)
 
     return (
       <div className="control-container fix-bottom-controltool">
@@ -94,7 +89,9 @@ class ControlTool extends Component {
             <div className="column">
               <div className="gift" onClick={this.handleGift}>
                 <div
-                  className={giftOn ? "gift-on font-jua" : "gift-off font-jua"}
+                  className={
+                    isGiftOn ? "gift-on font-jua" : "gift-off font-jua"
+                  }
                 >
                   안주쏘기
                 </div>
