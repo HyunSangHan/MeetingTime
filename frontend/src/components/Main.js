@@ -67,7 +67,13 @@ class Main extends Component {
         loading: false
       })
     }
-    !isLoginAlready && this.props.history.push("/")
+
+    const TIMEOUT_LIMIT = 3000
+
+    const pushTimeOut = setTimeout(() => {
+      !isLoginAlready && this.props.history.push("/")
+      clearTimeout(pushTimeOut)
+    }, TIMEOUT_LIMIT)
   }
 
   componentWillReceiveProps = nextProps => {

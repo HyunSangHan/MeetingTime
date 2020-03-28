@@ -121,7 +121,7 @@ class Profile extends Component {
                 value={ageValue}
                 onChange={this.handleInputChange}
               >
-                <option value="default">&nbsp; - 선택 -&nbsp;</option>
+                <option value="default"> - 선택 - </option>
                 <option value={10}>10대</option>
                 <option value={20}>20대</option>
                 <option value={30}>30대</option>
