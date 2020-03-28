@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import ExifOrientationImg from 'react-exif-orientation-img'
 import "../../css/Main.scss" //부모컴포넌트의CSS(SCSS)
 import "../../App.css" //공통CSS
 import ToolTipDown from './ToolTipDown';
@@ -30,7 +31,7 @@ class CounterPlayer extends Component {
         <div className="images-wrapper">
           <div className="images">
             <div className="each-image flex-center">
-              <img
+              <ExifOrientationImg
                 className="user-image"
                 src={
                   counterProfile.image || require("./../../images/noPhoto.jpg")
@@ -39,7 +40,7 @@ class CounterPlayer extends Component {
               />
             </div>
             <div className="each-image flex-center">
-              <img
+              <ExifOrientationImg
                 className="user-image"
                 src={
                   counterProfile.imageTwo ||
@@ -49,7 +50,7 @@ class CounterPlayer extends Component {
               />
             </div>
             <div className="each-image flex-center">
-              <img
+              <ExifOrientationImg
                 className="user-image"
                 src={
                   counterProfile.imageThree ||
