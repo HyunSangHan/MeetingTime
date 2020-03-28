@@ -5,15 +5,12 @@ import ToolTipDown from './ToolTipDown';
 
 class CounterPlayer extends Component {
   render() {
-    const { counterProfile, isGift } = this.props;
-    let gift = null;
-    if (isGift) {
-        gift = <ToolTipDown content={ "안주는 저희가 쏩니다!" }/>;
-    }
+    const { counterProfile, isCounterGiftOn } = this.props;
+
     return (
       <div className="total-container top-m">
         <div className="counter-container">
-        { gift }
+        { isCounterGiftOn && <ToolTipDown content={ "안주는 저희가 쏩니다!" }/> }
           <div className="team-info">
             <div className="team-name font-notosan">
               {counterProfile.teamName}

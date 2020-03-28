@@ -18,12 +18,9 @@ const initialState = {
     user: { username: null },
     company: { name: null }
   },
-  isEditedProfile: null,
   clickedTab: "new"
 }
 
-const CREATE_POPUP = `CREATE_POPUP`
-const DELETE_POPUP = `DELETE_POPUP`
 const NEW_TAB_ON = `NEW_TAB_ON`
 const PREV_TAB_ON = `PREV_TAB_ON`
 const LOGIN_SUCCESS = `LOGIN_SUCCESS`
@@ -41,7 +38,6 @@ export const getMyProfile = () => {
       url: "/profile"
     })
       .then(response => {
-        console.log(response.data)
         dispatch(createAction(GET_PROFILE, response.data))
         dispatch(createAction(LOGIN_SUCCESS))
       })
@@ -60,7 +56,6 @@ export const updateMyProfile = payload => {
       data: payload
     })
       .then(response => {
-        console.log(response.data)
         dispatch(createAction(GET_PROFILE, response.data))
       })
       .catch(err => {
@@ -71,18 +66,6 @@ export const updateMyProfile = payload => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_POPUP: {
-      return {
-        ...state,
-        isEditedProfile: true
-      }
-    }
-    case DELETE_POPUP: {
-      return {
-        ...state,
-        isEditedProfile: false
-      }
-    }
     // TODO: NEW_TAB_ON과 PREV_TAB_ON은 나중에 하나로 합쳐도 되겠음 파라미터만 다르게 하고
     case NEW_TAB_ON: {
       return {

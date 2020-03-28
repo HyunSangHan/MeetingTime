@@ -26,8 +26,6 @@ export const getCurrentMeeting = () => {
       url: "/current_meeting"
     })
       .then(response => {
-        console.log("this is working OOOOO")
-        console.log(response.data)
         dispatch(createAction(GET_CURRENT_MEETING, response.data))
       })
       .catch(err => {

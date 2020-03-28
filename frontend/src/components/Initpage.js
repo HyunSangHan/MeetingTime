@@ -22,19 +22,9 @@ class Initpage extends Component {
   componentDidMount() {
     try {
       window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY)
-      // 카카오 로그인 버튼을 생성
-      // window.Kakao.Auth.createLoginButton({
-      //     container: '#kakao-login-btn',
-      //     success: function(authObj) {
-
-      //     },
-      //     fail: function(err) {
-      //         alert(JSON.stringify(err));
-      //         console.log(err);
-      //     }
-      // });
     } catch (error) {
       console.log(error)
+      window.location.reload()
     }
   }
 
@@ -75,15 +65,13 @@ class Initpage extends Component {
     }
   }
 
-  kakaoLogout = () => () => {
-    console.log(window.Kakao.Auth.getAccessToken())
+  kakaoLogout = () => {
     window.Kakao.Auth.logout(function(data) {
       console.log(data)
     })
     axios
       .get("/logout")
       .then(response => {
-        console.log(response.data)
         console.log("로그아웃 완료")
         window.location.reload()
       })
@@ -131,7 +119,7 @@ class Initpage extends Component {
     if (isLoginAlready) {
       authButton = (
         <div className="mt-18">
-          {/* <div className="App font-05 hover" onClick={this.kakaoLogout()}>로그아웃</div> */}
+          {/* <div className="App font-05 hover" onClick={this.kakaoLogout}>로그아웃</div> */}
           <Link
             to="/profile"
             className="font-grey font-bold font-16 w100percent"

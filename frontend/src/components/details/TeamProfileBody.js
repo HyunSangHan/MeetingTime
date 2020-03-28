@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import "../../css/Profile.scss" //부모컴포넌트의CSS(SCSS)
 import "../../App.css" //공통CSS
 import Textarea from "react-textarea-autosize"
-import axios from "axios"
+import { isObject, isEmpty } from "../../modules/utils"
 
 class TeamProfileBody extends Component {
   constructor(props) {
@@ -15,7 +15,6 @@ class TeamProfileBody extends Component {
       previewFirst: null,
       previewSecond: null,
       previewThird: null,
-      hasThreeImages: false,
       teamNameValue: null,
       teamIntroValue: null
     }
@@ -38,120 +37,33 @@ class TeamProfileBody extends Component {
     })
   }
 
-  //수정 관련 함수들
-  handleInputChange = event => {
+  //텍스트 수정 관련 메서드
+  handleTextInputChange = event => {
     const {
       target: { value, name }
     } = event
     this.setState({
       [name]: value
     })
-    console.log(name, value)
   }
 
-  //첫번째 이미지 관련 함수
-  handleImageChangeFirst = event => {
-    console.log(event.target.files[0])
+  //이미지 수정 관련 메서드
+  handleImageInputChange = event => {
+    const previewSets = {
+      imageFirstValue: "previewFirst",
+      imageSecondValue: "previewSecond",
+      imageThirdValue: "previewThird"
+    }
+
     this.setState({
-      imageFirstValue: event.target.files[0],
-      previewFirst: URL.createObjectURL(event.target.files[0])
+      [event.target.name]: event.target.files[0],
+      [previewSets[event.target.name]]: URL.createObjectURL(
+        event.target.files[0]
+      )
     })
-  }
-
-  //두번째 이미지 관련 함수
-  handleImageChangeSecond = event => {
-    console.log(event.target.files[0])
-    this.setState({
-      imageSecondValue: event.target.files[0],
-      previewSecond: URL.createObjectURL(event.target.files[0])
-    })
-  }
-
-  //세번째 이미지 관련 함수
-  handleImageChangeThird = event => {
-    console.log(event.target.files[0])
-    this.setState({
-      imageThirdValue: event.target.files[0],
-      previewThird: URL.createObjectURL(event.target.files[0])
-    })
-  }
-  //이미지 제출 함수
-  handleImageSubmitFirst = () => {
-    const formData = new FormData()
-    const { imageFirstValue } = this.state
-
-    formData.append("image", imageFirstValue, imageFirstValue.name)
-    axios
-      .patch("http://localhost:3000/profile/", formData)
-      .then(response => {
-        console.log(response.data)
-      })
-      .catch(err => console.log(err))
-  }
-  handleImageSubmitSecond = () => {
-    const formData = new FormData()
-    const { imageSecondValue } = this.state
-    formData.append("imageTwo", imageSecondValue, imageSecondValue.name)
-    console.log(formData)
-    axios
-      .patch("http://localhost:3000/profile/", formData)
-      .then(response => {
-        console.log(response.data)
-      })
-      .catch(err => console.log(err))
-  }
-
-  handleImageSubmitThird = () => {
-    const formData = new FormData()
-    const { imageThirdValue } = this.state
-    console.log(formData)
-    formData.append("imageThree", imageThirdValue, imageThirdValue.name)
-    axios
-      .patch("http://localhost:3000/profile/", formData)
-      .then(response => {
-        console.log(response.data)
-      })
-      .catch(err => console.log(err))
-  }
-
-  handleTeamPopup = event => {
-    event.preventDefault()
-    this.handleSubmit()
-    alert("그룹이 생성되었습니다.")
   }
 
   handleSubmit = event => {
-    const { getMyProfile, updateMyProfile } = this.props
-    const {
-      teamNameValue,
-      teamIntroValue,
-      preview,
-      previewSecond,
-      previewThird
-    } = this.state
-    // event.preventDefault();
-    // console.log(this.state);
-
-    updateMyProfile({
-      teamName: teamNameValue,
-      teamIntroduce: teamIntroValue
-    })
-
-    if (preview) {
-      this.handleImageSubmitFirst()
-    }
-    if (previewSecond) {
-      this.handleImageSubmitSecond()
-    }
-    if (previewThird) {
-      this.handleImageSubmitThird()
-    }
-
-    getMyProfile()
-  }
-
-  render() {
-    const { isEditedProfile } = this.props
     const {
       teamNameValue,
       teamIntroValue,
@@ -160,8 +72,48 @@ class TeamProfileBody extends Component {
       previewThird,
       imageFirstValue,
       imageSecondValue,
-      imageThirdValue,
-      hasThreeImages
+      imageThirdValue
+    } = this.state
+
+    event.preventDefault()
+    if (
+      !isEmpty(teamNameValue) ||
+      !isEmpty(teamIntroValue) ||
+      previewFirst ||
+      previewSecond ||
+      previewThird
+    ) {
+      const formData = new FormData()
+      const { updateMyProfile } = this.props
+      isObject(imageFirstValue) &&
+        formData.append("image", imageFirstValue, imageFirstValue.name)
+      isObject(imageSecondValue) &&
+        formData.append("imageTwo", imageSecondValue, imageSecondValue.name)
+      isObject(imageThirdValue) &&
+        formData.append("imageThree", imageThirdValue, imageThirdValue.name)
+      !isEmpty(teamNameValue) && formData.append("teamName", teamNameValue)
+      !isEmpty(teamIntroValue) &&
+        formData.append("teamIntroduce", teamIntroValue)
+
+      updateMyProfile(formData)
+      if (this.props.clickedTab === "new") alert("그룹이 생성되었습니다.")
+      else if (this.props.clickedTab === "prev")
+        alert("그룹정보가 업데이트 되었습니다.")
+    } else {
+      alert("입력을 완료해주세요.")
+    }
+  }
+
+  render() {
+    const {
+      teamNameValue,
+      teamIntroValue,
+      previewFirst,
+      previewSecond,
+      previewThird,
+      imageFirstValue,
+      imageSecondValue,
+      imageThirdValue
     } = this.state
 
     return (
@@ -187,7 +139,7 @@ class TeamProfileBody extends Component {
             <input
               style={{ display: "none" }}
               type="file"
-              onChange={this.handleImageChangeFirst}
+              onChange={this.handleImageInputChange}
               ref={fileInputFirst => (this.fileInputFirst = fileInputFirst)}
               name="imageFirstValue"
               className="image-uploader"
@@ -196,7 +148,7 @@ class TeamProfileBody extends Component {
             <input
               style={{ display: "none" }}
               type="file"
-              onChange={this.handleImageChangeSecond}
+              onChange={this.handleImageInputChange}
               ref={fileInputSecond => (this.fileInputSecond = fileInputSecond)}
               name="imageSecondValue"
               className="image-uploader"
@@ -205,7 +157,7 @@ class TeamProfileBody extends Component {
             <input
               style={{ display: "none" }}
               type="file"
-              onChange={this.handleImageChangeThird}
+              onChange={this.handleImageInputChange}
               ref={fileInputThird => (this.fileInputThird = fileInputThird)}
               name="imageThirdValue"
               className="image-uploader"
@@ -215,8 +167,8 @@ class TeamProfileBody extends Component {
             <div className="title font-notosan">팀 이름</div>
             <input
               type="text"
-              value={teamNameValue === null ? "" : teamNameValue}
-              onChange={this.handleInputChange}
+              value={isEmpty(teamNameValue) ? "" : teamNameValue}
+              onChange={this.handleTextInputChange}
               className="text-input font-notosan"
               name="teamNameValue"
               placeholder="10자 이내로 작성해주세요"
@@ -226,8 +178,8 @@ class TeamProfileBody extends Component {
             <div className="team-intro">
               <Textarea
                 type="text"
-                value={teamIntroValue === null ? "" : teamIntroValue}
-                onChange={this.handleInputChange}
+                value={isEmpty(teamIntroValue) ? "" : teamIntroValue}
+                onChange={this.handleTextInputChange}
                 className="text-input font-notosan"
                 name="teamIntroValue"
                 placeholder="30자 이내로 작성해주세요"
@@ -239,9 +191,11 @@ class TeamProfileBody extends Component {
               (imageFirstValue && imageSecondValue && imageThirdValue) ? (
                 <button
                   className="SubmitButton WorkingButton mt-1"
-                  onClick={this.handleTeamPopup}
+                  onClick={this.handleSubmit}
                 >
-                  그룹만들기
+                  {this.props.clickedTab === "new"
+                    ? "그룹만들기"
+                    : "그룹정보 업데이트"}
                 </button>
               ) : (
                 <button

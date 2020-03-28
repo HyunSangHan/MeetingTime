@@ -3,18 +3,9 @@ import "../../css/Main.scss" //부모컴포넌트의CSS(SCSS)
 import "../../App.css" //공통CSS
 import { Link } from "react-router-dom" //다른 페이지로 링크 걸 때 필요
 import CountDown from "./CountDown"
+import GreenlightButton from "./GreenlightButton"
 
 class ControlTool extends Component {
-  handleGreenLight = () => {
-    const { handleGreenLight, myProfile, isGreenlightOn } = this.props
-
-    if (myProfile.isMale) {
-      handleGreenLight({ isGreenlightMale: !isGreenlightOn })
-    } else {
-      handleGreenLight({ isGreenlightFemale: !isGreenlightOn })
-    }
-  }
-
   handleGift = () => {
     const { handleGift, myProfile, isGiftOn } = this.props
     if (isGiftOn) {
@@ -33,46 +24,47 @@ class ControlTool extends Component {
   render() {
     const {
       myProfile,
-      currentMatching,
       currentMeeting,
+      currentMatching,
       isGiftOn,
+      handleGreenLight,
       isGreenlightOn
     } = this.props
+    const { trialTime } = currentMatching
+
     const {
-      isGreenlightMale,
-      isGreenlightFemale,
-      isGiftMale,
-      isGiftFemale
-    } = this.props.currentMatching
-
-    const giftOn =
-      isGiftOn ||
-      (myProfile.isMale && isGiftMale) ||
-      (!myProfile.isMale && isGiftFemale)
-    const greenlightOn =
-      isGreenlightOn ||
-      (myProfile.isMale && isGreenlightMale) ||
-      (!myProfile.isMale && isGreenlightFemale)
-
-    let countDown = null
-    if (currentMatching.trialTime === 1) {
-      countDown = <CountDown time={new Date(currentMeeting.firstShuffleTime)} />
-    } else if (currentMatching.trialTime === 2) {
-      countDown = (
-        <CountDown time={new Date(currentMeeting.secondShuffleTime)} />
-      )
-    } else if (currentMatching.trialTime === 3) {
-      countDown = <CountDown time={new Date(currentMeeting.thirdShuffleTime)} />
-    } else if (currentMatching.trialTime === 4) {
-      countDown = <CountDown time={new Date(currentMeeting.thirdShuffleTime)} /> // TODO: fourth 추가해서 수정필요
+      closeTime,
+      firstShuffleTime,
+      secondShuffleTime,
+      thirdShuffleTime
+    } = currentMeeting
+    let prevTargetTime = null
+    let targetTime = null
+    switch (trialTime) {
+      case 1:
+        prevTargetTime = new Date(closeTime).getTime()
+        targetTime = new Date(firstShuffleTime).getTime()
+        break
+      case 2:
+        prevTargetTime = new Date(firstShuffleTime).getTime()
+        targetTime = new Date(secondShuffleTime).getTime()
+        break
+      case 3:
+        prevTargetTime = new Date(secondShuffleTime).getTime()
+        targetTime = new Date(thirdShuffleTime).getTime()
+        break
+      case 4:
+        prevTargetTime = new Date(thirdShuffleTime).getTime()
+        targetTime = new Date(thirdShuffleTime).getTime() // TODO: fourth 추가해서 수정필요
+        break
     }
 
     return (
       <div className="control-container fix-bottom-controltool">
         <div className="control-tool">
-          {/* 임시적으로 1분 미만의 시간 카운트  */}
-          <div className="timer font-notosan font-13">{countDown}</div>
-
+          <div className="timer font-notosan font-13">
+            <CountDown time={targetTime} />
+          </div>
           <div className="action-container">
             <div className="column">
               <Link to="/team_profile">
@@ -84,24 +76,22 @@ class ControlTool extends Component {
                 />
               </Link>
             </div>
-
             <div className="column">
-              <div className="greenlight-back">
-                <div
-                  className="greenlight move-1"
-                  onClick={this.handleGreenLight}
-                >
-                  <div className="call-button font-jua">
-                    {greenlightOn ? "콜!!" : "콜?"}
-                  </div>
-                </div>
-              </div>
+              <GreenlightButton
+                currentMeeting={currentMeeting}
+                prevTargetTime={prevTargetTime}
+                targetTime={targetTime}
+                handleGreenLight={handleGreenLight}
+                myProfile={myProfile}
+                isGreenlightOn={isGreenlightOn}
+              />
             </div>
-
             <div className="column">
               <div className="gift" onClick={this.handleGift}>
                 <div
-                  className={giftOn ? "gift-on font-jua" : "gift-off font-jua"}
+                  className={
+                    isGiftOn ? "gift-on font-jua" : "gift-off font-jua"
+                  }
                 >
                   안주쏘기
                 </div>

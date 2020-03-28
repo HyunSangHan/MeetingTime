@@ -2,12 +2,10 @@
 import React, { Component } from "react"
 import "../css/Main.scss"
 import "../App.css"
-import { Link, Redirect } from "react-router-dom"
 import { bindActionCreators } from "redux"
 import Header from "./details/Header"
 import CounterPlayer from "./details/CounterPlayer"
 import ControlTool from "./details/ControlTool"
-import ToolTipDown from "./details/ToolTipDown"
 import Loading from "./details/Loading"
 import { connect } from "react-redux"
 import { getJoinedUser } from "../modules/join"
@@ -69,9 +67,7 @@ class Main extends Component {
         loading: false
       })
     }
-    {
-      !isLoginAlready && <Redirect to="/" />
-    }
+    !isLoginAlready && this.props.history.push("/")
   }
 
   componentWillReceiveProps = nextProps => {
@@ -85,12 +81,8 @@ class Main extends Component {
   render() {
     const {
       myProfile,
-      isJoinedPopupOn,
-      isJoinedAlready,
-      isLoginAlready,
-      joinedUser,
       currentMeeting,
-      isCurrentMatching,
+      hasCurrentMatching,
       currentMatching,
       counterProfile,
       hasCounterProfile,
@@ -99,8 +91,9 @@ class Main extends Component {
       getCurrentMatching,
       handleGift,
       handleGreenLight,
+      isGreenlightOn,
       isGiftOn,
-      isGreenlightOn
+      isCounterGiftOn
     } = this.props
 
     const emptyProfile = this.state
@@ -116,14 +109,6 @@ class Main extends Component {
       </div>
     )
 
-    let isGift = null
-
-    if (myProfile.isMale) {
-      isGift = currentMatching.isGiftFemale
-    } else {
-      isGift = currentMatching.isGiftMale
-    }
-
     return (
       <div className="main-container">
         <Header content={content} />
@@ -138,7 +123,8 @@ class Main extends Component {
               handleGift={handleGift}
               counterProfile={counterProfile}
               hasCounterProfile={hasCounterProfile}
-              isGift={isGift}
+              isGiftOn={isGiftOn}
+              isCounterGiftOn={isCounterGiftOn}
             />
           )}
         </div>
@@ -151,7 +137,7 @@ class Main extends Component {
           myProfile={myProfile || emptyProfile}
           counterProfile={counterProfile}
           hasCounterProfile={hasCounterProfile}
-          isCurrentMatching={isCurrentMatching}
+          hasCurrentMatching={hasCurrentMatching}
           currentMatching={currentMatching}
           currentMeeting={currentMeeting}
           isGiftOn={isGiftOn}
@@ -186,8 +172,9 @@ const mapStateToProps = state => ({
   counterProfile: state.current_matching.counterProfile,
   hasCounterProfile: state.current_matching.hasCounterProfile,
   isGiftOn: state.current_matching.isGiftOn,
+  isCounterGiftOn: state.current_matching.isCounterGiftOn,
   isGreenlightOn: state.current_matching.isGreenlightOn,
-  isCurrentMatching: state.current_matching.isCurrentMatching,
+  hasCurrentMatching: state.current_matching.hasCurrentMatching,
   myProfile: state.my_profile.myProfile
 })
 
