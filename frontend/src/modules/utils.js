@@ -1,3 +1,19 @@
+export const isObject = target => {
+  if (typeof target === "object") {
+    return true
+  } else {
+    return false
+  }
+}
+
+export const isEmpty = target => {
+  if (target === null || target === "" || target === []) {
+    return true
+  } else {
+    return false
+  }
+}
+
 export const createAction = (actionType, data) => {
   if (!data) {
     return {

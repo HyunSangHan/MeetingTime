@@ -48,7 +48,6 @@ class TeamProfile extends Component {
       getMyProfile,
       updateMyProfile,
       myProfile,
-      isEditedProfile,
       clickedTab,
       newTabOn,
       prevTabOn
@@ -64,10 +63,12 @@ class TeamProfile extends Component {
           clickedTab={clickedTab}
         />
         <TeamProfileBody
+          newTabOn={newTabOn}
+          prevTabOn={prevTabOn}
           getMyProfile={getMyProfile}
           updateMyProfile={updateMyProfile}
           myProfile={action === "prev" ? myProfile : emptyProfile}
-          isEditedProfile={isEditedProfile}
+          clickedTab={clickedTab}
         />
       </div>
     )
@@ -86,7 +87,6 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => ({
   isLoginAlready: state.my_profile.isLoginAlready,
-  isEditedProfile: state.my_profile.isEditedProfile,
   myProfile: state.my_profile.myProfile,
   clickedTab: state.my_profile.clickedTab
 })
