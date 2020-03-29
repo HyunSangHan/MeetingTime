@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
-from .models import Meeting, Profile, Matching, JoinedUser, KakaoChatting, Validation
+from .models import Meeting, Profile, Matching, JoinedUser, KakaoChatting, Validation, Company
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import MeetingSerializer, ProfileSerializer, MatchingSerializer, JoinSerializer, CompanySerializer
@@ -497,6 +497,14 @@ class CurrentProfile(APIView):
 
         if serializer.is_valid():
             serializer.save()
+            email = request.data["email"]
+            company_name = request.data["company"]
+            if Company.objects.filter(name=company_name).count() > 0:
+                queryset.user.email = email
+                queryset.user.save()
+                company = Company.objects.get(name=company_name)
+                queryset.company = company
+                queryset.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -524,7 +532,7 @@ class CurrentProfile(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class Company(APIView):
+class CurrentCompany(APIView):
 
     def get(self, request, format=None):
         if request.user.is_authenticated:
