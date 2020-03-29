@@ -5,7 +5,7 @@ const initialState = {
   currentMeeting: {
     id: null,
     openTime: null,
-    prevMeetingLastShuffleTime: null,
+    prevMeetingLastResultTime: null,
     closeTime: null,
     firstShuffleTime: null,
     secondShuffleTime: null,

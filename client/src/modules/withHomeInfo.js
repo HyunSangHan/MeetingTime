@@ -15,7 +15,7 @@ export default ComposedComponent => {
         getMyProfile
       } = this.props
 
-      const lastShuffledAt = new Date(currentMeeting.prevMeetingLastShuffleTime) //나중에 하위 필드 추가되면 수정필요
+      const lastShuffledAt = new Date(currentMeeting.prevMeetingLastResultTime) //나중에 하위 필드 추가되면 수정필요
       const lastTeamModifiedAt = new Date(myProfile.lastIntroModifiedAt)
 
       let isMadeTeam = null

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
-from .models import Meeting, Profile, Matching, JoinedUser, KakaoChatting, Validation
+from .models import Meeting, Profile, Matching, JoinedUser, KakaoChatting, Validation, Company
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import MeetingSerializer, ProfileSerializer, MatchingSerializer, JoinSerializer, CompanySerializer
@@ -25,7 +25,8 @@ def meeting_example():
     first_shuffle_time = close_time + timedelta(seconds=120)
     second_shuffle_time = first_shuffle_time + timedelta(seconds=120)
     third_shuffle_time = second_shuffle_time + timedelta(seconds=120)
-    Meeting.objects.create(open_time=now, close_time = close_time, first_shuffle_time=first_shuffle_time, second_shuffle_time=second_shuffle_time, third_shuffle_time=third_shuffle_time, meeting_time=meeting_time, cutline=4)
+    last_result_time = third_shuffle_time + timedelta(seconds=120)
+    Meeting.objects.create(open_time=now, close_time = close_time, first_shuffle_time=first_shuffle_time, second_shuffle_time=second_shuffle_time, third_shuffle_time=third_shuffle_time, last_result_time=last_result_time, meeting_time=meeting_time, cutline=4)
     # 일단 항상 cutline을 4로 만들긴 하는데 이건 join할 때마다 patch로 수정해줘야 할 것 같다
     # 매주 수금 10시에 생성, 하루 후 저녁 7시 미팅
     # 수금 11시 10분에 셔플, 11시 10분에 받기 종료
@@ -192,24 +193,38 @@ class CurrentMatching(APIView):
     if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first() is not None:
         current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
 
-    if timezone.now() < current_meeting.first_shuffle_time:
-        trial_time = 1
-    elif timezone.now() < current_meeting.second_shuffle_time:
-        trial_time = 2
-    elif timezone.now() < current_meeting.third_shuffle_time:
-        trial_time = 3
-    else:
-        trial_time = 4
+    if current_meeting is not None:
+        if timezone.now() < current_meeting.first_shuffle_time:
+            trial_time = 1
+        elif timezone.now() < current_meeting.second_shuffle_time:
+            trial_time = 2
+        elif timezone.now() < current_meeting.third_shuffle_time:
+            trial_time = 3
+        else:
+            trial_time = 4
 
 
     def get(self, request, format=None):
+        current_meeting = Meeting.objects.all().order_by('meeting_time').last()
+        if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first() is not None:
+            current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+
+        if current_meeting is not None:
+            if timezone.now() < current_meeting.first_shuffle_time:
+                trial_time = 1
+            elif timezone.now() < current_meeting.second_shuffle_time:
+                trial_time = 2
+            elif timezone.now() < current_meeting.third_shuffle_time:
+                trial_time = 3
+            else:
+                trial_time = 4
+
         my_profile = request.user.profile
-        joined_user = JoinedUser.objects.filter(meeting=self.current_meeting, profile=my_profile).last()
+        joined_user = JoinedUser.objects.filter(meeting=current_meeting, profile=my_profile).last()
         if my_profile.is_male:
-            matching = Matching.objects.filter(trial_time=self.trial_time, joined_male=joined_user).last()
-            print(matching)
+            matching = Matching.objects.filter(trial_time=trial_time, joined_male=joined_user).last()
         else:
-            matching = Matching.objects.filter(trial_time=self.trial_time, joined_female=joined_user).last()
+            matching = Matching.objects.filter(trial_time=trial_time, joined_female=joined_user).last()
 
         if matching is not None:
             serializer = MatchingSerializer(matching)
@@ -315,6 +330,8 @@ class CurrentMatching(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
     def delete(self, request, format=None):
         if request.data["trial_time"] > 0:
@@ -336,8 +353,8 @@ class CurrentMeeting(APIView):
         if queryset is not None:
             serializer = MeetingSerializer(queryset)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
     def post(self, request, format=None):
@@ -345,8 +362,8 @@ class CurrentMeeting(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
         # 프론트에서 Join 시간이 종료되면 호출되며 cutline을 설정
@@ -363,8 +380,8 @@ class CurrentMeeting(APIView):
             current_meeting.cutline = cutline
             current_meeting.save()
             return Response(status=status.HTTP_202_ACCEPTED)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class Join(APIView):
@@ -373,13 +390,14 @@ class Join(APIView):
         current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
 
     def get(self, request, format=None):
-        my_profile = request.user.profile
-        queryset = JoinedUser.objects.filter(profile=my_profile, meeting=self.current_meeting).last()
-        if queryset is not None:
+        if not request.user.is_anonymous:
+            my_profile = request.user.profile
+            queryset = JoinedUser.objects.filter(profile=my_profile, meeting=self.current_meeting).last()
             serializer = JoinSerializer(queryset)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+            if queryset is not None:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
     def post(self, request, format=None):
@@ -398,8 +416,7 @@ class Join(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
     def patch(self, request, format=None):
@@ -413,8 +430,8 @@ class Join(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+                
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
     def delete(self, request, format=None):
@@ -423,38 +440,38 @@ class Join(APIView):
         # 취소자보다 rank 높은 모든 사람들 
         after_joined_users = JoinedUser.objects.filter(rank__gte=user2delete.rank, meeting=self.current_meeting, profile__is_male = my_profile.is_male)
 
-        if current_meeting.cutline is None:
+        if self.current_meeting.cutline is None:
             for after_joined_user in after_joined_users:
                 after_joined_user.rank -= 1
         
         if my_profile is not None and self.current_meeting is not None and user2delete is not None:
             user2delete.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class CounterProfile(APIView):
     def get(self, request, format=None):
-        my_profile = request.user.profile
-        current_meeting = Meeting.objects.all().order_by('meeting_time').last()
-        if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first() is not None:
-            current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
-        joined_user = JoinedUser.objects.filter(profile=my_profile, meeting=current_meeting).first()
+        if not request.user.is_anonymous:
+            my_profile = request.user.profile
+            current_meeting = Meeting.objects.all().order_by('meeting_time').last()
+            if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first() is not None:
+                current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+            joined_user = JoinedUser.objects.filter(profile=my_profile, meeting=current_meeting).first()
 
-        if my_profile.is_male:
-            current_matching = Matching.objects.filter(joined_male=joined_user).last()
-            counter_joined_user = current_matching.joined_female
-        else:
-            current_matching = Matching.objects.filter(joined_female=joined_user).last()
-            counter_joined_user = current_matching.joined_male
+            if my_profile.is_male:
+                current_matching = Matching.objects.filter(joined_male=joined_user).last()
+                counter_joined_user = current_matching.joined_female
+            else:
+                current_matching = Matching.objects.filter(joined_female=joined_user).last()
+                counter_joined_user = current_matching.joined_male
 
-        if my_profile is not None and current_meeting is not None and current_matching is not None and counter_joined_user is not None:
-            queryset = counter_joined_user.profile
-            serializer = ProfileSerializer(queryset)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            if my_profile is not None and current_meeting is not None and current_matching is not None and counter_joined_user is not None:
+                queryset = counter_joined_user.profile
+                serializer = ProfileSerializer(queryset)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class CurrentProfile(APIView):
@@ -464,10 +481,7 @@ class CurrentProfile(APIView):
             if queryset is not None:
                 serializer = ProfileSerializer(queryset)
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            else:
-                return Response(status=status.HTTP_404_NOT_FOUND)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
     # models.py에서 user와 연동하여 profile을 만들어주고 있으므로 현재로선 Post 불필요
     # def post(self, request, format=None):
@@ -482,9 +496,16 @@ class CurrentProfile(APIView):
 
         if serializer.is_valid():
             serializer.save()
+            email = request.data["email"]
+            company_name = request.data["company"]
+            if Company.objects.filter(name=company_name).count() > 0:
+                queryset.user.email = email
+                queryset.user.save()
+                company = Company.objects.get(name=company_name)
+                queryset.company = company
+                queryset.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
     def delete(self, request, format=None):
@@ -505,11 +526,11 @@ class CurrentProfile(APIView):
         if my_profile is not None:
             request.user.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class Company(APIView):
+class CurrentCompany(APIView):
 
     def get(self, request, format=None):
         if request.user.is_authenticated:
@@ -517,10 +538,7 @@ class Company(APIView):
             if queryset is not None:
                 serializer = CompanySerializer(queryset)
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            else:
-                return Response(status=status.HTTP_404_NOT_FOUND)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
     def patch(self, request, format=None):
         queryset = request.user.profile.company
@@ -528,8 +546,7 @@ class Company(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, format=None):
         if request.user.profile is not None:
