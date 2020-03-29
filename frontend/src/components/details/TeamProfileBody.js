@@ -30,6 +30,9 @@ class TeamProfileBody extends Component {
       teamIntroduce
     } = nextProps.myProfile
     this.setState({
+      previewFirst: null,
+      previewSecond: null,
+      previewThird: null,
       imageFirstValue: image || null,
       imageSecondValue: imageTwo || null,
       imageThirdValue: imageThree || null,
