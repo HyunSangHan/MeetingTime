@@ -330,6 +330,8 @@ class CurrentMatching(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
     def delete(self, request, format=None):
         if request.data["trial_time"] > 0:
@@ -351,8 +353,8 @@ class CurrentMeeting(APIView):
         if queryset is not None:
             serializer = MeetingSerializer(queryset)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
     def post(self, request, format=None):
@@ -360,8 +362,8 @@ class CurrentMeeting(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
         # 프론트에서 Join 시간이 종료되면 호출되며 cutline을 설정
@@ -378,8 +380,8 @@ class CurrentMeeting(APIView):
             current_meeting.cutline = cutline
             current_meeting.save()
             return Response(status=status.HTTP_202_ACCEPTED)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class Join(APIView):
@@ -394,6 +396,7 @@ class Join(APIView):
             serializer = JoinSerializer(queryset)
             if queryset is not None:
                 return Response(serializer.data, status=status.HTTP_200_OK)
+
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
@@ -413,8 +416,7 @@ class Join(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
     def patch(self, request, format=None):
@@ -428,8 +430,8 @@ class Join(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+                
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
     def delete(self, request, format=None):
@@ -438,15 +440,15 @@ class Join(APIView):
         # 취소자보다 rank 높은 모든 사람들 
         after_joined_users = JoinedUser.objects.filter(rank__gte=user2delete.rank, meeting=self.current_meeting, profile__is_male = my_profile.is_male)
 
-        if current_meeting.cutline is None:
+        if self.current_meeting.cutline is None:
             for after_joined_user in after_joined_users:
                 after_joined_user.rank -= 1
         
         if my_profile is not None and self.current_meeting is not None and user2delete is not None:
             user2delete.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class CounterProfile(APIView):
@@ -479,10 +481,7 @@ class CurrentProfile(APIView):
             if queryset is not None:
                 serializer = ProfileSerializer(queryset)
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            else:
-                return Response(status=status.HTTP_404_NOT_FOUND)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
     # models.py에서 user와 연동하여 profile을 만들어주고 있으므로 현재로선 Post 불필요
     # def post(self, request, format=None):
@@ -506,8 +505,7 @@ class CurrentProfile(APIView):
                 queryset.company = company
                 queryset.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
     def delete(self, request, format=None):
@@ -528,8 +526,8 @@ class CurrentProfile(APIView):
         if my_profile is not None:
             request.user.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class CurrentCompany(APIView):
@@ -540,10 +538,7 @@ class CurrentCompany(APIView):
             if queryset is not None:
                 serializer = CompanySerializer(queryset)
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            else:
-                return Response(status=status.HTTP_404_NOT_FOUND)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
     def patch(self, request, format=None):
         queryset = request.user.profile.company
@@ -551,8 +546,7 @@ class CurrentCompany(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, format=None):
         if request.user.profile is not None:
