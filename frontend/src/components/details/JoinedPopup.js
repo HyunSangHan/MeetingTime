@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import "../../css/Initpage.scss" //부모컴포넌트의CSS(SCSS)
 import "../../App.css" //공통CSS
 import { connect } from "react-redux"
-import { bindActionCreators } from "redux"
 import MaterialIcon from "material-icons-react"
 
 class JoinedPopup extends Component {

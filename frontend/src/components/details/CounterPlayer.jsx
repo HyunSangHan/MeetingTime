@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import ExifOrientationImg from 'react-exif-orientation-img'
 import "../../css/Main.scss" //부모컴포넌트의CSS(SCSS)
 import "../../App.css" //공통CSS
 import ToolTipDown from './ToolTipDown';
@@ -30,16 +31,17 @@ class CounterPlayer extends Component {
         <div className="images-wrapper">
           <div className="images">
             <div className="each-image flex-center">
-              <img
+              <ExifOrientationImg
                 className="user-image"
                 src={
                   counterProfile.image || require("./../../images/noPhoto.jpg")
                 }
                 alt="first_user_image"
               />
+              <div className="user-image layer"></div>
             </div>
             <div className="each-image flex-center">
-              <img
+              <ExifOrientationImg
                 className="user-image"
                 src={
                   counterProfile.imageTwo ||
@@ -47,9 +49,10 @@ class CounterPlayer extends Component {
                 }
                 alt="second_user_image"
               />
+              <div className="user-image layer"></div>
             </div>
             <div className="each-image flex-center">
-              <img
+              <ExifOrientationImg
                 className="user-image"
                 src={
                   counterProfile.imageThree ||
@@ -57,6 +60,7 @@ class CounterPlayer extends Component {
                 }
                 alt="third_user_image"
               />
+              <div className="user-image layer"></div>
             </div>
             <div className="last-child-gap" />
           </div>

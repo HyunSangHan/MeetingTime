@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import ExifOrientationImg from "react-exif-orientation-img"
 import "../../css/Profile.scss" //부모컴포넌트의CSS(SCSS)
 import "../../App.css" //공통CSS
 import Textarea from "react-textarea-autosize"
@@ -29,6 +30,9 @@ class TeamProfileBody extends Component {
       teamIntroduce
     } = nextProps.myProfile
     this.setState({
+      previewFirst: null,
+      previewSecond: null,
+      previewThird: null,
       imageFirstValue: image || null,
       imageSecondValue: imageTwo || null,
       imageThirdValue: imageThree || null,
@@ -217,14 +221,14 @@ class TeamProfileBody extends Component {
                 onClick={() => this.fileInputFirst.click()}
               >
                 {imageFirstValue ? (
-                  <img
+                  <ExifOrientationImg
                     className="user-img"
                     src={imageFirstValue}
                     alt="first_user_image"
                   />
                 ) : (
                   <div className="App">
-                    <img
+                    <ExifOrientationImg
                       className="smile"
                       src={require("../../images/smile.png")}
                       alt="empty_image"
@@ -236,7 +240,7 @@ class TeamProfileBody extends Component {
                 )}
               </div>
             ) : (
-              <img
+              <ExifOrientationImg
                 className="each-img"
                 src={previewFirst}
                 alt="first_user_image"
@@ -249,14 +253,14 @@ class TeamProfileBody extends Component {
                 onClick={() => this.fileInputSecond.click()}
               >
                 {imageSecondValue ? (
-                  <img
+                  <ExifOrientationImg
                     className="user-img"
                     src={imageSecondValue}
                     alt="second_user_image"
                   />
                 ) : (
                   <div className="App">
-                    <img
+                    <ExifOrientationImg
                       className="smile"
                       src={require("../../images/smile.png")}
                       alt="empty_image"
@@ -266,7 +270,7 @@ class TeamProfileBody extends Component {
                 )}
               </div>
             ) : (
-              <img
+              <ExifOrientationImg
                 className="each-img"
                 src={previewSecond}
                 alt="second_user_image"
@@ -279,14 +283,14 @@ class TeamProfileBody extends Component {
                 onClick={() => this.fileInputThird.click()}
               >
                 {imageThirdValue ? (
-                  <img
+                  <ExifOrientationImg
                     className="user-img"
                     src={imageThirdValue}
                     alt="third_user_image"
                   />
                 ) : (
                   <div className="App">
-                    <img
+                    <ExifOrientationImg
                       className="smile"
                       src={require("../../images/smile.png")}
                       alt="empty_image"
@@ -296,7 +300,7 @@ class TeamProfileBody extends Component {
                 )}
               </div>
             ) : (
-              <img
+              <ExifOrientationImg
                 className="each-img"
                 src={previewThird}
                 alt="third_user_image"

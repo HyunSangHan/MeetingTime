@@ -13,6 +13,7 @@
     "react": "^16.8.4",
     "react-circular-progressbar": "^2.0.3",
     "react-dom": "^16.8.3",
+    "react-exif-orientation-img": "^0.1.5",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-router-redux": "^4.0.8",

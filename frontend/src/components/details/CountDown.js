@@ -6,13 +6,19 @@ import { getTimeNotification } from "../../modules/utils"
 class CountDown extends Component {
   constructor(props) {
     super(props)
-    const nowTime = new Date().getTime()
-    const targetTime = this.props.time
-    const gapSecondTotal = Math.floor((targetTime - nowTime) / 1000)
     this.state = {
-      gapSecondTotal: gapSecondTotal
+      gapSecond: 1
     }
     this.startTimer = this.startTimer.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const nowTime = new Date().getTime()
+    const targetTime = nextProps.time
+    const gapSecond = Math.floor((targetTime - nowTime) / 1000)
+    this.setState({
+      gapSecond: gapSecond
+    })
   }
 
   componentDidMount() {
@@ -27,13 +33,13 @@ class CountDown extends Component {
       () =>
         this.setState(prevState => ({
           ...prevState,
-          gapSecondTotal: prevState.gapSecondTotal - 1
+          gapSecond: prevState.gapSecond - 1
         })),
       1000
     )
     this.ifTimer = setInterval(() => {
-      const { gapSecondTotal } = this.state
-      if (gapSecondTotal <= 0) {
+      const { gapSecond } = this.state
+      if (gapSecond < 0) {
         window.location.reload() //리프레시
         this.timer && clearInterval(this.timer)
         this.ifTimer && clearInterval(this.ifTimer)
@@ -46,12 +52,10 @@ class CountDown extends Component {
   }
 
   render() {
-    const { gapSecondTotal } = this.state
+    const { gapSecond } = this.state
 
     return (
-      <Fragment>
-        {gapSecondTotal > 0 && getTimeNotification(gapSecondTotal)}
-      </Fragment>
+      <Fragment>{gapSecond > 0 && getTimeNotification(gapSecond)}</Fragment>
     )
   }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import ExifOrientationImg from "react-exif-orientation-img"
 import "../../css/Main.scss" //부모컴포넌트의CSS(SCSS)
 import "../../App.css" //공통CSS
 import { Link } from "react-router-dom" //다른 페이지로 링크 걸 때 필요
@@ -69,7 +70,7 @@ class ControlTool extends Component {
             <div className="column">
               <Link to="/team_profile">
                 {/* 대표사진 */}
-                <img
+                <ExifOrientationImg
                   className="my-team"
                   src={myProfile.image || require("../../images/noPhoto.jpg")}
                   alt="my_image"

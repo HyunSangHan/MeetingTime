@@ -4,6 +4,7 @@ import "../../css/Waiting.scss" //부모컴포넌트의CSS(SCSS)
 import "../../App.css" //공통CSS
 import { Link } from "react-router-dom"
 import CountDown from "./CountDown"
+import { isEmpty } from "../../modules/utils"
 
 class JoinButton extends Component {
   componentDidMount() {
@@ -86,7 +87,7 @@ class JoinButton extends Component {
         if (
           isJoinedAlready &&
           joinedUser.rank <= currentMeeting.cutline &&
-          joinedUser.rank != null &&
+          !isEmpty(joinedUser.rank) &&
           nowTime > closeTime
         ) {
           //for winner
@@ -109,7 +110,7 @@ class JoinButton extends Component {
         } else if (
           isJoinedAlready &&
           joinedUser.rank > currentMeeting.cutline &&
-          joinedUser.rank != null &&
+          !isEmpty(joinedUser.rank) &&
           nowTime > closeTime
         ) {
           // 나중에는 다음 미팅 알림받기로 변경

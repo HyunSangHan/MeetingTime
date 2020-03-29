@@ -26,30 +26,38 @@ export default function GreenlightButton(props) {
       if (gapSecondPassed <= gapSecondTotal) {
         const nowTime = new Date().getTime()
         const isTimerNecessary = nowTime > prevTargetTime
-        const gapSecondPassedNew = Math.floor(nowTime - prevTargetTime) || 0
+        const gapSecondPassedNew = Math.floor(nowTime - prevTargetTime)
         isTimerNecessary && setGapSecondPassed(gapSecondPassedNew)
       }
     }
   }, [isGreenlightOn])
 
+  let timer = null
   useEffect(() => {
     if (!isGreenlightOn) {
       if (gapSecondPassed <= gapSecondTotal) {
-        const timer = setTimeout(() => {
+        timer = setTimeout(() => {
           const nowTime = new Date().getTime()
           const isTimerNecessary = nowTime > prevTargetTime
           const gapSecondPassedNew = Math.floor(nowTime - prevTargetTime) || 0
           isTimerNecessary && setGapSecondPassed(gapSecondPassedNew)
         }, CALL_BUTTON_FILL_TERM)
-        return () => {
-          clearTimeout(timer)
-        }
+      }
+      return () => {
+        clearTimeout(timer)
       }
     }
   }, [isGreenlightOn, gapSecondPassed])
 
   const getPassedTimeRatio = (passed, total) => {
-    return Math.floor((passed / total) * 100)
+    const ratio = Math.floor((passed / total) * 100)
+    if (ratio < 0) {
+      return 0
+    } else if (ratio < 100) {
+      return ratio
+    } else {
+      return 100
+    }
   }
 
   const toggleGreenLight = () => {

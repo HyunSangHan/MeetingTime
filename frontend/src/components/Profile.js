@@ -4,8 +4,10 @@ import { sendEmail, validateEmail } from "../modules/email"
 import "../css/Profile.scss"
 import "../App.css"
 import Header from "./details/Header"
+import Loading from "./details/Loading"
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
+import { isEmpty } from "../modules/utils"
 
 class Profile extends Component {
   constructor(props) {
@@ -84,9 +86,13 @@ class Profile extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { myProfile } = nextProps
-    this.setState({
-      ageValue: myProfile.ageRange,
-      companyValue: myProfile.company.name
+    this.setState(prevState => {
+      if (prevState.companyValue === "default") {
+        return {
+          ageValue: myProfile.ageRange,
+          companyValue: myProfile.company.name
+        }
+      }
     })
   }
 
@@ -95,14 +101,14 @@ class Profile extends Component {
     const { ageValue, companyValue } = this.state
 
     const isStoreLoaded =
+      !isEmpty(myProfile) &&
       !isNaN(myProfile.ageRange) &&
-      myProfile !== null &&
-      isLoginAlready !== null
+      !isEmpty(isLoginAlready)
 
     return (
       <div className="frame bg-init-color">
         <Header content={"프로필 수정"} />
-        {isStoreLoaded && (
+        {isStoreLoaded ? (
           <div className="profile-form">
             <form
               className="form"
@@ -120,7 +126,7 @@ class Profile extends Component {
                 value={ageValue}
                 onChange={this.handleInputChange}
               >
-                <option value="default">&nbsp; - 선택 -&nbsp;</option>
+                <option value="default"> - 선택 - </option>
                 <option value={10}>10대</option>
                 <option value={20}>20대</option>
                 <option value={30}>30대</option>
@@ -219,6 +225,8 @@ class Profile extends Component {
               )}
             </div>
           </div>
+        ) : (
+          <Loading />
         )}
       </div>
     )
