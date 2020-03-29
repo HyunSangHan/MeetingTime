@@ -4,6 +4,7 @@ import { sendEmail, validateEmail } from "../modules/email"
 import "../css/Profile.scss"
 import "../App.css"
 import Header from "./details/Header"
+import Loading from "./details/Loading"
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
 import { isEmpty } from "../modules/utils"
@@ -85,9 +86,13 @@ class Profile extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { myProfile } = nextProps
-    this.setState({
-      ageValue: myProfile.ageRange,
-      companyValue: myProfile.company.name
+    this.setState(prevState => {
+      if (prevState.companyValue === "default") {
+        return {
+          ageValue: myProfile.ageRange,
+          companyValue: myProfile.company.name
+        }
+      }
     })
   }
 
@@ -103,7 +108,7 @@ class Profile extends Component {
     return (
       <div className="frame bg-init-color">
         <Header content={"프로필 수정"} />
-        {isStoreLoaded && (
+        {isStoreLoaded ? (
           <div className="profile-form">
             <form
               className="form"
@@ -220,6 +225,8 @@ class Profile extends Component {
               )}
             </div>
           </div>
+        ) : (
+          <Loading />
         )}
       </div>
     )
