@@ -95,7 +95,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             # 추가된 부분
-            os.path.join(BASE_DIR, 'frontend', 'build'),
+            os.path.join(BASE_DIR, 'client', 'build'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -110,7 +110,7 @@ TEMPLATES = [
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend', 'build', 'static')
+    os.path.join(BASE_DIR, 'client', 'build', 'static')
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
