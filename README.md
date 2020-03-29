@@ -25,16 +25,11 @@ This is a web application for helping workers to make meeting chance.
 ---
 
 ### 기술스택
-- Frontend : React.js, Redux, React-thunk, Scss 등  
-- Backend : Django(DRF), OAuth, sqlite 등
+- Client : React.js, Redux, React-thunk, Scss 등  
+- Server : Django(DRF), OAuth, sqlite 등
 
 ### 디렉토리 구조
-- backend  
-├─ backend  
-├─ meeting  
-└─ images  
-
-- frontend  
+- Client  
 ├─ public  
 └─ src  
 &nbsp; &nbsp; &nbsp; &nbsp; ├─ components  
@@ -42,6 +37,10 @@ This is a web application for helping workers to make meeting chance.
 &nbsp; &nbsp; &nbsp; &nbsp; ├─ images  
 &nbsp; &nbsp; &nbsp; &nbsp; └─ modules  
 
+- Server  
+├─ backend  
+├─ meeting  
+└─ images  
 
 ### Model
 <img src="https://user-images.githubusercontent.com/44132406/73130398-05a26b80-403b-11ea-9bb4-2bb35b171475.png" alt="ERD">
