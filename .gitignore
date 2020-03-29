@@ -45,4 +45,3 @@ local_settings.py
 
 .vscode/
 *venv/
-**/migrations/**

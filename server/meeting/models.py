@@ -9,11 +9,12 @@ from allauth.account.signals import user_signed_up
 
 class Meeting(models.Model):
     open_time = models.DateTimeField()
-    prev_meeting_last_shuffle_time = models.DateTimeField(null=True)
+    prev_meeting_last_result_time = models.DateTimeField(null=True)
     close_time = models.DateTimeField()
     first_shuffle_time = models.DateTimeField()
     second_shuffle_time = models.DateTimeField()
     third_shuffle_time = models.DateTimeField()
+    last_result_time = models.DateTimeField(null=True)
     meeting_time = models.DateTimeField()
     location = models.CharField(max_length=20)
     cutline = models.IntegerField(null=True, blank=True)
@@ -41,6 +42,7 @@ class Meeting(models.Model):
             first_shuffle_time = timezone.now()+timedelta(days=i*2)
             second_shuffle_time = timezone.now()+timedelta(days=i*3)
             third_shuffle_time = timezone.now()+timedelta(days=i*4)
+            last_result_time =  timezone.now()+timedelta(days=i*5)
             meeting_time = timezone.now()+timedelta(days=i*10)
             location = f'봉천{i}동'
             Meeting.objects.create(
@@ -49,6 +51,7 @@ class Meeting(models.Model):
                 first_shuffle_time=first_shuffle_time,
                 second_shuffle_time=second_shuffle_time,
                 third_shuffle_time=third_shuffle_time,
+                last_result_time=last_result_time,
                 meeting_time=meeting_time,
                 location=location
             )

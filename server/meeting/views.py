@@ -25,7 +25,8 @@ def meeting_example():
     first_shuffle_time = close_time + timedelta(seconds=120)
     second_shuffle_time = first_shuffle_time + timedelta(seconds=120)
     third_shuffle_time = second_shuffle_time + timedelta(seconds=120)
-    Meeting.objects.create(open_time=now, close_time = close_time, first_shuffle_time=first_shuffle_time, second_shuffle_time=second_shuffle_time, third_shuffle_time=third_shuffle_time, meeting_time=meeting_time, cutline=4)
+    last_result_time = third_shuffle_time + timedelta(seconds=120)
+    Meeting.objects.create(open_time=now, close_time = close_time, first_shuffle_time=first_shuffle_time, second_shuffle_time=second_shuffle_time, third_shuffle_time=third_shuffle_time, last_result_time=last_result_time, meeting_time=meeting_time, cutline=4)
     # 일단 항상 cutline을 4로 만들긴 하는데 이건 join할 때마다 patch로 수정해줘야 할 것 같다
     # 매주 수금 10시에 생성, 하루 후 저녁 7시 미팅
     # 수금 11시 10분에 셔플, 11시 10분에 받기 종료
@@ -192,21 +193,7 @@ class CurrentMatching(APIView):
     if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first() is not None:
         current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
 
-    if timezone.now() < current_meeting.first_shuffle_time:
-        trial_time = 1
-    elif timezone.now() < current_meeting.second_shuffle_time:
-        trial_time = 2
-    elif timezone.now() < current_meeting.third_shuffle_time:
-        trial_time = 3
-    else:
-        trial_time = 4
-
-
-    def get(self, request, format=None):
-        current_meeting = Meeting.objects.all().order_by('meeting_time').last()
-        if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first() is not None:
-            current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
-
+    if current_meeting is not None:
         if timezone.now() < current_meeting.first_shuffle_time:
             trial_time = 1
         elif timezone.now() < current_meeting.second_shuffle_time:
@@ -215,6 +202,22 @@ class CurrentMatching(APIView):
             trial_time = 3
         else:
             trial_time = 4
+
+
+    def get(self, request, format=None):
+        current_meeting = Meeting.objects.all().order_by('meeting_time').last()
+        if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first() is not None:
+            current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
+
+        if current_meeting is not None:
+            if timezone.now() < current_meeting.first_shuffle_time:
+                trial_time = 1
+            elif timezone.now() < current_meeting.second_shuffle_time:
+                trial_time = 2
+            elif timezone.now() < current_meeting.third_shuffle_time:
+                trial_time = 3
+            else:
+                trial_time = 4
 
         my_profile = request.user.profile
         joined_user = JoinedUser.objects.filter(meeting=current_meeting, profile=my_profile).last()
