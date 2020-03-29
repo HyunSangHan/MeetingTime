@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react"
 import { getMyProfile, updateMyProfile } from "../modules/my_profile"
-import { sendEmail, validateEmail } from "../modules/email"
+import { sendEmail, validateEmail } from "../modules/validation"
 import "../css/Profile.scss"
 import "../App.css"
 import Header from "./details/Header"
@@ -15,6 +15,7 @@ class Profile extends Component {
     this.state = {
       ageValue: "default",
       companyValue: "default",
+      emailValue: null,
       emailFront: null,
       code: null
     }
@@ -66,6 +67,9 @@ class Profile extends Component {
       email: emailFront + emailCompany
     })
     console.log(emailFront + emailCompany + "로 인증메일을 보냅니다.")
+    this.setState({
+      emailValue: emailFront + emailCompany
+    })
   }
 
   onValidate() {
@@ -77,9 +81,9 @@ class Profile extends Component {
 
   handleSubmit = event => {
     const { history, updateMyProfile } = this.props
-    const { ageValue, companyValue } = this.state
+    const { ageValue, companyValue, emailValue } = this.state
     event.preventDefault()
-    updateMyProfile({ ageRange: ageValue, company: companyValue })
+    updateMyProfile({ ageRange: ageValue, company: companyValue, email: emailValue})
     window.alert("프로필 수정이 완료되었습니다.")
     history.push("/")
   }
@@ -246,8 +250,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => ({
   isLoginAlready: state.my_profile.isLoginAlready,
   myProfile: state.my_profile.myProfile,
-  sent: state.email.sent,
-  validated: state.email.validated
+  sent: state.validation.sent,
+  validated: state.validation.validated
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
