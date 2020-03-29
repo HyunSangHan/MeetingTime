@@ -254,10 +254,20 @@
   }
 
   .user-image {
+    position: relative;
     width: 231px;
     height: 231px;
     object-fit: cover;
     border-radius: 12px;
+
+    &.layer {
+      position: absolute;
+      width: 231px;
+      height: 231px;
+      top: 0;
+      border-radius: 12px;
+      background-color: rgba(100, 100, 100, 0.03);
+    }
   }
 
   .each-image:first-child {
@@ -301,10 +311,20 @@
   }
 
   .user-image {
+    position: relative;
     width: 246px;
     height: 246px;
     object-fit: cover;
     border-radius: 12px;
+
+    &.layer {
+      position: absolute;
+      width: 246px;
+      height: 246px;
+      top: 0;
+      border-radius: 12px;
+      background-color: rgba(100, 100, 100, 0.03);
+    }
   }
 
   .each-image:first-child {

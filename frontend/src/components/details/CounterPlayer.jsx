@@ -38,6 +38,7 @@ class CounterPlayer extends Component {
                 }
                 alt="first_user_image"
               />
+              <div className="user-image layer"></div>
             </div>
             <div className="each-image flex-center">
               <ExifOrientationImg
@@ -48,6 +49,7 @@ class CounterPlayer extends Component {
                 }
                 alt="second_user_image"
               />
+              <div className="user-image layer"></div>
             </div>
             <div className="each-image flex-center">
               <ExifOrientationImg
@@ -58,6 +60,7 @@ class CounterPlayer extends Component {
                 }
                 alt="third_user_image"
               />
+              <div className="user-image layer"></div>
             </div>
             <div className="last-child-gap" />
           </div>
