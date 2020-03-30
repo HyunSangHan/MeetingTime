@@ -20,12 +20,13 @@ class Initpage extends Component {
   }
 
   componentDidMount() {
-    try {
-      !this.props.isLoginAlready &&
+    if (!this.props.isLoginAlready) {
+      try {
         window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY)
-    } catch (error) {
-      console.log(error)
-      window.location.reload()
+      } catch (error) {
+        console.log(error)
+        window.location.reload()
+      }
     }
   }
 
