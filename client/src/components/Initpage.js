@@ -61,9 +61,9 @@ class Initpage extends Component {
     })
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props !== nextProps) {
-      this.setState({ isLoading: false })
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return {
+      isLoading: false
     }
   }
 

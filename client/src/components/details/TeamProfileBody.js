@@ -21,7 +21,7 @@ class TeamProfileBody extends Component {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps, prevState) {
     const {
       image,
       imageTwo,
@@ -29,7 +29,8 @@ class TeamProfileBody extends Component {
       teamName,
       teamIntroduce
     } = nextProps.myProfile
-    this.setState({
+    
+    return {
       previewFirst: null,
       previewSecond: null,
       previewThird: null,
@@ -38,7 +39,7 @@ class TeamProfileBody extends Component {
       imageThirdValue: imageThree || null,
       teamNameValue: teamName || null,
       teamIntroValue: teamIntroduce || null
-    })
+    }
   }
 
   //텍스트 수정 관련 메서드

@@ -76,11 +76,11 @@ class Main extends Component {
     }, TIMEOUT_LIMIT)
   }
 
-  componentWillReceiveProps = nextProps => {
+  static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.isJoinedAlready) {
-      this.setState({
+      return {
         loading: false
-      })
+      }
     }
   }
 

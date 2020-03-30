@@ -12,13 +12,14 @@ class CountDown extends Component {
     this.startTimer = this.startTimer.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps, prevState) {
     const nowTime = new Date().getTime()
     const targetTime = nextProps.time
     const gapSecond = Math.floor((targetTime - nowTime) / 1000)
-    this.setState({
+
+    return {
       gapSecond: gapSecond
-    })
+    }
   }
 
   componentDidMount() {

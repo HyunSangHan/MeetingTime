@@ -88,16 +88,16 @@ class Profile extends Component {
     history.push("/")
   }
 
-  componentWillReceiveProps(nextProps) {
+
+  static getDerivedStateFromProps(nextProps, prevState) {
     const { myProfile } = nextProps
-    this.setState(prevState => {
-      if (prevState.companyValue === "default") {
-        return {
-          ageValue: myProfile.ageRange,
-          companyValue: myProfile.company.name
-        }
+    if (prevState.companyValue === "default" && !isEmpty(myProfile.ageRange)) {
+      return {
+        ageValue: myProfile.ageRange,
+        companyValue: myProfile.company.name
       }
-    })
+    }
+    return null
   }
 
   render() {
