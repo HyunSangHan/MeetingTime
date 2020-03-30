@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = ['name']
+        fields = '__all__'
 
 class MeetingSerializer(serializers.ModelSerializer):
     class Meta:

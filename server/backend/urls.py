@@ -23,6 +23,7 @@ from django.conf import settings
 
 router = routers.DefaultRouter()
 router.register('meeting_info', views.MeetingInfoView, 'meeting_info')
+router.register('company_registration', views.CompanyRegistrationView, 'company_registration')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,7 +37,6 @@ urlpatterns = [
     path('profile/', views.CurrentProfile.as_view()),
     path('email/', views.Email.as_view()),
     path('validate/', views.SentValidation.as_view()),
-    path('company/', views.CurrentCompany.as_view()),
     path('current_matching/', views.CurrentMatching.as_view())
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
