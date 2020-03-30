@@ -18,12 +18,23 @@ class Profile extends Component {
       emailValue: null,
       emailFront: null,
       code: null,
-      validationButtonClicked: false
+      validationButtonClicked: false,
+      companyArr: null
     }
   }
 
   componentDidMount() {
     this.props.getMyProfile()
+
+    fetch('/company_registration/')
+    .then(response => {
+      return response.json()
+    }).then(response => {
+      this.setState({
+        companyArr: response
+      })
+    })
+    .catch(err => console.log(err))
   }
 
   handleInputChange = event => {
@@ -110,8 +121,7 @@ class Profile extends Component {
 
   render() {
     const { myProfile, isLoginAlready, validated } = this.props
-    const { ageValue, companyValue, validationButtonClicked } = this.state
-
+    const { ageValue, companyValue, validationButtonClicked, companyArr } = this.state
     const isStoreLoaded =
       !isEmpty(myProfile) &&
       !isNaN(myProfile.ageRange) &&
@@ -152,10 +162,9 @@ class Profile extends Component {
                 onChange={this.handleInputChange}
               >
                 <option value="default"> - 선택 - </option>
-                <option value="네이버">네이버</option>
-                <option value="삼성">삼성</option>
-                <option value="멋쟁이사자처럼">멋쟁이사자처럼</option>
-                <option value="구글">구글</option>
+                {companyArr && Array.from(companyArr).map(company => {
+                  return <option value={company.name} key={company.id}>{company.name}</option>
+                })}
               </select>
               <div className="title">이메일</div>
               <div className="email-select">
@@ -173,10 +182,9 @@ class Profile extends Component {
                   onChange={this.handleInputChange}
                 >
                   <option value="default"> - </option>
-                  <option value="네이버">@navercorp.com</option>
-                  <option value="삼성">@samsung.com</option>
-                  <option value="멋쟁이사자처럼">@likelion.org</option>
-                  <option value="구글">@google.com</option>
+                  {companyArr && Array.from(companyArr).map(company => {
+                  return (<option value={company.name} key={company.id}>{company.domain}</option>)
+                })}
                 </select>
               </div>
               {!this.props.sent ? (
