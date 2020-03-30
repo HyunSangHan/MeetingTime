@@ -17,7 +17,8 @@ class Profile extends Component {
       companyValue: "default",
       emailValue: null,
       emailFront: null,
-      code: null
+      code: null,
+      validationButtonClicked: false
     }
   }
 
@@ -78,6 +79,9 @@ class Profile extends Component {
 
   onValidate() {
     const { code } = this.state
+    this.setState({
+      validationButtonClicked: true
+    })
     this.props.validateEmail({
       code: code
     })
@@ -106,7 +110,7 @@ class Profile extends Component {
 
   render() {
     const { myProfile, isLoginAlready, validated } = this.props
-    const { ageValue, companyValue } = this.state
+    const { ageValue, companyValue, validationButtonClicked } = this.state
 
     const isStoreLoaded =
       !isEmpty(myProfile) &&
@@ -213,7 +217,7 @@ class Profile extends Component {
                     </div>
                   ) : (
                     <div className="ErrorMessage" style={{ color: "red" }}>
-                      인증되지 않았습니다
+                      {validationButtonClicked ? "인증에 실패했습니다" : "이메일로 발송된 인증코드를 입력해주세요."}
                     </div>
                   )}
                 </Fragment>
