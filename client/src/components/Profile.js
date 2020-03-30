@@ -63,13 +63,17 @@ class Profile extends Component {
         emailCompany = "[등록되지 않은 회사입니다!]"
         break
     }
-    this.props.sendEmail({
-      email: emailFront + emailCompany
-    })
-    console.log(emailFront + emailCompany + "로 인증메일을 보냅니다.")
-    this.setState({
-      emailValue: emailFront + emailCompany
-    })
+    if (!isEmpty(emailFront)) {
+      this.props.sendEmail({
+        email: emailFront + emailCompany
+      })
+      console.log(emailFront + emailCompany + "로 인증메일을 보냅니다.")
+      this.setState({
+        emailValue: emailFront + emailCompany
+      })
+    } else {
+      window.alert("이메일주소를 입력하세요.")
+    }
   }
 
   onValidate() {
@@ -101,7 +105,7 @@ class Profile extends Component {
   }
 
   render() {
-    const { myProfile, isLoginAlready } = this.props
+    const { myProfile, isLoginAlready, validated } = this.props
     const { ageValue, companyValue } = this.state
 
     const isStoreLoaded =
@@ -178,8 +182,13 @@ class Profile extends Component {
                     type="button"
                     onClick={e => this.onSend(e)}
                   >
-                    인증하기
+                    {this.props.myProfile.validated ? "재인증하기" : "인증하기"}
                   </button>
+                  { myProfile.validated && !validated && 
+                    <div className="ErrorMessage" style={{ color: "blue" }}>
+                      이미 { myProfile.company.name} 사내 메일계정으로 인증이 완료되었습니다.
+                    </div>
+                  }
                 </Fragment>
               ) : (
                 <Fragment>
@@ -198,7 +207,7 @@ class Profile extends Component {
                       인증
                     </button>
                   </div>
-                  {this.props.validated ? (
+                  {validated ? (
                     <div className="ErrorMessage" style={{ color: "blue" }}>
                       인증되었습니다
                     </div>
@@ -211,7 +220,7 @@ class Profile extends Component {
               )}
             </form>
             <div className="FixedButton mt-4">
-              {this.props.validated ? (
+              {validated ? (
                 <button
                   className="SubmitButton WorkingButton"
                   onClick={this.handleSubmit}
