@@ -13,6 +13,7 @@ class Profile extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      genderValue: "default",
       ageValue: "default",
       companyValue: "default",
       emailValue: null,
@@ -22,6 +23,24 @@ class Profile extends Component {
       companyArr: null
     }
   }
+  
+    static getDerivedStateFromProps(nextProps, prevState) {
+      const { isMale, ageRange, company } = nextProps.myProfile
+      if (prevState.companyValue === "default" && !isEmpty(company.name)) {
+        let gender = null
+        if (isEmpty(isMale)) {
+          gender = "default"
+        } else {
+          gender = isMale
+        }
+        return {
+          genderValue: gender,
+          ageValue: ageRange,
+          companyValue: company.name
+        }
+      }
+      return null
+    }
 
   componentDidMount() {
     this.props.getMyProfile()
@@ -36,18 +55,33 @@ class Profile extends Component {
     })
     .catch(err => console.log(err))
   }
-
+  
   handleInputChange = event => {
     let { value, name } = event.target
-    if (value === "10대") {
-      value = 10
-    } else if (value === "20대") {
-      value = 20
-    } else if (value === "30대") {
-      value = 30
-    } else if (value === "40대") {
-      value = 40
+    switch (value) { // replace the value
+      case "10대":
+        value = 10
+        break
+      case "20대":
+        value = 20
+        break
+      case "30대":
+        value = 30
+        break
+      case "40대":
+        value = 40
+        break
+      case "남자":
+        value = true
+        break
+      case "여자":
+        value = false
+        break
+      default:
+        value = null
+        break
     }
+
     this.setState({
       [name]: value
     })
@@ -100,28 +134,18 @@ class Profile extends Component {
 
   handleSubmit = event => {
     const { history, updateMyProfile } = this.props
-    const { ageValue, companyValue, emailValue } = this.state
+    const { genderValue, ageValue, companyValue, emailValue } = this.state
     event.preventDefault()
-    updateMyProfile({ ageRange: ageValue, company: companyValue, email: emailValue})
+    !isEmpty(genderValue) && !isEmpty(ageValue) && !isEmpty(companyValue) && !isEmpty(emailValue) &&
+    updateMyProfile({ isMale: genderValue, ageRange: ageValue, company: companyValue, email: emailValue})
     window.alert("프로필 수정이 완료되었습니다.")
     history.push("/")
   }
 
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const { myProfile } = nextProps
-    if (prevState.companyValue === "default" && !isEmpty(myProfile.ageRange)) {
-      return {
-        ageValue: myProfile.ageRange,
-        companyValue: myProfile.company.name
-      }
-    }
-    return null
-  }
-
   render() {
     const { myProfile, isLoginAlready, validated } = this.props
-    const { ageValue, companyValue, validationButtonClicked, companyArr } = this.state
+    const { genderValue, ageValue, companyValue, validationButtonClicked, companyArr } = this.state
     const isStoreLoaded =
       !isEmpty(myProfile) &&
       !isNaN(myProfile.ageRange) &&
@@ -139,9 +163,21 @@ class Profile extends Component {
               encType="multipart/form-data"
             >
               <div className="title">성별</div>
+              { isEmpty(myProfile.isMale) ? (
+              <select
+                name="genderValue"
+                value={genderValue === "default" ? genderValue: (genderValue ? "남자": "여자")}
+                onChange={this.handleInputChange}
+              >
+                <option value="default"> - 선택 - </option>
+                <option value="남자">남자</option>
+                <option value="여자">여자</option>
+              </select>
+              ) : (
               <div className="not-change Gender">
                 <p>{myProfile.isMale ? "남자" : "여자"}</p>
               </div>
+              )}
               <div className="title">연령대</div>
               <select
                 name="ageValue"
@@ -232,7 +268,7 @@ class Profile extends Component {
               )}
             </form>
             <div className="FixedButton mt-4">
-              {validated ? (
+              {!isEmpty(genderValue) &&!isEmpty(ageValue) && validated ? (
                 <button
                   className="SubmitButton WorkingButton"
                   onClick={this.handleSubmit}
