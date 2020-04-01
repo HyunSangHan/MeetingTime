@@ -29,7 +29,7 @@ class TeamProfileBody extends Component {
       teamName,
       teamIntroduce
     } = nextProps.myProfile
-    
+
     return {
       previewFirst: null,
       previewSecond: null,

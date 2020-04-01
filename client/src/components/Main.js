@@ -106,7 +106,7 @@ class Main extends Component {
       isCounterGiftOn
     } = this.props
 
-    isLoginAlready === false && history.push('/')
+    isLoginAlready === false && history.push("/")
 
     const emptyProfile = this.state
     const meetingWeek = getInputWeekLabel(currentMeeting.meetingTime)

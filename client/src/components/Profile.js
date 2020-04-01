@@ -23,45 +23,46 @@ class Profile extends Component {
       companyArr: null
     }
   }
-  
-    static getDerivedStateFromProps(nextProps, prevState) {
-      const { isLoginAlready, myProfile } = nextProps
-      const { isMale, ageRange, company } = myProfile
-      if (isLoginAlready && prevState.companyValue === "default") {
-        let gender = null
-        if (isEmpty(isMale)) {
-          gender = "default"
-        } else {
-          gender = isMale
-        }
 
-        let age = null
-        isEmpty(ageRange) ? age = "default" : age = ageRange
-
-        return {
-          genderValue: gender,
-          ageValue: age,
-          companyValue: company.name
-        }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { isLoginAlready, myProfile } = nextProps
+    const { isMale, ageRange, company } = myProfile
+    if (isLoginAlready && prevState.companyValue === "default") {
+      let gender = null
+      if (isEmpty(isMale)) {
+        gender = "default"
+      } else {
+        gender = isMale
       }
-      return null
+
+      let age = null
+      isEmpty(ageRange) ? (age = "default") : (age = ageRange)
+
+      return {
+        genderValue: gender,
+        ageValue: age,
+        companyValue: company.name
+      }
     }
+    return null
+  }
 
   componentDidMount() {
     const { isLoginAlready, getMyProfile } = this.props
     isEmpty(isLoginAlready) && getMyProfile()
 
-    fetch('/company_registration/')
-    .then(response => {
-      return response.json()
-    }).then(response => {
-      this.setState({
-        companyArr: response
+    fetch("/company_registration/")
+      .then(response => {
+        return response.json()
       })
-    })
-    .catch(err => console.log(err))
+      .then(response => {
+        this.setState({
+          companyArr: response
+        })
+      })
+      .catch(err => console.log(err))
   }
-  
+
   handleInputChange = event => {
     let { value, name } = event.target
 
@@ -111,18 +112,31 @@ class Profile extends Component {
     const { history, updateMyProfile } = this.props
     const { genderValue, ageValue, companyValue, emailValue } = this.state
     event.preventDefault()
-    !isEmpty(genderValue) && !isEmpty(ageValue) && !isEmpty(companyValue) && !isEmpty(emailValue) &&
-    updateMyProfile({ isMale: genderValue, ageRange: ageValue, company: companyValue, email: emailValue})
+    !isEmpty(genderValue) &&
+      !isEmpty(ageValue) &&
+      !isEmpty(companyValue) &&
+      !isEmpty(emailValue) &&
+      updateMyProfile({
+        isMale: genderValue,
+        ageRange: ageValue,
+        company: companyValue,
+        email: emailValue
+      })
     window.alert("프로필 수정이 완료되었습니다.")
     history.push("/")
   }
 
-
   render() {
     const { history, myProfile, isLoginAlready, validated } = this.props
-    const { genderValue, ageValue, companyValue, validationButtonClicked, companyArr } = this.state
+    const {
+      genderValue,
+      ageValue,
+      companyValue,
+      validationButtonClicked,
+      companyArr
+    } = this.state
 
-    isLoginAlready === false && history.push('/')
+    isLoginAlready === false && history.push("/")
 
     const isStoreLoaded =
       !isEmpty(myProfile) &&
@@ -141,20 +155,26 @@ class Profile extends Component {
               encType="multipart/form-data"
             >
               <div className="title">성별</div>
-              { isEmpty(myProfile.isMale) ? (
-              <select
-                name="genderValue"
-                value={genderValue === "default" ? genderValue: (genderValue ? "남자": "여자")}
-                onChange={this.handleInputChange}
-              >
-                <option value="default"> - 선택 - </option>
-                <option value="남자">남자</option>
-                <option value="여자">여자</option>
-              </select>
+              {isEmpty(myProfile.isMale) ? (
+                <select
+                  name="genderValue"
+                  value={
+                    genderValue === "default"
+                      ? genderValue
+                      : genderValue
+                      ? "남자"
+                      : "여자"
+                  }
+                  onChange={this.handleInputChange}
+                >
+                  <option value="default"> - 선택 - </option>
+                  <option value="남자">남자</option>
+                  <option value="여자">여자</option>
+                </select>
               ) : (
-              <div className="not-change Gender">
-                <p>{myProfile.isMale ? "남자" : "여자"}</p>
-              </div>
+                <div className="not-change Gender">
+                  <p>{myProfile.isMale ? "남자" : "여자"}</p>
+                </div>
               )}
               <div className="title">연령대</div>
               <select
@@ -176,9 +196,14 @@ class Profile extends Component {
                 onChange={this.handleInputChange}
               >
                 <option value="default"> - 선택 - </option>
-                {companyArr && Array.from(companyArr).map(company => {
-                  return <option value={company.name} key={company.id}>{company.name}</option>
-                })}
+                {companyArr &&
+                  Array.from(companyArr).map(company => {
+                    return (
+                      <option value={company.name} key={company.id}>
+                        {company.name}
+                      </option>
+                    )
+                  })}
               </select>
               <div className="title">이메일</div>
               <div className="email-select">
@@ -196,9 +221,14 @@ class Profile extends Component {
                   onChange={this.handleInputChange}
                 >
                   <option value="default"> - </option>
-                  {companyArr && Array.from(companyArr).map(company => {
-                    return (<option value={company.name} key={company.id}>{company.domain}</option>)
-                  })}
+                  {companyArr &&
+                    Array.from(companyArr).map(company => {
+                      return (
+                        <option value={company.name} key={company.id}>
+                          {company.domain}
+                        </option>
+                      )
+                    })}
                 </select>
               </div>
               {!this.props.sent ? (
@@ -210,11 +240,12 @@ class Profile extends Component {
                   >
                     {this.props.myProfile.validated ? "재인증하기" : "인증하기"}
                   </button>
-                  { myProfile.validated && !validated && 
+                  {myProfile.validated && !validated && (
                     <div className="ErrorMessage" style={{ color: "blue" }}>
-                      이미 { myProfile.company.name} 사내 메일계정으로 인증이 완료되었습니다.
+                      이미 {myProfile.company.name} 사내 메일계정으로 인증이
+                      완료되었습니다.
                     </div>
-                  }
+                  )}
                 </Fragment>
               ) : (
                 <Fragment>
@@ -239,14 +270,16 @@ class Profile extends Component {
                     </div>
                   ) : (
                     <div className="ErrorMessage" style={{ color: "red" }}>
-                      {validationButtonClicked ? "인증에 실패했습니다" : "이메일로 발송된 인증코드를 입력해주세요."}
+                      {validationButtonClicked
+                        ? "인증에 실패했습니다"
+                        : "이메일로 발송된 인증코드를 입력해주세요."}
                     </div>
                   )}
                 </Fragment>
               )}
             </form>
             <div className="FixedButton mt-4">
-              {!isEmpty(genderValue) &&!isEmpty(ageValue) && validated ? (
+              {!isEmpty(genderValue) && !isEmpty(ageValue) && validated ? (
                 <button
                   className="SubmitButton WorkingButton"
                   onClick={this.handleSubmit}

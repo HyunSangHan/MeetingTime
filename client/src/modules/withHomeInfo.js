@@ -11,7 +11,7 @@ export default ComposedComponent => {
   class withHomeInfo extends React.Component {
     componentDidMount() {
       const { history, isLoginAlready, myProfile } = this.props
-      isLoginAlready && isEmpty(myProfile.isMale) && history.push("/profile")  
+      isLoginAlready && isEmpty(myProfile.isMale) && history.push("/profile")
     }
     render() {
       const {
@@ -32,8 +32,10 @@ export default ComposedComponent => {
         isMadeTeam = false
       }
 
-      const isProfileLoaded = !isEmpty(myProfile) && !isEmpty(myProfile.user.username)
-      const isMeetingLoaded = !isEmpty(currentMeeting) && !isEmpty(currentMeeting.openTime)
+      const isProfileLoaded =
+        !isEmpty(myProfile) && !isEmpty(myProfile.user.username)
+      const isMeetingLoaded =
+        !isEmpty(currentMeeting) && !isEmpty(currentMeeting.openTime)
 
       isEmpty(isLoginAlready) && getMyProfile()
       !isMeetingLoaded && getCurrentMeeting()
