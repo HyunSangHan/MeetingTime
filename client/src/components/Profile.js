@@ -64,28 +64,11 @@ class Profile extends Component {
   
   handleInputChange = event => {
     let { value, name } = event.target
-    switch (value) { // replace the value
-      case "10":
-        value = 10
-        break
-      case "20":
-        value = 20
-        break
-      case "30":
-        value = 30
-        break
-      case "40":
-        value = 40
-        break
-      case "남자":
-        value = true
-        break
-      case "여자":
-        value = false
-        break
-      default:
-        value = null
-        break
+
+    if (value === "남자") {
+      value = true
+    } else if (value === "여자") {
+      value = false
     }
 
     this.setState({
@@ -94,28 +77,14 @@ class Profile extends Component {
   }
 
   onSend() {
-    const { emailFront, companyValue } = this.state
+    const { emailFront, companyValue, companyArr } = this.state
     let emailCompany
-    switch (
-      companyValue //테스트용임
-    ) {
-      case "네이버":
-        emailCompany = "@navercorp.com"
-        break
-      case "삼성":
-        emailCompany = "@samsung.com"
-        break
-      case "멋쟁이사자처럼":
-        emailCompany = "@likelion.org"
-        break
-      case "구글":
-        emailCompany = "@google.com"
-        break
-      default:
-        emailCompany = "[등록되지 않은 회사입니다!]"
-        break
-    }
-    if (!isEmpty(emailFront)) {
+
+    companyArr.forEach(company => {
+      if (companyValue === company.name) emailCompany = company.domain
+    })
+
+    if (!isEmpty(emailFront) && !isEmpty(emailCompany)) {
       this.props.sendEmail({
         email: emailFront + emailCompany
       })
@@ -228,8 +197,8 @@ class Profile extends Component {
                 >
                   <option value="default"> - </option>
                   {companyArr && Array.from(companyArr).map(company => {
-                  return (<option value={company.name} key={company.id}>{company.domain}</option>)
-                })}
+                    return (<option value={company.name} key={company.id}>{company.domain}</option>)
+                  })}
                 </select>
               </div>
               {!this.props.sent ? (
