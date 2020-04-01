@@ -18,6 +18,7 @@ import {
 } from "../modules/current_matching"
 import { getMyProfile } from "../modules/my_profile"
 import { getInputWeekLabel, getInputDayLabel } from "../modules/utils"
+import { isEmpty } from "../modules/utils"
 
 class Main extends Component {
   constructor(props) {
@@ -56,9 +57,10 @@ class Main extends Component {
       getCounterProfile,
       getJoinedUser
     } = this.props
+
+    isEmpty(isLoginAlready) && getMyProfile()
     getCurrentMeeting()
     getCurrentMatching()
-    getMyProfile()
     getCounterProfile()
     if (!isJoinedAlready) {
       getJoinedUser()
@@ -86,7 +88,9 @@ class Main extends Component {
 
   render() {
     const {
+      history,
       myProfile,
+      isLoginAlready,
       currentMeeting,
       hasCurrentMatching,
       currentMatching,
@@ -101,6 +105,8 @@ class Main extends Component {
       isGiftOn,
       isCounterGiftOn
     } = this.props
+
+    isLoginAlready === false && history.push('/')
 
     const emptyProfile = this.state
     const meetingWeek = getInputWeekLabel(currentMeeting.meetingTime)

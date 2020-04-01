@@ -9,12 +9,17 @@ import { isEmpty } from "./utils"
 
 export default ComposedComponent => {
   class withHomeInfo extends React.Component {
+    componentDidMount() {
+      const { history, isLoginAlready, myProfile } = this.props
+      isLoginAlready && isEmpty(myProfile.isMale) && history.push("/profile")  
+    }
     render() {
       const {
         currentMeeting,
         myProfile,
         getCurrentMeeting,
-        getMyProfile
+        getMyProfile,
+        isLoginAlready
       } = this.props
 
       const lastShuffledAt = new Date(currentMeeting.prevMeetingLastResultTime) //나중에 하위 필드 추가되면 수정필요
@@ -30,11 +35,13 @@ export default ComposedComponent => {
       const isProfileLoaded = !isEmpty(myProfile) && !isEmpty(myProfile.user.username)
       const isMeetingLoaded = !isEmpty(currentMeeting) && !isEmpty(currentMeeting.openTime)
 
-      !isProfileLoaded && getMyProfile()
+      isEmpty(isLoginAlready) && getMyProfile()
       !isMeetingLoaded && getCurrentMeeting()
 
       if (isProfileLoaded && isMeetingLoaded) {
         return <ComposedComponent {...this.props} isMadeTeam={isMadeTeam} />
+      } else if (!isLoginAlready) {
+        return <ComposedComponent {...this.props} isMadeTeam={false} />
       } else {
         return <Loading />
       }

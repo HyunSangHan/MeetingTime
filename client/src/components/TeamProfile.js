@@ -12,6 +12,7 @@ import TwoTab from "./details/TwoTab"
 import TeamProfileBody from "./details/TeamProfileBody"
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
+import { isEmpty } from "../modules/utils"
 
 class TeamProfile extends Component {
   constructor(props) {
@@ -40,7 +41,8 @@ class TeamProfile extends Component {
   }
 
   componentDidMount() {
-    this.props.getMyProfile()
+    const { isLoginAlready, getMyProfile } = this.props
+    isEmpty(isLoginAlready) && getMyProfile()
   }
 
   render() {
@@ -50,10 +52,15 @@ class TeamProfile extends Component {
       myProfile,
       clickedTab,
       newTabOn,
-      prevTabOn
+      prevTabOn,
+      isLoginAlready,
+      history
     } = this.props
     const { emptyProfile } = this.state
     const action = this.props.clickedTab
+
+    isLoginAlready === false && history.push('/')
+
     return (
       <div className="frame-scrollable bg-init-color">
         <Header content={"미팅 그룹 생성"} />

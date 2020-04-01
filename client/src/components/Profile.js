@@ -48,7 +48,8 @@ class Profile extends Component {
     }
 
   componentDidMount() {
-    this.props.getMyProfile()
+    const { isLoginAlready, getMyProfile } = this.props
+    isEmpty(isLoginAlready) && getMyProfile()
 
     fetch('/company_registration/')
     .then(response => {
@@ -149,8 +150,11 @@ class Profile extends Component {
 
 
   render() {
-    const { myProfile, isLoginAlready, validated } = this.props
+    const { history, myProfile, isLoginAlready, validated } = this.props
     const { genderValue, ageValue, companyValue, validationButtonClicked, companyArr } = this.state
+
+    isLoginAlready === false && history.push('/')
+
     const isStoreLoaded =
       !isEmpty(myProfile) &&
       !isNaN(myProfile.ageRange) &&
