@@ -25,17 +25,22 @@ class Profile extends Component {
   }
   
     static getDerivedStateFromProps(nextProps, prevState) {
-      const { isMale, ageRange, company } = nextProps.myProfile
-      if (prevState.companyValue === "default" && !isEmpty(company.name)) {
+      const { isLoginAlready, myProfile } = nextProps
+      const { isMale, ageRange, company } = myProfile
+      if (isLoginAlready && prevState.companyValue === "default") {
         let gender = null
         if (isEmpty(isMale)) {
           gender = "default"
         } else {
           gender = isMale
         }
+
+        let age = null
+        isEmpty(ageRange) ? age = "default" : age = ageRange
+
         return {
           genderValue: gender,
-          ageValue: ageRange,
+          ageValue: age,
           companyValue: company.name
         }
       }
@@ -59,16 +64,16 @@ class Profile extends Component {
   handleInputChange = event => {
     let { value, name } = event.target
     switch (value) { // replace the value
-      case "10대":
+      case "10":
         value = 10
         break
-      case "20대":
+      case "20":
         value = 20
         break
-      case "30대":
+      case "30":
         value = 30
         break
-      case "40대":
+      case "40":
         value = 40
         break
       case "남자":
