@@ -110,6 +110,7 @@ class TeamProfileBody extends Component {
   }
 
   render() {
+    const { myProfile } = this.props
     const {
       teamNameValue,
       teamIntroValue,
@@ -127,7 +128,7 @@ class TeamProfileBody extends Component {
           <div className="team-container title-imgs">
             <div className="title font-notosan">
               팀 사진
-              {!this.props.myProfile.createdAt && (
+              {!myProfile.createdAt && (
                 <span className="title-noti font-notosan ml-2">
                   * 멤버수는 본인을 포함, 3명을 기본으로 합니다.
                 </span>
@@ -190,7 +191,14 @@ class TeamProfileBody extends Component {
                 placeholder="30자 이내로 작성해주세요"
               />
             </div>
-
+            {!isEmpty(myProfile.lastIntroModifiedAt) && (
+              <div className="font-blue font-notosan">
+                마지막 수정일 :{" "}
+                {JSON.stringify(myProfile.lastIntroModifiedAt)
+                  .slice(1, -1)
+                  .split("T", 1)}
+              </div>
+            )}
             <div className="ButtonWrap">
               {(previewFirst && previewSecond && previewThird) ||
               (imageFirstValue && imageSecondValue && imageThirdValue) ? (

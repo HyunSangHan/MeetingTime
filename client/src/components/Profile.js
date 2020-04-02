@@ -241,7 +241,7 @@ class Profile extends Component {
                     {this.props.myProfile.validated ? "재인증하기" : "인증하기"}
                   </button>
                   {myProfile.validated && !validated && (
-                    <div className="ErrorMessage" style={{ color: "blue" }}>
+                    <div className="ErrorMessage font-blue font-notosan">
                       이미 {myProfile.company.name} 사내 메일계정으로 인증이
                       완료되었습니다.
                     </div>
@@ -265,11 +265,11 @@ class Profile extends Component {
                     </button>
                   </div>
                   {validated ? (
-                    <div className="ErrorMessage" style={{ color: "blue" }}>
+                    <div className="ErrorMessage font-blue font-notosan">
                       인증되었습니다
                     </div>
                   ) : (
-                    <div className="ErrorMessage" style={{ color: "red" }}>
+                    <div className="ErrorMessage font-red font-notosan">
                       {validationButtonClicked
                         ? "인증에 실패했습니다"
                         : "이메일로 발송된 인증코드를 입력해주세요."}
