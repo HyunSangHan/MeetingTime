@@ -5,6 +5,7 @@ import {
   newTabOn,
   prevTabOn
 } from "../modules/my_profile"
+import { getCurrentMeeting } from "../modules/current_meeting"
 import "../css/Profile.scss"
 import "../App.css"
 import Header from "./details/Header"
@@ -41,8 +42,19 @@ class TeamProfile extends Component {
   }
 
   componentDidMount() {
-    const { isLoginAlready, getMyProfile } = this.props
+    const {
+      isLoginAlready,
+      getMyProfile,
+      getCurrentMeeting,
+      currentMeeting
+    } = this.props
     isEmpty(isLoginAlready) && getMyProfile()
+
+    const isMeetingLoaded =
+      !isEmpty(currentMeeting) && !isEmpty(currentMeeting.openTime)
+
+    isEmpty(isLoginAlready) && getMyProfile()
+    !isMeetingLoaded && getCurrentMeeting()
   }
 
   render() {
@@ -50,6 +62,7 @@ class TeamProfile extends Component {
       getMyProfile,
       updateMyProfile,
       myProfile,
+      currentMeeting,
       clickedTab,
       newTabOn,
       prevTabOn,
@@ -59,7 +72,7 @@ class TeamProfile extends Component {
     const { emptyProfile } = this.state
     const action = this.props.clickedTab
 
-    isLoginAlready === false && history.push('/')
+    isLoginAlready === false && history.push("/")
 
     return (
       <div className="frame-scrollable bg-init-color">
@@ -75,6 +88,7 @@ class TeamProfile extends Component {
           getMyProfile={getMyProfile}
           updateMyProfile={updateMyProfile}
           myProfile={action === "prev" ? myProfile : emptyProfile}
+          currentMeeting={currentMeeting}
           clickedTab={clickedTab}
         />
       </div>
@@ -87,6 +101,7 @@ const mapDispatchToProps = dispatch => {
     dispatch,
     getMyProfile: bindActionCreators(getMyProfile, dispatch),
     updateMyProfile: bindActionCreators(updateMyProfile, dispatch),
+    getCurrentMeeting: bindActionCreators(getCurrentMeeting, dispatch),
     newTabOn: bindActionCreators(newTabOn, dispatch),
     prevTabOn: bindActionCreators(prevTabOn, dispatch)
   }
@@ -95,6 +110,7 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => ({
   isLoginAlready: state.my_profile.isLoginAlready,
   myProfile: state.my_profile.myProfile,
+  currentMeeting: state.current_meeting.currentMeeting,
   clickedTab: state.my_profile.clickedTab
 })
 

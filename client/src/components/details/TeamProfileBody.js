@@ -17,7 +17,8 @@ class TeamProfileBody extends Component {
       previewSecond: null,
       previewThird: null,
       teamNameValue: null,
-      teamIntroValue: null
+      teamIntroValue: null,
+      isUpdatedNow: false
     }
   }
 
@@ -104,13 +105,16 @@ class TeamProfileBody extends Component {
       if (this.props.clickedTab === "new") alert("그룹이 생성되었습니다.")
       else if (this.props.clickedTab === "prev")
         alert("그룹정보가 업데이트 되었습니다.")
+      this.setState({
+        isUpdatedNow: true
+      })
     } else {
       alert("입력을 완료해주세요.")
     }
   }
 
   render() {
-    const { myProfile } = this.props
+    const { myProfile, currentMeeting } = this.props
     const {
       teamNameValue,
       teamIntroValue,
@@ -119,8 +123,20 @@ class TeamProfileBody extends Component {
       previewThird,
       imageFirstValue,
       imageSecondValue,
-      imageThirdValue
+      imageThirdValue,
+      isUpdatedNow
     } = this.state
+
+    let isNecessaryToUpdate
+    if (!isEmpty(myProfile.createdAt)) {
+      const lastTeamModifiedAt = new Date(myProfile.lastIntroModifiedAt)
+      const lastShuffledAt = new Date(currentMeeting.prevMeetingLastResultTime)
+      if (isEmpty(lastTeamModifiedAt)) {
+        isNecessaryToUpdate = true
+      } else {
+        isNecessaryToUpdate = lastTeamModifiedAt < lastShuffledAt
+      }
+    }
 
     return (
       <div className="team-container">
@@ -128,7 +144,7 @@ class TeamProfileBody extends Component {
           <div className="team-container title-imgs">
             <div className="title font-notosan">
               팀 사진
-              {!myProfile.createdAt && (
+              {isEmpty(myProfile.createdAt) && (
                 <span className="title-noti font-notosan ml-2">
                   * 멤버수는 본인을 포함, 3명을 기본으로 합니다.
                 </span>
@@ -191,7 +207,18 @@ class TeamProfileBody extends Component {
                 placeholder="30자 이내로 작성해주세요"
               />
             </div>
-            {!isEmpty(myProfile.lastIntroModifiedAt) && (
+            {!isEmpty(myProfile.lastIntroModifiedAt) &&
+              isNecessaryToUpdate &&
+              !isUpdatedNow && (
+                <div className="font-red font-notosan">
+                  업데이트 필요(마지막 수정일 :{" "}
+                  {JSON.stringify(myProfile.lastIntroModifiedAt)
+                    .slice(1, -1)
+                    .split("T", 1)}
+                  )
+                </div>
+              )}
+            {!isEmpty(myProfile.lastIntroModifiedAt) && !isNecessaryToUpdate && (
               <div className="font-blue font-notosan">
                 마지막 수정일 :{" "}
                 {JSON.stringify(myProfile.lastIntroModifiedAt)

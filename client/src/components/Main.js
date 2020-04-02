@@ -35,7 +35,7 @@ class Main extends Component {
         image: null,
         imageTwo: null,
         imageThree: null,
-        isMale: false,
+        isMale: null,
         lastIntroModifiedAt: null,
         lastLoginAt: null,
         teamIntroduce: null,
