@@ -30,16 +30,20 @@ class TeamProfileBody extends Component {
       teamName,
       teamIntroduce
     } = nextProps.myProfile
-
-    return {
-      previewFirst: null,
-      previewSecond: null,
-      previewThird: null,
-      imageFirstValue: image || null,
-      imageSecondValue: imageTwo || null,
-      imageThirdValue: imageThree || null,
-      teamNameValue: teamName || null,
-      teamIntroValue: teamIntroduce || null
+    if (prevState.clickedTab !== nextProps.clickedTab) {
+      return {
+        clickedTab: nextProps.clickedTab,
+        previewFirst: null,
+        previewSecond: null,
+        previewThird: null,
+        imageFirstValue: image,
+        imageSecondValue: imageTwo,
+        imageThirdValue: imageThree,
+        teamNameValue: teamName,
+        teamIntroValue: teamIntroduce
+      }
+    } else {
+      return null
     }
   }
 
@@ -102,8 +106,8 @@ class TeamProfileBody extends Component {
         formData.append("teamIntroduce", teamIntroValue)
 
       updateMyProfile(formData)
-      if (this.props.clickedTab === "new") alert("그룹이 생성되었습니다.")
-      else if (this.props.clickedTab === "prev")
+      if (this.state.clickedTab === "new") alert("그룹이 생성되었습니다.")
+      else if (this.state.clickedTab === "prev")
         alert("그룹정보가 업데이트 되었습니다.")
       this.setState({
         isUpdatedNow: true
@@ -233,7 +237,7 @@ class TeamProfileBody extends Component {
                   className="SubmitButton WorkingButton mt-1"
                   onClick={this.handleSubmit}
                 >
-                  {this.props.clickedTab === "new"
+                  {this.state.clickedTab === "new"
                     ? "그룹만들기"
                     : "그룹정보 업데이트"}
                 </button>
