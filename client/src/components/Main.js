@@ -84,6 +84,7 @@ class Main extends Component {
         loading: false
       }
     }
+    return null
   }
 
   render() {
