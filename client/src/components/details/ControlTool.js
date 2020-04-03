@@ -7,6 +7,10 @@ import CountDown from "./CountDown"
 import GreenlightButton from "./GreenlightButton"
 
 class ControlTool extends Component {
+  componentDidMount() {
+    this.props.prevTabOn()
+  }
+
   handleGift = () => {
     const { handleGift, myProfile, isGiftOn } = this.props
     if (isGiftOn) {

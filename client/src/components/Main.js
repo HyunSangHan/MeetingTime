@@ -16,7 +16,7 @@ import {
   handleGreenLight,
   handleGift
 } from "../modules/current_matching"
-import { getMyProfile } from "../modules/my_profile"
+import { getMyProfile, prevTabOn } from "../modules/my_profile"
 import { getInputWeekLabel, getInputDayLabel } from "../modules/utils"
 import { isEmpty } from "../modules/utils"
 
@@ -101,6 +101,7 @@ class Main extends Component {
       getCurrentMatching,
       handleGift,
       handleGreenLight,
+      prevTabOn,
       isGreenlightOn,
       isGiftOn,
       isCounterGiftOn
@@ -145,6 +146,7 @@ class Main extends Component {
           getCurrentMatching={getCurrentMatching}
           handleGift={handleGift}
           handleGreenLight={handleGreenLight}
+          prevTabOn={prevTabOn}
           time={this.state.time}
           myProfile={myProfile || emptyProfile}
           counterProfile={counterProfile}
@@ -170,7 +172,8 @@ const mapDispatchToProps = dispatch => {
     getCurrentMeeting: bindActionCreators(getCurrentMeeting, dispatch),
     getCurrentMatching: bindActionCreators(getCurrentMatching, dispatch),
     getJoinedUser: bindActionCreators(getJoinedUser, dispatch),
-    getCounterProfile: bindActionCreators(getCounterProfile, dispatch)
+    getCounterProfile: bindActionCreators(getCounterProfile, dispatch),
+    prevTabOn: bindActionCreators(prevTabOn, dispatch)
   }
 }
 
