@@ -8,8 +8,8 @@ from allauth.account.signals import user_signed_up
 
 
 class Meeting(models.Model):
-    open_time = models.DateTimeField(help_text="미팅 선착순이 열리는 시간")
     prev_meeting_last_result_time = models.DateTimeField(null=True, help_text="지난번 미팅매칭 프로세스가 종료되었던 시간")
+    open_time = models.DateTimeField(help_text="미팅 선착순이 열리는 시간")
     close_time = models.DateTimeField(help_text="미팅 선착순이 닫히는 시간")
     first_shuffle_time = models.DateTimeField(help_text="1번째 섞는 시간 / 즉, first met에서 second met으로 넘어가는 시간")
     second_shuffle_time = models.DateTimeField(help_text="2번째 섞는 시간 / 즉, second met에서 third met으로 넘어가는 시간")
@@ -105,9 +105,9 @@ class Company(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True)
-    image = models.ImageField(null=True, blank=True)
-    image_two = models.ImageField(null=True, blank=True)
-    image_three = models.ImageField(null=True, blank=True)
+    image_first = models.ImageField(null=True, blank=True)
+    image_second = models.ImageField(null=True, blank=True)
+    image_third = models.ImageField(null=True, blank=True)
     team_name = models.CharField(null=True, max_length=20)
     is_male = models.BooleanField(null=True)
     age_range = models.IntegerField(null=True, blank=True) #10, 20, 30, 40 예컨대 이런식
@@ -115,7 +115,7 @@ class Profile(models.Model):
     last_login_at = models.DateTimeField(default=timezone.now)
     team_introduce = models.TextField(blank=True, default="")
     last_intro_modified_at = models.DateTimeField(null=True, blank=True)
-    validated = models.BooleanField(default=False)
+    is_validated = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = '회원/팀정보(Profile)'
@@ -170,9 +170,9 @@ class JoinedUser(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     is_matched = models.BooleanField(default=False)
     rank = models.IntegerField(null=True, blank=True)
-    already_met_one = models.IntegerField(null=True, blank=True)
-    already_met_two = models.IntegerField(null=True, blank=True)
-    already_met_three = models.IntegerField(null=True, blank=True)
+    already_met_first = models.IntegerField(null=True, blank=True)
+    already_met_second = models.IntegerField(null=True, blank=True)
+    already_met_third = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = '미팅지원자 현황(JoinedUser)'

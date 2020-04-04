@@ -40,9 +40,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = (
-            "image",
-            "image_two",
-            "image_three",
+            "image_first",
+            "image_second",
+            "image_third",
             "is_male",
             "age_range",
             "created_at",
@@ -50,7 +50,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             "team_name",
             "team_introduce",
             "last_intro_modified_at",
-            "validated"
+            "is_validated"
         )
     def to_representation(self, instance):
         response = super().to_representation(instance)

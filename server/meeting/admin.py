@@ -20,7 +20,7 @@ class ProfileAdmin(admin.ModelAdmin):
         'is_male',
         'age_range',
         'company',
-        'validated',
+        'is_validated',
         'team_name',
         'team_introduce'
     ]
@@ -30,7 +30,7 @@ class ProfileAdmin(admin.ModelAdmin):
         'is_male',
         'age_range',
         'company',
-        'validated',
+        'is_validated',
         'team_name',
         'team_introduce'
     ]
