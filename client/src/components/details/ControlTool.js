@@ -63,6 +63,8 @@ class ControlTool extends Component {
         prevTargetTime = new Date(thirdShuffleTime).getTime()
         targetTime = new Date(lastResultTime).getTime()
         break
+      default:
+        break
     }
 
     return (

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import {
   CircularProgressbarWithChildren,
   buildStyles
 } from "react-circular-progressbar"
 import "react-circular-progressbar/dist/styles.css"
+import { isEmpty } from "../../modules/utils"
 
 export default function GreenlightButton(props) {
   const CALL_BUTTON_FILL_TERM = 1000
@@ -17,37 +18,26 @@ export default function GreenlightButton(props) {
     isGreenlightOn
   } = props
 
-  const gapSecondTotal = Math.floor(targetTime - prevTargetTime) || 100
+  const gapSecondTotal =
+    !isEmpty(targetTime) && !isEmpty(prevTargetTime)
+      ? targetTime - prevTargetTime
+      : 10000000000000
+  const progressTick = useCallback(() => {
+    const nowTime = new Date().getTime()
+    const isTimerNecessary = nowTime > prevTargetTime
+    const gapSecondPassedNew = Math.floor(nowTime - prevTargetTime) || 0
+    isTimerNecessary && setGapSecondPassed(gapSecondPassedNew)
+  }, [prevTargetTime])
 
-  useEffect(() => {
-    if (isGreenlightOn) {
-      setGapSecondPassed(gapSecondTotal)
-    } else {
-      if (gapSecondPassed <= gapSecondTotal) {
-        const nowTime = new Date().getTime()
-        const isTimerNecessary = nowTime > prevTargetTime
-        const gapSecondPassedNew = Math.floor(nowTime - prevTargetTime)
-        isTimerNecessary && setGapSecondPassed(gapSecondPassedNew)
-      }
-    }
-  }, [isGreenlightOn])
-
-  let timer = null
+  let timer = useRef(null)
   useEffect(() => {
     if (!isGreenlightOn) {
       if (gapSecondPassed <= gapSecondTotal) {
-        timer = setTimeout(() => {
-          const nowTime = new Date().getTime()
-          const isTimerNecessary = nowTime > prevTargetTime
-          const gapSecondPassedNew = Math.floor(nowTime - prevTargetTime) || 0
-          isTimerNecessary && setGapSecondPassed(gapSecondPassedNew)
-        }, CALL_BUTTON_FILL_TERM)
+        timer.current = setTimeout(progressTick, CALL_BUTTON_FILL_TERM)
       }
-      return () => {
-        clearTimeout(timer)
-      }
+      return () => clearTimeout(timer.current)
     }
-  }, [isGreenlightOn, gapSecondPassed])
+  }, [isGreenlightOn, gapSecondPassed, gapSecondTotal, progressTick])
 
   const getPassedTimeRatio = (passed, total) => {
     const ratio = Math.floor((passed / total) * 100)
