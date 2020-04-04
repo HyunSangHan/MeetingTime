@@ -32,9 +32,9 @@ class Main extends Component {
         },
         createdAt: null,
         id: null,
-        image: null,
-        imageTwo: null,
-        imageThree: null,
+        imageFirst: null,
+        imageSecond: null,
+        imageThird: null,
         isMale: null,
         lastIntroModifiedAt: null,
         lastLoginAt: null,
@@ -42,7 +42,7 @@ class Main extends Component {
         user: {
           username: null
         },
-        validated: false
+        isValidated: false
       }
     }
   }

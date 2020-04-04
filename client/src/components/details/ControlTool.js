@@ -79,7 +79,9 @@ class ControlTool extends Component {
                 {/* 대표사진 */}
                 <ExifOrientationImg
                   className="my-team"
-                  src={myProfile.image || require("../../images/noPhoto.jpg")}
+                  src={
+                    myProfile.imageFirst || require("../../images/noPhoto.jpg")
+                  }
                   alt="my_image"
                 />
               </Link>

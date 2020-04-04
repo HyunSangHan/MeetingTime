@@ -15,17 +15,17 @@ class MakeTeamButton extends Component {
         <div className="mt-4 mh-auto team-profile-img-warp">
           <ExifOrientationImg
             className="team-profile-img-small first-img"
-            src={myProfile.image || require("./../../images/noPhoto.jpg")}
+            src={myProfile.imageFirst || require("./../../images/noPhoto.jpg")}
             alt="first_user_image"
           />
           <ExifOrientationImg
             className="team-profile-img-small second-img"
-            src={myProfile.imageTwo || require("./../../images/noPhoto.jpg")}
+            src={myProfile.imageSecond || require("./../../images/noPhoto.jpg")}
             alt="second_user_image"
           />
           <ExifOrientationImg
             className="team-profile-img-small third-img"
-            src={myProfile.imageThree || require("./../../images/noPhoto.jpg")}
+            src={myProfile.imageThird || require("./../../images/noPhoto.jpg")}
             alt="third_user_image"
           />
         </div>

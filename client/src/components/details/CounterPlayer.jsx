@@ -34,7 +34,7 @@ class CounterPlayer extends Component {
               <ExifOrientationImg
                 className="user-image"
                 src={
-                  counterProfile.image || require("./../../images/noPhoto.jpg")
+                  counterProfile.imageFirst || require("./../../images/noPhoto.jpg")
                 }
                 alt="first_user_image"
               />
@@ -44,7 +44,7 @@ class CounterPlayer extends Component {
               <ExifOrientationImg
                 className="user-image"
                 src={
-                  counterProfile.imageTwo ||
+                  counterProfile.imageSecond ||
                   require("./../../images/noPhoto.jpg")
                 }
                 alt="second_user_image"
@@ -55,7 +55,7 @@ class CounterPlayer extends Component {
               <ExifOrientationImg
                 className="user-image"
                 src={
-                  counterProfile.imageThree ||
+                  counterProfile.imageThird ||
                   require("./../../images/noPhoto.jpg")
                 }
                 alt="third_user_image"

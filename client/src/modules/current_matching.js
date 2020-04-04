@@ -23,9 +23,9 @@ const initialState = {
     isGiftFemale: false,
     joinedMale: {
       profile: {
-        image: null,
-        imageTwo: null,
-        imageThree: null,
+        imageFirst: null,
+        imageSecond: null,
+        imageThird: null,
         isMale: null,
         ageRange: null,
         createdAt: null,
@@ -33,7 +33,7 @@ const initialState = {
         teamName: null,
         teamIntroduce: "",
         lastIntroModifiedAt: null,
-        validated: null,
+        isValidated: null,
         user: {
           username: null
         },
@@ -47,9 +47,9 @@ const initialState = {
     },
     joinedFemale: {
       profile: {
-        image: null,
-        imageTwo: null,
-        imageThree: null,
+        imageFirst: null,
+        imageSecond: null,
+        imageThird: null,
         isMale: null,
         ageRange: null,
         createdAt: null,
@@ -57,7 +57,7 @@ const initialState = {
         teamName: null,
         teamIntroduce: "",
         lastIntroModifiedAt: null,
-        validated: null,
+        isValidated: null,
         user: {
           username: null
         },
@@ -82,9 +82,9 @@ const initialState = {
     },
     createdAt: null,
     id: null,
-    image: null,
-    imageTwo: null,
-    imageThree: null,
+    imageFirst: null,
+    imageSecond: null,
+    imageThird: null,
     isMale: null,
     lastIntroModifiedAt: null,
     lastLoginAt: null,

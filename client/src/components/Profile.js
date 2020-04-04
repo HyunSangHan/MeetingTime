@@ -19,7 +19,7 @@ class Profile extends Component {
       emailValue: null,
       emailFront: null,
       code: null,
-      validationButtonClicked: false,
+      isValidationButtonClicked: false,
       companyArr: null
     }
   }
@@ -101,7 +101,7 @@ class Profile extends Component {
   onValidate() {
     const { code } = this.state
     this.setState({
-      validationButtonClicked: true
+      isValidationButtonClicked: true
     })
     this.props.validateEmail({
       code: code
@@ -127,12 +127,12 @@ class Profile extends Component {
   }
 
   render() {
-    const { history, myProfile, isLoginAlready, validated } = this.props
+    const { history, myProfile, isLoginAlready, isValidated } = this.props
     const {
       genderValue,
       ageValue,
       companyValue,
-      validationButtonClicked,
+      isValidationButtonClicked,
       companyArr
     } = this.state
 
@@ -231,16 +231,18 @@ class Profile extends Component {
                     })}
                 </select>
               </div>
-              {!this.props.sent ? (
+              {!this.props.isEmailSent ? (
                 <Fragment>
                   <button
                     className="SendButton Send"
                     type="button"
                     onClick={e => this.onSend(e)}
                   >
-                    {this.props.myProfile.validated ? "재인증하기" : "인증하기"}
+                    {this.props.myProfile.isValidated
+                      ? "재인증하기"
+                      : "인증하기"}
                   </button>
-                  {myProfile.validated && !validated && (
+                  {myProfile.isValidated && !isValidated && (
                     <div className="ErrorMessage font-blue font-notosan">
                       이미 {myProfile.company.name} 사내 메일계정으로 인증이
                       완료되었습니다.
@@ -264,13 +266,13 @@ class Profile extends Component {
                       인증
                     </button>
                   </div>
-                  {validated ? (
+                  {isValidated ? (
                     <div className="ErrorMessage font-blue font-notosan">
                       인증되었습니다
                     </div>
                   ) : (
                     <div className="ErrorMessage font-red font-notosan">
-                      {validationButtonClicked
+                      {isValidationButtonClicked
                         ? "인증에 실패했습니다"
                         : "이메일로 발송된 인증코드를 입력해주세요."}
                     </div>
@@ -279,7 +281,7 @@ class Profile extends Component {
               )}
             </form>
             <div className="FixedButton mt-4">
-              {!isEmpty(genderValue) && !isEmpty(ageValue) && validated ? (
+              {!isEmpty(genderValue) && !isEmpty(ageValue) && isValidated ? (
                 <button
                   className="SubmitButton WorkingButton"
                   onClick={this.handleSubmit}
@@ -318,8 +320,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => ({
   isLoginAlready: state.my_profile.isLoginAlready,
   myProfile: state.my_profile.myProfile,
-  sent: state.validation.sent,
-  validated: state.validation.validated
+  isEmailSent: state.validation.isEmailSent,
+  isValidated: state.validation.isValidated
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

@@ -24,9 +24,9 @@ class TeamProfileBody extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const {
-      image,
-      imageTwo,
-      imageThree,
+      imageFirst,
+      imageSecond,
+      imageThird,
       teamName,
       teamIntroduce
     } = nextProps.myProfile
@@ -36,9 +36,9 @@ class TeamProfileBody extends Component {
         previewFirst: null,
         previewSecond: null,
         previewThird: null,
-        imageFirstValue: image,
-        imageSecondValue: imageTwo,
-        imageThirdValue: imageThree,
+        imageFirstValue: imageFirst,
+        imageSecondValue: imageSecond,
+        imageThirdValue: imageThird,
         teamNameValue: teamName,
         teamIntroValue: teamIntroduce
       }
@@ -96,11 +96,11 @@ class TeamProfileBody extends Component {
       const formData = new FormData()
       const { updateMyProfile } = this.props
       isObject(imageFirstValue) &&
-        formData.append("image", imageFirstValue, imageFirstValue.name)
+        formData.append("imageFirst", imageFirstValue, imageFirstValue.name)
       isObject(imageSecondValue) &&
-        formData.append("imageTwo", imageSecondValue, imageSecondValue.name)
+        formData.append("imageSecond", imageSecondValue, imageSecondValue.name)
       isObject(imageThirdValue) &&
-        formData.append("imageThree", imageThirdValue, imageThirdValue.name)
+        formData.append("imageThird", imageThirdValue, imageThirdValue.name)
       !isEmpty(teamNameValue) && formData.append("teamName", teamNameValue)
       !isEmpty(teamIntroValue) &&
         formData.append("teamIntroduce", teamIntroValue)

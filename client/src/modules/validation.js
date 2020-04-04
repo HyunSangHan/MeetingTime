@@ -6,8 +6,8 @@ const VALIDATE_SUCCESS = `VALIDATE_SUCCESS`
 const VALIDATE_FAILURE = `VALIDATE_FAILURE`
 
 const initialState = {
-  sent: false,
-  validated: false
+  isEmailSent: false,
+  isValidated: false
 }
 
 export const sendEmail = payload => {
@@ -46,17 +46,17 @@ const reducer = (state = initialState, action) => {
     case SEND_EMAIL:
       return {
         ...state,
-        sent: true
+        isEmailSent: true
       }
     case VALIDATE_SUCCESS:
       return {
         ...state,
-        validated: true
+        isValidated: true
       }
     case VALIDATE_FAILURE:
       return {
         ...state,
-        validated: false
+        isValidated: false
       }
     default:
       return state

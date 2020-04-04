@@ -26,17 +26,17 @@ class TeamProfile extends Component {
         },
         createdAt: null,
         id: null,
-        image: null,
-        imageTwo: null,
-        imageThree: null,
-        isMale: false,
+        imageFirst: null,
+        imageSecond: null,
+        imageThird: null,
+        isMale: null,
         lastIntroModifiedAt: null,
         lastLoginAt: null,
         teamIntroduce: null,
         user: {
           username: null
         },
-        validated: false
+        isValidated: false
       }
     }
   }
