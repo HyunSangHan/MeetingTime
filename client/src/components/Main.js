@@ -12,7 +12,6 @@ import { getJoinedUser } from "../modules/join"
 import { getCurrentMeeting } from "../modules/current_meeting"
 import {
   getCurrentMatching,
-  getCounterProfile,
   handleGreenLight,
   handleGift
 } from "../modules/current_matching"
@@ -54,14 +53,12 @@ class Main extends Component {
       getCurrentMeeting,
       getCurrentMatching,
       getMyProfile,
-      getCounterProfile,
       getJoinedUser
     } = this.props
 
     isEmpty(isLoginAlready) && getMyProfile()
     getCurrentMeeting()
     getCurrentMatching()
-    getCounterProfile()
     if (!isJoinedAlready) {
       getJoinedUser()
     } else {
@@ -98,7 +95,6 @@ class Main extends Component {
       counterProfile,
       hasCounterProfile,
       getJoinedUser,
-      getCounterProfile,
       getCurrentMatching,
       handleGift,
       handleGreenLight,
@@ -132,7 +128,6 @@ class Main extends Component {
           ) : (
             <CounterPlayer
               myProfile={myProfile || emptyProfile}
-              getCounterProfile={getCounterProfile}
               handleGreenLight={handleGreenLight}
               handleGift={handleGift}
               counterProfile={counterProfile}
@@ -173,7 +168,6 @@ const mapDispatchToProps = dispatch => {
     getCurrentMeeting: bindActionCreators(getCurrentMeeting, dispatch),
     getCurrentMatching: bindActionCreators(getCurrentMatching, dispatch),
     getJoinedUser: bindActionCreators(getJoinedUser, dispatch),
-    getCounterProfile: bindActionCreators(getCounterProfile, dispatch),
     prevTabOn: bindActionCreators(prevTabOn, dispatch)
   }
 }

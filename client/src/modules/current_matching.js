@@ -76,21 +76,22 @@ const initialState = {
   isGiftOn: false,
   isCounterGiftOn: false,
   counterProfile: {
-    ageRange: null,
-    company: {
-      name: null
-    },
-    createdAt: null,
-    id: null,
     imageFirst: null,
     imageSecond: null,
     imageThird: null,
     isMale: null,
-    lastIntroModifiedAt: null,
+    ageRange: null,
+    createdAt: null,
     lastLoginAt: null,
-    teamIntroduce: null,
+    teamName: null,
+    teamIntroduce: "",
+    lastIntroModifiedAt: null,
+    isValidated: null,
     user: {
       username: null
+    },
+    company: {
+      name: null
     }
   }
 }
@@ -113,14 +114,31 @@ export const getCurrentMatching = () => {
         if (counterGiftOn) dispatch(createAction(COUNTER_GIFT_ON))
         dispatch(createAction(GET_CURRENT_MATCHING, response.data))
         dispatch(createAction(GET_CURRENT_MATCHING_SUCCESS))
+        dispatch(createAction(GET_COUNTER_PROFILE_SUCCESS))
+
+        isMale
+          ? dispatch(
+              createAction(
+                GET_COUNTER_PROFILE,
+                response.data.joinedFemale.profile
+              )
+            )
+          : dispatch(
+              createAction(
+                GET_COUNTER_PROFILE,
+                response.data.joinedMale.profile
+              )
+            )
       })
       .catch(err => {
         console.log(err + "not working (currentMatching)")
         dispatch(createAction(GET_CURRENT_MATCHING_FAILURE))
+        dispatch(createAction(GET_COUNTER_PROFILE_FAILURE))
       })
   }
 }
 
+// deprecated TODO: 추후 최종 결과 확인에서 로직상 필요없게 되면 삭제
 export const getCounterProfile = () => {
   return dispatch => {
     axios({
@@ -138,7 +156,6 @@ export const getCounterProfile = () => {
   }
 }
 
-//TODO: 추후 컴포넌트 state로 해결가능하게 될 수 있겠음
 export const handleGreenLight = payload => {
   return (dispatch, getState) => {
     axios({
@@ -155,8 +172,6 @@ export const handleGreenLight = payload => {
         } else {
           dispatch(createAction(GREEN_LIGHT_OFF))
         }
-
-        /// TODO: 프로미스 리턴 넣어줘야함
       })
       .catch(err => {
         console.log("not working (greenlight api) - " + err)
@@ -164,7 +179,6 @@ export const handleGreenLight = payload => {
   }
 }
 
-//TODO: 추후 컴포넌트 state로 해결가능하게 될 수 있겠음
 export const handleGift = payload => {
   return (dispatch, getState) => {
     axios({
