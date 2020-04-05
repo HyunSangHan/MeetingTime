@@ -456,9 +456,9 @@ class CounterProfile(APIView):
         if not request.user.is_anonymous:
             my_profile = request.user.profile
             current_meeting = Meeting.objects.all().order_by('meeting_time').last()
-            if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first() is not None:
-                current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
-            joined_user = JoinedUser.objects.filter(profile=my_profile, meeting=current_meeting).first()
+            if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').last() is not None:
+                current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').last()
+            joined_user = JoinedUser.objects.filter(profile=my_profile, meeting=current_meeting).last()
 
             if my_profile.is_male:
                 current_matching = Matching.objects.filter(joined_male=joined_user).last()
