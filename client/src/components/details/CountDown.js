@@ -6,54 +6,47 @@ import { getTimeNotification } from "../../modules/utils"
 class CountDown extends Component {
   constructor(props) {
     super(props)
+    const nowTime = new Date().getTime()
     this.state = {
-      gapSecond: 1
+      targetTime: nowTime,
+      nowTime: nowTime
     }
-    this.startTimer = this.startTimer.bind(this)
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const nowTime = new Date().getTime()
-    const targetTime = nextProps.time
-    const gapSecond = Math.floor((targetTime - nowTime) / 1000)
-
-    return {
-      gapSecond: gapSecond
+    if (nextProps.time !== prevState.targetTime) {
+      return {
+        targetTime: nextProps.time
+      }
     }
+    return null
   }
 
   componentDidMount() {
     this.startTimer()
   }
 
-  startTimer() {
-    this.setState(prevState => ({
-      time: prevState.time
-    }))
-    this.timer = setInterval(
-      () =>
-        this.setState(prevState => ({
-          ...prevState,
-          gapSecond: prevState.gapSecond - 1
-        })),
-      1000
-    )
-    this.ifTimer = setInterval(() => {
-      const { gapSecond } = this.state
-      if (gapSecond < 0) {
-        window.location.reload() //리프레시
-        this.timer && clearInterval(this.timer)
-        this.ifTimer && clearInterval(this.ifTimer)
+  componentWillUnmount() {
+    this.timer && clearInterval(this.timer)
+  }
+
+  startTimer = () => {
+    this.timer = setInterval(() => {
+      const { nowTime, targetTime } = this.state
+      if (nowTime < targetTime) {
+        this.setState({
+          nowTime: new Date().getTime()
+        })
+      } else {
+        clearInterval(this.timer)
+        window.location.reload() // TODO: 추후 socket 활용하면 이부분은 삭제가능
       }
     }, 1000)
   }
-  componentWillUnmount() {
-    this.timer && clearInterval(this.timer)
-    this.ifTimer && clearInterval(this.ifTimer)
-  }
 
   render() {
-    const { gapSecond } = this.state
+    const { targetTime, nowTime } = this.state
+    const gapSecond = Math.floor((targetTime - nowTime) / 1000)
 
     return (
       <Fragment>{gapSecond > 0 && getTimeNotification(gapSecond)}</Fragment>
