@@ -17,7 +17,7 @@ class Profile extends Component {
       ageValue: "default",
       companyValue: "default",
       emailValue: null,
-      emailFront: null,
+      emailID: null,
       code: null,
       isValidationButtonClicked: false,
       companyArr: null
@@ -28,20 +28,18 @@ class Profile extends Component {
     const { isLoginAlready, myProfile } = nextProps
     const { isMale, ageRange, company } = myProfile
     if (isLoginAlready && prevState.companyValue === "default") {
-      let gender = null
-      if (isEmpty(isMale)) {
-        gender = "default"
-      } else {
-        gender = isMale
-      }
-
-      let age = null
-      isEmpty(ageRange) ? (age = "default") : (age = ageRange)
-
+      let gender = "default"
+      !isEmpty(isMale) && (gender = isMale)
+      let age = "default"
+      !isEmpty(ageRange) && (age = ageRange)
+      let companyName = "default"
+      !isEmpty(company) &&
+        !isEmpty(company.name) &&
+        (companyName = company.name)
       return {
         genderValue: gender,
         ageValue: age,
-        companyValue: company.name
+        companyValue: companyName
       }
     }
     return null
@@ -78,20 +76,20 @@ class Profile extends Component {
   }
 
   onSend() {
-    const { emailFront, companyValue, companyArr } = this.state
-    let emailCompany
+    const { emailID, companyValue, companyArr } = this.state
+    let emailDomain
 
     companyArr.forEach(company => {
-      if (companyValue === company.name) emailCompany = company.domain
+      if (companyValue === company.name) emailDomain = company.domain
     })
 
-    if (!isEmpty(emailFront) && !isEmpty(emailCompany)) {
+    if (!isEmpty(emailID) && !isEmpty(emailDomain)) {
       this.props.sendEmail({
-        email: emailFront + emailCompany
+        email: emailID + emailDomain
       })
-      console.log(emailFront + emailCompany + "로 인증메일을 보냅니다.")
+      console.log(emailID + emailDomain + "로 인증메일을 보냅니다.")
       this.setState({
-        emailValue: emailFront + emailCompany
+        emailValue: emailID + emailDomain
       })
     } else {
       window.alert("이메일주소를 입력하세요.")
@@ -145,9 +143,9 @@ class Profile extends Component {
     isLoginAlready === false && history.push("/")
 
     const isStoreLoaded =
+      !isEmpty(isLoginAlready) &&
       !isEmpty(myProfile) &&
-      !isNaN(myProfile.ageRange) &&
-      !isEmpty(isLoginAlready)
+      !isNaN(myProfile.ageRange)
 
     return (
       <div className="frame bg-init-color">
@@ -215,11 +213,10 @@ class Profile extends Component {
               <div className="email-select">
                 <input
                   onChange={e => {
-                    this.setState({ emailFront: e.target.value })
+                    this.setState({ emailID: e.target.value })
                   }}
                   placeholder="입력"
                 ></input>
-                {/* <span id="EmailAt">@</span> */}
                 <select
                   name="companyValue"
                   className="ml-2"

@@ -28,7 +28,7 @@ export const validateEmail = payload => {
   return dispatch => {
     axios({
       method: "post",
-      url: "/validate/",
+      url: "/validation/",
       data: payload
     })
       .then(() => {
