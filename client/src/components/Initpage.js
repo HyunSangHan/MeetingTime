@@ -67,19 +67,6 @@ class Initpage extends Component {
     }
   }
 
-  kakaoLogout = () => {
-    window.Kakao.Auth.logout(function(data) {
-      console.log(data)
-    })
-    axios
-      .get("/logout")
-      .then(response => {
-        console.log("로그아웃 완료")
-        window.location.reload()
-      })
-      .catch(err => console.log(err))
-  }
-
   blockJoin = bool => () => {
     const { history, isLoginAlready } = this.props
     if (isLoginAlready) {

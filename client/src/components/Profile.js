@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react"
-import { getMyProfile, updateMyProfile } from "../modules/my_profile"
+import { getMyProfile, updateMyProfile, logout } from "../modules/my_profile"
 import { sendEmail, validateEmail } from "../modules/validation"
 import "../css/Profile.scss"
 import "../App.css"
@@ -127,7 +127,13 @@ class Profile extends Component {
   }
 
   render() {
-    const { history, myProfile, isLoginAlready, isValidated } = this.props
+    const {
+      history,
+      myProfile,
+      logout,
+      isLoginAlready,
+      isValidated
+    } = this.props
     const {
       genderValue,
       ageValue,
@@ -297,6 +303,9 @@ class Profile extends Component {
                   적용하기
                 </button>
               )}
+              <div className="logout" onClick={logout}>
+                로그아웃
+              </div>
             </div>
           </div>
         ) : (
@@ -312,6 +321,7 @@ const mapDispatchToProps = dispatch => {
     dispatch,
     getMyProfile: bindActionCreators(getMyProfile, dispatch),
     updateMyProfile: bindActionCreators(updateMyProfile, dispatch),
+    logout: bindActionCreators(logout, dispatch),
     sendEmail: bindActionCreators(sendEmail, dispatch),
     validateEmail: bindActionCreators(validateEmail, dispatch)
   }

@@ -146,15 +146,10 @@
 }
 
 .FixedButton {
-  display: -webkit-flex !important;
-  display: -ms-flexbox !important;
-  display: flex !important;
-  justify-content: center;
-
+  padding-bottom: 20px;
   .SubmitButton {
     width: 100%;
     max-width: 800px;
-    margin-bottom: 20px;
     height: 52px;
     border: 0;
     border-radius: 12px;
@@ -168,6 +163,16 @@
     color: #ffffff;
     bottom: 20px;
     align-items: center;
+  }
+
+  .logout {
+    margin: 10px auto;
+    text-align: center;
+    text-decoration: underline;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 

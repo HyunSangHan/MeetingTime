@@ -64,6 +64,21 @@ export const updateMyProfile = payload => {
   }
 }
 
+export const logout = () => {
+  return dispatch => {
+    axios({
+      method: "get",
+      url: "/logout"
+    })
+      .then(() => {
+        dispatch(createAction(LOGOUT_SUCCESS))
+      })
+      .catch(err => {
+        console.log("not working (logout) - " + err)
+      })
+  }
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     // TODO: NEW_TAB_ON과 PREV_TAB_ON은 나중에 하나로 합쳐도 되겠음 파라미터만 다르게 하고
