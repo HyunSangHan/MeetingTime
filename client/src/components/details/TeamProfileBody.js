@@ -17,28 +17,34 @@ class TeamProfileBody extends Component {
       previewSecond: null,
       previewThird: null,
       teamNameValue: null,
-      teamIntroValue: null
+      teamIntroValue: null,
+      isUpdatedNow: false
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps, prevState) {
     const {
-      image,
-      imageTwo,
-      imageThree,
+      imageFirst,
+      imageSecond,
+      imageThird,
       teamName,
       teamIntroduce
     } = nextProps.myProfile
-    this.setState({
-      previewFirst: null,
-      previewSecond: null,
-      previewThird: null,
-      imageFirstValue: image || null,
-      imageSecondValue: imageTwo || null,
-      imageThirdValue: imageThree || null,
-      teamNameValue: teamName || null,
-      teamIntroValue: teamIntroduce || null
-    })
+    if (prevState.clickedTab !== nextProps.clickedTab) {
+      return {
+        clickedTab: nextProps.clickedTab,
+        previewFirst: null,
+        previewSecond: null,
+        previewThird: null,
+        imageFirstValue: imageFirst,
+        imageSecondValue: imageSecond,
+        imageThirdValue: imageThird,
+        teamNameValue: teamName,
+        teamIntroValue: teamIntroduce
+      }
+    } else {
+      return null
+    }
   }
 
   //텍스트 수정 관련 메서드
@@ -90,25 +96,29 @@ class TeamProfileBody extends Component {
       const formData = new FormData()
       const { updateMyProfile } = this.props
       isObject(imageFirstValue) &&
-        formData.append("image", imageFirstValue, imageFirstValue.name)
+        formData.append("imageFirst", imageFirstValue, imageFirstValue.name)
       isObject(imageSecondValue) &&
-        formData.append("imageTwo", imageSecondValue, imageSecondValue.name)
+        formData.append("imageSecond", imageSecondValue, imageSecondValue.name)
       isObject(imageThirdValue) &&
-        formData.append("imageThree", imageThirdValue, imageThirdValue.name)
+        formData.append("imageThird", imageThirdValue, imageThirdValue.name)
       !isEmpty(teamNameValue) && formData.append("teamName", teamNameValue)
       !isEmpty(teamIntroValue) &&
         formData.append("teamIntroduce", teamIntroValue)
 
       updateMyProfile(formData)
-      if (this.props.clickedTab === "new") alert("그룹이 생성되었습니다.")
-      else if (this.props.clickedTab === "prev")
+      if (this.state.clickedTab === "new") alert("그룹이 생성되었습니다.")
+      else if (this.state.clickedTab === "prev")
         alert("그룹정보가 업데이트 되었습니다.")
+      this.setState({
+        isUpdatedNow: true
+      })
     } else {
       alert("입력을 완료해주세요.")
     }
   }
 
   render() {
+    const { myProfile, currentMeeting } = this.props
     const {
       teamNameValue,
       teamIntroValue,
@@ -117,8 +127,20 @@ class TeamProfileBody extends Component {
       previewThird,
       imageFirstValue,
       imageSecondValue,
-      imageThirdValue
+      imageThirdValue,
+      isUpdatedNow
     } = this.state
+
+    let isNecessaryToUpdate
+    if (!isEmpty(myProfile.createdAt)) {
+      const lastTeamModifiedAt = new Date(myProfile.lastIntroModifiedAt)
+      const lastShuffledAt = new Date(currentMeeting.prevMeetingLastResultTime)
+      if (isEmpty(lastTeamModifiedAt)) {
+        isNecessaryToUpdate = true
+      } else {
+        isNecessaryToUpdate = lastTeamModifiedAt < lastShuffledAt
+      }
+    }
 
     return (
       <div className="team-container">
@@ -126,7 +148,7 @@ class TeamProfileBody extends Component {
           <div className="team-container title-imgs">
             <div className="title font-notosan">
               팀 사진
-              {!this.props.myProfile.createdAt && (
+              {isEmpty(myProfile.createdAt) && (
                 <span className="title-noti font-notosan ml-2">
                   * 멤버수는 본인을 포함, 3명을 기본으로 합니다.
                 </span>
@@ -189,7 +211,25 @@ class TeamProfileBody extends Component {
                 placeholder="30자 이내로 작성해주세요"
               />
             </div>
-
+            {!isEmpty(myProfile.lastIntroModifiedAt) &&
+              isNecessaryToUpdate &&
+              !isUpdatedNow && (
+                <div className="font-red font-notosan">
+                  업데이트 필요(마지막 수정일 :{" "}
+                  {JSON.stringify(myProfile.lastIntroModifiedAt)
+                    .slice(1, -1)
+                    .split("T", 1)}
+                  )
+                </div>
+              )}
+            {!isEmpty(myProfile.lastIntroModifiedAt) && !isNecessaryToUpdate && (
+              <div className="font-blue font-notosan">
+                마지막 수정일 :{" "}
+                {JSON.stringify(myProfile.lastIntroModifiedAt)
+                  .slice(1, -1)
+                  .split("T", 1)}
+              </div>
+            )}
             <div className="ButtonWrap">
               {(previewFirst && previewSecond && previewThird) ||
               (imageFirstValue && imageSecondValue && imageThirdValue) ? (
@@ -197,7 +237,7 @@ class TeamProfileBody extends Component {
                   className="SubmitButton WorkingButton mt-1"
                   onClick={this.handleSubmit}
                 >
-                  {this.props.clickedTab === "new"
+                  {this.state.clickedTab === "new"
                     ? "그룹만들기"
                     : "그룹정보 업데이트"}
                 </button>

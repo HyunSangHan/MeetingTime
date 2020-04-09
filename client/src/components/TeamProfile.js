@@ -5,6 +5,7 @@ import {
   newTabOn,
   prevTabOn
 } from "../modules/my_profile"
+import { getCurrentMeeting } from "../modules/current_meeting"
 import "../css/Profile.scss"
 import "../App.css"
 import Header from "./details/Header"
@@ -12,6 +13,7 @@ import TwoTab from "./details/TwoTab"
 import TeamProfileBody from "./details/TeamProfileBody"
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
+import { isEmpty } from "../modules/utils"
 
 class TeamProfile extends Component {
   constructor(props) {
@@ -24,23 +26,35 @@ class TeamProfile extends Component {
         },
         createdAt: null,
         id: null,
-        image: null,
-        imageTwo: null,
-        imageThree: null,
-        isMale: false,
+        imageFirst: null,
+        imageSecond: null,
+        imageThird: null,
+        isMale: null,
         lastIntroModifiedAt: null,
         lastLoginAt: null,
         teamIntroduce: null,
         user: {
           username: null
         },
-        validated: false
+        isValidated: false
       }
     }
   }
 
   componentDidMount() {
-    this.props.getMyProfile()
+    const {
+      isLoginAlready,
+      getMyProfile,
+      getCurrentMeeting,
+      currentMeeting
+    } = this.props
+    isEmpty(isLoginAlready) && getMyProfile()
+
+    const isMeetingLoaded =
+      !isEmpty(currentMeeting) && !isEmpty(currentMeeting.openTime)
+
+    isEmpty(isLoginAlready) && getMyProfile()
+    !isMeetingLoaded && getCurrentMeeting()
   }
 
   render() {
@@ -48,12 +62,18 @@ class TeamProfile extends Component {
       getMyProfile,
       updateMyProfile,
       myProfile,
+      currentMeeting,
       clickedTab,
       newTabOn,
-      prevTabOn
+      prevTabOn,
+      isLoginAlready,
+      history
     } = this.props
     const { emptyProfile } = this.state
     const action = this.props.clickedTab
+
+    isLoginAlready === false && history.push("/")
+
     return (
       <div className="frame-scrollable bg-init-color">
         <Header content={"미팅 그룹 생성"} />
@@ -68,6 +88,7 @@ class TeamProfile extends Component {
           getMyProfile={getMyProfile}
           updateMyProfile={updateMyProfile}
           myProfile={action === "prev" ? myProfile : emptyProfile}
+          currentMeeting={currentMeeting}
           clickedTab={clickedTab}
         />
       </div>
@@ -80,6 +101,7 @@ const mapDispatchToProps = dispatch => {
     dispatch,
     getMyProfile: bindActionCreators(getMyProfile, dispatch),
     updateMyProfile: bindActionCreators(updateMyProfile, dispatch),
+    getCurrentMeeting: bindActionCreators(getCurrentMeeting, dispatch),
     newTabOn: bindActionCreators(newTabOn, dispatch),
     prevTabOn: bindActionCreators(prevTabOn, dispatch)
   }
@@ -88,6 +110,7 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => ({
   isLoginAlready: state.my_profile.isLoginAlready,
   myProfile: state.my_profile.myProfile,
+  currentMeeting: state.current_meeting.currentMeeting,
   clickedTab: state.my_profile.clickedTab
 })
 

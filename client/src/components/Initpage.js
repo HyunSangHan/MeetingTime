@@ -20,12 +20,13 @@ class Initpage extends Component {
   }
 
   componentDidMount() {
-    try {
-      !this.props.isLoginAlready &&
+    if (!this.props.isLoginAlready) {
+      try {
         window.Kakao.init(process.env.REACT_APP_KAKAO_JAVSCRIPT_SDK_KEY)
-    } catch (error) {
-      console.log(error)
-      window.location.reload()
+      } catch (error) {
+        console.log(error)
+        window.location.reload()
+      }
     }
   }
 
@@ -60,23 +61,10 @@ class Initpage extends Component {
     })
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props !== nextProps) {
-      this.setState({ isLoading: false })
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return {
+      isLoading: false
     }
-  }
-
-  kakaoLogout = () => {
-    window.Kakao.Auth.logout(function(data) {
-      console.log(data)
-    })
-    axios
-      .get("/logout")
-      .then(response => {
-        console.log("로그아웃 완료")
-        window.location.reload()
-      })
-      .catch(err => console.log(err))
   }
 
   blockJoin = bool => () => {

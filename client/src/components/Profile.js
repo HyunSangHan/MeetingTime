@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react"
-import { getMyProfile, updateMyProfile } from "../modules/my_profile"
-import { sendEmail, validateEmail } from "../modules/email"
+import { getMyProfile, updateMyProfile, logout } from "../modules/my_profile"
+import { sendEmail, validateEmail } from "../modules/validation"
 import "../css/Profile.scss"
 import "../App.css"
 import Header from "./details/Header"
@@ -13,63 +13,94 @@ class Profile extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      genderValue: "default",
       ageValue: "default",
       companyValue: "default",
-      emailFront: null,
-      code: null
+      emailValue: null,
+      emailID: null,
+      code: null,
+      isValidationButtonClicked: false,
+      companyArr: null
     }
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { isLoginAlready, myProfile } = nextProps
+    const { isMale, ageRange, company } = myProfile
+    if (isLoginAlready && prevState.companyValue === "default") {
+      let gender = "default"
+      !isEmpty(isMale) && (gender = isMale)
+      let age = "default"
+      !isEmpty(ageRange) && (age = ageRange)
+      let companyName = "default"
+      !isEmpty(company) &&
+        !isEmpty(company.name) &&
+        (companyName = company.name)
+      return {
+        genderValue: gender,
+        ageValue: age,
+        companyValue: companyName
+      }
+    }
+    return null
+  }
+
   componentDidMount() {
-    this.props.getMyProfile()
+    const { isLoginAlready, getMyProfile } = this.props
+    isEmpty(isLoginAlready) && getMyProfile()
+
+    fetch("/company_registration/")
+      .then(response => {
+        return response.json()
+      })
+      .then(response => {
+        this.setState({
+          companyArr: response
+        })
+      })
+      .catch(err => console.log(err))
   }
 
   handleInputChange = event => {
     let { value, name } = event.target
-    if (value === "10대") {
-      value = 10
-    } else if (value === "20대") {
-      value = 20
-    } else if (value === "30대") {
-      value = 30
-    } else if (value === "40대") {
-      value = 40
+
+    if (value === "남자") {
+      value = true
+    } else if (value === "여자") {
+      value = false
     }
+
     this.setState({
       [name]: value
     })
   }
 
   onSend() {
-    const { emailFront, companyValue } = this.state
-    let emailCompany
-    switch (
-      companyValue //테스트용임
-    ) {
-      case "네이버":
-        emailCompany = "@navercorp.com"
-        break
-      case "삼성":
-        emailCompany = "@samsung.com"
-        break
-      case "멋쟁이사자처럼":
-        emailCompany = "@likelion.org"
-        break
-      case "구글":
-        emailCompany = "@google.com"
-        break
-      default:
-        emailCompany = "[등록되지 않은 회사입니다!]"
-        break
-    }
-    this.props.sendEmail({
-      email: emailFront + emailCompany
+    const { emailID, companyValue, companyArr } = this.state
+    let emailDomain
+
+    companyArr.forEach(company => {
+      if (companyValue === company.name) emailDomain = company.domain
     })
-    console.log(emailFront + emailCompany + "로 인증메일을 보냅니다.")
+
+    if (!isEmpty(emailID) && !isEmpty(emailDomain)) {
+      this.props.sendEmail({
+        email: emailID + emailDomain
+      })
+      console.log(emailID + emailDomain + "로 인증메일을 보냅니다.")
+      this.setState({
+        emailValue: emailID + emailDomain
+      })
+    } else {
+      window.alert("이메일주소를 입력하세요.")
+    }
   }
 
   onValidate() {
     const { code } = this.state
+    this.setState({
+      isValidationButtonClicked: true
+    })
     this.props.validateEmail({
       code: code
     })
@@ -77,33 +108,44 @@ class Profile extends Component {
 
   handleSubmit = event => {
     const { history, updateMyProfile } = this.props
-    const { ageValue, companyValue } = this.state
+    const { genderValue, ageValue, companyValue, emailValue } = this.state
     event.preventDefault()
-    updateMyProfile({ ageRange: ageValue, company: companyValue })
+    !isEmpty(genderValue) &&
+      !isEmpty(ageValue) &&
+      !isEmpty(companyValue) &&
+      !isEmpty(emailValue) &&
+      updateMyProfile({
+        isMale: genderValue,
+        ageRange: ageValue,
+        company: companyValue,
+        email: emailValue
+      })
     window.alert("프로필 수정이 완료되었습니다.")
     history.push("/")
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { myProfile } = nextProps
-    this.setState(prevState => {
-      if (prevState.companyValue === "default") {
-        return {
-          ageValue: myProfile.ageRange,
-          companyValue: myProfile.company.name
-        }
-      }
-    })
-  }
-
   render() {
-    const { myProfile, isLoginAlready } = this.props
-    const { ageValue, companyValue } = this.state
+    const {
+      history,
+      myProfile,
+      logout,
+      isLoginAlready,
+      isValidated
+    } = this.props
+    const {
+      genderValue,
+      ageValue,
+      companyValue,
+      isValidationButtonClicked,
+      companyArr
+    } = this.state
+
+    isLoginAlready === false && history.push("/")
 
     const isStoreLoaded =
+      !isEmpty(isLoginAlready) &&
       !isEmpty(myProfile) &&
-      !isNaN(myProfile.ageRange) &&
-      !isEmpty(isLoginAlready)
+      !isNaN(myProfile.ageRange)
 
     return (
       <div className="frame bg-init-color">
@@ -117,9 +159,27 @@ class Profile extends Component {
               encType="multipart/form-data"
             >
               <div className="title">성별</div>
-              <div className="not-change Gender">
-                <p>{myProfile.isMale ? "남자" : "여자"}</p>
-              </div>
+              {isEmpty(myProfile.isMale) ? (
+                <select
+                  name="genderValue"
+                  value={
+                    genderValue === "default"
+                      ? genderValue
+                      : genderValue
+                      ? "남자"
+                      : "여자"
+                  }
+                  onChange={this.handleInputChange}
+                >
+                  <option value="default"> - 선택 - </option>
+                  <option value="남자">남자</option>
+                  <option value="여자">여자</option>
+                </select>
+              ) : (
+                <div className="not-change Gender">
+                  <p>{myProfile.isMale ? "남자" : "여자"}</p>
+                </div>
+              )}
               <div className="title">연령대</div>
               <select
                 name="ageValue"
@@ -140,20 +200,23 @@ class Profile extends Component {
                 onChange={this.handleInputChange}
               >
                 <option value="default"> - 선택 - </option>
-                <option value="네이버">네이버</option>
-                <option value="삼성">삼성</option>
-                <option value="멋쟁이사자처럼">멋쟁이사자처럼</option>
-                <option value="구글">구글</option>
+                {companyArr &&
+                  Array.from(companyArr).map(company => {
+                    return (
+                      <option value={company.name} key={company.id}>
+                        {company.name}
+                      </option>
+                    )
+                  })}
               </select>
               <div className="title">이메일</div>
               <div className="email-select">
                 <input
                   onChange={e => {
-                    this.setState({ emailFront: e.target.value })
+                    this.setState({ emailID: e.target.value })
                   }}
                   placeholder="입력"
                 ></input>
-                {/* <span id="EmailAt">@</span> */}
                 <select
                   name="companyValue"
                   className="ml-2"
@@ -161,21 +224,33 @@ class Profile extends Component {
                   onChange={this.handleInputChange}
                 >
                   <option value="default"> - </option>
-                  <option value="네이버">@navercorp.com</option>
-                  <option value="삼성">@samsung.com</option>
-                  <option value="멋쟁이사자처럼">@likelion.org</option>
-                  <option value="구글">@google.com</option>
+                  {companyArr &&
+                    Array.from(companyArr).map(company => {
+                      return (
+                        <option value={company.name} key={company.id}>
+                          {company.domain}
+                        </option>
+                      )
+                    })}
                 </select>
               </div>
-              {!this.props.sent ? (
+              {!this.props.isEmailSent ? (
                 <Fragment>
                   <button
                     className="SendButton Send"
                     type="button"
                     onClick={e => this.onSend(e)}
                   >
-                    인증하기
+                    {this.props.myProfile.isValidated
+                      ? "재인증하기"
+                      : "인증하기"}
                   </button>
+                  {myProfile.isValidated && !isValidated && (
+                    <div className="ErrorMessage font-blue font-notosan">
+                      이미 {myProfile.company.name} 사내 메일계정으로 인증이
+                      완료되었습니다.
+                    </div>
+                  )}
                 </Fragment>
               ) : (
                 <Fragment>
@@ -194,20 +269,22 @@ class Profile extends Component {
                       인증
                     </button>
                   </div>
-                  {this.props.validated ? (
-                    <div className="ErrorMessage" style={{ color: "blue" }}>
+                  {isValidated ? (
+                    <div className="ErrorMessage font-blue font-notosan">
                       인증되었습니다
                     </div>
                   ) : (
-                    <div className="ErrorMessage" style={{ color: "red" }}>
-                      인증되지 않았습니다
+                    <div className="ErrorMessage font-red font-notosan">
+                      {isValidationButtonClicked
+                        ? "인증에 실패했습니다"
+                        : "이메일로 발송된 인증코드를 입력해주세요."}
                     </div>
                   )}
                 </Fragment>
               )}
             </form>
             <div className="FixedButton mt-4">
-              {this.props.validated ? (
+              {!isEmpty(genderValue) && !isEmpty(ageValue) && isValidated ? (
                 <button
                   className="SubmitButton WorkingButton"
                   onClick={this.handleSubmit}
@@ -223,6 +300,9 @@ class Profile extends Component {
                   적용하기
                 </button>
               )}
+              <div className="logout" onClick={logout}>
+                로그아웃
+              </div>
             </div>
           </div>
         ) : (
@@ -238,6 +318,7 @@ const mapDispatchToProps = dispatch => {
     dispatch,
     getMyProfile: bindActionCreators(getMyProfile, dispatch),
     updateMyProfile: bindActionCreators(updateMyProfile, dispatch),
+    logout: bindActionCreators(logout, dispatch),
     sendEmail: bindActionCreators(sendEmail, dispatch),
     validateEmail: bindActionCreators(validateEmail, dispatch)
   }
@@ -246,8 +327,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => ({
   isLoginAlready: state.my_profile.isLoginAlready,
   myProfile: state.my_profile.myProfile,
-  sent: state.email.sent,
-  validated: state.email.validated
+  isEmailSent: state.validation.isEmailSent,
+  isValidated: state.validation.isValidated
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

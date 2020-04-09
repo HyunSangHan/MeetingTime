@@ -23,23 +23,23 @@ from django.conf import settings
 
 router = routers.DefaultRouter()
 router.register('meeting_info', views.MeetingInfoView, 'meeting_info')
+router.register('company_registration', views.CompanyRegistrationView, 'company_registration')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('join/', views.Join.as_view()),
-    path('current_meeting/', views.CurrentMeeting.as_view()),
-    path('counter_profile/', views.CounterProfile.as_view()),
-    path('rest-auth/', include('rest_auth.urls')),
-    path('rest-auth/registration/', include('rest_auth.registration.urls')),
-    path('logout/', views.logout, name='logout'),
-    path('', include(router.urls)),
-    path('profile/', views.CurrentProfile.as_view()),
-    path('email/', views.Email.as_view()),
-    path('validate/', views.SentValidation.as_view()),
-    path('company/', views.CurrentCompany.as_view()),
-    path('current_matching/', views.CurrentMatching.as_view())
+    path('api/join/', views.Join.as_view()),
+    path('api/current_meeting/', views.CurrentMeeting.as_view()),
+    path('api/counter_profile/', views.CounterProfile.as_view()),
+    path('api/rest-auth/', include('rest_auth.urls')),
+    path('api/rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('api/logout/', views.logout, name='logout'),
+    path('api/', include(router.urls)),
+    path('api/profile/', views.MyProfile.as_view()),
+    path('api/email/', views.Email.as_view()),
+    path('api/validation/', views.Validation.as_view()),
+    path('api/current_matching/', views.CurrentMatching.as_view())
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [
-    path('rest-auth/kakao/', views.KakaoLogin.as_view())
+    path('api/rest-auth/kakao/', views.KakaoLogin.as_view())
 ]

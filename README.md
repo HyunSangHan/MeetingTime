@@ -50,9 +50,9 @@ This is a web application for helping workers to make meeting chance.
 - CurrentMeeting
 - Join
 - CounterProfile
-- CurrentProfile
+- MyProfile
 - Company
-- Email, SentValidation
+- Email, Validation
 - success_matching
 - KakaoLogin, logout
 

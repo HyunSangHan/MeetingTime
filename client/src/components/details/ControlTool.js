@@ -7,6 +7,10 @@ import CountDown from "./CountDown"
 import GreenlightButton from "./GreenlightButton"
 
 class ControlTool extends Component {
+  componentDidMount() {
+    this.props.prevTabOn()
+  }
+
   handleGift = () => {
     const { handleGift, myProfile, isGiftOn } = this.props
     if (isGiftOn) {
@@ -37,7 +41,8 @@ class ControlTool extends Component {
       closeTime,
       firstShuffleTime,
       secondShuffleTime,
-      thirdShuffleTime
+      thirdShuffleTime,
+      lastResultTime
     } = currentMeeting
     let prevTargetTime = null
     let targetTime = null
@@ -56,7 +61,9 @@ class ControlTool extends Component {
         break
       case 4:
         prevTargetTime = new Date(thirdShuffleTime).getTime()
-        targetTime = new Date(thirdShuffleTime).getTime() // TODO: fourth 추가해서 수정필요
+        targetTime = new Date(lastResultTime).getTime()
+        break
+      default:
         break
     }
 
@@ -72,7 +79,9 @@ class ControlTool extends Component {
                 {/* 대표사진 */}
                 <ExifOrientationImg
                   className="my-team"
-                  src={myProfile.image || require("../../images/noPhoto.jpg")}
+                  src={
+                    myProfile.imageFirst || require("../../images/noPhoto.jpg")
+                  }
                   alt="my_image"
                 />
               </Link>

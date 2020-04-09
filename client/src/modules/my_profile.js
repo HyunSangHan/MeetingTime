@@ -4,9 +4,9 @@ import { createAction } from "./utils"
 const initialState = {
   isLoginAlready: null,
   myProfile: {
-    image: null,
-    imageTwo: null,
-    imageThree: null,
+    imageFirst: null,
+    imageSecond: null,
+    imageThird: null,
     isMale: null,
     ageRange: null,
     createdAt: null,
@@ -14,7 +14,7 @@ const initialState = {
     teamName: null,
     teamIntroduce: "",
     lastIntroModifiedAt: null,
-    validated: false,
+    isValidated: false,
     user: { username: null },
     company: { name: null }
   },
@@ -60,6 +60,21 @@ export const updateMyProfile = payload => {
       })
       .catch(err => {
         console.log("not working (updateMyProfile) - " + err)
+      })
+  }
+}
+
+export const logout = () => {
+  return dispatch => {
+    axios({
+      method: "get",
+      url: "/logout"
+    })
+      .then(() => {
+        dispatch(createAction(LOGOUT_SUCCESS))
+      })
+      .catch(err => {
+        console.log("not working (logout) - " + err)
       })
   }
 }

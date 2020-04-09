@@ -15,9 +15,9 @@ const initialState = {
       },
       createdAt: null,
       id: null,
-      image: null,
-      imageTwo: null,
-      imageThree: null,
+      imageFirst: null,
+      imageSecond: null,
+      imageThird: null,
       isMale: false,
       lastIntroModifiedAt: null,
       lastLoginAt: null,
@@ -25,7 +25,7 @@ const initialState = {
       user: {
         username: null
       },
-      validated: false
+      isValidated: false
     },
     rank: null,
     isMatched: null,

@@ -12,12 +12,12 @@ import { getJoinedUser } from "../modules/join"
 import { getCurrentMeeting } from "../modules/current_meeting"
 import {
   getCurrentMatching,
-  getCounterProfile,
   handleGreenLight,
   handleGift
 } from "../modules/current_matching"
-import { getMyProfile } from "../modules/my_profile"
+import { getMyProfile, prevTabOn } from "../modules/my_profile"
 import { getInputWeekLabel, getInputDayLabel } from "../modules/utils"
+import { isEmpty } from "../modules/utils"
 
 class Main extends Component {
   constructor(props) {
@@ -31,17 +31,17 @@ class Main extends Component {
         },
         createdAt: null,
         id: null,
-        image: null,
-        imageTwo: null,
-        imageThree: null,
-        isMale: false,
+        imageFirst: null,
+        imageSecond: null,
+        imageThird: null,
+        isMale: null,
         lastIntroModifiedAt: null,
         lastLoginAt: null,
         teamIntroduce: null,
         user: {
           username: null
         },
-        validated: false
+        isValidated: false
       }
     }
   }
@@ -53,13 +53,12 @@ class Main extends Component {
       getCurrentMeeting,
       getCurrentMatching,
       getMyProfile,
-      getCounterProfile,
       getJoinedUser
     } = this.props
+
+    isEmpty(isLoginAlready) && getMyProfile()
     getCurrentMeeting()
     getCurrentMatching()
-    getMyProfile()
-    getCounterProfile()
     if (!isJoinedAlready) {
       getJoinedUser()
     } else {
@@ -76,31 +75,36 @@ class Main extends Component {
     }, TIMEOUT_LIMIT)
   }
 
-  componentWillReceiveProps = nextProps => {
+  static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.isJoinedAlready) {
-      this.setState({
+      return {
         loading: false
-      })
+      }
     }
+    return null
   }
 
   render() {
     const {
+      history,
       myProfile,
+      isLoginAlready,
       currentMeeting,
       hasCurrentMatching,
       currentMatching,
       counterProfile,
       hasCounterProfile,
       getJoinedUser,
-      getCounterProfile,
       getCurrentMatching,
       handleGift,
       handleGreenLight,
+      prevTabOn,
       isGreenlightOn,
       isGiftOn,
       isCounterGiftOn
     } = this.props
+
+    isLoginAlready === false && history.push("/")
 
     const emptyProfile = this.state
     const meetingWeek = getInputWeekLabel(currentMeeting.meetingTime)
@@ -124,7 +128,6 @@ class Main extends Component {
           ) : (
             <CounterPlayer
               myProfile={myProfile || emptyProfile}
-              getCounterProfile={getCounterProfile}
               handleGreenLight={handleGreenLight}
               handleGift={handleGift}
               counterProfile={counterProfile}
@@ -139,6 +142,7 @@ class Main extends Component {
           getCurrentMatching={getCurrentMatching}
           handleGift={handleGift}
           handleGreenLight={handleGreenLight}
+          prevTabOn={prevTabOn}
           time={this.state.time}
           myProfile={myProfile || emptyProfile}
           counterProfile={counterProfile}
@@ -164,7 +168,7 @@ const mapDispatchToProps = dispatch => {
     getCurrentMeeting: bindActionCreators(getCurrentMeeting, dispatch),
     getCurrentMatching: bindActionCreators(getCurrentMatching, dispatch),
     getJoinedUser: bindActionCreators(getJoinedUser, dispatch),
-    getCounterProfile: bindActionCreators(getCounterProfile, dispatch)
+    prevTabOn: bindActionCreators(prevTabOn, dispatch)
   }
 }
 

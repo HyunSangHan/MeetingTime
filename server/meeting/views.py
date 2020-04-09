@@ -55,26 +55,26 @@ def match_example():
     for i in range(len(joined_users_male)):
         if trial_time == 1:
             Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=trial_time)
-            joined_users_male[i].already_met_one = joined_users_female[numbers[0]].rank
-            joined_users_female[numbers[0]].already_met_one = joined_users_male[i].rank
+            joined_users_male[i].already_met_first = joined_users_female[numbers[0]].rank
+            joined_users_female[numbers[0]].already_met_first = joined_users_male[i].rank
             joined_users_male[i].save()
             joined_users_female[numbers[0]].save()
             numbers.pop(0)
         elif trial_time == 2:
             runned = 1
             while runned < 10:
-                if joined_users_male[i].already_met_one != joined_users_female[numbers[0]].rank:
+                if joined_users_male[i].already_met_first != joined_users_female[numbers[0]].rank:
                     Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=trial_time)
-                    joined_users_male[i].already_met_two = joined_users_female[numbers[0]].rank
-                    joined_users_female[numbers[0]].already_met_two = joined_users_male[i].rank
+                    joined_users_male[i].already_met_second = joined_users_female[numbers[0]].rank
+                    joined_users_female[numbers[0]].already_met_second = joined_users_male[i].rank
                     joined_users_male[i].save()
                     joined_users_female[numbers[0]].save()
                     numbers.pop(0)
                     break
                 elif runned == 9:
                     Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=trial_time)
-                    joined_users_male[i].already_met_two = joined_users_female[numbers[0]].rank
-                    joined_users_female[numbers[0]].already_met_two = joined_users_male[i].rank
+                    joined_users_male[i].already_met_second = joined_users_female[numbers[0]].rank
+                    joined_users_female[numbers[0]].already_met_second = joined_users_male[i].rank
                     joined_users_male[i].save()
                     joined_users_female[numbers[0]].save()
                     numbers.pop(0)
@@ -86,18 +86,18 @@ def match_example():
         elif trial_time:
             runned = 1
             while runned < 10:
-                if joined_users_male[i].already_met_one != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_two != joined_users_female[numbers[0]].rank:
+                if joined_users_male[i].already_met_first != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_second != joined_users_female[numbers[0]].rank:
                     Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=trial_time)
-                    joined_users_male[i].already_met_three = joined_users_female[numbers[0]].rank
-                    joined_users_female[numbers[0]].already_met_three = joined_users_male[i].rank
+                    joined_users_male[i].already_met_third = joined_users_female[numbers[0]].rank
+                    joined_users_female[numbers[0]].already_met_third = joined_users_male[i].rank
                     joined_users_male[i].save()
                     joined_users_female[numbers[0]].save()
                     numbers.pop(0)
                     break
                 elif runned == 9:
                     Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=trial_time)
-                    joined_users_male[i].already_met_three = joined_users_female[numbers[0]].rank
-                    joined_users_female[numbers[0]].already_met_three = joined_users_male[i].rank
+                    joined_users_male[i].already_met_third = joined_users_female[numbers[0]].rank
+                    joined_users_female[numbers[0]].already_met_third = joined_users_male[i].rank
                     joined_users_male[i].save()
                     joined_users_female[numbers[0]].save()
                     numbers.pop(0)
@@ -108,7 +108,7 @@ def match_example():
         else:
             runned = 1
             while runned < 10:
-                if joined_users_male[i].already_met_one != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_two != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_three != joined_users_female[numbers[0]].rank:
+                if joined_users_male[i].already_met_first != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_second != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_third != joined_users_female[numbers[0]].rank:
                     Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=trial_time)
                     numbers.pop(0)
                     break
@@ -146,7 +146,7 @@ class Email(APIView):
         return Response(status=status.HTTP_201_CREATED)
 
 
-class SentValidation(APIView):
+class Validation(APIView):
     def post(self, request, format=None):
         try:
             if request.user.validation.code == int(request.data['code']):
@@ -243,26 +243,26 @@ class CurrentMatching(APIView):
         for i in range(len(joined_users_male)):
             if request.data["trial_time"] == 1:
                 Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
-                joined_users_male[i].already_met_one = joined_users_female[numbers[0]].rank
-                joined_users_female[numbers[0]].already_met_one = joined_users_male[i].rank
+                joined_users_male[i].already_met_first = joined_users_female[numbers[0]].rank
+                joined_users_female[numbers[0]].already_met_first = joined_users_male[i].rank
                 joined_users_male[i].save()
                 joined_users_female[numbers[0]].save()
                 numbers.pop(0)
             elif request.data["trial_time"] == 2:
                 runned = 1
                 while runned < 10:
-                    if joined_users_male[i].already_met_one != joined_users_female[numbers[0]].rank:
+                    if joined_users_male[i].already_met_first != joined_users_female[numbers[0]].rank:
                         Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
-                        joined_users_male[i].already_met_two = joined_users_female[numbers[0]].rank
-                        joined_users_female[numbers[0]].already_met_two = joined_users_male[i].rank
+                        joined_users_male[i].already_met_second = joined_users_female[numbers[0]].rank
+                        joined_users_female[numbers[0]].already_met_second = joined_users_male[i].rank
                         joined_users_male[i].save()
                         joined_users_female[numbers[0]].save()
                         numbers.pop(0)
                         break
                     elif runned == 9:
                         Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
-                        joined_users_male[i].already_met_two = joined_users_female[numbers[0]].rank
-                        joined_users_female[numbers[0]].already_met_two = joined_users_male[i].rank
+                        joined_users_male[i].already_met_second = joined_users_female[numbers[0]].rank
+                        joined_users_female[numbers[0]].already_met_second = joined_users_male[i].rank
                         joined_users_male[i].save()
                         joined_users_female[numbers[0]].save()
                         numbers.pop(0)
@@ -274,18 +274,18 @@ class CurrentMatching(APIView):
             elif request.data["trial_time"] == 3:
                 runned = 1
                 while runned < 10:
-                    if joined_users_male[i].already_met_one != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_two != joined_users_female[numbers[0]].rank:
+                    if joined_users_male[i].already_met_first != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_second != joined_users_female[numbers[0]].rank:
                         Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
-                        joined_users_male[i].already_met_three = joined_users_female[numbers[0]].rank
-                        joined_users_female[numbers[0]].already_met_three = joined_users_male[i].rank
+                        joined_users_male[i].already_met_third = joined_users_female[numbers[0]].rank
+                        joined_users_female[numbers[0]].already_met_third = joined_users_male[i].rank
                         joined_users_male[i].save()
                         joined_users_female[numbers[0]].save()
                         numbers.pop(0)
                         break
                     elif runned == 9:
                         Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
-                        joined_users_male[i].already_met_three = joined_users_female[numbers[0]].rank
-                        joined_users_female[numbers[0]].already_met_three = joined_users_male[i].rank
+                        joined_users_male[i].already_met_third = joined_users_female[numbers[0]].rank
+                        joined_users_female[numbers[0]].already_met_third = joined_users_male[i].rank
                         joined_users_male[i].save()
                         joined_users_female[numbers[0]].save()
                         numbers.pop(0)
@@ -296,7 +296,7 @@ class CurrentMatching(APIView):
             else:
                 runned = 1
                 while runned < 10:
-                    if joined_users_male[i].already_met_one != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_two != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_three != joined_users_female[numbers[0]].rank:
+                    if joined_users_male[i].already_met_first != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_second != joined_users_female[numbers[0]].rank and joined_users_male[i].already_met_third != joined_users_female[numbers[0]].rank:
                         Matching.objects.create(joined_male=joined_users_male[i], joined_female=joined_users_female[numbers[0]], trial_time=request.data["trial_time"])
                         numbers.pop(0)
                         break
@@ -456,9 +456,9 @@ class CounterProfile(APIView):
         if not request.user.is_anonymous:
             my_profile = request.user.profile
             current_meeting = Meeting.objects.all().order_by('meeting_time').last()
-            if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first() is not None:
-                current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').first()
-            joined_user = JoinedUser.objects.filter(profile=my_profile, meeting=current_meeting).first()
+            if Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').last() is not None:
+                current_meeting = Meeting.objects.filter(meeting_time__gte=timezone.now()).order_by('meeting_time').last()
+            joined_user = JoinedUser.objects.filter(profile=my_profile, meeting=current_meeting).last()
 
             if my_profile.is_male:
                 current_matching = Matching.objects.filter(joined_male=joined_user).last()
@@ -474,7 +474,7 @@ class CounterProfile(APIView):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-class CurrentProfile(APIView):
+class MyProfile(APIView):
     def get(self, request, format=None):
         if request.user.is_authenticated:
             queryset = request.user.profile
@@ -530,27 +530,6 @@ class CurrentProfile(APIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class CurrentCompany(APIView):
-
-    def get(self, request, format=None):
-        if request.user.is_authenticated:
-            queryset = request.user.profile.company
-            if queryset is not None:
-                serializer = CompanySerializer(queryset)
-                return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    def patch(self, request, format=None):
-        queryset = request.user.profile.company
-        serializer = CompanySerializer(queryset, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, format=None):
-        if request.user.profile is not None:
-            request.user.company.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+class CompanyRegistrationView(viewsets.ModelViewSet):
+    serializer_class = CompanySerializer
+    queryset = Company.objects.all()

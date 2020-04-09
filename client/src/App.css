@@ -481,6 +481,14 @@ h4 {
   color: #9013fe;
 }
 
+.font-blue {
+  color: blue;
+}
+
+.font-red {
+  color: red;
+}
+
 .font-bold {
   font-weight: bold;
 }

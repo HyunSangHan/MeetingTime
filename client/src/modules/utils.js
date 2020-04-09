@@ -7,7 +7,7 @@ export const isObject = target => {
 }
 
 export const isEmpty = target => {
-  if (target === null || target === "" || target === []) {
+  if (target === null || target === undefined || target === "" || target === []) {
     return true
   } else {
     return false

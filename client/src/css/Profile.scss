@@ -146,15 +146,10 @@
 }
 
 .FixedButton {
-  display: -webkit-flex !important;
-  display: -ms-flexbox !important;
-  display: flex !important;
-  justify-content: center;
-
+  padding-bottom: 20px;
   .SubmitButton {
     width: 100%;
     max-width: 800px;
-    margin-bottom: 20px;
     height: 52px;
     border: 0;
     border-radius: 12px;
@@ -169,6 +164,16 @@
     bottom: 20px;
     align-items: center;
   }
+
+  .logout {
+    margin: 10px auto;
+    text-align: center;
+    text-decoration: underline;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .team-intro {
@@ -176,7 +181,8 @@
 }
 
 .SendButton {
-  width: 82px;
+  padding: 0 12px;
+  min-width: 82px;
   height: 44px;
   opacity: 0.9;
   border-radius: 12px;
@@ -189,6 +195,7 @@
   letter-spacing: -0.3px;
   text-align: center;
   color: #ffffff;
+  border: 0;
 }
 
 .WorkingButton {
@@ -238,6 +245,7 @@
   }
 }
 
+select[name="genderValue"],
 select[name="ageValue"],
 select[name="companyValue"] {
   appearance: none;
