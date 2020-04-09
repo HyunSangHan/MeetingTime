@@ -34,9 +34,9 @@ urlpatterns = [
     path('api/rest-auth/registration/', include('rest_auth.registration.urls')),
     path('api/logout/', views.logout, name='logout'),
     path('api/', include(router.urls)),
-    path('api/profile/', views.CurrentProfile.as_view()),
+    path('api/profile/', views.MyProfile.as_view()),
     path('api/email/', views.Email.as_view()),
-    path('api/validation/', views.SentValidation.as_view()),
+    path('api/validation/', views.Validation.as_view()),
     path('api/current_matching/', views.CurrentMatching.as_view())
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -146,7 +146,7 @@ class Email(APIView):
         return Response(status=status.HTTP_201_CREATED)
 
 
-class SentValidation(APIView):
+class Validation(APIView):
     def post(self, request, format=None):
         try:
             if request.user.validation.code == int(request.data['code']):
@@ -474,7 +474,7 @@ class CounterProfile(APIView):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-class CurrentProfile(APIView):
+class MyProfile(APIView):
     def get(self, request, format=None):
         if request.user.is_authenticated:
             queryset = request.user.profile
