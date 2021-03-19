@@ -12,7 +12,7 @@ django-crontab==0.7.1
 django-imagekit==4.0.2
 django-rest-auth==0.9.5
 django-sass-processor==0.7.3
-djangorestframework==3.9.4
+djangorestframework==3.11.2
 djangorestframework-camel-case==1.1.2
 Faker==1.0.4
 gunicorn==19.9.0
