@@ -9,7 +9,7 @@
     "history": "^4.9.0",
     "material-icons": "^0.3.1",
     "material-icons-react": "^1.0.4",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "react": "^16.8.4",
     "react-circular-progressbar": "^2.0.3",
     "react-dom": "^16.8.3",
